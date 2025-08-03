@@ -269,10 +269,39 @@ const DashboardPage: React.FC = () => {
               }
             </p>
           </div>
+                </div>
+
+        {/* RIB */}
+        <div className="bg-white/10 rounded-xl p-3 md:p-4">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0">
+            <div>
+              <p className="text-blue-100 text-xs md:text-sm font-medium">RIB</p>
+              <p className="text-sm md:text-lg font-mono">
+                {userStatus === 'verified' ? 'FR76 1234 5678 9012 3456 7890 123' : 
+                 userStatus === 'pending' ? 'RIB en cours de vérification' : 
+                 'RIB non disponible'}
+              </p>
+              <p className="text-blue-100 text-xs">
+                {userStatus === 'verified' ? 'BIC: AMCBFRPPXXX' : 
+                 userStatus === 'pending' ? 'Vérification en cours - RIB disponible sous 24-48h' : 
+                 'Vérifiez votre identité pour accéder à votre RIB'}
+              </p>
+            </div>
+            <button 
+              className={`px-3 md:px-4 py-2 rounded-lg transition-colors text-sm md:text-base ${
+                userStatus !== 'verified' 
+                  ? 'bg-gray-400 text-gray-200 cursor-not-allowed' 
+                  : 'bg-white/20 hover:bg-white/30 text-white'
+              }`}
+              disabled={userStatus !== 'verified'}
+            >
+              {userStatus === 'verified' ? 'Copier' : 
+               userStatus === 'pending' ? 'RIB en cours de vérification' : 
+               'RIB non disponible'}
+            </button>
+          </div>
         </div>
-
-
-      </div>
+        </div>
 
       {/* Actions rapides modernisées */}
       <div className="bg-white rounded-2xl shadow-lg p-4 md:p-6">

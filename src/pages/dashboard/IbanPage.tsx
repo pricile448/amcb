@@ -34,22 +34,23 @@ const IbanPage: React.FC = () => {
         // Synchroniser le statut KYC avant de vérifier
         await syncKycStatus();
 
-        // Récupérer le statut de l'utilisateur
-        const userStr = localStorage.getItem('user');
-        if (userStr) {
-          try {
-            const user = JSON.parse(userStr);
-            setUserStatus(user.verificationStatus || 'pending');
-            setIsUnverified(user.verificationStatus !== 'verified');
-          } catch (error) {
-            console.error('Erreur parsing user:', error);
-            setUserStatus('pending');
-            setIsUnverified(true);
-          }
-        } else {
-          setUserStatus('pending');
-          setIsUnverified(true);
-        }
+                 // Récupérer le statut de l'utilisateur
+         const userStr = localStorage.getItem('user');
+         if (userStr) {
+           try {
+             const user = JSON.parse(userStr);
+             const status = user.kycStatus || user.verificationStatus || 'pending';
+             setUserStatus(status);
+             setIsUnverified(status !== 'verified');
+           } catch (error) {
+             console.error('Erreur parsing user:', error);
+             setUserStatus('pending');
+             setIsUnverified(true);
+           }
+         } else {
+           setUserStatus('pending');
+           setIsUnverified(true);
+         }
 
         console.log('🏦 Chargement des données IBAN pour userId:', userId);
         
