@@ -33,9 +33,6 @@ import VerificationPage from './pages/dashboard/VerificationPage'
 // Auth Guard
 import ProtectedRoute from './components/ProtectedRoute'
 
-// Debug Component (temporaire)
-import KycStatusDebug from './components/KycStatusDebug'
-
 function App() {
   return (
     <div className="min-h-screen bg-gray-50">
@@ -73,9 +70,6 @@ function App() {
           <Route path="verification" element={<VerificationPage />} />
         </Route>
       </Routes>
-
-      {/* Debug Component - TEMPORAIRE */}
-      <KycStatusDebug />
 
       <Toaster
         position="top-right"
