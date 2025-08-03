@@ -245,8 +245,12 @@ export class FirebaseDataService {
   // Récupérer les comptes de l'utilisateur
   static async getUserAccounts(userId: string): Promise<FirebaseAccount[]> {
     try {
-      // FORCER l'utilisation de Firestore en production
+      // FORCER l'utilisation de Firestore en production - VERSION FINALE
       const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel');
+      
+      console.log('🔍 DEBUG: isProduction =', isProduction);
+      console.log('🔍 DEBUG: hostname =', window.location.hostname);
+      console.log('🔍 DEBUG: import.meta.env.PROD =', import.meta.env.PROD);
       
       if (isProduction) {
         console.log('🔍 FirebaseDataService.getUserAccounts - Production: Utilisation directe Firestore');
