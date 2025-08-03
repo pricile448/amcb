@@ -4,7 +4,7 @@ const { createServer: createViteServer } = require('vite');
 const nodemailer = require('nodemailer');
 
 const app = express();
-const PORT = 5173;
+const PORT = process.env.PORT || 5174; // Use environment variable or fallback to 5174
 
 // Middleware
 app.use(cors());

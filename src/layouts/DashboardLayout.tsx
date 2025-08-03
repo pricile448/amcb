@@ -37,13 +37,15 @@ import { useKycSync } from "../hooks/useNotifications";
 import { useNotifications } from "../hooks/useNotifications";
 import NotificationDropdown from "../components/NotificationDropdown";
 import { FirebaseDataService } from "../services/firebaseData";
+import { signOut } from "firebase/auth";
+import { auth } from "../config/firebase";
 
 
 const DashboardLayout: React.FC = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
-  const { userStatus, syncKycStatus } = useKycSync();
+  const { userStatus, syncKycStatus, hasInitialized } = useKycSync();
   const { unreadCount: hookUnreadCount, markAsRead, notifications } = useNotifications();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -55,16 +57,21 @@ const DashboardLayout: React.FC = () => {
     type: 'info' as 'info' | 'warning' | 'error' | 'success'
   });
 
-  // Synchroniser le statut KYC au chargement
+  // Synchroniser le statut KYC au chargement UNE SEULE FOIS
   useEffect(() => {
-    syncKycStatus();
-  }, [syncKycStatus]);
+    if (!hasInitialized) {
+      syncKycStatus();
+    }
+  }, [hasInitialized, syncKycStatus]);
 
   const [userName, setUserName] = useState('Client AmCbunq');
+  const [userDataLoaded, setUserDataLoaded] = useState(false);
 
-  // Charger les données utilisateur
+  // Charger les données utilisateur UNE SEULE FOIS
   useEffect(() => {
     const loadUserData = async () => {
+      if (userDataLoaded) return;
+      
       try {
         const userId = FirebaseDataService.getCurrentUserId();
         if (userId) {
@@ -74,13 +81,15 @@ const DashboardLayout: React.FC = () => {
             setUserName(fullName);
           }
         }
+        setUserDataLoaded(true);
       } catch (error) {
         console.error('❌ Erreur chargement données utilisateur:', error);
+        setUserDataLoaded(true);
       }
     };
     
     loadUserData();
-  }, []);
+  }, [userDataLoaded]);
 
   // Fonction pour récupérer le nom de l'utilisateur pour la sidebar (troncature agressive)
   const getSidebarUserName = (): string => {
@@ -156,8 +165,16 @@ const DashboardLayout: React.FC = () => {
   ];
 
   const handleLogout = () => {
-    // TODO: Implement logout logic
-    navigate("/connexion");
+    // Vider le cache avant la déconnexion
+    FirebaseDataService.clearCache();
+    
+    // Déconnexion Firebase
+    signOut(auth).then(() => {
+      console.log('✅ Déconnexion réussie');
+      navigate('/connexion');
+    }).catch((error) => {
+      console.error('❌ Erreur lors de la déconnexion:', error);
+    });
   };
 
   // Fonction pour fermer la sidebar sur mobile lors du clic sur un lien

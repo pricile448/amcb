@@ -1,0 +1,15 @@
+a817077 2025-08-03 Remove debug panel and fix user name loading - Load real user data from Firebase instead of localStorage
+f913d1a 2025-08-03 SECURITY: Remove exposed Firebase keys and add security guide
+6050321 2025-08-03 Fix Vercel environment variables configuration - Add proper vercel.json and configuration guide
+5b747f2 2025-08-03 Fix TypeScript errors - Convert userIdDiagnostic to TypeScript and fix build issues
+9a2ab44 2025-08-03 Add user data API endpoint and userId diagnostic tools - Fix userId loading issues in dashboard
+f3ee91b 2025-08-03 Remove password reset scripts - no longer needed
+74b28f8 2025-08-03 Fix Firebase authentication and add password reset functionality
+caaaec8 2025-08-03 Remove PHP files to fix Vercel build conflict, keep only Node.js API
+f9d5f40 2025-08-03 Add Firebase configuration guides and diagnostic tools
+ca737d9 2025-08-03 Replace PHP API with Node.js API for email verification
+94d1e13 2025-08-03 Add simple PHP test endpoint to debug API issues
+83ba9cb 2025-08-03 Fix PHP runtime detection by removing conflicting functions config
+1049281 2025-08-03 Fix PHP functions runtime configuration for Vercel
+278d845 2025-08-03 Fix Vercel configuration for Vite framework
+5553fe2 2025-08-03 Initial commit: AMCB application with PHP API and email verification

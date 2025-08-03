@@ -47,17 +47,23 @@ interface Transaction {
 
 const DashboardPage: React.FC = () => {
   const { t } = useTranslation();
-  const { userStatus, syncKycStatus } = useKycSync();
+  const { userStatus, syncKycStatus, hasInitialized } = useKycSync();
   const [loading, setLoading] = useState(true);
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [recentTransactions, setRecentTransactions] = useState<Transaction[]>([]);
   const [showBalances, setShowBalances] = useState(true);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
-  // Charger les données Firebase au montage du composant
+  // Charger les données Firebase au montage du composant UNE SEULE FOIS
   useEffect(() => {
     const loadFirebaseData = async () => {
-      // Synchroniser le statut KYC
-      await syncKycStatus();
+      if (dataLoaded) return;
+      
+      // Synchroniser le statut KYC seulement si pas encore initialisé
+      if (!hasInitialized) {
+        await syncKycStatus();
+      }
+      
       try {
         setLoading(true);
         const userId = FirebaseDataService.getCurrentUserId();
@@ -87,72 +93,23 @@ const DashboardPage: React.FC = () => {
             status: acc.status as 'active' | 'blocked' | 'pending',
             lastTransaction: {
               date: new Date(),
-              amount: 0,
-              description: 'Aucune transaction récente'
+              amount: 0
             }
           };
         });
-        setAccounts(mappedAccounts);
-
-        // Charger les transactions récentes (limiter à 5)
-        const firebaseTransactions = await FirebaseDataService.getUserTransactions(userId);
-        console.log('🔍 Dashboard - Transactions reçues:', firebaseTransactions);
         
-        const mappedTransactions: Transaction[] = firebaseTransactions
-          .slice(0, 5) // Limiter à 5 transactions récentes
-          .map(trans => {
-            const parsedDate = parseFirestoreDate(trans.date);
-            
-            // Corriger les descriptions pour utiliser les noms d'affichage des comptes
-            let correctedDescription = trans.description;
-            if (trans.description.includes('savings-1')) {
-              correctedDescription = trans.description.replace('savings-1', 'Compte Épargne');
-            }
-            if (trans.description.includes('checking-1')) {
-              correctedDescription = trans.description.replace('checking-1', 'Compte Courant');
-            }
-            if (trans.description.includes('credit-1')) {
-              correctedDescription = trans.description.replace('credit-1', 'Carte de Crédit');
-            }
-            
-            // Déterminer le type de transaction
-            let transactionType: 'income' | 'expense' | 'transfer' = 'income';
-            if (trans.type === 'debit' || trans.category === 'Virement sortant' || trans.description?.includes('Überweisung')) {
-              transactionType = 'expense';
-            } else if (trans.amount < 0) {
-              transactionType = 'expense';
-            } else if (trans.amount > 0) {
-              transactionType = 'income';
-            }
-            
-            // Déterminer le montant (négatif pour les dépenses)
-            let amount = trans.amount;
-            if (transactionType === 'expense' && amount > 0) {
-              amount = -amount;
-            }
-            
-            console.log(`💰 Dashboard Transaction ${trans.id}: amount=${amount}, type=${transactionType}, date=${parsedDate}, category=${trans.category}`);
-            
-            return {
-              id: trans.id,
-              description: truncateTransactionDescription(correctedDescription || 'Transaction'),
-              amount: amount,
-              date: parsedDate,
-              category: trans.category || 'Autre',
-              type: transactionType
-            };
-          });
-        setRecentTransactions(mappedTransactions);
-
+        setAccounts(mappedAccounts);
+        setDataLoaded(true);
       } catch (error) {
-        console.error('Erreur lors du chargement des données:', error);
+        console.error('❌ Erreur chargement données dashboard:', error);
+        setDataLoaded(true);
       } finally {
         setLoading(false);
       }
     };
 
     loadFirebaseData();
-  }, []);
+  }, [syncKycStatus, hasInitialized, dataLoaded]);
 
   const totalBalance = accounts.reduce((sum, account) => sum + account.balance, 0);
   const currentAccount = accounts.find(a => a.type === 'current');

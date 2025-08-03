@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "start": "node server.cjs",
     "start:prod": "NODE_ENV=production node server.cjs",
-    "start:full": "node start.cjs"
+    "start:full": "node start.cjs",
+    "check-ports": "node check-ports.cjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.9.11",

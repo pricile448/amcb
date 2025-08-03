@@ -1,4 +1,6 @@
 import { API_CONFIG } from '../config/api';
+import { db } from '../config/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 
 // Types pour les données Firebase
 export interface FirebaseAccount {
@@ -119,6 +121,10 @@ export interface FirebaseBudget {
   createdAt?: any;
   updatedAt?: any;
 }
+
+// Cache pour éviter les rechargements multiples
+const userDataCache = new Map<string, any>();
+const kycStatusCache = new Map<string, string>();
 
 // Service pour récupérer les données Firebase
 export class FirebaseDataService {
@@ -489,58 +495,29 @@ export class FirebaseDataService {
     }
   }
 
-  // Méthode pour récupérer les données utilisateur complètes
-  static async getUserData(userId: string): Promise<any | null> {
-    console.log('👤 Récupération des données utilisateur complètes pour userId:', userId);
-    
+  // Méthode pour récupérer les données utilisateur avec cache
+  static async getUserData(userId: string): Promise<any> {
     try {
-      // Essayer d'abord l'endpoint API
-      console.log('🔍 Tentative de récupération depuis l\'API...');
-      const response = await fetch(`${API_CONFIG.BASE_URL}/api/user/${userId}`, {
-        method: 'GET',
-        headers: this.getAuthHeaders()
-      });
-
-      console.log('🔍 Réponse API utilisateur - Status:', response.status);
-      console.log('🔍 Réponse API utilisateur - OK:', response.ok);
-      console.log('🔍 URL appelée:', `${API_CONFIG.BASE_URL}/api/user/${userId}`);
-      
-      if (!response.ok) {
-        // Essayer de lire le contenu de la réponse pour diagnostiquer
-        const responseText = await response.text();
-        console.error('❌ Réponse d\'erreur du serveur:', responseText);
-        console.error('❌ Headers de réponse:', Object.fromEntries(response.headers.entries()));
-        
-        // Si l'endpoint n'existe pas, essayer une approche alternative
-        if (response.status === 404) {
-          console.log('⚠️ Endpoint /api/user non trouvé, tentative de récupération alternative...');
-          return await this.getUserDataAlternative(userId);
-        }
-        
-        throw new Error(`Erreur HTTP: ${response.status} - ${responseText.substring(0, 100)}`);
+      // Vérifier le cache d'abord
+      if (userDataCache.has(userId)) {
+        console.log('👤 Données utilisateur récupérées du cache');
+        return userDataCache.get(userId);
       }
 
-      const data = await response.json();
-      console.log('🔍 Données utilisateur reçues:', data);
-      
-      if (data.success && data.user) {
-        console.log('✅ Données utilisateur récupérées avec succès depuis l\'API');
-        return data.user;
-      } else {
-        console.log('⚠️ Réponse API invalide, tentative alternative...');
-        return await this.getUserDataAlternative(userId);
+      const userDoc = await getDoc(doc(db, 'users', userId));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        
+        // Mettre en cache
+        userDataCache.set(userId, userData);
+        
+        console.log('👤 Données utilisateur chargées:', userData);
+        return userData;
       }
+      return null;
     } catch (error) {
-      console.error('❌ Erreur FirebaseDataService.getUserData:', error);
-      
-      // Si c'est une erreur de parsing JSON, c'est probablement que le serveur retourne HTML
-      if (error instanceof SyntaxError && error.message.includes('Unexpected token')) {
-        console.error('❌ Le serveur retourne du HTML au lieu de JSON. Vérifiez que le serveur est démarré et que la route /api/user existe.');
-      }
-      
-      // En cas d'erreur, essayer l'approche alternative
-      console.log('🔄 Tentative de récupération alternative...');
-      return await this.getUserDataAlternative(userId);
+      console.error('❌ Erreur chargement données utilisateur:', error);
+      return null;
     }
   }
 
@@ -659,53 +636,46 @@ export class FirebaseDataService {
     }
   }
 
-  // Synchroniser le statut KYC depuis Firestore avec le localStorage
-  static async syncKycStatus(userId: string): Promise<void> {
-    console.log('🔄 Synchronisation du statut KYC pour userId:', userId);
-    
+  // Méthode pour synchroniser le statut KYC avec cache
+  static async syncKycStatus(userId: string): Promise<string> {
     try {
-      // Vérifier d'abord le localStorage actuel
-      const currentUserStr = localStorage.getItem('user');
-      if (currentUserStr) {
-        const currentUser = JSON.parse(currentUserStr);
-        console.log('🔍 Statut actuel dans localStorage:', currentUser.verificationStatus);
+      // Vérifier le cache d'abord
+      if (kycStatusCache.has(userId)) {
+        console.log('🔄 Statut KYC récupéré du cache:', kycStatusCache.get(userId));
+        return kycStatusCache.get(userId) || 'unverified';
       }
-      
-      const userData = await this.getUserData(userId);
-      console.log('🔍 Données utilisateur complètes reçues:', userData);
-      
-      if (userData) {
-        console.log('🔍 Champ kycStatus dans les données:', userData.kycStatus);
-        console.log('🔍 Tous les champs disponibles:', Object.keys(userData));
+
+      const userDoc = await getDoc(doc(db, 'users', userId));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        const status = userData.verificationStatus || 'unverified';
         
-        if (userData.kycStatus) {
-          console.log('🔄 Statut KYC trouvé dans Firestore:', userData.kycStatus);
-          
-          // Mettre à jour le localStorage avec le statut KYC
-          const userStr = localStorage.getItem('user');
-          if (userStr) {
-            const user = JSON.parse(userStr);
-            const updatedUser = {
-              ...user,
-              verificationStatus: userData.kycStatus // Synchroniser kycStatus vers verificationStatus
-            };
-            localStorage.setItem('user', JSON.stringify(updatedUser));
-            console.log('✅ Statut KYC synchronisé dans localStorage:', userData.kycStatus);
-            console.log('✅ Utilisateur mis à jour dans localStorage:', updatedUser);
-          }
-        } else {
-          console.log('⚠️ Aucun champ kycStatus trouvé dans les données utilisateur');
+        // Mettre en cache
+        kycStatusCache.set(userId, status);
+        
+        // Mettre à jour localStorage
+        const userStr = localStorage.getItem('user');
+        if (userStr) {
+          const user = JSON.parse(userStr);
+          user.verificationStatus = status;
+          localStorage.setItem('user', JSON.stringify(user));
         }
-      } else {
-        console.log('⚠️ Aucune donnée utilisateur reçue de l\'API');
+        
+        console.log('🔄 Statut KYC synchronisé:', status);
+        return status;
       }
+      return 'unverified';
     } catch (error) {
-      console.error('❌ Erreur lors de la synchronisation du statut KYC:', error);
-      if (error instanceof Error) {
-        console.error('❌ Détails de l\'erreur:', error.message);
-        console.error('❌ Stack trace:', error.stack);
-      }
+      console.error('❌ Erreur synchronisation KYC:', error);
+      return 'unverified';
     }
+  }
+
+  // Méthode pour vider le cache (utile lors de la déconnexion)
+  static clearCache(): void {
+    userDataCache.clear();
+    kycStatusCache.clear();
+    console.log('🗑️ Cache vidé');
   }
 
   // Méthodes pour les bénéficiaires

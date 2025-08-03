@@ -145,8 +145,14 @@ export const useKycSync = () => {
   const [userStatus, setUserStatus] = useState<string>('unverified');
   const [isUnverified, setIsUnverified] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [hasInitialized, setHasInitialized] = useState(false);
 
-  const syncKycStatus = useCallback(async () => {
+  const syncKycStatus = useCallback(async (force = false) => {
+    // Éviter les synchronisations multiples si déjà initialisé
+    if (hasInitialized && !force) {
+      return userStatus;
+    }
+
     setIsLoading(true);
     try {
       const userStr = localStorage.getItem('user');
@@ -165,6 +171,7 @@ export const useKycSync = () => {
             const status = updatedUser.verificationStatus || 'unverified';
             setUserStatus(status);
             setIsUnverified(status !== 'verified');
+            setHasInitialized(true);
             console.log('🔄 Statut KYC synchronisé:', status);
             return status;
           }
@@ -174,21 +181,25 @@ export const useKycSync = () => {
       console.error('❌ Erreur lors de la synchronisation KYC:', error);
       setUserStatus('unverified');
       setIsUnverified(true);
+      setHasInitialized(true);
     } finally {
       setIsLoading(false);
     }
     return 'unverified';
-  }, []);
+  }, [hasInitialized, userStatus]);
 
-  // Synchroniser automatiquement le statut KYC au démarrage
+  // Synchroniser automatiquement le statut KYC au démarrage UNE SEULE FOIS
   useEffect(() => {
-    syncKycStatus();
-  }, [syncKycStatus]);
+    if (!hasInitialized) {
+      syncKycStatus();
+    }
+  }, [hasInitialized, syncKycStatus]);
 
   return {
     userStatus,
     isUnverified,
     isLoading,
-    syncKycStatus
+    syncKycStatus,
+    hasInitialized
   };
 }; 
