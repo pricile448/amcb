@@ -36,7 +36,8 @@ import ProfileMenu from "../components/ProfileMenu";
 import { useKycSync } from "../hooks/useNotifications";
 import { useNotifications } from "../hooks/useNotifications";
 import NotificationDropdown from "../components/NotificationDropdown";
-import UserIdDebugPanel from "../components/UserIdDebugPanel";
+import { FirebaseDataService } from "../services/firebaseData";
+
 
 const DashboardLayout: React.FC = () => {
   const { t } = useTranslation();
@@ -59,19 +60,27 @@ const DashboardLayout: React.FC = () => {
     syncKycStatus();
   }, [syncKycStatus]);
 
-  // Fonction pour récupérer le nom de l'utilisateur connecté (formaté pour mobile)
-  const getUserName = (): string => {
-    const userStr = localStorage.getItem('user');
-    if (userStr) {
+  const [userName, setUserName] = useState('Client AmCbunq');
+
+  // Charger les données utilisateur
+  useEffect(() => {
+    const loadUserData = async () => {
       try {
-        const user = JSON.parse(userStr);
-        return formatUserNameForDisplay(user.firstName || 'Client', user.lastName || 'AmCbunq');
+        const userId = FirebaseDataService.getCurrentUserId();
+        if (userId) {
+          const userData = await FirebaseDataService.getUserData(userId);
+          if (userData && userData.firstName && userData.lastName) {
+            const fullName = formatUserNameForDisplay(userData.firstName, userData.lastName);
+            setUserName(fullName);
+          }
+        }
       } catch (error) {
-        console.error('❌ Erreur parsing user:', error);
+        console.error('❌ Erreur chargement données utilisateur:', error);
       }
-    }
-    return 'Client AmCbunq';
-  };
+    };
+    
+    loadUserData();
+  }, []);
 
   // Fonction pour récupérer le nom de l'utilisateur pour la sidebar (troncature agressive)
   const getSidebarUserName = (): string => {
@@ -296,7 +305,7 @@ const DashboardLayout: React.FC = () => {
                 <span className="text-white font-semibold text-xs md:text-sm">{getUserInitials()}</span>
               </div>
               <div>
-                <p className="text-white font-semibold text-xs md:text-sm">{getUserName()}</p>
+                <p className="text-white font-semibold text-xs md:text-sm">{userName}</p>
                 <div className="flex items-center space-x-1">
                   {userStatus === 'verified' ? (
                     <>
@@ -394,7 +403,7 @@ const DashboardLayout: React.FC = () => {
                     <User className="w-3 md:w-4 h-3 md:h-4 text-white" />
                   </div>
                   <div className="hidden md:block text-left">
-                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{getUserName()}</p>
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{userName}</p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">Client Premium</p>
                   </div>
                   <ChevronDown className="w-4 h-4 text-gray-400 dark:text-gray-500" />
@@ -404,7 +413,7 @@ const DashboardLayout: React.FC = () => {
                 <ProfileMenu
                   isOpen={showProfileMenu}
                   onClose={() => setShowProfileMenu(false)}
-                  userName={getUserName()}
+                  userName={userName}
                   userEmail={getUserEmail()}
                   userStatus={userStatus}
                   onLogout={handleLogout}
@@ -432,8 +441,7 @@ const DashboardLayout: React.FC = () => {
         showIcon={true}
       />
 
-      {/* UserId Debug Panel */}
-      <UserIdDebugPanel />
+
     </div>
   );
 };

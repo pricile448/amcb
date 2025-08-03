@@ -191,18 +191,27 @@ const DashboardPage: React.FC = () => {
   };
 
   // Fonction pour traduire les noms des comptes
-  const getUserName = (): string => {
-    const userStr = localStorage.getItem('user');
-    if (userStr) {
+  const [userName, setUserName] = useState('Client AmCbunq');
+
+  // Charger les données utilisateur
+  useEffect(() => {
+    const loadUserData = async () => {
       try {
-        const user = JSON.parse(userStr);
-        return formatUserNameForDisplay(user.firstName || 'Client', user.lastName || 'AmCbunq');
+        const userId = FirebaseDataService.getCurrentUserId();
+        if (userId) {
+          const userData = await FirebaseDataService.getUserData(userId);
+          if (userData && userData.firstName && userData.lastName) {
+            const fullName = formatUserNameForDisplay(userData.firstName, userData.lastName);
+            setUserName(fullName);
+          }
+        }
       } catch (error) {
-        console.error('❌ Erreur parsing user:', error);
+        console.error('❌ Erreur chargement données utilisateur:', error);
       }
-    }
-    return 'Client AmCbunq';
-  };
+    };
+    
+    loadUserData();
+  }, []);
 
   const translateAccountName = (name: string): string => {
     console.log('🔍 Dashboard translateAccountName called with:', name);
@@ -243,7 +252,7 @@ const DashboardPage: React.FC = () => {
       <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-4 md:p-6 text-white">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-xl md:text-2xl font-bold">Bonjour, {getUserName()}</h1>
+            <h1 className="text-xl md:text-2xl font-bold">Bonjour, {userName}</h1>
             <p className="text-blue-100 text-sm md:text-base">Votre tableau de bord financier</p>
           </div>
           <div className="flex items-center space-x-2">
