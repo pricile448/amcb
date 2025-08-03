@@ -1,2 +1,6 @@
-# Ignore everything in api folder for automatic detection
-api/*.php 
+# Ignore specific PHP files but allow test files
+api/send-email.php
+api/verify-code.php
+api/health.php
+api/index.php
+api/test-email.php 
