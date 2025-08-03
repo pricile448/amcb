@@ -1,0 +1,397 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "close": "Close",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "view": "View",
+    "download": "Download",
+    "upload": "Upload",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "nav": {
+    "features": "Features",
+    "pricing": "Pricing",
+    "help": "Help",
+    "login": "Login",
+    "openAccount": "Open Account",
+    "dashboard": "My Client Space",
+    "accounts": "Accounts",
+    "iban": "My IBAN",
+    "transfers": "Transfers",
+    "cards": "Cards",
+    "billing": "Billing",
+    "history": "History",
+    "budgets": "Budgets",
+    "settings": "Settings",
+    "help": "Help & Support",
+    "documents": "My Documents",
+    "logout": "Logout"
+  },
+  "home": {
+    "hero": {
+      "title": "The bank of the future, today",
+      "subtitle": "Manage your finances with ease with AmCbunq. Account opening in 5 minutes, instant transfers, and bank-level security.",
+      "openAccount": "Open Account",
+      "learnMore": "Learn More"
+    },
+    "features": {
+      "title": "Why choose AmCbunq?",
+      "subtitle": "A modern and secure banking experience"
+    },
+    "security": {
+      "title": "Maximum security",
+      "description": "Your data is protected by military-grade encryption"
+    },
+    "accounts": {
+      "title": "Multiple accounts",
+      "description": "Current, savings, and credit cards in one place"
+    },
+    "transactions": {
+      "title": "Instant transactions",
+      "description": "Real-time transfers and payments"
+    },
+    "international": {
+      "title": "International",
+      "description": "Send money anywhere in the world"
+    },
+    "benefits": {
+      "title": "AmCbunq Benefits",
+      "noFees": "No hidden fees",
+      "instant": "Instant transfers",
+      "secure": "Bank-level security",
+      "support": "24/7 support",
+      "getStarted": "Get Started Now"
+    },
+    "mobile": {
+      "title": "Mobile app",
+      "description": "Manage your finances from your smartphone"
+    },
+    "speed": {
+      "title": "Speed",
+      "description": "Account opening in 5 minutes"
+    },
+    "cta": {
+      "title": "Ready to join AmCbunq?",
+      "description": "Join thousands of satisfied customers",
+      "button": "Open My Account"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to your AmCbunq account",
+      "email": "Email",
+      "password": "Password",
+      "forgotPassword": "Forgot password?",
+      "signIn": "Sign In",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up"
+    },
+    "register": {
+      "title": "Create your account",
+      "subtitle": "Join AmCbunq in just a few steps",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "agreeTerms": "I agree to the terms and conditions",
+      "createAccount": "Create Account",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign in"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome back",
+    "totalBalance": "Total Balance",
+    "recentTransactions": "Recent Transactions",
+    "quickActions": "Quick Actions",
+    "transfer": "Transfer",
+    "pay": "Pay",
+    "topUp": "Top Up",
+    "viewAll": "View All"
+  },
+  "accounts": {
+    "title": "My Accounts",
+    "totalBalance": "Total Balance",
+    "activeAccounts": "Active Accounts",
+    "monthlyTransactions": "Monthly Transactions",
+    "accountNumber": "Account Number",
+    "balance": "Balance",
+    "lastTransaction": "Last Transaction",
+    "details": "Details",
+    "transfer": "Transfer",
+    "rib": "RIB AmCbunq",
+    "copyRib": "Copy RIB"
+  },
+  "transactions": {
+    "title": "Transaction History",
+    "filter": "Filter",
+    "search": "Search transactions",
+    "date": "Date",
+    "description": "Description",
+    "amount": "Amount",
+    "type": "Type",
+    "status": "Status",
+    "income": "Income",
+    "expense": "Expense",
+    "transfer": "Transfer"
+  },
+  "transfers": {
+    "title": "Transfers",
+    "newTransfer": "New Transfer",
+    "beneficiaries": "Beneficiaries",
+    "addBeneficiary": "Add Beneficiary",
+    "fromAccount": "From Account",
+    "toAccount": "To Account",
+    "amount": "Amount",
+    "description": "Description",
+    "send": "Send",
+    "transferHistory": "Transfer History"
+  },
+  "cards": {
+    "title": "My Cards",
+    "activeCards": "Active Cards",
+    "cardNumber": "Card Number",
+    "expiryDate": "Expiry Date",
+    "cvv": "CVV",
+    "status": "Status",
+    "block": "Block",
+    "unblock": "Unblock",
+    "orderNew": "Order New Card"
+  },
+  "documents": {
+    "title": "My Documents",
+    "upload": "Upload Document",
+    "fileName": "File Name",
+    "uploadDate": "Upload Date",
+    "status": "Status",
+    "download": "Download",
+    "delete": "Delete"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Customize your experience",
+    "profile": "Profile",
+    "security": "Security",
+    "notifications": "Notifications",
+    "preferences": "Preferences",
+    "profileSettings": "Profile Settings",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "dateOfBirth": "Date of Birth",
+    "placeOfBirth": "Place of Birth",
+    "nationality": "Nationality",
+    "residenceCountry": "Country of Residence",
+    "address": "Address",
+    "city": "City",
+    "postalCode": "Postal Code",
+    "profession": "Profession",
+    "salary": "Salary",
+    "saveChanges": "Save Changes",
+    "securitySettings": "Security Settings",
+    "changePassword": "Change Password",
+    "changePasswordDescription": "Update your password",
+    "change": "Change",
+    "twoFactorAuth": "Two-Factor Authentication",
+    "twoFactorAuthDescription": "Add an extra layer of security",
+    "enable": "Enable",
+    "loginHistory": "Login History",
+    "loginHistoryDescription": "View your recent logins",
+    "view": "View",
+    "notificationSettings": "Notification Settings",
+    "emailNotifications": "Email Notifications",
+    "emailNotificationsDescription": "Receive email notifications",
+    "smsNotifications": "SMS Notifications",
+    "smsNotificationsDescription": "Receive SMS notifications",
+    "pushNotifications": "Push Notifications",
+    "pushNotificationsDescription": "Receive notifications on your device",
+    "marketingEmails": "Marketing Emails",
+    "marketingEmailsDescription": "Receive our offers and news",
+    "language": "Language",
+    "currency": "Currency",
+    "timezone": "Timezone",
+    "theme": "Theme"
+  },
+  "footer": {
+    "description": "The bank of the future, today. Manage your finances with ease.",
+    "products": "Products",
+    "support": "Support",
+    "legal": "Legal",
+    "contact": "Contact",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "rights": "All rights reserved"
+  },
+  "errors": {
+    "network": "Network error",
+    "unauthorized": "Unauthorized",
+    "forbidden": "Access forbidden",
+    "notFound": "Page not found",
+    "serverError": "Server error",
+    "validation": "Validation error",
+    "fileTooLarge": "File too large",
+    "invalidFileType": "Unsupported file type",
+    "transferCreationFailed": "Error during creation",
+    "beneficiaryAddFailed": "Error during addition",
+    "beneficiaryUpdateFailed": "Error during update",
+    "beneficiaryDeleteFailed": "Error during deletion"
+  },
+  "success": {
+    "accountCreated": "Account created successfully",
+    "loginSuccess": "Login successful",
+    "logoutSuccess": "Logout successful",
+    "profileUpdated": "Profile updated",
+    "passwordChanged": "Password changed",
+    "documentUploaded": "Document uploaded",
+    "transferCompleted": "Transfer completed",
+    "transferCreated": "Transfer created",
+    "transferScheduled": "Transfer scheduled",
+    "transferSubmitted": "Transfer submitted",
+    "beneficiaryAdded": "Beneficiary added",
+    "beneficiaryUpdated": "Beneficiary updated",
+    "beneficiaryDeleted": "Beneficiary deleted"
+  },
+  "messages": {
+    "title": "Messages",
+    "subtitle": "AmCbunq Customer Service",
+    "support": "AmCbunq Support",
+    "online": "Online",
+    "quickResponse": "Quick response",
+    "typing": "Support is typing...",
+    "placeholder": "Type your message...",
+    "send": "Send",
+    "faq": "Frequently Asked Questions",
+    "faq1": "How to change my password?",
+    "faq2": "How to make a transfer?",
+    "faq3": "Problem with my bank card",
+    "directContact": "Direct contact",
+    "phone": "01 23 45 67 89",
+    "email": "support@amcbunq.fr",
+    "availability": "24/7",
+    "responseTime": "Response time",
+    "chatResponse": "Immediate",
+    "emailResponse": "2-4h",
+    "phoneResponse": "Immediate",
+    "welcomeMessage": "Hello! I'm your AmCbunq virtual assistant. How can I help you today?",
+    "autoResponse": "Thank you for your message. An advisor will respond to you as soon as possible."
+  },
+  "transferMessages": {
+    "internalSuccess": "Your transfer of {amount} has been created successfully.",
+    "scheduledSuccess": "Your transfer of {amount} has been scheduled successfully.",
+    "externalSuccess": "Your external transfer of {amount} has been submitted and is pending review.",
+    "creationError": "Unable to create transfer: {error}",
+    "beneficiaryAddSuccess": "Beneficiary \"{name}\" has been added successfully.",
+    "beneficiaryUpdateSuccess": "Information for \"{name}\" has been updated successfully.",
+    "beneficiaryDeleteSuccess": "Beneficiary \"{name}\" has been deleted successfully.",
+    "beneficiaryAddError": "Unable to add beneficiary: {error}",
+    "beneficiaryUpdateError": "Unable to update beneficiary: {error}",
+    "beneficiaryDeleteError": "Unable to delete beneficiary: {error}",
+    "externalTransferTitle": "External Transfer",
+    "externalTransferMessage": "External transfers are subject to security review before validation.\n\nYour transfer will be automatically put on hold and processed as soon as possible.\n\nDo you want to continue?",
+    "confirmTransfer": "Confirm Transfer"
+  },
+  "kyc": {
+    "title": "Identity Verification",
+    "subtitle": "To access all AmCBunq features, please provide the following documents",
+    "documentsRequired": "Required Documents",
+    "identityDocument": "Identity Document (National ID, Passport)",
+    "proofOfAddress": "Proof of Address (Bill, Rent Receipt)",
+    "proofOfIncome": "Proof of Income (Payslips, Tax Notice)",
+    "acceptedFormats": "Accepted formats: PDF, JPG, PNG (max 5MB)",
+    "required": "Required",
+    "selectFile": "Click to select a file",
+    "dragDrop": "or drag and drop here",
+    "fileTooLarge": "File too large",
+    "fileTooLargeMessage": "File must not exceed 5MB",
+    "removeFile": "Remove",
+    "importantInfo": "Important Information",
+    "secureProcessing": "• Your documents are processed securely and confidentially",
+    "verificationTime": "• Verification usually takes 24-48 hours",
+    "emailNotification": "• You will receive an email notification once verification is complete",
+    "accountLimits": "• Meanwhile, your account remains functional with limitations",
+    "submitDocuments": "Submit Documents",
+    "submitting": "Submitting...",
+    "documentsSubmitted": "Documents Submitted",
+    "submissionSuccess": "Your documents have been submitted successfully. Your account is pending verification by our team.",
+    "missingDocuments": "Missing Documents",
+    "missingDocumentsMessage": "Please upload all required documents",
+    "submissionError": "Unable to submit documents",
+    "validationButton": "Verify Your Identity",
+    "verificationInProgress": "Verification in Progress",
+    "unverified": "Unverified",
+    "pending": "Pending",
+    "verified": "Verified"
+  },
+  "verification": {
+    "banner": {
+      "unverified": {
+        "title": "Identity Verification Required",
+        "message": "To access all AmCbunq features, you must verify your identity.",
+        "button": "Verify Now"
+      },
+      "pending": {
+        "title": "Verification in Progress",
+        "message": "Your documents are being verified. You will receive a notification once completed.",
+        "button": "View Status"
+      }
+    }
+  },
+  "iban": {
+    "title": "My IBAN",
+    "subtitle": "Your unique banking identifier",
+    "status": {
+      "available": "Available",
+      "processing": "Processing",
+      "request_required": "Request Required",
+      "unavailable": "Unavailable"
+    },
+    "actions": {
+      "copy": "Copy",
+      "copied": "Copied!",
+      "download": "Download RIB",
+      "share": "Share",
+      "showDetails": "Show Details",
+      "hideDetails": "Hide Details",
+      "requestRib": "Request My RIB",
+      "requesting": "Requesting..."
+    },
+    "messages": {
+      "ribNotAvailable": "RIB not available",
+      "ribNotAvailableDesc": "To make transfers, you must first request your RIB.",
+      "ribProcessing": "RIB being generated",
+      "ribProcessingDesc": "Your RIB request has been registered. It will be available within 24-48h.",
+      "ribUnavailable": "RIB not available",
+      "ribUnavailableDesc": "Your account must be verified to request a RIB.",
+      "ribAvailable": "RIB available and active"
+    },
+    "info": {
+      "title": "Important Information",
+      "unavailable": {
+        "title": "RIB not available",
+        "description": "Your account must be verified to request a RIB. Please first validate your identity via the KYC page."
+      },
+      "processing": {
+        "title": "RIB being generated",
+        "description": "Your RIB request has been registered and is being processed. The RIB will be available within 24-48h.",
+        "notification": "You will receive a notification as soon as your RIB is available."
+      }
+    }
+  }
+} 

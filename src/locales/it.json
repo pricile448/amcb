@@ -1,0 +1,41 @@
+{
+  "common": {
+    "loading": "Caricamento...",
+    "error": "Errore",
+    "success": "Successo",
+    "cancel": "Annulla",
+    "save": "Salva",
+    "edit": "Modifica",
+    "delete": "Elimina",
+    "confirm": "Conferma",
+    "back": "Indietro",
+    "next": "Avanti",
+    "previous": "Precedente",
+    "submit": "Invia",
+    "close": "Chiudi",
+    "search": "Cerca",
+    "filter": "Filtra",
+    "sort": "Ordina",
+    "view": "Visualizza",
+    "download": "Scarica",
+    "upload": "Carica",
+    "yes": "Sì",
+    "no": "No"
+  },
+  "navigation": {
+    "home": "Home",
+    "features": "Funzionalità",
+    "pricing": "Prezzi",
+    "help": "Aiuto",
+    "login": "Accedi",
+    "register": "Apri conto",
+    "dashboard": "Il mio spazio cliente",
+    "accounts": "Conti",
+    "transactions": "Transazioni",
+    "transfers": "Bonifici",
+    "cards": "Carte",
+    "settings": "Impostazioni",
+    "profile": "Profilo",
+    "logout": "Esci"
+  }
+} 

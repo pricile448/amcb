@@ -1,0 +1,197 @@
+// firestore.rules
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // 👤 Collection users : Lecture/écriture pour le propriétaire
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      
+      // ✅ Permettre la mise à jour du kycStatus : unverified → pending
+      allow update: if request.auth != null 
+        && request.auth.uid == userId
+        && request.auth.uid == resource.data.uid
+        && (
+          // Utilisateur peut passer de unverified à pending
+          (resource.data.kycStatus == 'unverified' && request.resource.data.kycStatus == 'pending')
+          // Ou garder le même statut (pour autres champs)
+          || (resource.data.kycStatus == request.resource.data.kycStatus)
+        );
+      
+      // 🔔 Règles spécifiques pour les notifications dans le document utilisateur
+      // Permettre la lecture/écriture/modification du champ notifications
+      allow update: if request.auth != null 
+        && request.auth.uid == userId
+        && (
+          // Permettre la modification du champ notifications
+          (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['notifications', 'updatedAt']))
+          // Ou d'autres champs autorisés
+          || (request.resource.data.diff(resource.data).affectedKeys().hasAny(['kycStatus', 'verificationStatus', 'lastSignInTime']))
+        );
+      
+      // 👮‍♂️ Admins peuvent tout lire/modifier
+      allow read, write: if request.auth != null 
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // 🧾 Collection kycSubmissions
+    match /kycSubmissions/{submissionId} {
+      // Utilisateur peut créer/lire ses propres soumissions
+      allow create, read: if request.auth != null 
+        && request.auth.uid == resource.data.uid;
+      
+      // ✅ Permettre la création avec tous les champs nécessaires
+      allow create: if request.auth != null 
+        && request.resource.data.uid == request.auth.uid;
+      
+      // Admins peuvent tout faire
+      allow read, write: if request.auth != null 
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // 🏦 Collection accounts : Comptes bancaires
+    match /accounts/{accountId} {
+      // Utilisateur peut lire ses propres comptes
+      allow read: if request.auth != null 
+        && resource.data.userId == request.auth.uid;
+      
+      // Utilisateur peut créer/modifier ses propres comptes
+      allow create, update: if request.auth != null 
+        && request.resource.data.userId == request.auth.uid;
+      
+      // Admins peuvent tout faire
+      allow read, write: if request.auth != null 
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // 💰 Collection transactions : Transactions bancaires
+    match /transactions/{transactionId} {
+      // Utilisateur peut lire ses propres transactions
+      allow read: if request.auth != null 
+        && resource.data.userId == request.auth.uid;
+      
+      // Utilisateur peut créer ses propres transactions
+      allow create: if request.auth != null 
+        && request.resource.data.userId == request.auth.uid;
+      
+      // Admins peuvent tout faire
+      allow read, write: if request.auth != null 
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // 📄 Collection documents : Documents utilisateur
+    match /documents/{documentId} {
+      // Utilisateur peut lire ses propres documents
+      allow read: if request.auth != null 
+        && resource.data.userId == request.auth.uid;
+      
+      // Utilisateur peut créer/modifier/supprimer ses propres documents
+      allow create, update, delete: if request.auth != null 
+        && request.resource.data.userId == request.auth.uid;
+      
+      // Admins peuvent tout faire
+      allow read, write: if request.auth != null 
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // 🔄 Collection transfers : Virements
+    match /transfers/{transferId} {
+      // Utilisateur peut lire ses propres virements
+      allow read: if request.auth != null 
+        && resource.data.userId == request.auth.uid;
+      
+      // Utilisateur peut créer ses propres virements
+      allow create: if request.auth != null 
+        && request.resource.data.userId == request.auth.uid;
+      
+      // Admins peuvent tout faire
+      allow read, write: if request.auth != null 
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // 👥 Collection beneficiaries : Bénéficiaires
+    match /beneficiaries/{beneficiaryId} {
+      // Utilisateur peut lire ses propres bénéficiaires
+      allow read: if request.auth != null 
+        && resource.data.userId == request.auth.uid;
+      
+      // Utilisateur peut créer ses propres bénéficiaires
+      allow create: if request.auth != null 
+        && request.resource.data.userId == request.auth.uid;
+      
+      // Utilisateur peut modifier ses propres bénéficiaires
+      allow update: if request.auth != null 
+        && resource.data.userId == request.auth.uid
+        && request.resource.data.userId == request.auth.uid;
+      
+      // Utilisateur peut supprimer ses propres bénéficiaires
+      allow delete: if request.auth != null 
+        && resource.data.userId == request.auth.uid;
+      
+      // Admins peuvent tout faire
+      allow read, write: if request.auth != null 
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // 💬 Collection chats : Messages de support
+    match /chats/{chatId} {
+      // Utilisateur peut lire ses propres chats (où il est participant)
+      allow read: if request.auth != null 
+        && (
+          // Soit il est le créateur du chat
+          resource.data.userId == request.auth.uid
+          // Soit il est dans la liste des participants
+          || request.auth.uid in resource.data.participants
+        );
+      
+      // Utilisateur peut créer ses propres chats
+      allow create: if request.auth != null 
+        && request.resource.data.userId == request.auth.uid;
+      
+      // Admins peuvent tout faire
+      allow read, write: if request.auth != null 
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+      
+      // 💬 Sous-collection messages : Messages dans chaque chat
+      match /messages/{messageId} {
+        // Utilisateur peut lire les messages des chats où il est participant
+        allow read: if request.auth != null 
+          && (
+            // Soit il est le créateur du chat parent
+            get(/databases/$(database)/documents/chats/$(chatId)).data.userId == request.auth.uid
+            // Soit il est dans la liste des participants du chat parent
+            || request.auth.uid in get(/databases/$(database)/documents/chats/$(chatId)).data.participants
+          );
+        
+        // Utilisateur peut créer des messages dans les chats où il est participant
+        allow create: if request.auth != null 
+          && (
+            // Soit il est le créateur du chat parent
+            get(/databases/$(database)/documents/chats/$(chatId)).data.userId == request.auth.uid
+            // Soit il est dans la liste des participants du chat parent
+            || request.auth.uid in get(/databases/$(database)/documents/chats/$(chatId)).data.participants
+          )
+          && request.resource.data.senderId == request.auth.uid;
+        
+        // Admins peuvent tout faire
+        allow read, write: if request.auth != null 
+          && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+          && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+      }
+    }
+    
+    // 🚫 Tout le reste est refusé par défaut
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+} 
