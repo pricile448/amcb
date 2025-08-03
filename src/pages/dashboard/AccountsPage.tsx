@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { CreditCard, Eye, EyeOff, TrendingUp, TrendingDown, ArrowRight, Download, FileText, Calendar, Filter, Search } from 'lucide-react';
 import { FirebaseDataService, FirebaseAccount, FirebaseTransaction } from '../../services/firebaseData';
 import { parseFirestoreDate, formatAmount, truncateTransactionDescription, formatUserNameForDisplay } from '../../utils/dateUtils';
@@ -34,6 +35,7 @@ interface Transaction {
 
 const AccountsPage: React.FC = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { userStatus, isUnverified, syncKycStatus } = useKycSync();
   const [showBalances, setShowBalances] = useState(true);
   const [selectedAccount, setSelectedAccount] = useState<string | null>(null);
@@ -343,13 +345,8 @@ const AccountsPage: React.FC = () => {
       setShowVerificationDialog(true);
       return;
     }
-    // Logique de virement interne
-    console.log(`Virement interne de ${fromAccount} vers ${toAccount}`);
-    // Ici on pourrait ouvrir un modal ou naviguer vers la page de virement
-    console.log(
-      t('transfers.internalTransfer') || 'Virement interne',
-      t('transfers.internalTransferDescription') || 'Fonctionnalité de virement interne en cours de développement'
-    );
+    // Rediriger vers la page virements
+    navigate('/dashboard/virements');
   };
 
   const handleAccountDetails = (accountId: string) => {
@@ -362,10 +359,10 @@ const AccountsPage: React.FC = () => {
     setShowTransactionDetails(true);
   };
 
-  // Pour les utilisateurs non vérifiés, afficher des données vierges
-  const displayAccounts = userStatus === 'verified' ? accounts : [];
-  const displayTransactions = userStatus === 'verified' ? transactions : [];
-  const totalBalance = userStatus === 'verified' ? accounts.reduce((sum, account) => sum + account.balance, 0) : 0;
+  // Utiliser les vraies données Firestore pour tous les utilisateurs
+  const displayAccounts = accounts;
+  const displayTransactions = transactions;
+  const totalBalance = accounts.reduce((sum, account) => sum + account.balance, 0);
 
   // Afficher un indicateur de chargement
   if (loading) {
