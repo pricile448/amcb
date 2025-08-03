@@ -1,7 +1,8 @@
 {
-  "name": "amcbunq-frontend",
+  "name": "amcb-frontend",
+  "version": "1.0.1",
+  "description": "AmCbunq Frontend Application",
   "private": true,
-  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "node vite-dev-server.cjs",
