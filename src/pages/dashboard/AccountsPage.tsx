@@ -427,36 +427,7 @@ const AccountsPage: React.FC = () => {
           </div>
         </div>
 
-        {/* RIB commun */}
-        <div className="bg-white/10 rounded-xl p-3 sm:p-4">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
-            <div>
-              <p className="text-blue-100 text-sm font-medium">RIB AmCbunq</p>
-              <p className="text-sm sm:text-lg font-mono break-all sm:break-normal">
-                {userStatus === 'pending' ? 'RIB en cours de vérification' : 
-                 userStatus === 'verified' ? 'FR76 1234 5678 9012 3456 7890 123' : 
-                 'RIB indisponible'}
-              </p>
-              <p className="text-blue-100 text-xs">
-                {userStatus === 'pending' ? 'Vérification en cours - RIB disponible sous 24-48h' : 
-                 userStatus === 'verified' ? `BIC: AMCBFRPPXXX • Titulaire: ${getUserName()}` :
-                 'Vérifiez votre identité pour accéder à votre RIB'}
-              </p>
-            </div>
-            <button 
-              className={`px-3 sm:px-4 py-2 rounded-lg transition-colors text-sm ${
-                userStatus !== 'verified'
-                  ? 'bg-gray-400 text-gray-200 cursor-not-allowed' 
-                  : 'bg-white/20 hover:bg-white/30 text-white'
-              }`}
-              disabled={userStatus !== 'verified'}
-            >
-              {userStatus === 'pending' ? 'RIB en cours de vérification' : 
-               userStatus === 'verified' ? 'Copier RIB' : 
-               'RIB indisponible'}
-            </button>
-          </div>
-        </div>
+
       </div>
 
       {/* Comptes */}

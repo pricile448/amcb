@@ -84,8 +84,19 @@ const IbanPage: React.FC = () => {
           setIbanData(firebaseIban);
           console.log('✅ Données IBAN chargées avec succès:', firebaseIban);
         } else {
-          // Fallback en cas d'erreur
+          // Fallback en cas d'erreur - utiliser le statut approprié selon la vérification
           console.log('⚠️ Aucune donnée IBAN reçue, affichage du statut par défaut');
+          const userStr = localStorage.getItem('user');
+          let userStatus = 'unverified';
+          if (userStr) {
+            try {
+              const user = JSON.parse(userStr);
+              userStatus = user.kycStatus || user.verificationStatus || 'unverified';
+            } catch (error) {
+              console.error('Erreur parsing user:', error);
+            }
+          }
+          
           const defaultIbanData: FirebaseIban = {
             id: 'default-iban',
             userId: userId,
@@ -94,7 +105,7 @@ const IbanPage: React.FC = () => {
             accountHolder: `${userFirstName} ${userLastName}`,
             bankName: 'AmCbunq Bank',
             accountType: 'Compte principal',
-            status: 'unavailable',
+            status: userStatus === 'verified' ? 'request_required' : 'unavailable',
             balance: 0,
             currency: 'EUR'
           };
