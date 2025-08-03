@@ -1,0 +1,19 @@
+{
+  "functions": {
+    "send-email.php": {
+      "runtime": "vercel-php@0.6.0"
+    },
+    "verify-code.php": {
+      "runtime": "vercel-php@0.6.0"
+    },
+    "health.php": {
+      "runtime": "vercel-php@0.6.0"
+    },
+    "index.php": {
+      "runtime": "vercel-php@0.6.0"
+    },
+    "test-email.php": {
+      "runtime": "vercel-php@0.6.0"
+    }
+  }
+} 
