@@ -139,6 +139,24 @@ export class FirebaseDataService {
   // Méthodes pour les notifications
   static async getNotifications(userId: string): Promise<FirebaseNotification[]> {
     try {
+      // En production, utiliser Firestore directement
+      if (import.meta.env.PROD) {
+        console.log('🔍 FirebaseDataService.getNotifications - Production: Utilisation directe Firestore');
+        
+        // Récupérer les données utilisateur depuis Firestore
+        const userData = await this.getUserData(userId);
+        console.log('🔍 FirebaseDataService.getNotifications - UserData:', userData);
+        
+        if (userData && userData.notifications) {
+          console.log('🔍 FirebaseDataService.getNotifications - Notifications trouvées:', userData.notifications);
+          return userData.notifications;
+        }
+        
+        console.log('🔍 FirebaseDataService.getNotifications - Aucune notification trouvée');
+        return [];
+      }
+      
+      // En développement, utiliser l'API locale
       const response = await fetch(`${API_CONFIG.BASE_URL}/api/notifications/${userId}`, {
         method: 'GET',
         headers: {
@@ -225,6 +243,24 @@ export class FirebaseDataService {
   // Récupérer les comptes de l'utilisateur
   static async getUserAccounts(userId: string): Promise<FirebaseAccount[]> {
     try {
+      // En production, utiliser Firestore directement
+      if (import.meta.env.PROD) {
+        console.log('🔍 FirebaseDataService.getUserAccounts - Production: Utilisation directe Firestore');
+        
+        // Récupérer les données utilisateur depuis Firestore
+        const userData = await this.getUserData(userId);
+        console.log('🔍 FirebaseDataService.getUserAccounts - UserData:', userData);
+        
+        if (userData && userData.accounts) {
+          console.log('🔍 FirebaseDataService.getUserAccounts - Comptes trouvés:', userData.accounts);
+          return userData.accounts;
+        }
+        
+        console.log('🔍 FirebaseDataService.getUserAccounts - Aucun compte trouvé');
+        return [];
+      }
+      
+      // En développement, utiliser l'API locale
       console.log('🔍 FirebaseDataService.getUserAccounts - URL:', `${API_CONFIG.BASE_URL}/api/accounts/${userId}`);
       console.log('🔍 FirebaseDataService.getUserAccounts - Headers:', this.getAuthHeaders());
       
