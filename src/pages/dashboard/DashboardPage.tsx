@@ -277,23 +277,42 @@ const DashboardPage: React.FC = () => {
             <div>
               <p className="text-blue-100 text-xs md:text-sm font-medium">RIB</p>
               <p className="text-sm md:text-lg font-mono">
-                {userStatus === 'verified' ? 'RIB non disponible' : 
-                 userStatus === 'pending' ? 'RIB non disponible' : 
-                 'RIB non disponible'}
+                {(() => {
+                  // Récupérer le RIB commun depuis les comptes
+                  const firstAccount = accounts[0];
+                  if (firstAccount && firstAccount.rib) {
+                    return firstAccount.rib.displayValue || 'RIB non disponible';
+                  }
+                  
+                  // Fallback selon le statut KYC
+                  if (userStatus === 'unverified') {
+                    return 'RIB non disponible';
+                  } else if (userStatus === 'pending') {
+                    return 'RIB non disponible';
+                  } else if (userStatus === 'verified') {
+                    return 'RIB non disponible'; // Jusqu'à ce qu'une demande soit faite
+                  }
+                  return 'RIB non disponible';
+                })()}
               </p>
               <p className="text-blue-100 text-xs">
-                {userStatus === 'verified' ? 'Demandez votre RIB sur la page IBAN' : 
-                 userStatus === 'pending' ? 'Vérifiez votre identité pour accéder à votre RIB' : 
-                 'Vérifiez votre identité pour accéder à votre RIB'}
+                {(() => {
+                  if (userStatus === 'unverified') {
+                    return 'Vérifiez votre identité pour accéder à votre RIB';
+                  } else if (userStatus === 'pending') {
+                    return 'Vérifiez votre identité pour accéder à votre RIB';
+                  } else if (userStatus === 'verified') {
+                    return 'Demandez votre RIB sur la page IBAN';
+                  }
+                  return 'Vérifiez votre identité pour accéder à votre RIB';
+                })()}
               </p>
             </div>
             <button 
               className="px-3 md:px-4 py-2 rounded-lg transition-colors text-sm md:text-base bg-gray-400 text-gray-200 cursor-not-allowed"
               disabled={true}
             >
-              {userStatus === 'verified' ? 'RIB non disponible' : 
-               userStatus === 'pending' ? 'RIB non disponible' : 
-               'RIB non disponible'}
+              RIB non disponible
             </button>
           </div>
         </div>

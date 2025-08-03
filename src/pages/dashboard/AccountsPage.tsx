@@ -424,29 +424,48 @@ const AccountsPage: React.FC = () => {
           </div>
                 </div>
 
-        {/* RIB commun */}
+                {/* RIB commun */}
         <div className="bg-white/10 rounded-xl p-3 sm:p-4">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
             <div>
               <p className="text-blue-100 text-sm font-medium">RIB AmCbunq</p>
               <p className="text-sm sm:text-lg font-mono break-all sm:break-normal">
-                {userStatus === 'verified' ? 'RIB non disponible' : 
-                 userStatus === 'pending' ? 'RIB non disponible' : 
-                 'RIB non disponible'}
+                {(() => {
+                  // Récupérer le RIB commun depuis les comptes
+                  const firstAccount = accounts[0];
+                  if (firstAccount && firstAccount.rib) {
+                    return firstAccount.rib.displayValue || 'RIB non disponible';
+                  }
+                  
+                  // Fallback selon le statut KYC
+                  if (userStatus === 'unverified') {
+                    return 'RIB non disponible';
+                  } else if (userStatus === 'pending') {
+                    return 'RIB non disponible';
+                  } else if (userStatus === 'verified') {
+                    return 'RIB non disponible'; // Jusqu'à ce qu'une demande soit faite
+                  }
+                  return 'RIB non disponible';
+                })()}
               </p>
               <p className="text-blue-100 text-xs">
-                {userStatus === 'verified' ? 'Demandez votre RIB sur la page IBAN' : 
-                 userStatus === 'pending' ? 'Vérifiez votre identité pour accéder à votre RIB' : 
-                 'Vérifiez votre identité pour accéder à votre RIB'}
+                {(() => {
+                  if (userStatus === 'unverified') {
+                    return 'Vérifiez votre identité pour accéder à votre RIB';
+                  } else if (userStatus === 'pending') {
+                    return 'Vérifiez votre identité pour accéder à votre RIB';
+                  } else if (userStatus === 'verified') {
+                    return 'Demandez votre RIB sur la page IBAN';
+                  }
+                  return 'Vérifiez votre identité pour accéder à votre RIB';
+                })()}
               </p>
             </div>
-            <button 
+            <button
               className="px-3 sm:px-4 py-2 rounded-lg transition-colors text-sm bg-gray-400 text-gray-200 cursor-not-allowed"
               disabled={true}
             >
-              {userStatus === 'verified' ? 'RIB non disponible' : 
-               userStatus === 'pending' ? 'RIB non disponible' : 
-               'RIB non disponible'}
+              RIB non disponible
             </button>
           </div>
         </div>
