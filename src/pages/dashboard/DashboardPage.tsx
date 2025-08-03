@@ -93,7 +93,8 @@ const DashboardPage: React.FC = () => {
             status: acc.status as 'active' | 'blocked' | 'pending',
             lastTransaction: {
               date: new Date(),
-              amount: 0
+              amount: 0,
+              description: 'Aucune transaction récente'
             }
           };
         });
