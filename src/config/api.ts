@@ -1,7 +1,7 @@
 // Configuration de l'API backend
 export const API_CONFIG = {
-  // URL de base de l'API (serveur de développement sur port 5173)
-  BASE_URL: 'http://localhost:5173',
+  // URL de base de l'API (serveur de développement sur port 5174)
+  BASE_URL: 'http://localhost:5174',
   
   // Endpoints d'authentification
   AUTH: {
