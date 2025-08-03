@@ -433,26 +433,22 @@ const AccountsPage: React.FC = () => {
             <div>
               <p className="text-blue-100 text-sm font-medium">RIB AmCbunq</p>
               <p className="text-sm sm:text-lg font-mono break-all sm:break-normal">
-                {userStatus === 'verified' ? 'FR76 1234 5678 9012 3456 7890 123' : 
-                 userStatus === 'pending' ? 'RIB en cours de vérification' : 
+                {userStatus === 'verified' ? 'RIB non disponible' : 
+                 userStatus === 'pending' ? 'RIB non disponible' : 
                  'RIB non disponible'}
               </p>
               <p className="text-blue-100 text-xs">
-                {userStatus === 'verified' ? `BIC: AMCBFRPPXXX • Titulaire: ${getUserName()}` : 
-                 userStatus === 'pending' ? 'Vérification en cours - RIB disponible sous 24-48h' : 
+                {userStatus === 'verified' ? 'Demandez votre RIB sur la page IBAN' : 
+                 userStatus === 'pending' ? 'Vérifiez votre identité pour accéder à votre RIB' : 
                  'Vérifiez votre identité pour accéder à votre RIB'}
               </p>
             </div>
             <button 
-              className={`px-3 sm:px-4 py-2 rounded-lg transition-colors text-sm ${
-                userStatus !== 'verified'
-                  ? 'bg-gray-400 text-gray-200 cursor-not-allowed' 
-                  : 'bg-white/20 hover:bg-white/30 text-white'
-              }`}
-              disabled={userStatus !== 'verified'}
+              className="px-3 sm:px-4 py-2 rounded-lg transition-colors text-sm bg-gray-400 text-gray-200 cursor-not-allowed"
+              disabled={true}
             >
-              {userStatus === 'verified' ? 'Copier RIB' : 
-               userStatus === 'pending' ? 'RIB en cours de vérification' : 
+              {userStatus === 'verified' ? 'RIB non disponible' : 
+               userStatus === 'pending' ? 'RIB non disponible' : 
                'RIB non disponible'}
             </button>
           </div>
