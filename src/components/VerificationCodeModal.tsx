@@ -67,8 +67,8 @@ const VerificationCodeModal: React.FC<VerificationCodeModalProps> = ({
     try {
       const codeString = code.join('');
       
-      // Appel à l'endpoint PHP
-      const response = await fetch('/api/verify-code.php', {
+      // Appel à l'endpoint Node.js
+      const response = await fetch('/api/verify-code.js', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ const VerificationCodeModal: React.FC<VerificationCodeModalProps> = ({
     setError('');
     
     try {
-      const response = await fetch('/api/send-email.php', {
+      const response = await fetch('/api/send-email.js', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

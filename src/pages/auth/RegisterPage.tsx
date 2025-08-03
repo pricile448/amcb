@@ -83,8 +83,8 @@ const RegisterPage: React.FC = () => {
         status: 'pending'
       });
 
-      // 3. Envoyer le code de validation via l'API PHP
-      const response = await fetch('/api/send-email.php', {
+      // 3. Envoyer le code de validation via l'API Node.js
+      const response = await fetch('/api/send-email.js', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
