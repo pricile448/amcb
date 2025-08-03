@@ -1,5 +1,8 @@
 const nodemailer = require('nodemailer');
 
+// Stockage temporaire des codes (en production, utilisez Redis ou une base de données)
+const verificationCodes = new Map();
+
 export default async function handler(req, res) {
   // Headers CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -45,6 +48,13 @@ export default async function handler(req, res) {
 
     // Générer un code de vérification à 6 chiffres
     const code = Math.floor(100000 + Math.random() * 900000).toString();
+
+    // Stocker le code pour la vérification
+    verificationCodes.set(email, {
+      code: code,
+      expires: Date.now() + (15 * 60 * 1000), // 15 minutes
+      attempts: 0
+    });
 
     // Configuration SMTP
     const transporter = nodemailer.createTransporter({
@@ -109,4 +119,7 @@ export default async function handler(req, res) {
       }
     });
   }
-} 
+}
+
+// Exporter la Map pour qu'elle soit accessible par verify-code.js
+export { verificationCodes }; 

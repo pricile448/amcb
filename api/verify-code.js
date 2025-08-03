@@ -114,13 +114,4 @@ export default async function handler(req, res) {
       error: 'Erreur interne du serveur'
     });
   }
-}
-
-// Fonction pour stocker un code (appelée par send-email.js)
-export function storeVerificationCode(email, code) {
-  verificationCodes.set(email, {
-    code: code,
-    expires: Date.now() + (15 * 60 * 1000), // 15 minutes
-    attempts: 0
-  });
 } 
