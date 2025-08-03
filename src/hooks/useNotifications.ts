@@ -148,6 +148,13 @@ export const useKycSync = () => {
   const [hasInitialized, setHasInitialized] = useState(false);
 
   const syncKycStatus = useCallback(async (force = false) => {
+    // Si force = true, vider le cache et forcer la synchronisation
+    if (force) {
+      FirebaseDataService.clearCache();
+      setHasInitialized(false);
+      console.log('🔄 Synchronisation KYC forcée...');
+    }
+    
     // Éviter les synchronisations multiples si déjà initialisé
     if (hasInitialized && !force) {
       return userStatus;

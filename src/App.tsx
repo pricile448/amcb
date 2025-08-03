@@ -33,6 +33,9 @@ import VerificationPage from './pages/dashboard/VerificationPage'
 // Auth Guard
 import ProtectedRoute from './components/ProtectedRoute'
 
+// Debug Component (temporaire)
+import KycStatusDebug from './components/KycStatusDebug'
+
 function App() {
   return (
     <div className="min-h-screen bg-gray-50">
@@ -49,27 +52,30 @@ function App() {
         </Route>
 
         {/* Protected Dashboard Routes */}
-                        <Route path="/dashboard" element={
-                  <ProtectedRoute>
-                    <DashboardLayout />
-                  </ProtectedRoute>
-                }>
-                  <Route index element={<DashboardPage />} />
-                  <Route path="comptes" element={<AccountsPage />} />
-                  <Route path="iban" element={<IbanPage />} />
-                  <Route path="virements" element={<TransfersPage />} />
-                  <Route path="cartes" element={<CardsPage />} />
-                  <Route path="facturation" element={<BillingPage />} />
-                  <Route path="kyc" element={<KycPage />} />
-                  <Route path="historique" element={<HistoryPage />} />
-                  <Route path="budgets" element={<BudgetsPage />} />
-                  <Route path="parametres" element={<SettingsPage />} />
-                  <Route path="aide" element={<DashboardHelpPage />} />
-                  <Route path="documents" element={<DocumentsPage />} />
-                  <Route path="messages" element={<MessagesPage />} />
-                  <Route path="verification" element={<VerificationPage />} />
-                </Route>
+        <Route path="/dashboard" element={
+          <ProtectedRoute>
+            <DashboardLayout />
+          </ProtectedRoute>
+        }>
+          <Route index element={<DashboardPage />} />
+          <Route path="comptes" element={<AccountsPage />} />
+          <Route path="iban" element={<IbanPage />} />
+          <Route path="virements" element={<TransfersPage />} />
+          <Route path="cartes" element={<CardsPage />} />
+          <Route path="facturation" element={<BillingPage />} />
+          <Route path="kyc" element={<KycPage />} />
+          <Route path="historique" element={<HistoryPage />} />
+          <Route path="budgets" element={<BudgetsPage />} />
+          <Route path="parametres" element={<SettingsPage />} />
+          <Route path="aide" element={<DashboardHelpPage />} />
+          <Route path="documents" element={<DocumentsPage />} />
+          <Route path="messages" element={<MessagesPage />} />
+          <Route path="verification" element={<VerificationPage />} />
+        </Route>
       </Routes>
+
+      {/* Debug Component - TEMPORAIRE */}
+      <KycStatusDebug />
 
       <Toaster
         position="top-right"
