@@ -637,21 +637,49 @@ const AccountsPage: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <p className="text-xs sm:text-sm text-gray-500">Numéro de compte</p>
-                    <p className="font-mono text-xs sm:text-sm text-gray-900 break-all">FR76 **** **** **** 1234 5678 901</p>
+                    <p className="font-mono text-xs sm:text-sm text-gray-900 break-all">
+                      {(() => {
+                        const account = accounts.find(acc => acc.id === selectedAccount);
+                        return account ? account.accountNumber : 'Non disponible';
+                      })()}
+                    </p>
                   </div>
                   <div>
                     <p className="text-xs sm:text-sm text-gray-500">Solde actuel</p>
-                    <p className="text-base sm:text-lg font-bold text-gray-900">2 847,50 €</p>
+                    <p className="text-base sm:text-lg font-bold text-gray-900">
+                      {(() => {
+                        const account = accounts.find(acc => acc.id === selectedAccount);
+                        return account ? formatCurrency(account.balance, account.currency) : '0,00 €';
+                      })()}
+                    </p>
                   </div>
                   <div>
                     <p className="text-xs sm:text-sm text-gray-500">Statut</p>
-                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                      Actif
+                    <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                      (() => {
+                        const account = accounts.find(acc => acc.id === selectedAccount);
+                        const status = account ? account.status : 'active';
+                        return status === 'active' ? 'bg-green-100 text-green-800' :
+                               status === 'blocked' ? 'bg-red-100 text-red-800' :
+                               'bg-yellow-100 text-yellow-800';
+                      })()
+                    }`}>
+                      {(() => {
+                        const account = accounts.find(acc => acc.id === selectedAccount);
+                        return account ? getStatusText(account.status) : 'Actif';
+                      })()}
                     </span>
                   </div>
                   <div>
                     <p className="text-xs sm:text-sm text-gray-500">Date d'ouverture</p>
-                    <p className="text-xs sm:text-sm text-gray-900">15/01/2024</p>
+                    <p className="text-xs sm:text-sm text-gray-900">
+                      {(() => {
+                        const account = accounts.find(acc => acc.id === selectedAccount);
+                        return account && account.createdAt ? 
+                          formatDate(new Date(account.createdAt)) : 
+                          'Non disponible';
+                      })()}
+                    </p>
                   </div>
                 </div>
               </div>
