@@ -1,3 +1,7 @@
+// 🚨 URGENT: VERSION FORCÉE POUR VERCEL - $(Get-Date)
+// 🔧 CORRECTION: Utilisation directe Firestore en production
+// 📅 Dernière mise à jour: $(Get-Date)
+
 import { API_CONFIG } from '../config/api';
 import { db } from '../config/firebase';
 import { doc, getDoc } from 'firebase/firestore';
