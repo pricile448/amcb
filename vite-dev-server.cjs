@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 // Configuration email avec SMTP professionnel
-const transporter = nodemailer.createTransporter({
+const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || 'mail.votre-domaine.com', // ex: mail.amcb.com
   port: process.env.SMTP_PORT || 587, // 587 pour TLS, 465 pour SSL
   secure: process.env.SMTP_SECURE === 'true', // true pour 465, false pour 587

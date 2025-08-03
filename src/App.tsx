@@ -12,6 +12,7 @@ import PricingPage from './pages/public/PricingPage'
 import HelpPage from './pages/public/HelpPage'
 import LoginPage from './pages/auth/LoginPage'
 import RegisterPage from './pages/auth/RegisterPage'
+import ForgotPasswordPage from './pages/auth/ForgotPasswordPage'
 
 // Dashboard Pages
 import DashboardPage from './pages/dashboard/DashboardPage'
@@ -44,6 +45,7 @@ function App() {
           <Route path="aide" element={<HelpPage />} />
           <Route path="connexion" element={<LoginPage />} />
           <Route path="ouvrir-compte" element={<RegisterPage />} />
+          <Route path="mot-de-passe-oublie" element={<ForgotPasswordPage />} />
         </Route>
 
         {/* Protected Dashboard Routes */}

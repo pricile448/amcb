@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { TokenManager } from '../config/api';
-import { AuthService } from '../services/api';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../config/firebase';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -13,27 +13,20 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const location = useLocation();
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        // Vérifier si un token existe
-        if (!TokenManager.isAuthenticated()) {
-          setIsAuthenticated(false);
-          setIsLoading(false);
-          return;
-        }
-
-        // Pour simplifier, on considère que si le token existe, l'utilisateur est connecté
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log('🔐 ProtectedRoute - État d\'authentification:', user ? 'Connecté' : 'Non connecté');
+      if (user) {
+        console.log('✅ Utilisateur connecté:', user.email);
         setIsAuthenticated(true);
-      } catch (error) {
-        // Si erreur, déconnecter l'utilisateur
-        TokenManager.clearTokens();
+      } else {
+        console.log('❌ Aucun utilisateur connecté');
         setIsAuthenticated(false);
-      } finally {
-        setIsLoading(false);
       }
-    };
+      setIsLoading(false);
+    });
 
-    checkAuth();
+    // Nettoyer l'écouteur lors du démontage
+    return () => unsubscribe();
   }, []);
 
   if (isLoading) {

@@ -12,14 +12,14 @@ console.log('Storage Bucket:', import.meta.env.VITE_FIREBASE_STORAGE_BUCKET);
 console.log('Messaging Sender ID:', import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID);
 console.log('App ID:', import.meta.env.VITE_FIREBASE_APP_ID);
 
-// Configuration Firebase (avec fallback temporaire)
+// Configuration Firebase
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyA5wfRvUsB_Z7Xv4t-F0IoCa0LMEqB12LI",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "amcbunq.firebaseapp.com",
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "amcbunq",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "amcbunq.firebasestorage.app",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "466533825569",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:466533825569:web:873294f84a51aee5f63760"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialiser Firebase
