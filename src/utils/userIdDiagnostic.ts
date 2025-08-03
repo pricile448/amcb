@@ -2,7 +2,19 @@
 import { auth } from '../config/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 
-export function diagnoseUserIds() {
+// Types pour TypeScript
+export interface UserData {
+  id: string;
+  email: string;
+  emailVerified: boolean;
+  displayName?: string;
+  photoURL?: string;
+  firstName?: string;
+  lastName?: string;
+  verificationStatus?: string;
+}
+
+export function diagnoseUserIds(): Promise<void> {
   console.log('🔍 Diagnostic des userId:');
   console.log('========================');
 
@@ -96,7 +108,7 @@ export function diagnoseUserIds() {
   });
 }
 
-export function fixUserIds() {
+export function fixUserIds(): Promise<void> {
   console.log('🔧 Correction des userId:');
   console.log('========================');
 
@@ -127,18 +139,18 @@ export function fixUserIds() {
         console.log('------------------------');
         
         // Créer un nouvel objet utilisateur avec les bonnes données
-        const correctedUser = {
+        const correctedUser: UserData = {
           id: user.uid, // Utiliser l'UID de Firebase Auth
-          email: user.email,
+          email: user.email || '',
           emailVerified: user.emailVerified,
           displayName: user.displayName || 'Utilisateur',
-          photoURL: user.photoURL,
+          photoURL: user.photoURL || undefined,
           // Conserver les autres champs existants
           ...(userStr ? JSON.parse(userStr) : {})
         };
         
         // Supprimer l'ancien ID s'il existe
-        delete correctedUser.oldId;
+        delete (correctedUser as any).oldId;
         
         // Sauvegarder dans localStorage
         localStorage.setItem('user', JSON.stringify(correctedUser));
@@ -175,7 +187,7 @@ export function fixUserIds() {
 }
 
 // Fonction pour nettoyer le localStorage
-export function clearUserData() {
+export function clearUserData(): void {
   console.log('🧹 Nettoyage du localStorage:');
   console.log('=============================');
   
