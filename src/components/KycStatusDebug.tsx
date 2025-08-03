@@ -28,8 +28,10 @@ const KycStatusDebug: React.FC = () => {
       
       if (userStr) {
         const user = JSON.parse(userStr);
-        setCurrentStatus(user.verificationStatus || 'non défini');
-        setMessage(`Statut actuel: ${user.verificationStatus || 'non défini'}`);
+        // Utiliser kycStatus au lieu de verificationStatus
+        const status = user.kycStatus || user.verificationStatus || 'non défini';
+        setCurrentStatus(status);
+        setMessage(`Statut actuel: ${status}`);
       } else {
         setCurrentStatus('aucun utilisateur');
         setMessage('Aucun utilisateur trouvé dans localStorage');
@@ -117,8 +119,10 @@ const KycStatusDebug: React.FC = () => {
       const userData = await FirebaseDataService.getUserData(authUser.uid);
       console.log('🔍 Données utilisateur récupérées:', userData);
       
-      setMessage(`✅ Connexion Firestore OK. Statut: ${userData?.verificationStatus || 'non défini'}`);
-      setCurrentStatus(userData?.verificationStatus || 'non défini');
+      // Utiliser kycStatus au lieu de verificationStatus
+      const status = userData?.kycStatus || userData?.verificationStatus || 'non défini';
+      setMessage(`✅ Connexion Firestore OK. Statut: ${status}`);
+      setCurrentStatus(status);
       
     } catch (error) {
       console.error('❌ Erreur test Firestore:', error);
@@ -150,7 +154,8 @@ const KycStatusDebug: React.FC = () => {
           id: authUser.uid,
           email: authUser.email,
           displayName: authUser.displayName,
-          verificationStatus: userData.verificationStatus || 'unverified',
+          // Utiliser kycStatus comme priorité, puis verificationStatus comme fallback
+          verificationStatus: userData.kycStatus || userData.verificationStatus || 'unverified',
           kycStatus: userData.kycStatus || 'unverified',
           ...userData
         };
@@ -158,8 +163,9 @@ const KycStatusDebug: React.FC = () => {
         // Sauvegarder dans localStorage
         localStorage.setItem('user', JSON.stringify(userForStorage));
         
-        setCurrentStatus(userForStorage.verificationStatus);
-        setMessage(`✅ Données synchronisées! Statut: ${userForStorage.verificationStatus}`);
+        const status = userForStorage.kycStatus;
+        setCurrentStatus(status);
+        setMessage(`✅ Données synchronisées! Statut: ${status}`);
         
         // Recharger les infos de debug
         setTimeout(() => {

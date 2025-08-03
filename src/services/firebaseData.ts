@@ -648,7 +648,8 @@ export class FirebaseDataService {
       const userDoc = await getDoc(doc(db, 'users', userId));
       if (userDoc.exists()) {
         const userData = userDoc.data();
-        const status = userData.verificationStatus || 'unverified';
+        // Utiliser kycStatus comme priorité, puis verificationStatus comme fallback
+        const status = userData.kycStatus || userData.verificationStatus || 'unverified';
         
         // Mettre en cache
         kycStatusCache.set(userId, status);
@@ -658,6 +659,7 @@ export class FirebaseDataService {
         if (userStr) {
           const user = JSON.parse(userStr);
           user.verificationStatus = status;
+          user.kycStatus = status;
           localStorage.setItem('user', JSON.stringify(user));
         }
         
