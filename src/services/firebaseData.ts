@@ -495,6 +495,7 @@ export class FirebaseDataService {
     
     try {
       // Essayer d'abord l'endpoint API
+      console.log('🔍 Tentative de récupération depuis l\'API...');
       const response = await fetch(`${API_CONFIG.BASE_URL}/api/user/${userId}`, {
         method: 'GET',
         headers: this.getAuthHeaders()
@@ -502,11 +503,13 @@ export class FirebaseDataService {
 
       console.log('🔍 Réponse API utilisateur - Status:', response.status);
       console.log('🔍 Réponse API utilisateur - OK:', response.ok);
+      console.log('🔍 URL appelée:', `${API_CONFIG.BASE_URL}/api/user/${userId}`);
       
       if (!response.ok) {
         // Essayer de lire le contenu de la réponse pour diagnostiquer
         const responseText = await response.text();
         console.error('❌ Réponse d\'erreur du serveur:', responseText);
+        console.error('❌ Headers de réponse:', Object.fromEntries(response.headers.entries()));
         
         // Si l'endpoint n'existe pas, essayer une approche alternative
         if (response.status === 404) {
@@ -520,7 +523,13 @@ export class FirebaseDataService {
       const data = await response.json();
       console.log('🔍 Données utilisateur reçues:', data);
       
-      return data.success ? data.user : null;
+      if (data.success && data.user) {
+        console.log('✅ Données utilisateur récupérées avec succès depuis l\'API');
+        return data.user;
+      } else {
+        console.log('⚠️ Réponse API invalide, tentative alternative...');
+        return await this.getUserDataAlternative(userId);
+      }
     } catch (error) {
       console.error('❌ Erreur FirebaseDataService.getUserData:', error);
       
@@ -545,11 +554,18 @@ export class FirebaseDataService {
       if (userStr) {
         const user = JSON.parse(userStr);
         console.log('🔍 Utilisateur trouvé dans localStorage:', user);
+        console.log('🔍 ID dans localStorage:', user.id);
+        console.log('🔍 ID recherché:', userId);
         
         // Si l'utilisateur a un ID correspondant, retourner ses données
         if (user.id === userId) {
+          console.log('✅ Correspondance trouvée dans localStorage');
           return user;
+        } else {
+          console.log('❌ ID ne correspond pas dans localStorage');
         }
+      } else {
+        console.log('❌ Aucun utilisateur dans localStorage');
       }
       
       // Si pas dans localStorage, essayer d'autres endpoints
@@ -571,6 +587,8 @@ export class FirebaseDataService {
             const data = await response.json();
             console.log(`✅ Données récupérées depuis ${endpoint}:`, data);
             return data.user || data;
+          } else {
+            console.log(`❌ Endpoint ${endpoint} retourne ${response.status}`);
           }
         } catch (endpointError) {
           console.log(`❌ Erreur avec l'endpoint ${endpoint}:`, endpointError);

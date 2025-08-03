@@ -36,6 +36,7 @@ import ProfileMenu from "../components/ProfileMenu";
 import { useKycSync } from "../hooks/useNotifications";
 import { useNotifications } from "../hooks/useNotifications";
 import NotificationDropdown from "../components/NotificationDropdown";
+import UserIdDebugPanel from "../components/UserIdDebugPanel";
 
 const DashboardLayout: React.FC = () => {
   const { t } = useTranslation();
@@ -430,6 +431,9 @@ const DashboardLayout: React.FC = () => {
         type={alertConfig.type}
         showIcon={true}
       />
+
+      {/* UserId Debug Panel */}
+      <UserIdDebugPanel />
     </div>
   );
 };
