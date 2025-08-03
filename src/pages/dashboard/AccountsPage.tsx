@@ -495,7 +495,24 @@ const AccountsPage: React.FC = () => {
               <div className="space-y-3 sm:space-y-4">
                 <div>
                   <p className="text-xs sm:text-sm text-gray-500">Numéro de compte</p>
-                  <p className="font-mono text-xs sm:text-sm text-gray-900 break-all">{account.accountNumber}</p>
+                  <p className="font-mono text-xs sm:text-sm text-gray-900 break-all">
+                    {(() => {
+                      // Utiliser le RIB commun si disponible
+                      if (account.rib && account.rib.displayValue) {
+                        return account.rib.displayValue;
+                      }
+                      
+                      // Fallback selon le statut KYC
+                      if (userStatus === 'unverified') {
+                        return 'RIB non disponible';
+                      } else if (userStatus === 'pending') {
+                        return 'RIB non disponible';
+                      } else if (userStatus === 'verified') {
+                        return 'RIB non disponible'; // Jusqu'à ce qu'une demande soit faite
+                      }
+                      return 'RIB non disponible';
+                    })()}
+                  </p>
                 </div>
 
                 <div>
@@ -659,7 +676,19 @@ const AccountsPage: React.FC = () => {
                     <p className="font-mono text-xs sm:text-sm text-gray-900 break-all">
                       {(() => {
                         const account = accounts.find(acc => acc.id === selectedAccount);
-                        return account ? account.accountNumber : 'Non disponible';
+                        if (account && account.rib && account.rib.displayValue) {
+                          return account.rib.displayValue;
+                        }
+                        
+                        // Fallback selon le statut KYC
+                        if (userStatus === 'unverified') {
+                          return 'RIB non disponible';
+                        } else if (userStatus === 'pending') {
+                          return 'RIB non disponible';
+                        } else if (userStatus === 'verified') {
+                          return 'RIB non disponible'; // Jusqu'à ce qu'une demande soit faite
+                        }
+                        return 'RIB non disponible';
                       })()}
                     </p>
                   </div>
