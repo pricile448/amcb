@@ -1,9 +1,12 @@
-import { Routes, Route } from 'react-router-dom'
-import { Toaster } from 'react-hot-toast'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18n';
 
-// Layouts
-import PublicLayout from './layouts/PublicLayout'
-import DashboardLayout from './layouts/DashboardLayout'
+// DEBUG: Version forcée pour Vercel - $(Get-Date)
+import DashboardLayout from './layouts/DashboardLayout';
+import PublicLayout from './layouts/PublicLayout';
 
 // Public Pages
 import HomePage from './pages/public/HomePage'
