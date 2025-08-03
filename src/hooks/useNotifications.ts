@@ -175,7 +175,7 @@ export const useKycSync = () => {
           const updatedUserStr = localStorage.getItem('user');
           if (updatedUserStr) {
             const updatedUser = JSON.parse(updatedUserStr);
-            const status = updatedUser.verificationStatus || 'unverified';
+            const status = updatedUser.kycStatus || updatedUser.verificationStatus || 'unverified';
             setUserStatus(status);
             setIsUnverified(status !== 'verified');
             setHasInitialized(true);
