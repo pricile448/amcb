@@ -140,7 +140,7 @@ export class FirebaseDataService {
   static async getNotifications(userId: string): Promise<FirebaseNotification[]> {
     try {
       // En production, utiliser Firestore directement
-      if (import.meta.env.PROD) {
+      if (import.meta.env.PROD || window.location.hostname !== 'localhost') {
         console.log('🔍 FirebaseDataService.getNotifications - Production: Utilisation directe Firestore');
         
         // Récupérer les données utilisateur depuis Firestore
@@ -244,7 +244,7 @@ export class FirebaseDataService {
   static async getUserAccounts(userId: string): Promise<FirebaseAccount[]> {
     try {
       // En production, utiliser Firestore directement
-      if (import.meta.env.PROD) {
+      if (import.meta.env.PROD || window.location.hostname !== 'localhost') {
         console.log('🔍 FirebaseDataService.getUserAccounts - Production: Utilisation directe Firestore');
         
         // Récupérer les données utilisateur depuis Firestore

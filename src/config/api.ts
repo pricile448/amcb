@@ -2,7 +2,7 @@
 export const API_CONFIG = {
   // URL de base de l'API (serveur de développement sur port 5174)
   // En production, on utilise Firestore directement
-  BASE_URL: import.meta.env.PROD ? '' : 'http://localhost:5174',
+  BASE_URL: import.meta.env.PROD || window.location.hostname !== 'localhost' ? '' : 'http://localhost:5174',
   
   // Endpoints d'authentification
   AUTH: {
