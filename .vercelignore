@@ -1,0 +1,2 @@
+# Ignore everything in api folder for automatic detection
+api/*.php 
