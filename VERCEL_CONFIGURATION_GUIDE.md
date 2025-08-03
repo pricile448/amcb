@@ -1,17 +1,8 @@
-# 🔧 Guide de Configuration Vercel - Résolution des Problèmes de Connexion
+# 🔧 Guide de Configuration Vercel
 
-## 🚨 Problème Identifié
+## 📋 Variables d'environnement requises
 
-Les erreurs de connexion Firebase sont causées par des **variables d'environnement manquantes** sur Vercel.
-
-## 📋 Variables à Configurer sur Vercel
-
-### 1. Variables Firebase (OBLIGATOIRES)
-
-Allez sur https://vercel.com/dashboard → Votre projet "studio" → Settings → Environment Variables
-
-Ajoutez ces variables une par une :
-
+### Variables Firebase
 ```
 VITE_FIREBASE_API_KEY=AIzaSyA5wfRvUsB_Z7Xv4t-F0IoCa0LMEqB12LI
 VITE_FIREBASE_AUTH_DOMAIN=amcbunq.firebaseapp.com
@@ -21,129 +12,117 @@ VITE_FIREBASE_MESSAGING_SENDER_ID=466533825569
 VITE_FIREBASE_APP_ID=1:466533825569:web:873294f84a51aee5f63760
 ```
 
-### 2. Variables SMTP (pour l'envoi d'emails)
-
+### Variables SMTP
 ```
 SMTP_HOST=mail.amccredit.com
 SMTP_PORT=465
 SMTP_SECURE=ssl
 SMTP_USER=amcbunq@amccredit.com
-SMTP_PASS=VOTRE_MOT_DE_PASSE_EMAIL_REEL
+SMTP_PASS=VOTRE_MOT_DE_PASSE_EMAIL
 ```
 
-## 🔧 Étapes de Configuration
+## 🚀 Configuration manuelle sur Vercel
 
-### Étape 1: Configuration via Dashboard Vercel
+### Méthode 1 : Interface Web (Recommandée)
 
-1. **Allez sur Vercel Dashboard**
-   - https://vercel.com/dashboard
-   - Sélectionnez votre projet "studio"
+1. **Allez sur le dashboard Vercel** : https://vercel.com/dashboard
+2. **Sélectionnez votre projet** "studio"
+3. **Cliquez sur "Settings"** dans le menu
+4. **Allez dans "Environment Variables"**
+5. **Ajoutez chaque variable une par une** :
 
-2. **Accédez aux Variables d'Environnement**
-   - Cliquez sur "Settings"
-   - Allez dans "Environment Variables"
+#### Variables Firebase :
+- **Name** : `VITE_FIREBASE_API_KEY`
+- **Value** : `AIzaSyA5wfRvUsB_Z7Xv4t-F0IoCa0LMEqB12LI`
+- **Environment** : ✅ Production, ✅ Preview, ✅ Development
 
-3. **Ajoutez les Variables Firebase**
-   - Cliquez sur "Add New"
-   - Nom: `VITE_FIREBASE_API_KEY`
-   - Valeur: `AIzaSyA5wfRvUsB_Z7Xv4t-F0IoCa0LMEqB12LI`
-   - Environnements: ✅ Production, ✅ Preview, ✅ Development
-   - Répétez pour toutes les variables Firebase
+- **Name** : `VITE_FIREBASE_AUTH_DOMAIN`
+- **Value** : `amcbunq.firebaseapp.com`
+- **Environment** : ✅ Production, ✅ Preview, ✅ Development
 
-4. **Ajoutez les Variables SMTP**
-   - Même processus pour les variables SMTP
-   - **IMPORTANT**: Remplacez `VOTRE_MOT_DE_PASSE_EMAIL_REEL` par le vrai mot de passe
+- **Name** : `VITE_FIREBASE_PROJECT_ID`
+- **Value** : `amcbunq`
+- **Environment** : ✅ Production, ✅ Preview, ✅ Development
 
-### Étape 2: Redéploiement
+- **Name** : `VITE_FIREBASE_STORAGE_BUCKET`
+- **Value** : `amcbunq.firebasestorage.app`
+- **Environment** : ✅ Production, ✅ Preview, ✅ Development
 
-Après avoir ajouté toutes les variables :
+- **Name** : `VITE_FIREBASE_MESSAGING_SENDER_ID`
+- **Value** : `466533825569`
+- **Environment** : ✅ Production, ✅ Preview, ✅ Development
+
+- **Name** : `VITE_FIREBASE_APP_ID`
+- **Value** : `1:466533825569:web:873294f84a51aee5f63760`
+- **Environment** : ✅ Production, ✅ Preview, ✅ Development
+
+#### Variables SMTP :
+- **Name** : `SMTP_HOST`
+- **Value** : `mail.amccredit.com`
+- **Environment** : ✅ Production, ✅ Preview, ✅ Development
+
+- **Name** : `SMTP_PORT`
+- **Value** : `465`
+- **Environment** : ✅ Production, ✅ Preview, ✅ Development
+
+- **Name** : `SMTP_SECURE`
+- **Value** : `ssl`
+- **Environment** : ✅ Production, ✅ Preview, ✅ Development
+
+- **Name** : `SMTP_USER`
+- **Value** : `amcbunq@amccredit.com`
+- **Environment** : ✅ Production, ✅ Preview, ✅ Development
+
+- **Name** : `SMTP_PASS`
+- **Value** : `VOTRE_MOT_DE_PASSE_EMAIL` (remplacez par le vrai mot de passe)
+- **Environment** : ✅ Production, ✅ Preview, ✅ Development
+
+### Méthode 2 : CLI Vercel
+
+Si vous avez la CLI Vercel installée :
 
 ```bash
-git add .
-git commit -m "Update configuration"
-git push
+# Variables Firebase
+vercel env add VITE_FIREBASE_API_KEY production
+vercel env add VITE_FIREBASE_AUTH_DOMAIN production
+vercel env add VITE_FIREBASE_PROJECT_ID production
+vercel env add VITE_FIREBASE_STORAGE_BUCKET production
+vercel env add VITE_FIREBASE_MESSAGING_SENDER_ID production
+vercel env add VITE_FIREBASE_APP_ID production
+
+# Variables SMTP
+vercel env add SMTP_HOST production
+vercel env add SMTP_PORT production
+vercel env add SMTP_SECURE production
+vercel env add SMTP_USER production
+vercel env add SMTP_PASS production
 ```
 
-### Étape 3: Vérification
+## 🔄 Redéploiement
 
-1. **Testez la connexion** avec un compte existant
-2. **Vérifiez la console** du navigateur (F12) pour les erreurs
-3. **Vérifiez les logs Vercel** dans le dashboard
+Après avoir configuré toutes les variables :
 
-## 🔍 Diagnostic des Erreurs
+1. **Allez dans "Deployments"** sur Vercel
+2. **Cliquez sur "Redeploy"** sur le dernier déploiement
+3. **Ou faites un nouveau commit** et poussez sur GitHub
 
-### Erreur: `auth/invalid-credential`
-- **Cause**: Variables Firebase manquantes ou incorrectes
-- **Solution**: Vérifiez que toutes les variables Firebase sont configurées
+## ✅ Vérification
 
-### Erreur: `auth/user-not-found`
-- **Cause**: Le compte n'existe pas dans Firebase
-- **Solution**: Vérifiez dans Firebase Console → Authentication → Users
+1. **Testez l'application** : https://studio-pricile448.vercel.app
+2. **Ouvrez la console** du navigateur (F12)
+3. **Vérifiez qu'il n'y a plus d'erreurs** `auth/invalid-api-key`
+4. **Testez la connexion** avec un compte existant
 
-### Erreur: `auth/wrong-password`
-- **Cause**: Mot de passe incorrect
-- **Solution**: Vérifiez le mot de passe ou réinitialisez-le
+## 🚨 Problèmes courants
 
-### Erreur: `auth/too-many-requests`
-- **Cause**: Trop de tentatives de connexion
-- **Solution**: Attendez quelques minutes avant de réessayer
+### Page blanche
+- Vérifiez que toutes les variables Firebase sont configurées
+- Vérifiez que les variables commencent par `VITE_`
 
-## 📱 Test de Connexion
+### Erreur auth/invalid-api-key
+- Vérifiez que `VITE_FIREBASE_API_KEY` est correct
+- Vérifiez que toutes les variables Firebase sont présentes
 
-### 1. Ouvrez la Console du Navigateur
-- Appuyez sur F12
-- Allez dans l'onglet "Console"
-
-### 2. Essayez de Vous Connecter
-- Utilisez un compte existant
-- Observez les messages dans la console
-
-### 3. Vérifiez les Logs
-Vous devriez voir :
-```
-🔍 Variables d'environnement Firebase:
-API Key: AIzaSyA5wfRvUsB_Z7Xv4t-F0IoCa0LMEqB12LI
-Auth Domain: amcbunq.firebaseapp.com
-...
-```
-
-## 🚀 Commandes Utiles
-
-### Diagnostic Local
-```bash
-node diagnose-firebase.cjs
-```
-
-### Configuration Vercel
-```bash
-node setup-vercel-env.cjs
-```
-
-### Redéploiement
-```bash
-git add .
-git commit -m "Fix configuration"
-git push
-```
-
-## ✅ Checklist de Vérification
-
-- [ ] Variables Firebase configurées sur Vercel
-- [ ] Variables SMTP configurées sur Vercel
-- [ ] Redéploiement effectué
-- [ ] Test de connexion réussi
-- [ ] Accès au dashboard fonctionnel
-- [ ] Envoi d'emails fonctionnel
-
-## 🆘 Support
-
-Si les problèmes persistent :
-
-1. **Vérifiez les logs Vercel** dans le dashboard
-2. **Vérifiez la console du navigateur** pour les erreurs détaillées
-3. **Vérifiez Firebase Console** pour l'état des comptes
-4. **Contactez le support** avec les logs d'erreur
-
----
-
-**Note**: Les variables d'environnement sont essentielles pour que Firebase fonctionne correctement sur Vercel. Sans elles, l'authentification échouera systématiquement. 
+### Variables non chargées
+- Redéployez l'application après avoir ajouté les variables
+- Vérifiez que les variables sont configurées pour "Production" 
