@@ -172,8 +172,8 @@ const SettingsPage: React.FC = () => {
     console.log('🔍 getUserDateOfBirth - userData:', userData);
     
     if (userData) {
-      // Essayer différents noms de champs possibles (birthDate est le nom correct utilisé dans la DB)
-      const possibleFields = ['birthDate', 'dob', 'dateOfBirth', 'birthdate', 'date_de_naissance'];
+      // Essayer différents noms de champs possibles (dob est le nom correct utilisé dans la DB)
+      const possibleFields = ['dob', 'birthDate', 'dateOfBirth', 'birthdate', 'date_de_naissance'];
       
       for (const field of possibleFields) {
         if (userData[field]) {
@@ -181,7 +181,9 @@ const SettingsPage: React.FC = () => {
           
           // Si c'est un timestamp Firebase
           if (userData[field]._seconds) {
-            return new Date(userData[field]._seconds * 1000).toISOString().split('T')[0];
+            const date = new Date(userData[field]._seconds * 1000);
+            console.log('🔍 Timestamp converti en date:', date);
+            return date.toISOString().split('T')[0];
           }
           // Si c'est déjà une date
           if (userData[field] instanceof Date) {
@@ -205,7 +207,7 @@ const SettingsPage: React.FC = () => {
         const user = JSON.parse(userStr);
         console.log('🔍 getUserDateOfBirth - Fallback localStorage user:', user);
         
-        const possibleFields = ['birthDate', 'dob', 'dateOfBirth', 'birthdate', 'date_de_naissance'];
+        const possibleFields = ['dob', 'birthDate', 'dateOfBirth', 'birthdate', 'date_de_naissance'];
         for (const field of possibleFields) {
           if (user[field]) {
             console.log(`✅ Date de naissance trouvée dans localStorage champ '${field}':`, user[field]);
@@ -225,8 +227,8 @@ const SettingsPage: React.FC = () => {
     console.log('🔍 getUserPlaceOfBirth - userData:', userData);
     
     if (userData) {
-      // Essayer différents noms de champs possibles (birthPlace est le nom correct utilisé dans la DB)
-      const possibleFields = ['birthPlace', 'pob', 'placeOfBirth', 'birthplace', 'lieu_de_naissance'];
+      // Essayer différents noms de champs possibles (pob est le nom correct utilisé dans la DB)
+      const possibleFields = ['pob', 'birthPlace', 'placeOfBirth', 'birthplace', 'lieu_de_naissance'];
       
       for (const field of possibleFields) {
         if (userData[field]) {
@@ -246,7 +248,7 @@ const SettingsPage: React.FC = () => {
         const user = JSON.parse(userStr);
         console.log('🔍 getUserPlaceOfBirth - Fallback localStorage user:', user);
         
-        const possibleFields = ['birthPlace', 'pob', 'placeOfBirth', 'birthplace', 'lieu_de_naissance'];
+        const possibleFields = ['pob', 'birthPlace', 'placeOfBirth', 'birthplace', 'lieu_de_naissance'];
         for (const field of possibleFields) {
           if (user[field]) {
             console.log(`✅ Lieu de naissance trouvé dans localStorage champ '${field}':`, user[field]);
