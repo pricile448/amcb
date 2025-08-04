@@ -493,9 +493,9 @@ export class FirebaseDataService {
     }
   }
 
-  // Récupérer les messages de l'utilisateur depuis la collection chat
+  // Récupérer les messages de l'utilisateur depuis la collection chats
   static async getUserMessages(userId: string): Promise<FirebaseMessage[]> {
-    console.log('💬 Récupération des messages depuis la collection chat pour userId:', userId);
+    console.log('💬 Récupération des messages depuis la collection chats pour userId:', userId);
     try {
       // FORCER l'utilisation de Firestore en production
       const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel') || window.location.hostname.includes('render');
@@ -503,40 +503,53 @@ export class FirebaseDataService {
       if (isProduction) {
         console.log('🔍 FirebaseDataService.getUserMessages - Production: Utilisation directe Firestore');
         
-        // Pour les messages, nous devons accéder à la collection chats séparée
         try {
-          // Chercher dans la collection chats avec l'ID utilisateur
-          const chatDoc = await getDoc(doc(db, 'chats', userId));
-          if (chatDoc.exists()) {
-            const chatData = chatDoc.data();
-            console.log('🔍 FirebaseDataService.getUserMessages - ChatData:', chatData);
-            
-            if (chatData && chatData.messages) {
-              console.log('🔍 FirebaseDataService.getUserMessages - Messages trouvés:', chatData.messages);
-              return chatData.messages;
-            }
-          }
-          
-          // Si pas trouvé avec userId direct, chercher dans les documents qui contiennent userId
-          console.log('🔍 FirebaseDataService.getUserMessages - Recherche alternative dans chats...');
+          // 1. Chercher tous les chats où l'utilisateur est participant
+          console.log('🔍 FirebaseDataService.getUserMessages - Recherche des chats pour userId:', userId);
           const chatsQuery = query(collection(db, 'chats'), where('participants', 'array-contains', userId));
           const chatsSnapshot = await getDocs(chatsQuery);
           
-          if (!chatsSnapshot.empty) {
-            const chatDoc = chatsSnapshot.docs[0]; // Prendre le premier chat trouvé
-            const chatData = chatDoc.data();
-            console.log('🔍 FirebaseDataService.getUserMessages - ChatData (recherche alternative):', chatData);
+          if (chatsSnapshot.empty) {
+            console.log('🔍 FirebaseDataService.getUserMessages - Aucun chat trouvé pour cet utilisateur');
+            return [];
+          }
+          
+          console.log('🔍 FirebaseDataService.getUserMessages - Chats trouvés:', chatsSnapshot.docs.length);
+          
+          // 2. Récupérer tous les messages de tous les chats de l'utilisateur
+          const allMessages: FirebaseMessage[] = [];
+          
+          for (const chatDoc of chatsSnapshot.docs) {
+            const chatId = chatDoc.id;
+            console.log('🔍 FirebaseDataService.getUserMessages - Traitement du chat:', chatId);
             
-            if (chatData && chatData.messages) {
-              console.log('🔍 FirebaseDataService.getUserMessages - Messages trouvés (recherche alternative):', chatData.messages);
-              return chatData.messages;
+            // 3. Accéder à la sous-collection messages de ce chat
+            const messagesQuery = query(collection(db, 'chats', chatId, 'messages'));
+            const messagesSnapshot = await getDocs(messagesQuery);
+            
+            if (!messagesSnapshot.empty) {
+              const chatMessages = messagesSnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+              })) as FirebaseMessage[];
+              
+              console.log('🔍 FirebaseDataService.getUserMessages - Messages trouvés dans le chat', chatId, ':', chatMessages.length);
+              allMessages.push(...chatMessages);
             }
           }
           
-          console.log('🔍 FirebaseDataService.getUserMessages - Aucun message trouvé dans la collection chats');
-          return [];
+          // 4. Trier les messages par timestamp
+          allMessages.sort((a, b) => {
+            const timeA = a.timestamp?.toDate?.() || new Date(a.timestamp);
+            const timeB = b.timestamp?.toDate?.() || new Date(b.timestamp);
+            return timeA.getTime() - timeB.getTime();
+          });
+          
+          console.log('🔍 FirebaseDataService.getUserMessages - Total messages récupérés:', allMessages.length);
+          return allMessages;
+          
         } catch (firestoreError) {
-          console.error('❌ Erreur accès collection chat:', firestoreError);
+          console.error('❌ Erreur accès collection chats:', firestoreError);
           return [];
         }
       }
