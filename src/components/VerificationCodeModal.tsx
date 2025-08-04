@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Mail, RefreshCw } from 'lucide-react';
+import { EmailVerificationService } from '../services/emailVerification';
+import { FirebaseDataService } from '../services/firebaseData';
 
 interface VerificationCodeModalProps {
   isOpen: boolean;
@@ -67,19 +69,17 @@ const VerificationCodeModal: React.FC<VerificationCodeModalProps> = ({
     try {
       const codeString = code.join('');
       
-      // Appel à l'endpoint Node.js
-      const response = await fetch('/api/verify-code.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, code: codeString }),
-      });
+      // Récupérer l'userId de l'utilisateur connecté
+      const userId = FirebaseDataService.getCurrentUserId();
+      if (!userId) {
+        throw new Error('Utilisateur non connecté');
+      }
       
-      const result = await response.json();
+      // Utiliser le nouveau service de vérification
+      const result = await EmailVerificationService.verifyCode(email, userId, codeString);
       
-      if (!response.ok) {
-        throw new Error(result.message || 'Erreur lors de la vérification');
+      if (!result.success) {
+        throw new Error(result.error || 'Erreur lors de la vérification');
       }
       
       onVerificationSuccess();
@@ -95,18 +95,23 @@ const VerificationCodeModal: React.FC<VerificationCodeModalProps> = ({
     setError('');
     
     try {
-      const response = await fetch('/api/send-email.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
+      // Récupérer l'userId de l'utilisateur connecté
+      const userId = FirebaseDataService.getCurrentUserId();
+      if (!userId) {
+        throw new Error('Utilisateur non connecté');
+      }
       
-      const result = await response.json();
+      // Utiliser le nouveau service d'envoi
+      const result = await EmailVerificationService.sendVerificationCode(email, userId);
       
-      if (!response.ok) {
-        throw new Error(result.message || 'Erreur lors de l\'envoi du code');
+      if (!result.success) {
+        throw new Error(result.error || 'Erreur lors de l\'envoi du code');
+      }
+      
+      // En mode développement, afficher le code
+      if (result.code) {
+        console.log('🔍 CODE DE VÉRIFICATION (DEV):', result.code);
+        alert(`Code de vérification (DEV): ${result.code}`);
       }
       
       setTimeLeft(900);

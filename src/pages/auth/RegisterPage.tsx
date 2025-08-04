@@ -11,6 +11,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../../config/firebase";
 import VerificationCodeModal from "../../components/VerificationCodeModal";
+import { EmailVerificationService } from "../../services/emailVerification";
 
 const registerSchema = z.object({
   firstName: z.string().min(2, "Le prénom doit contenir au moins 2 caractères"),
@@ -83,17 +84,20 @@ const RegisterPage: React.FC = () => {
         status: 'pending'
       });
 
-      // 3. Envoyer le code de validation via l'API Node.js
-      const response = await fetch('/api/send-email.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: data.email }),
-      });
+      // 3. Envoyer le code de validation via le nouveau service
+      const verificationResult = await EmailVerificationService.sendVerificationCode(
+        data.email, 
+        userCredential.user.uid
+      );
       
-      if (!response.ok) {
-        throw new Error('Erreur lors de l\'envoi du code de validation');
+      if (!verificationResult.success) {
+        throw new Error(verificationResult.error || 'Erreur lors de l\'envoi du code de validation');
+      }
+
+      // En mode développement, afficher le code
+      if (verificationResult.code) {
+        console.log('🔍 CODE DE VÉRIFICATION (DEV):', verificationResult.code);
+        alert(`Code de vérification (DEV): ${verificationResult.code}`);
       }
 
       // 4. Afficher la modal de validation

@@ -21,6 +21,7 @@ import {
 import { FirebaseDataService, FirebaseAccount, FirebaseTransaction } from '../../services/firebaseData';
 import { parseFirestoreDate, formatDate, formatAmount, truncateTransactionDescription, formatUserNameForDisplay } from '../../utils/dateUtils';
 import { useKycSync } from '../../hooks/useNotifications';
+import EmailVerificationBanner from '../../components/EmailVerificationBanner';
 
 // Utiliser FirebaseAccount au lieu de l'interface locale
 type Account = FirebaseAccount;
@@ -137,6 +138,7 @@ const DashboardPage: React.FC = () => {
 
   // Fonction pour traduire les noms des comptes
   const [userName, setUserName] = useState('Client AmCbunq');
+  const [userEmail, setUserEmail] = useState('');
 
   // Charger les données utilisateur
   useEffect(() => {
@@ -149,6 +151,9 @@ const DashboardPage: React.FC = () => {
             const fullName = formatUserNameForDisplay(userData.firstName, userData.lastName);
             setUserName(fullName);
           }
+          if (userData && userData.email) {
+            setUserEmail(userData.email);
+          }
         }
       } catch (error) {
         console.error('❌ Erreur chargement données utilisateur:', error);
@@ -157,6 +162,11 @@ const DashboardPage: React.FC = () => {
     
     loadUserData();
   }, []);
+
+  // Fonction pour récupérer l'email de l'utilisateur
+  const getUserEmail = (): string => {
+    return userEmail || 'client@amcbunq.com';
+  };
 
   const translateAccountName = (name: string): string => {
     console.log('🔍 Dashboard translateAccountName called with:', name);
@@ -193,6 +203,15 @@ const DashboardPage: React.FC = () => {
 
   return (
     <div className="space-y-4 md:space-y-6">
+      {/* Banner de vérification email */}
+      <EmailVerificationBanner 
+        userEmail={getUserEmail()}
+        onVerificationComplete={() => {
+          console.log('✅ Email vérifié avec succès');
+          // Recharger les données si nécessaire
+        }}
+      />
+      
       {/* Header avec RIB */}
       <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-4 md:p-6 text-white">
         <div className="flex items-center justify-between mb-4">
