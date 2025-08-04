@@ -3,18 +3,6 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getFunctions } from 'firebase/functions';
 
-// 🔍 DEBUG TEMPORAIRE - TOUTES les variables d'environnement disponibles
-console.log('🔍 TOUTES les variables d\'environnement disponibles:');
-console.log(import.meta.env);
-
-console.log('🔍 Variables Firebase spécifiques:');
-console.log('API Key:', import.meta.env.VITE_FIREBASE_API_KEY);
-console.log('Auth Domain:', import.meta.env.VITE_FIREBASE_AUTH_DOMAIN);
-console.log('Project ID:', import.meta.env.VITE_FIREBASE_PROJECT_ID);
-console.log('Storage Bucket:', import.meta.env.VITE_FIREBASE_STORAGE_BUCKET);
-console.log('Messaging Sender ID:', import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID);
-console.log('App ID:', import.meta.env.VITE_FIREBASE_APP_ID);
-
 // Vérifier que toutes les variables Firebase sont présentes
 const requiredEnvVars = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -41,7 +29,7 @@ if (missingVars.length > 0) {
   console.error('VITE_FIREBASE_APP_ID=your-app-id');
 }
 
-// Configuration Firebase - TOUJOURS utiliser les vraies valeurs
+// Configuration Firebase
 const firebaseConfig = {
   apiKey: requiredEnvVars.apiKey,
   authDomain: requiredEnvVars.authDomain,
@@ -50,11 +38,6 @@ const firebaseConfig = {
   messagingSenderId: requiredEnvVars.messagingSenderId,
   appId: requiredEnvVars.appId
 };
-
-console.log('🔍 Configuration Firebase finale:', {
-  ...firebaseConfig,
-  apiKey: firebaseConfig.apiKey ? `${firebaseConfig.apiKey.substring(0, 10)}...` : 'MISSING'
-});
 
 // Initialiser Firebase
 const app = initializeApp(firebaseConfig);

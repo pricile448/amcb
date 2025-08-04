@@ -5,6 +5,7 @@
 import { API_CONFIG } from '../config/api';
 import { db } from '../config/firebase';
 import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
+import { logger } from '../utils/logger';
 
 // Types pour les données Firebase
 export interface FirebaseAccount {
@@ -262,44 +263,44 @@ export class FirebaseDataService {
       // FORCER l'utilisation de Firestore en production - VERSION FINALE
       const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel') || window.location.hostname.includes('render');
       
-      console.log('🔍 DEBUG: isProduction =', isProduction);
-      console.log('🔍 DEBUG: hostname =', window.location.hostname);
-      console.log('🔍 DEBUG: import.meta.env.PROD =', import.meta.env.PROD);
+      logger.debug('DEBUG: isProduction =', isProduction);
+      logger.debug('DEBUG: hostname =', window.location.hostname);
+      logger.debug('DEBUG: import.meta.env.PROD =', import.meta.env.PROD);
       
       if (isProduction) {
-        console.log('🔍 FirebaseDataService.getUserAccounts - Production: Utilisation directe Firestore');
+        logger.debug('FirebaseDataService.getUserAccounts - Production: Utilisation directe Firestore');
         
         // Récupérer les données utilisateur depuis Firestore
         const userData = await this.getUserData(userId);
-        console.log('🔍 FirebaseDataService.getUserAccounts - UserData:', userData);
+        logger.debug('FirebaseDataService.getUserAccounts - UserData:', userData);
         
         if (userData && userData.accounts) {
-          console.log('🔍 FirebaseDataService.getUserAccounts - Comptes trouvés:', userData.accounts);
+          logger.debug('FirebaseDataService.getUserAccounts - Comptes trouvés:', userData.accounts);
           return userData.accounts;
         }
         
-        console.log('🔍 FirebaseDataService.getUserAccounts - Aucun compte trouvé');
+        logger.debug('FirebaseDataService.getUserAccounts - Aucun compte trouvé');
         return [];
       }
       
       // En développement, utiliser l'API locale
-      console.log('🔍 FirebaseDataService.getUserAccounts - URL:', `${API_CONFIG.BASE_URL}/api/accounts/${userId}`);
-      console.log('🔍 FirebaseDataService.getUserAccounts - Headers:', this.getAuthHeaders());
+      logger.debug('FirebaseDataService.getUserAccounts - URL:', `${API_CONFIG.BASE_URL}/api/accounts/${userId}`);
+      logger.debug('FirebaseDataService.getUserAccounts - Headers:', this.getAuthHeaders());
       
       const response = await fetch(`${API_CONFIG.BASE_URL}/api/accounts/${userId}`, {
         method: 'GET',
         headers: this.getAuthHeaders()
       });
 
-      console.log('🔍 FirebaseDataService.getUserAccounts - Response status:', response.status);
-      console.log('🔍 FirebaseDataService.getUserAccounts - Response ok:', response.ok);
+      logger.debug('FirebaseDataService.getUserAccounts - Response status:', response.status);
+      logger.debug('FirebaseDataService.getUserAccounts - Response ok:', response.ok);
 
       if (!response.ok) {
         throw new Error('Erreur lors de la récupération des comptes');
       }
 
       const data = await response.json();
-      console.log('🔍 FirebaseDataService.getUserAccounts - Data reçue:', data);
+      logger.debug('FirebaseDataService.getUserAccounts - Data reçue:', data);
       return data.accounts || [];
     } catch (error) {
       console.error('❌ Erreur FirebaseDataService.getUserAccounts:', error);
@@ -798,14 +799,14 @@ export class FirebaseDataService {
 
   // Récupérer l'ID de l'utilisateur connecté
   static getCurrentUserId(): string | null {
-    console.log('🔍 FirebaseDataService.getCurrentUserId - localStorage user:', localStorage.getItem('user'));
-    console.log('🔍 FirebaseDataService.getCurrentUserId - localStorage accessToken:', localStorage.getItem('accessToken'));
+    logger.debug('FirebaseDataService.getCurrentUserId - localStorage user:', localStorage.getItem('user'));
+    logger.debug('FirebaseDataService.getCurrentUserId - localStorage accessToken:', localStorage.getItem('accessToken'));
     
     const userStr = localStorage.getItem('user');
     if (userStr) {
       try {
         const user = JSON.parse(userStr);
-        console.log('🔍 FirebaseDataService.getCurrentUserId - User parsé:', user);
+        logger.debug('FirebaseDataService.getCurrentUserId - User parsé:', user);
         return user.id;
       } catch (error) {
         console.error('❌ Erreur parsing user:', error);
