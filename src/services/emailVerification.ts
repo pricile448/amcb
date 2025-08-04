@@ -3,13 +3,15 @@ import { db } from '../config/firebase';
 import { sendEmailVerification } from 'firebase/auth';
 import { auth } from '../config/firebase';
 
+import { Timestamp } from 'firebase/firestore';
+
 export interface VerificationCode {
   code: string;
   email: string;
   userId: string;
-  expires: Date;
+  expires: Timestamp;
   attempts: number;
-  createdAt: Date;
+  createdAt: Timestamp;
 }
 
 export class EmailVerificationService {
@@ -28,8 +30,9 @@ export class EmailVerificationService {
       const code = Math.floor(100000 + Math.random() * 900000).toString();
       
       // Calculer l'expiration
-      const expires = new Date();
-      expires.setMinutes(expires.getMinutes() + this.CODE_EXPIRY_MINUTES);
+      const expiresDate = new Date();
+      expiresDate.setMinutes(expiresDate.getMinutes() + this.CODE_EXPIRY_MINUTES);
+      const expires = Timestamp.fromDate(expiresDate);
 
       // Créer l'objet de vérification
       const verificationData: VerificationCode = {
@@ -38,7 +41,7 @@ export class EmailVerificationService {
         userId,
         expires,
         attempts: 0,
-        createdAt: new Date()
+        createdAt: Timestamp.now()
       };
 
       // Stocker dans Firestore
@@ -102,7 +105,7 @@ export class EmailVerificationService {
 
       const storedData = docSnap.data() as VerificationCode;
 
-      // Vérifier l'expiration
+      // Vérifier l'expiration (storedData.expires est déjà un Timestamp)
       if (new Date() > storedData.expires.toDate()) {
         await deleteDoc(docRef);
         return {
@@ -173,6 +176,7 @@ export class EmailVerificationService {
       }
 
       const storedData = docSnap.data() as VerificationCode;
+      // storedData.expires est déjà un Timestamp, utiliser toDate()
       return new Date() < storedData.expires.toDate();
     } catch (error) {
       console.error('❌ Erreur lors de la vérification du code actif:', error);
