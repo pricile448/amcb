@@ -15,25 +15,46 @@ console.log('Storage Bucket:', import.meta.env.VITE_FIREBASE_STORAGE_BUCKET);
 console.log('Messaging Sender ID:', import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID);
 console.log('App ID:', import.meta.env.VITE_FIREBASE_APP_ID);
 
-// Configuration Firebase sécurisée
-const firebaseConfig = import.meta.env.DEV ? {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || 'API_KEY_MISSING',
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'AUTH_DOMAIN_MISSING',
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'PROJECT_ID_MISSING',
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || 'STORAGE_BUCKET_MISSING',
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || 'SENDER_ID_MISSING',
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || 'APP_ID_MISSING'
-} : {
-  // En production, masquer l'API Key
-  apiKey: '***MASKED***',
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'AUTH_DOMAIN_MISSING',
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'PROJECT_ID_MISSING',
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || 'STORAGE_BUCKET_MISSING',
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || 'SENDER_ID_MISSING',
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || 'APP_ID_MISSING'
+// Vérifier que toutes les variables Firebase sont présentes
+const requiredEnvVars = {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
-console.log('🔍 Configuration Firebase finale:', firebaseConfig);
+// Vérifier les variables manquantes
+const missingVars = Object.entries(requiredEnvVars)
+  .filter(([key, value]) => !value)
+  .map(([key]) => key);
+
+if (missingVars.length > 0) {
+  console.error('❌ Variables d\'environnement Firebase manquantes:', missingVars);
+  console.error('💡 Créez un fichier .env dans le dossier frontend/ avec les variables suivantes:');
+  console.error('VITE_FIREBASE_API_KEY=your-api-key');
+  console.error('VITE_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com');
+  console.error('VITE_FIREBASE_PROJECT_ID=your-project-id');
+  console.error('VITE_FIREBASE_STORAGE_BUCKET=your-project.appspot.com');
+  console.error('VITE_FIREBASE_MESSAGING_SENDER_ID=your-sender-id');
+  console.error('VITE_FIREBASE_APP_ID=your-app-id');
+}
+
+// Configuration Firebase - TOUJOURS utiliser les vraies valeurs
+const firebaseConfig = {
+  apiKey: requiredEnvVars.apiKey,
+  authDomain: requiredEnvVars.authDomain,
+  projectId: requiredEnvVars.projectId,
+  storageBucket: requiredEnvVars.storageBucket,
+  messagingSenderId: requiredEnvVars.messagingSenderId,
+  appId: requiredEnvVars.appId
+};
+
+console.log('🔍 Configuration Firebase finale:', {
+  ...firebaseConfig,
+  apiKey: firebaseConfig.apiKey ? `${firebaseConfig.apiKey.substring(0, 10)}...` : 'MISSING'
+});
 
 // Initialiser Firebase
 const app = initializeApp(firebaseConfig);
