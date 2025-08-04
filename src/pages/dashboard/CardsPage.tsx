@@ -80,7 +80,7 @@ const CardsPage: React.FC = () => {
 
   const handleSubmitRequest = () => {
     // Logique pour soumettre la demande de carte
-    console.log('Demande de carte soumise:', requestType);
+            logger.debug('Demande de carte soumise:', requestType);
     setShowRequestForm(false);
   };
 

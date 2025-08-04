@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Plus, TrendingUp, TrendingDown, Target, AlertTriangle, CheckCircle, Shield, Lock } from 'lucide-react';
 import { FirebaseDataService, FirebaseBudget } from '../../services/firebaseData';
 import { useKycSync } from '../../hooks/useNotifications';
+import { logger } from '../../utils/logger';
 
 interface Budget {
   id: string;
@@ -31,17 +32,17 @@ const BudgetsPage: React.FC = () => {
         setLoading(true);
         const userId = FirebaseDataService.getCurrentUserId();
         
-        console.log('🔍 UserID récupéré:', userId);
+        logger.debug('UserID récupéré:', userId);
         
         if (!userId) {
-          console.error('❌ Aucun utilisateur connecté');
+          logger.error('Aucun utilisateur connecté');
           return;
         }
 
         // Charger les budgets depuis Firestore
-        console.log('💰 Chargement des budgets pour userId:', userId);
+        logger.debug('Chargement des budgets pour userId:', userId);
         const firebaseBudgets = await FirebaseDataService.getUserBudgets(userId);
-        console.log('💰 Budgets Firebase récupérés:', firebaseBudgets);
+        logger.debug('Budgets Firebase récupérés:', firebaseBudgets);
         
         const mappedBudgets: Budget[] = firebaseBudgets.map(budget => {
           // Déterminer le statut basé sur le pourcentage d'utilisation
@@ -89,11 +90,11 @@ const BudgetsPage: React.FC = () => {
           };
         });
         
-        console.log('💰 Budgets mappés:', mappedBudgets);
+        logger.debug('Budgets mappés:', mappedBudgets);
         setBudgets(mappedBudgets);
 
       } catch (error) {
-        console.error('❌ Erreur lors du chargement des budgets:', error);
+        logger.error('Erreur lors du chargement des budgets:', error);
       } finally {
         setLoading(false);
       }

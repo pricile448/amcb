@@ -799,7 +799,7 @@ const AccountsPage: React.FC = () => {
                   onClick={() => {
                     setShowVerificationDialog(false);
                     // Ici on pourrait naviguer vers la page de vérification
-                    console.log('Vérification d\'identité', 'Redirection vers la page de vérification d\'identité');
+                    logger.debug('Vérification d\'identité', 'Redirection vers la page de vérification d\'identité');
                   }}
                   className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
                 >

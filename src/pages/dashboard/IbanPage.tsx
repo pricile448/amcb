@@ -207,7 +207,7 @@ Date: ${new Date().toLocaleDateString('fr-FR')}
 
   const handleShare = () => {
     // Logique pour partager
-    console.log('Partage de l\'IBAN...');
+            logger.debug('Partage de l\'IBAN...');
   };
 
 

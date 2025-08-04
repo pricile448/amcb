@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Search, Filter, Download, TrendingUp, TrendingDown, Loader2 } from "lucide-react";
 import { FirebaseDataService } from "../../services/firebaseData";
 import { parseFirestoreDate, formatDate, formatAmount, truncateTransactionDescription } from "../../utils/dateUtils";
+import { logger } from "../../utils/logger";
 
 const TransactionsPage: React.FC = () => {
   const { t } = useTranslation();
@@ -36,15 +37,15 @@ const TransactionsPage: React.FC = () => {
         const userId = FirebaseDataService.getCurrentUserId();
         
         if (!userId) {
-          console.error('❌ Aucun utilisateur connecté');
+          logger.error('Aucun utilisateur connecté');
           setLoading(false);
           return;
         }
 
-        console.log('💰 Chargement des transactions pour userId:', userId);
+        logger.debug('Chargement des transactions pour userId:', userId);
         const firebaseTransactions = await FirebaseDataService.getUserTransactions(userId);
         
-        console.log('🔍 Transactions reçues:', firebaseTransactions);
+        logger.debug('Transactions reçues:', firebaseTransactions);
         
                  // Mapper les transactions Firebase avec les dates correctes
          const mappedTransactions = firebaseTransactions.map(tx => {
@@ -70,7 +71,7 @@ const TransactionsPage: React.FC = () => {
              accountName = 'Compte Épargne';
            }
            
-           console.log(`💰 Transaction ${tx.id}: amount=${tx.amount}, type=${transactionType}, date=${parsedDate}, category=${tx.category}`);
+           logger.debug(`Transaction ${tx.id}: amount=${tx.amount}, type=${transactionType}, date=${parsedDate}, category=${tx.category}`);
            
            // Corriger les descriptions pour utiliser les noms d'affichage des comptes
            let correctedDescription = tx.description;
@@ -99,9 +100,9 @@ const TransactionsPage: React.FC = () => {
          });
         
         setTransactions(mappedTransactions);
-        console.log('✅ Transactions chargées avec succès');
+        logger.success('Transactions chargées avec succès');
       } catch (error) {
-        console.error('❌ Erreur lors du chargement des transactions:', error);
+        logger.error('Erreur lors du chargement des transactions:', error);
         // En cas d'erreur, utiliser des données de test
         setTransactions([
           {

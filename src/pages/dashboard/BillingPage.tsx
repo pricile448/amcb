@@ -4,6 +4,7 @@ import { Copy, Download, Share2, FileText, Building, AlertCircle, CheckCircle, L
 import { FirebaseDataService } from '../../services/firebaseData';
 import VerificationState from '../../components/VerificationState';
 import { useKycSync } from '../../hooks/useNotifications';
+import { logger } from '../../utils/logger';
 
 interface BillingData {
   billingIban: string;
@@ -30,16 +31,16 @@ const BillingPage: React.FC = () => {
         const userId = FirebaseDataService.getCurrentUserId();
         
         if (!userId) {
-          console.error('❌ Aucun utilisateur connecté');
+          logger.error('Aucun utilisateur connecté');
           setLoading(false);
           return;
         }
 
-        console.log('🏦 Chargement des données de facturation pour userId:', userId);
+        logger.debug('Chargement des données de facturation pour userId:', userId);
         
         // Récupérer les données utilisateur complètes depuis l'API
         const userData = await FirebaseDataService.getUserData(userId);
-        console.log('🔍 Données utilisateur reçues:', userData);
+        logger.debug('Données utilisateur reçues:', userData);
         
         if (userData && userData.billingIban) {
           const billingInfo: BillingData = {
@@ -52,13 +53,13 @@ const BillingPage: React.FC = () => {
           };
           
           setBillingData(billingInfo);
-          console.log('✅ Données de facturation chargées avec succès:', billingInfo);
+          logger.success('Données de facturation chargées avec succès:', billingInfo);
         } else {
-          console.log('⚠️ Aucune donnée de facturation trouvée');
+          logger.warn('Aucune donnée de facturation trouvée');
           setBillingData(null);
         }
       } catch (error) {
-        console.error('❌ Erreur lors du chargement des données de facturation:', error);
+        logger.error('Erreur lors du chargement des données de facturation:', error);
         setBillingData(null);
       } finally {
         setLoading(false);
@@ -75,7 +76,7 @@ const BillingPage: React.FC = () => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      console.error('Erreur lors de la copie:', err);
+      logger.error('Erreur lors de la copie:', err);
     }
   };
 
@@ -106,7 +107,7 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
 
   const handleShare = () => {
     // Logique pour partager
-    console.log('Partage du RIB de facturation...');
+    logger.debug('Partage du RIB de facturation...');
   };
 
   // Si l'utilisateur n'est pas vérifié, afficher l'état de vérification
