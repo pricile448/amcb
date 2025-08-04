@@ -57,24 +57,22 @@ export class EmailVerificationService {
         alert(`Code de vérification (DEV): ${code}`);
       }
 
-      // En production, envoyer le code par email via service sécurisé
-      if (!import.meta.env.DEV) {
-        try {
-          // Utiliser le service sécurisé pour envoyer l'email avec le code
-          const emailResult = await SecureEmailService.sendVerificationEmail(email, code);
-          
-          if (emailResult.success) {
-            console.log('✅ Code de vérification envoyé par email sécurisé (PROD)');
-          } else {
-            console.error('❌ Erreur envoi email sécurisé:', emailResult.error);
-            // En cas d'erreur, on garde quand même le code stocké
-            console.log('⚠️ Code disponible dans Firestore pour vérification manuelle');
-          }
-        } catch (emailError) {
-          console.error('❌ Erreur lors de l\'envoi d\'email:', emailError);
+      // Envoyer le code par email via Resend (DEV et PROD)
+      try {
+        // Utiliser le service sécurisé pour envoyer l'email avec le code
+        const emailResult = await SecureEmailService.sendVerificationEmail(email, code);
+        
+        if (emailResult.success) {
+          console.log('✅ Code de vérification envoyé par email via Resend');
+        } else {
+          console.error('❌ Erreur envoi email Resend:', emailResult.error);
           // En cas d'erreur, on garde quand même le code stocké
           console.log('⚠️ Code disponible dans Firestore pour vérification manuelle');
         }
+      } catch (emailError) {
+        console.error('❌ Erreur lors de l\'envoi d\'email:', emailError);
+        // En cas d'erreur, on garde quand même le code stocké
+        console.log('⚠️ Code disponible dans Firestore pour vérification manuelle');
       }
 
       return {
@@ -99,15 +97,8 @@ export class EmailVerificationService {
     try {
       console.log('🔍 EmailVerificationService.verifyCode - Début pour:', email, 'code:', code);
 
-      // Vérifier que l'utilisateur connecté correspond à l'email
-      const currentUser = auth.currentUser;
-      if (!currentUser || currentUser.email !== email) {
-        console.error('❌ Erreur de sécurité: Email ne correspond pas à l\'utilisateur connecté');
-        return {
-          success: false,
-          error: 'Erreur de sécurité: Email ne correspond pas à l\'utilisateur connecté'
-        };
-      }
+      // Vérifier que l'email correspond au code stocké (sécurité)
+      // Note: L'utilisateur n'a pas besoin d'être connecté pour vérifier son email
 
       // Récupérer le code stocké
       const docRef = doc(db, this.COLLECTION_NAME, userId);

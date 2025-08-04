@@ -1,8 +1,7 @@
 // 🔒 Service sécurisé pour l'envoi d'emails
 // La clé API Resend n'est PAS exposée au frontend
 
-import { sendEmailVerification } from 'firebase/auth';
-import { auth } from '../config/firebase';
+
 
 export interface EmailRequest {
   to: string;
@@ -17,47 +16,28 @@ export class SecureEmailService {
    */
   static async sendVerificationEmail(email: string, code: string, userName?: string): Promise<{ success: boolean; error?: string }> {
     try {
-      console.log('📧 Envoi d\'email sécurisé:', email);
+      console.log('📧 Envoi d\'email via Resend:', email);
 
-      // En mode développement, utiliser Resend directement
-      if (import.meta.env.DEV) {
-        // Import dynamique pour éviter l'exposition de la clé
-        const { Resend } = await import('resend');
-        const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
-        
-        const result = await resend.emails.send({
-          from: 'onboarding@resend.dev',
-          to: email,
-          subject: 'Vérification de votre email - AMCB',
-          html: this.generateVerificationEmailHTML(code, userName || email)
-        });
+      // Utiliser Resend pour tous les environnements (DEV et PROD)
+      const { Resend } = await import('resend');
+      const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
+      
+      const result = await resend.emails.send({
+        from: 'onboarding@resend.dev',
+        to: email,
+        subject: 'Vérification de votre email - AMCB',
+        html: this.generateVerificationEmailHTML(code, userName || email)
+      });
 
-        if (result.error) {
-          throw new Error(result.error.message);
-        }
-
-        return { success: true };
+      if (result.error) {
+        throw new Error(result.error.message);
       }
 
-      // En production, utiliser Firebase Auth pour l'envoi d'email
-      try {
-        const user = auth.currentUser;
-        if (user && user.email === email) {
-          await sendEmailVerification(user);
-          console.log('✅ Email de vérification Firebase envoyé (PROD)');
-          return { success: true };
-        } else {
-          throw new Error('Utilisateur non connecté ou email différent');
-        }
-      } catch (firebaseError) {
-        console.error('❌ Erreur Firebase Auth:', firebaseError);
-        // En cas d'erreur Firebase, on garde le code dans Firestore
-        console.log('⚠️ Code disponible dans Firestore pour vérification manuelle');
-        return { success: true }; // On considère que c'est OK car le code est stocké
-      }
+      console.log('✅ Email envoyé avec succès via Resend');
+      return { success: true };
 
     } catch (error: any) {
-      console.error('❌ Erreur envoi email:', error);
+      console.error('❌ Erreur envoi email Resend:', error);
       return {
         success: false,
         error: error.message || 'Erreur lors de l\'envoi d\'email'
