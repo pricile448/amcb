@@ -472,12 +472,12 @@ const AccountsPage: React.FC = () => {
             <div key={account.id} className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4 sm:p-6 hover:shadow-lg transition-all duration-300">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center space-x-3">
-                  <div className={`p-2 sm:p-3 rounded-xl ${getAccountTypeColor(account.type)}`}>
+                  <div className={`p-2 sm:p-3 rounded-xl ${getAccountTypeColor(account.type || 'savings')}`}>
                     <CreditCard className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 text-sm sm:text-base">{account.name}</h3>
-                    <p className="text-xs sm:text-sm text-gray-500">{getAccountTypeText(account.type)}</p>
+                    <p className="text-xs sm:text-sm text-gray-500">{getAccountTypeText(account.type || 'savings')}</p>
                   </div>
                 </div>
                 <span className={`text-xs px-2 py-1 rounded-full ${getStatusColor(account.status)}`}>

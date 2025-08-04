@@ -22,19 +22,8 @@ import { FirebaseDataService, FirebaseAccount, FirebaseTransaction } from '../..
 import { parseFirestoreDate, formatDate, formatAmount, truncateTransactionDescription, formatUserNameForDisplay } from '../../utils/dateUtils';
 import { useKycSync } from '../../hooks/useNotifications';
 
-interface Account {
-  id: string;
-  name: string;
-  type: 'current' | 'savings' | 'credit';
-  balance: number;
-  currency: string;
-  status: 'active' | 'blocked' | 'pending';
-  lastTransaction?: {
-    date: Date;
-    amount: number;
-    description: string;
-  };
-}
+// Utiliser FirebaseAccount au lieu de l'interface locale
+type Account = FirebaseAccount;
 
 interface Transaction {
   id: string;
@@ -84,13 +73,11 @@ const DashboardPage: React.FC = () => {
           console.log('🔍 Dashboard - Translated name:', translatedName);
           
           return {
-            id: acc.id,
+            ...acc, // Garder toutes les propriétés originales
             name: translatedName,
             type: (acc.name || acc.accountType || '').includes('checking') ? 'current' : 
                   (acc.name || acc.accountType || '').includes('credit') ? 'credit' : 'savings',
             balance: Math.abs(acc.balance), // Utiliser la valeur absolue pour l'affichage
-            currency: acc.currency,
-            status: acc.status as 'active' | 'blocked' | 'pending',
             lastTransaction: {
               date: new Date(),
               amount: 0,
