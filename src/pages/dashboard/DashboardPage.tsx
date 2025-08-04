@@ -265,20 +265,23 @@ const DashboardPage: React.FC = () => {
               <p className="text-blue-100 text-xs md:text-sm font-medium">RIB</p>
               <p className="text-sm md:text-lg font-mono">
                 {(() => {
-                  // Récupérer le RIB commun depuis les comptes
-                  const firstAccount = accounts[0];
-                  if (firstAccount && firstAccount.rib) {
-                    return firstAccount.rib.displayValue || 'RIB non disponible';
-                  }
-                  
-                  // Fallback selon le statut KYC
+                  // PRIORITÉ 1: Vérifier le statut KYC AVANT tout
                   if (userStatus === 'unverified') {
                     return 'RIB non disponible';
                   } else if (userStatus === 'pending') {
                     return 'RIB non disponible';
                   } else if (userStatus === 'verified') {
-                    return 'RIB non disponible'; // Jusqu'à ce qu'une demande soit faite
+                    // Même si vérifié, ne pas afficher l'IBAN sans demande explicite
+                    return 'RIB non disponible';
                   }
+                  
+                  // PRIORITÉ 2: Fallback vers les données des comptes seulement si statut OK
+                  const firstAccount = accounts[0];
+                  if (firstAccount && firstAccount.rib && firstAccount.rib.displayValue) {
+                    // Vérifier si l'IBAN est vraiment disponible (pas juste stocké)
+                    return 'RIB non disponible';
+                  }
+                  
                   return 'RIB non disponible';
                 })()}
               </p>
