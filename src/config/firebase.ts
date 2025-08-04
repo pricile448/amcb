@@ -15,9 +15,17 @@ console.log('Storage Bucket:', import.meta.env.VITE_FIREBASE_STORAGE_BUCKET);
 console.log('Messaging Sender ID:', import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID);
 console.log('App ID:', import.meta.env.VITE_FIREBASE_APP_ID);
 
-// Configuration Firebase avec fallbacks pour diagnostic
-const firebaseConfig = {
+// Configuration Firebase sécurisée
+const firebaseConfig = import.meta.env.DEV ? {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || 'API_KEY_MISSING',
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'AUTH_DOMAIN_MISSING',
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'PROJECT_ID_MISSING',
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || 'STORAGE_BUCKET_MISSING',
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || 'SENDER_ID_MISSING',
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || 'APP_ID_MISSING'
+} : {
+  // En production, masquer l'API Key
+  apiKey: '***MASKED***',
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'AUTH_DOMAIN_MISSING',
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'PROJECT_ID_MISSING',
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || 'STORAGE_BUCKET_MISSING',
