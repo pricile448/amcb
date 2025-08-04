@@ -28,8 +28,10 @@ export class ResendEmailService {
        const fromEmail = import.meta.env.DEV ? 'onboarding@resend.dev' : 'onboarding@resend.dev';
 
              const result = await resend.emails.send({
-         ...emailData,
-         from: fromEmail
+         from: fromEmail,
+         to: emailData.to,
+         subject: emailData.subject,
+         html: emailData.html
        });
 
       if (result.error) {
@@ -185,12 +187,13 @@ export class ResendEmailService {
     try {
       console.log('🔍 Test de connexion Resend...');
       
-      // Envoyer un email de test
-      const result = await resend.emails.send({
-        to: 'test@example.com',
-        subject: 'Test de connexion Resend',
-        html: '<p>Test de connexion</p>'
-      });
+             // Envoyer un email de test
+       const result = await resend.emails.send({
+         from: 'onboarding@resend.dev',
+         to: 'test@example.com',
+         subject: 'Test de connexion Resend',
+         html: '<p>Test de connexion</p>'
+       });
 
       if (result.error) {
         return {
