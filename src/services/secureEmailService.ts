@@ -1,54 +1,62 @@
-// 📧 Service d'envoi d'email avec Resend
-import { Resend } from 'resend';
+// 🔒 Service sécurisé pour l'envoi d'emails
+// La clé API Resend n'est PAS exposée au frontend
 
-// Initialiser Resend avec la clé API
-const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
-
-export interface EmailData {
+export interface EmailRequest {
   to: string;
   subject: string;
-  html: string;
+  code: string;
+  userName?: string;
 }
 
-export class ResendEmailService {
+export class SecureEmailService {
   /**
-   * Envoie un email avec un code de vérification
+   * Envoie un email via une API backend sécurisée
    */
   static async sendVerificationEmail(email: string, code: string, userName?: string): Promise<{ success: boolean; error?: string }> {
     try {
-      console.log('📧 Envoi d\'email de vérification via Resend:', email);
+      console.log('📧 Envoi d\'email sécurisé:', email);
 
-             const emailData: EmailData = {
-         to: email,
-         subject: 'Vérification de votre email - AMCB',
-         html: this.generateVerificationEmailHTML(code, userName || email)
-       };
+      // En mode développement, utiliser Resend directement
+      if (import.meta.env.DEV) {
+        // Import dynamique pour éviter l'exposition de la clé
+        const { Resend } = await import('resend');
+        const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
+        
+        const result = await resend.emails.send({
+          from: 'onboarding@resend.dev',
+          to: email,
+          subject: 'Vérification de votre email - AMCB',
+          html: this.generateVerificationEmailHTML(code, userName || email)
+        });
 
-       // Utiliser le domaine de test Resend pour les tests
-       const fromEmail = import.meta.env.DEV ? 'onboarding@resend.dev' : 'onboarding@resend.dev';
+        if (result.error) {
+          throw new Error(result.error.message);
+        }
 
-             const result = await resend.emails.send({
-         from: fromEmail,
-         to: emailData.to,
-         subject: emailData.subject,
-         html: emailData.html
-       });
-
-      if (result.error) {
-        console.error('❌ Erreur Resend:', result.error);
-        return {
-          success: false,
-          error: `Erreur d'envoi: ${result.error.message}`
-        };
+        return { success: true };
       }
 
-      console.log('✅ Email envoyé avec succès via Resend:', result.data?.id);
-      return {
-        success: true
-      };
+      // En production, utiliser une API backend sécurisée
+      const response = await fetch('/api/send-verification-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: email,
+          code: code,
+          userName: userName || email
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur lors de l\'envoi d\'email');
+      }
+
+      return { success: true };
 
     } catch (error: any) {
-      console.error('❌ Erreur lors de l\'envoi d\'email:', error);
+      console.error('❌ Erreur envoi email:', error);
       return {
         success: false,
         error: error.message || 'Erreur lors de l\'envoi d\'email'
@@ -178,39 +186,5 @@ export class ResendEmailService {
       </body>
       </html>
     `;
-  }
-
-  /**
-   * Teste la connexion à Resend
-   */
-  static async testConnection(): Promise<{ success: boolean; error?: string }> {
-    try {
-      console.log('🔍 Test de connexion Resend...');
-      
-             // Envoyer un email de test
-       const result = await resend.emails.send({
-         from: 'onboarding@resend.dev',
-         to: 'test@example.com',
-         subject: 'Test de connexion Resend',
-         html: '<p>Test de connexion</p>'
-       });
-
-      if (result.error) {
-        return {
-          success: false,
-          error: result.error.message
-        };
-      }
-
-      return {
-        success: true
-      };
-
-    } catch (error: any) {
-      return {
-        success: false,
-        error: error.message
-      };
-    }
   }
 } 

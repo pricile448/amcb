@@ -2,7 +2,7 @@ import { doc, setDoc, getDoc, deleteDoc, updateDoc, serverTimestamp } from 'fire
 import { db } from '../config/firebase';
 import { sendEmailVerification } from 'firebase/auth';
 import { auth } from '../config/firebase';
-import { ResendEmailService } from './resendEmail';
+import { SecureEmailService } from './secureEmailService';
 
 import { Timestamp } from 'firebase/firestore';
 
@@ -57,17 +57,17 @@ export class EmailVerificationService {
         alert(`Code de vérification (DEV): ${code}`);
       }
 
-      // En production, envoyer le code par email via Resend
+      // En production, envoyer le code par email via service sécurisé
       if (!import.meta.env.DEV) {
         try {
-          // Utiliser Resend pour envoyer l'email avec le code
-          const emailResult = await ResendEmailService.sendVerificationEmail(email, code);
+          // Utiliser le service sécurisé pour envoyer l'email avec le code
+          const emailResult = await SecureEmailService.sendVerificationEmail(email, code);
           
           if (emailResult.success) {
-            console.log('✅ Code de vérification envoyé par email via Resend (PROD)');
+            console.log('✅ Code de vérification envoyé par email sécurisé (PROD)');
           } else {
-            console.error('❌ Erreur envoi email Resend:', emailResult.error);
-            // En cas d'erreur Resend, on garde quand même le code stocké
+            console.error('❌ Erreur envoi email sécurisé:', emailResult.error);
+            // En cas d'erreur, on garde quand même le code stocké
             console.log('⚠️ Code disponible dans Firestore pour vérification manuelle');
           }
         } catch (emailError) {
