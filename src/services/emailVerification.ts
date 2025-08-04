@@ -1,6 +1,7 @@
 import { doc, setDoc, getDoc, deleteDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import { sendEmailVerification, auth } from 'firebase/auth';
+import { sendEmailVerification } from 'firebase/auth';
+import { auth } from '../config/firebase';
 import { SecureEmailService } from './secureEmailService';
 
 import { Timestamp } from 'firebase/firestore';
