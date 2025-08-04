@@ -1,7 +1,8 @@
-import { doc, setDoc, getDoc, deleteDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, setDoc, getDoc, deleteDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { sendEmailVerification } from 'firebase/auth';
 import { auth } from '../config/firebase';
+import { ResendEmailService } from './resendEmail';
 
 import { Timestamp } from 'firebase/firestore';
 
@@ -20,13 +21,13 @@ export class EmailVerificationService {
   private static readonly MAX_ATTEMPTS = 3;
 
   /**
-   * Génère et envoie un code de vérification
+   * Envoie un code de vérification à 6 chiffres (DEV et PROD)
    */
   static async sendVerificationCode(email: string, userId: string): Promise<{ success: boolean; code?: string; error?: string }> {
     try {
       console.log('🔍 EmailVerificationService.sendVerificationCode - Début pour:', email);
 
-      // Générer un code à 6 chiffres
+      // Générer un code à 6 chiffres (DEV et PROD)
       const code = Math.floor(100000 + Math.random() * 900000).toString();
       
       // Calculer l'expiration
@@ -50,34 +51,40 @@ export class EmailVerificationService {
 
       console.log('✅ Code de vérification stocké dans Firestore:', { email, code });
 
-      // En mode développement, retourner le code pour les tests
+      // En mode développement, afficher le code dans la console et alert
       if (import.meta.env.DEV) {
-        return {
-          success: true,
-          code: code,
-          error: undefined
-        };
+        console.log('🔍 CODE DE VÉRIFICATION (DEV):', code);
+        alert(`Code de vérification (DEV): ${code}`);
       }
 
-      // En production, utiliser Firebase Auth pour envoyer l'email
-      try {
-        const user = auth.currentUser;
-        if (user && user.email === email) {
-          await sendEmailVerification(user);
-          console.log('✅ Email de vérification Firebase envoyé');
+      // En production, envoyer le code par email via Resend
+      if (!import.meta.env.DEV) {
+        try {
+          // Utiliser Resend pour envoyer l'email avec le code
+          const emailResult = await ResendEmailService.sendVerificationEmail(email, code);
+          
+          if (emailResult.success) {
+            console.log('✅ Code de vérification envoyé par email via Resend (PROD)');
+          } else {
+            console.error('❌ Erreur envoi email Resend:', emailResult.error);
+            // En cas d'erreur Resend, on garde quand même le code stocké
+            console.log('⚠️ Code disponible dans Firestore pour vérification manuelle');
+          }
+        } catch (emailError) {
+          console.error('❌ Erreur lors de l\'envoi d\'email:', emailError);
+          // En cas d'erreur, on garde quand même le code stocké
+          console.log('⚠️ Code disponible dans Firestore pour vérification manuelle');
         }
-      } catch (firebaseError) {
-        console.warn('⚠️ Erreur Firebase Auth, utilisation du mode debug:', firebaseError);
       }
 
       return {
         success: true,
-        code: undefined,
+        code: import.meta.env.DEV ? code : undefined, // En PROD, ne pas retourner le code
         error: undefined
       };
 
     } catch (error) {
-      console.error('❌ Erreur lors de l\'envoi du code:', error);
+      console.error('❌ Erreur lors de l\'envoi du code de vérification:', error);
       return {
         success: false,
         error: 'Erreur lors de l\'envoi du code de vérification'

@@ -49,18 +49,50 @@ const LoginPage: React.FC = () => {
       
       console.log(`✅ Connexion Firebase réussie pour: ${data.email}`);
       
+      // Vérifier le statut emailVerified dans Firestore
+      const { doc, getDoc } = await import('firebase/firestore');
+      const { db } = await import('../../config/firebase');
+      
+      const userDoc = await getDoc(doc(db, 'users', userCredential.user.uid));
+      
+      if (!userDoc.exists()) {
+        throw new Error('Utilisateur non trouvé dans la base de données');
+      }
+      
+      const userData = userDoc.data();
+      const isEmailVerified = userData.emailVerified || false;
+      
+      console.log(`📧 Statut emailVerified: ${isEmailVerified}`);
+      
+      if (!isEmailVerified) {
+        // Déconnecter l'utilisateur
+        await auth.signOut();
+        localStorage.removeItem('user');
+        
+        toast.error('Veuillez vérifier votre email avant de vous connecter. Vérifiez vos spams ou demandez un nouveau code.');
+        
+        // Rediriger vers la page d'inscription avec un message
+        navigate('/inscription', { 
+          state: { 
+            message: 'Veuillez vérifier votre email avant de vous connecter.',
+            email: data.email 
+          } 
+        });
+        return;
+      }
+      
       // Stocker les informations utilisateur dans localStorage
       const user = userCredential.user;
-      const userData = {
+      const userDataForStorage = {
         id: user.uid,
         email: user.email,
-        emailVerified: user.emailVerified,
+        emailVerified: isEmailVerified,
         displayName: user.displayName || 'Utilisateur',
         photoURL: user.photoURL
       };
       
-      localStorage.setItem('user', JSON.stringify(userData));
-      console.log('✅ Utilisateur stocké dans localStorage:', userData);
+      localStorage.setItem('user', JSON.stringify(userDataForStorage));
+      console.log('✅ Utilisateur stocké dans localStorage:', userDataForStorage);
       
       toast.success(t("auth.loginSuccess"));
       navigate(from, { replace: true });

@@ -152,9 +152,12 @@ const VerificationCodeModal: React.FC<VerificationCodeModalProps> = ({
           <p className="font-medium text-gray-900 dark:text-gray-100">
             {email}
           </p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+            Entrez le code reçu par email pour vérifier votre adresse
+          </p>
         </div>
 
-        {/* Champs de saisie du code */}
+        {/* Champs de saisie du code (DEV et PROD) */}
         <div className="flex justify-center space-x-2 mb-6">
           {code.map((digit, index) => (
             <input
