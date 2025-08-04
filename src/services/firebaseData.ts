@@ -508,6 +508,26 @@ export class FirebaseDataService {
     console.log('🏦 Récupération des données IBAN pour userId:', userId);
     
     try {
+      // FORCER l'utilisation de Firestore en production
+      const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel') || window.location.hostname.includes('render');
+      
+      if (isProduction) {
+        console.log('🔍 FirebaseDataService.getUserIban - Production: Utilisation directe Firestore');
+        
+        // Récupérer les données utilisateur depuis Firestore
+        const userData = await this.getUserData(userId);
+        console.log('🔍 FirebaseDataService.getUserIban - UserData:', userData);
+        
+        if (userData && userData.iban) {
+          console.log('🔍 FirebaseDataService.getUserIban - IBAN trouvé:', userData.iban);
+          return userData.iban;
+        }
+        
+        console.log('🔍 FirebaseDataService.getUserIban - Aucun IBAN trouvé');
+        return null;
+      }
+      
+      // En développement, utiliser l'API locale
       const response = await fetch(`${API_CONFIG.BASE_URL}/api/iban/${userId}`, {
         method: 'GET',
         headers: this.getAuthHeaders()
