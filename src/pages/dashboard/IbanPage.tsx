@@ -4,6 +4,7 @@ import { Copy, Download, Share2, QrCode, Building, CreditCard, Eye, EyeOff, Load
 import { FirebaseDataService, FirebaseIban } from '../../services/firebaseData';
 import { useNotifications, useKycSync } from '../../hooks/useNotifications';
 import VerificationState from '../../components/VerificationState';
+import { logger } from '../../utils/logger';
 
 const IbanPage: React.FC = () => {
   const { t } = useTranslation();
@@ -26,7 +27,7 @@ const IbanPage: React.FC = () => {
         const userId = FirebaseDataService.getCurrentUserId();
         
         if (!userId) {
-          console.error('❌ Aucun utilisateur connecté');
+          logger.error('Aucun utilisateur connecté');
           setLoading(false);
           return;
         }
@@ -52,7 +53,7 @@ const IbanPage: React.FC = () => {
            setIsUnverified(true);
          }
 
-        console.log('🏦 Chargement des données IBAN pour userId:', userId);
+        logger.debug('Chargement des données IBAN pour userId:', userId);
         
 
         
@@ -66,36 +67,36 @@ const IbanPage: React.FC = () => {
             const user = JSON.parse(userDataStr);
             userFirstName = user.firstName || 'Client';
             userLastName = user.lastName || 'AmCbunq';
-            console.log('👤 Nom utilisateur récupéré:', `${userFirstName} ${userLastName}`);
-          } catch (error) {
-            console.error('❌ Erreur parsing user:', error);
-          }
+                         logger.debug('Nom utilisateur récupéré:', `${userFirstName} ${userLastName}`);
+           } catch (error) {
+             logger.error('Erreur parsing user:', error);
+           }
         }
         
         // Récupérer les données IBAN depuis l'API
         const firebaseIban = await FirebaseDataService.getUserIban(userId);
-        console.log('🔍 Données IBAN reçues:', firebaseIban);
+        logger.debug('Données IBAN reçues:', firebaseIban);
         
         // Récupérer aussi les comptes pour avoir les vraies données
         const firebaseAccounts = await FirebaseDataService.getUserAccounts(userId);
-        console.log('🔍 Comptes récupérés pour IBAN:', firebaseAccounts);
+        logger.debug('Comptes récupérés pour IBAN:', firebaseAccounts);
         
         if (firebaseIban) {
           // Utiliser les données IBAN reçues de l'API
           setIbanData(firebaseIban);
-          console.log('✅ Données IBAN chargées avec succès:', firebaseIban);
+          logger.success('Données IBAN chargées avec succès:', firebaseIban);
         } else {
           // Fallback en cas d'erreur - utiliser le statut approprié selon la vérification
-          console.log('⚠️ Aucune donnée IBAN reçue, affichage du statut par défaut');
+          logger.warn('Aucune donnée IBAN reçue, affichage du statut par défaut');
           const userStr = localStorage.getItem('user');
           let userStatus = 'unverified';
           if (userStr) {
             try {
               const user = JSON.parse(userStr);
               userStatus = user.kycStatus || user.verificationStatus || 'unverified';
-            } catch (error) {
-              console.error('Erreur parsing user:', error);
-            }
+                         } catch (error) {
+               logger.error('Erreur parsing user:', error);
+             }
           }
           
           const defaultIbanData: FirebaseIban = {

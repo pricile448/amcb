@@ -5,6 +5,7 @@ import { FirebaseDataService } from '../../services/firebaseData';
 import { parseFirestoreDate, formatDate, formatAmount, truncateTransactionDescription } from '../../utils/dateUtils';
 import VerificationState from '../../components/VerificationState';
 import { useKycSync } from '../../hooks/useNotifications';
+import { logger } from '../../utils/logger';
 
 interface Transaction {
   id: string;
@@ -36,13 +37,13 @@ const HistoryPage: React.FC = () => {
         const userId = FirebaseDataService.getCurrentUserId();
         
         if (!userId) {
-          console.error('Aucun utilisateur connecté');
+          logger.error('Aucun utilisateur connecté');
           return;
         }
 
         // Charger les transactions
         const firebaseTransactions = await FirebaseDataService.getUserTransactions(userId);
-        console.log('🔍 Transactions reçues dans HistoryPage:', firebaseTransactions);
+        logger.debug('Transactions reçues dans HistoryPage:', firebaseTransactions);
         
         const mappedTransactions: Transaction[] = firebaseTransactions.map(trans => {
           const parsedDate = parseFirestoreDate(trans.date);
@@ -71,7 +72,7 @@ const HistoryPage: React.FC = () => {
             accountName = 'Compte Épargne';
           }
           
-          console.log(`💰 History Transaction ${trans.id}: amount=${amount}, type=${transactionType}, date=${parsedDate}, category=${trans.category}`);
+          logger.debug(`History Transaction ${trans.id}: amount=${amount}, type=${transactionType}, date=${parsedDate}, category=${trans.category}`);
           
           // Déterminer le statut
           let status: 'completed' | 'pending' | 'failed' = 'completed';

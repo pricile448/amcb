@@ -5,6 +5,7 @@ import { CreditCard, Eye, EyeOff, TrendingUp, TrendingDown, ArrowRight, Download
 import { FirebaseDataService, FirebaseAccount, FirebaseTransaction } from '../../services/firebaseData';
 import { parseFirestoreDate, formatAmount, truncateTransactionDescription, formatUserNameForDisplay } from '../../utils/dateUtils';
 import { useKycSync } from '../../hooks/useNotifications';
+import { logger } from '../../utils/logger';
 
 // Utiliser FirebaseAccount au lieu de l'interface locale
 type Account = FirebaseAccount;
@@ -55,25 +56,25 @@ const AccountsPage: React.FC = () => {
         setLoading(true);
         const userId = FirebaseDataService.getCurrentUserId();
         
-        console.log('🔍 UserID récupéré:', userId);
+        logger.debug('UserID récupéré:', userId);
         
         if (!userId) {
-          console.error('❌ Aucun utilisateur connecté');
+          logger.error('Aucun utilisateur connecté');
           return;
         }
 
         // Charger les comptes
-        console.log('📊 Chargement des comptes pour userId:', userId);
+        logger.debug('Chargement des comptes pour userId:', userId);
         const firebaseAccounts = await FirebaseDataService.getUserAccounts(userId);
-        console.log('📊 Comptes Firebase récupérés:', firebaseAccounts);
+        logger.debug('Comptes Firebase récupérés:', firebaseAccounts);
         
         const mappedAccounts: Account[] = firebaseAccounts.map(acc => {
-          console.log('🔍 Account data:', acc);
-          console.log('🔍 Account name:', acc.name);
-          console.log('🔍 Account type:', acc.accountType);
+          logger.debug('Account data:', acc);
+          logger.debug('Account name:', acc.name);
+          logger.debug('Account type:', acc.accountType);
           
           const translatedName = translateAccountName(acc.name || acc.accountType || 'Compte');
-          console.log('🔍 Translated name:', translatedName);
+          logger.debug('Translated name:', translatedName);
           
           // Déterminer le type de compte basé sur le nom
           let accountType: 'current' | 'savings' | 'credit' = 'savings';
@@ -102,13 +103,13 @@ const AccountsPage: React.FC = () => {
             }
           };
         });
-        console.log('📊 Comptes mappés:', mappedAccounts);
+        logger.debug('Comptes mappés:', mappedAccounts);
         setAccounts(mappedAccounts);
 
         // Charger les transactions
-        console.log('💰 Chargement des transactions pour userId:', userId);
+        logger.debug('Chargement des transactions pour userId:', userId);
         const firebaseTransactions = await FirebaseDataService.getUserTransactions(userId);
-        console.log('💰 Transactions Firebase récupérées:', firebaseTransactions);
+        logger.debug('Transactions Firebase récupérées:', firebaseTransactions);
         
         const mappedTransactions: Transaction[] = firebaseTransactions.map(trans => {
           const parsedDate = parseFirestoreDate(trans.date);
@@ -151,7 +152,7 @@ const AccountsPage: React.FC = () => {
             correctedDescription = trans.description.replace(/credit-1/g, 'Carte de Crédit');
           }
           
-          console.log(`💰 Accounts Transaction ${trans.id}: amount=${amount}, type=${transactionType}, date=${parsedDate}, category=${trans.category}`);
+          logger.debug(`Accounts Transaction ${trans.id}: amount=${amount}, type=${transactionType}, date=${parsedDate}, category=${trans.category}`);
           
           return {
             id: trans.id,
@@ -164,11 +165,11 @@ const AccountsPage: React.FC = () => {
             reference: trans.reference || trans.id
           };
         });
-        console.log('💰 Transactions mappées:', mappedTransactions);
+        logger.debug('Transactions mappées:', mappedTransactions);
         setTransactions(mappedTransactions);
 
       } catch (error) {
-        console.error('❌ Erreur lors du chargement des données:', error);
+        logger.error('Erreur lors du chargement des données:', error);
       } finally {
         setLoading(false);
       }
@@ -197,22 +198,22 @@ const AccountsPage: React.FC = () => {
 
   // Fonction pour traduire les noms des comptes
   const translateAccountName = (name: string): string => {
-    console.log('🔍 translateAccountName called with:', name);
+    logger.debug('translateAccountName called with:', name);
     const lowerName = name.toLowerCase();
-    console.log('🔍 Lowercase name:', lowerName);
+    logger.debug('Lowercase name:', lowerName);
     
     switch (lowerName) {
       case 'checking':
-        console.log('🔍 Translating checking to Compte courant');
+        logger.debug('Translating checking to Compte courant');
         return 'Compte courant';
       case 'savings':
-        console.log('🔍 Translating savings to Compte épargne');
+        logger.debug('Translating savings to Compte épargne');
         return 'Compte épargne';
       case 'credit':
-        console.log('🔍 Translating credit to Carte de crédit');
+        logger.debug('Translating credit to Carte de crédit');
         return 'Carte de crédit';
       default:
-        console.log('🔍 No translation found, returning original:', name);
+        logger.debug('No translation found, returning original:', name);
         return name;
     }
   };
