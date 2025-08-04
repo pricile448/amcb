@@ -301,25 +301,31 @@ const AccountsPage: React.FC = () => {
   };
 
   const formatDateShort = (date: Date) => {
-    if (!date || isNaN(date.getTime())) {
-      return 'Date invalide';
-    }
-    
     const now = new Date();
-    const isToday = date.toDateString() === now.toDateString();
-    const isYesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000).toDateString() === date.toDateString();
-    
-    if (isToday) {
-      return `Aujourd'hui`;
-    } else if (isYesterday) {
-      return `Hier`;
+    const diffTime = Math.abs(now.getTime() - date.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 1) {
+      return 'Aujourd\'hui';
+    } else if (diffDays === 2) {
+      return 'Hier';
+    } else if (diffDays <= 7) {
+      return `Il y a ${diffDays - 1} jours`;
     } else {
-      return date.toLocaleDateString('fr-FR', { 
-        day: '2-digit', 
-        month: '2-digit', 
-        year: 'numeric' 
+      return date.toLocaleDateString('fr-FR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
       });
     }
+  };
+
+  const formatDate = (date: Date) => {
+    return date.toLocaleDateString('fr-FR', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric'
+    });
   };
 
   const formatReference = (reference: string) => {
