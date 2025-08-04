@@ -370,6 +370,26 @@ export class FirebaseDataService {
   // Récupérer les virements de l'utilisateur
   static async getUserTransfers(userId: string): Promise<FirebaseTransfer[]> {
     try {
+      // FORCER l'utilisation de Firestore en production
+      const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel') || window.location.hostname.includes('render');
+      
+      if (isProduction) {
+        console.log('🔍 FirebaseDataService.getUserTransfers - Production: Utilisation directe Firestore');
+        
+        // Récupérer les données utilisateur depuis Firestore
+        const userData = await this.getUserData(userId);
+        console.log('🔍 FirebaseDataService.getUserTransfers - UserData:', userData);
+        
+        if (userData && userData.transfers) {
+          console.log('🔍 FirebaseDataService.getUserTransfers - Virements trouvés:', userData.transfers);
+          return userData.transfers;
+        }
+        
+        console.log('🔍 FirebaseDataService.getUserTransfers - Aucun virement trouvé');
+        return [];
+      }
+      
+      // En développement, utiliser l'API locale
       const response = await fetch(`${API_CONFIG.BASE_URL}/api/transfers/${userId}`, {
         method: 'GET',
         headers: this.getAuthHeaders()
@@ -392,6 +412,26 @@ export class FirebaseDataService {
   // Récupérer les bénéficiaires de l'utilisateur
   static async getUserBeneficiaries(userId: string): Promise<FirebaseBeneficiary[]> {
     try {
+      // FORCER l'utilisation de Firestore en production
+      const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel') || window.location.hostname.includes('render');
+      
+      if (isProduction) {
+        console.log('🔍 FirebaseDataService.getUserBeneficiaries - Production: Utilisation directe Firestore');
+        
+        // Récupérer les données utilisateur depuis Firestore
+        const userData = await this.getUserData(userId);
+        console.log('🔍 FirebaseDataService.getUserBeneficiaries - UserData:', userData);
+        
+        if (userData && userData.beneficiaries) {
+          console.log('🔍 FirebaseDataService.getUserBeneficiaries - Bénéficiaires trouvés:', userData.beneficiaries);
+          return userData.beneficiaries;
+        }
+        
+        console.log('🔍 FirebaseDataService.getUserBeneficiaries - Aucun bénéficiaire trouvé');
+        return [];
+      }
+      
+      // En développement, utiliser l'API locale
       const response = await fetch(`${API_CONFIG.BASE_URL}/api/beneficiaries/${userId}`, {
         method: 'GET',
         headers: this.getAuthHeaders()
@@ -414,6 +454,26 @@ export class FirebaseDataService {
   // Récupérer les budgets de l'utilisateur
   static async getUserBudgets(userId: string): Promise<FirebaseBudget[]> {
     try {
+      // FORCER l'utilisation de Firestore en production
+      const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel') || window.location.hostname.includes('render');
+      
+      if (isProduction) {
+        console.log('🔍 FirebaseDataService.getUserBudgets - Production: Utilisation directe Firestore');
+        
+        // Récupérer les données utilisateur depuis Firestore
+        const userData = await this.getUserData(userId);
+        console.log('🔍 FirebaseDataService.getUserBudgets - UserData:', userData);
+        
+        if (userData && userData.budgets) {
+          console.log('🔍 FirebaseDataService.getUserBudgets - Budgets trouvés:', userData.budgets);
+          return userData.budgets;
+        }
+        
+        console.log('🔍 FirebaseDataService.getUserBudgets - Aucun budget trouvé');
+        return [];
+      }
+      
+      // En développement, utiliser l'API locale
       const response = await fetch(`${API_CONFIG.BASE_URL}/api/budgets/${userId}`, {
         method: 'GET',
         headers: this.getAuthHeaders()
@@ -437,6 +497,34 @@ export class FirebaseDataService {
   static async getUserMessages(userId: string): Promise<FirebaseMessage[]> {
     console.log('💬 Récupération des messages depuis la collection chat pour userId:', userId);
     try {
+      // FORCER l'utilisation de Firestore en production
+      const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel') || window.location.hostname.includes('render');
+      
+      if (isProduction) {
+        console.log('🔍 FirebaseDataService.getUserMessages - Production: Utilisation directe Firestore');
+        
+        // Pour les messages, nous devons accéder à la collection chat séparée
+        try {
+          const chatDoc = await getDoc(doc(db, 'chat', userId));
+          if (chatDoc.exists()) {
+            const chatData = chatDoc.data();
+            console.log('🔍 FirebaseDataService.getUserMessages - ChatData:', chatData);
+            
+            if (chatData && chatData.messages) {
+              console.log('🔍 FirebaseDataService.getUserMessages - Messages trouvés:', chatData.messages);
+              return chatData.messages;
+            }
+          }
+          
+          console.log('🔍 FirebaseDataService.getUserMessages - Aucun message trouvé dans la collection chat');
+          return [];
+        } catch (firestoreError) {
+          console.error('❌ Erreur accès collection chat:', firestoreError);
+          return [];
+        }
+      }
+      
+      // En développement, utiliser l'API locale
       const response = await fetch(`${API_CONFIG.BASE_URL}/api/chat/${userId}`, {
         method: 'GET',
         headers: this.getAuthHeaders()
