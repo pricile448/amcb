@@ -260,7 +260,7 @@ export class FirebaseDataService {
   static async getUserAccounts(userId: string): Promise<FirebaseAccount[]> {
     try {
       // FORCER l'utilisation de Firestore en production - VERSION FINALE
-      const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel');
+      const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel') || window.location.hostname.includes('render');
       
       console.log('🔍 DEBUG: isProduction =', isProduction);
       console.log('🔍 DEBUG: hostname =', window.location.hostname);
@@ -310,6 +310,26 @@ export class FirebaseDataService {
   // Récupérer les transactions de l'utilisateur
   static async getUserTransactions(userId: string): Promise<FirebaseTransaction[]> {
     try {
+      // FORCER l'utilisation de Firestore en production
+      const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel') || window.location.hostname.includes('render');
+      
+      if (isProduction) {
+        console.log('🔍 FirebaseDataService.getUserTransactions - Production: Utilisation directe Firestore');
+        
+        // Récupérer les données utilisateur depuis Firestore
+        const userData = await this.getUserData(userId);
+        console.log('🔍 FirebaseDataService.getUserTransactions - UserData:', userData);
+        
+        if (userData && userData.transactions) {
+          console.log('🔍 FirebaseDataService.getUserTransactions - Transactions trouvées:', userData.transactions);
+          return userData.transactions;
+        }
+        
+        console.log('🔍 FirebaseDataService.getUserTransactions - Aucune transaction trouvée');
+        return [];
+      }
+      
+      // En développement, utiliser l'API locale
       const response = await fetch(`${API_CONFIG.BASE_URL}/api/transactions/${userId}`, {
         method: 'GET',
         headers: this.getAuthHeaders()
