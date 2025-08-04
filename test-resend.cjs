@@ -4,7 +4,7 @@ const { Resend } = require('resend');
 // Charger les variables d'environnement
 require('dotenv').config();
 
-const resend = new Resend('re_4s8nQUEp_23F1EG5Ce8Jyd6xZXkPxaVdg');
+const resend = new Resend(process.env.VITE_RESEND_API_KEY);
 
 async function testResend() {
   console.log('🧪 TEST DE CONNEXION RESEND');
