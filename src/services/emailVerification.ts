@@ -1,7 +1,6 @@
 import { doc, setDoc, getDoc, deleteDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import { sendEmailVerification } from 'firebase/auth';
-import { auth } from '../config/firebase';
+import { sendEmailVerification, auth } from 'firebase/auth';
 import { SecureEmailService } from './secureEmailService';
 
 import { Timestamp } from 'firebase/firestore';
@@ -99,6 +98,16 @@ export class EmailVerificationService {
     try {
       console.log('🔍 EmailVerificationService.verifyCode - Début pour:', email, 'code:', code);
 
+      // Vérifier que l'utilisateur connecté correspond à l'email
+      const currentUser = auth.currentUser;
+      if (!currentUser || currentUser.email !== email) {
+        console.error('❌ Erreur de sécurité: Email ne correspond pas à l\'utilisateur connecté');
+        return {
+          success: false,
+          error: 'Erreur de sécurité: Email ne correspond pas à l\'utilisateur connecté'
+        };
+      }
+
       // Récupérer le code stocké
       const docRef = doc(db, this.COLLECTION_NAME, userId);
       const docSnap = await getDoc(docRef);
@@ -161,8 +170,17 @@ export class EmailVerificationService {
         error: undefined
       };
 
-    } catch (error) {
+    } catch (error: any) {
       console.error('❌ Erreur lors de la vérification du code:', error);
+      
+      // Gérer spécifiquement les erreurs de permissions
+      if (error.code === 'permission-denied' || error.message?.includes('permissions')) {
+        return {
+          success: false,
+          error: 'Erreur de permissions: Vérifiez que vous êtes connecté avec le bon compte'
+        };
+      }
+      
       return {
         success: false,
         error: 'Erreur lors de la vérification du code'
