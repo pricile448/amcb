@@ -6,21 +6,8 @@ import { FirebaseDataService, FirebaseAccount, FirebaseTransaction } from '../..
 import { parseFirestoreDate, formatAmount, truncateTransactionDescription, formatUserNameForDisplay } from '../../utils/dateUtils';
 import { useKycSync } from '../../hooks/useNotifications';
 
-
-interface Account {
-  id: string;
-  name: string;
-  type: 'current' | 'savings' | 'credit';
-  accountNumber: string;
-  balance: number;
-  currency: string;
-  status: 'active' | 'blocked' | 'pending';
-  lastTransaction?: {
-    date: Date;
-    amount: number;
-    description: string;
-  };
-}
+// Utiliser FirebaseAccount au lieu de l'interface locale
+type Account = FirebaseAccount;
 
 interface Transaction {
   id: string;

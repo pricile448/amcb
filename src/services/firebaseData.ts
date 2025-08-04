@@ -20,6 +20,16 @@ export interface FirebaseAccount {
   bankName?: string;
   iban?: string;
   bic?: string;
+  rib?: {
+    displayValue: string;
+    status: string;
+  };
+  type?: 'current' | 'savings' | 'credit';
+  lastTransaction?: {
+    date: Date;
+    amount: number;
+    description: string;
+  };
 }
 
 export interface FirebaseTransaction {
