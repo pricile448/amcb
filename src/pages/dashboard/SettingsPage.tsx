@@ -4,6 +4,7 @@ import { Settings, User, Shield, Bell, Globe, CreditCard, Save } from "lucide-re
 import { FirebaseDataService } from "../../services/firebaseData";
 import { useTheme } from "../../contexts/ThemeContext";
 import ThemeSelector from "../../components/ThemeSelector";
+import { logger } from "../../utils/logger";
 
 const SettingsPage: React.FC = () => {
   const { t } = useTranslation();
@@ -30,47 +31,47 @@ const SettingsPage: React.FC = () => {
         const userId = FirebaseDataService.getCurrentUserId();
         
         if (!userId) {
-          console.error('❌ Aucun utilisateur connecté');
+          logger.error('Aucun utilisateur connecté');
           return;
         }
 
-        console.log('👤 Chargement des données utilisateur complètes pour userId:', userId);
+        logger.debug('Chargement des données utilisateur complètes pour userId:', userId);
         const completeUserData = await FirebaseDataService.getUserData(userId);
         
         if (completeUserData) {
-          console.log('✅ Données utilisateur complètes chargées:', completeUserData);
-          console.log('🔍 Tous les champs disponibles dans completeUserData:', Object.keys(completeUserData));
-          console.log('🔍 Valeurs des champs dans completeUserData:', completeUserData);
+          logger.success('Données utilisateur complètes chargées:', completeUserData);
+          logger.debug('Tous les champs disponibles dans completeUserData:', Object.keys(completeUserData));
+          logger.debug('Valeurs des champs dans completeUserData:', completeUserData);
           setUserData(completeUserData);
         } else {
-          console.log('⚠️ Aucune donnée utilisateur complète trouvée, utilisation des données localStorage');
+          logger.warn('Aucune donnée utilisateur complète trouvée, utilisation des données localStorage');
           // Fallback vers les données localStorage
           const userStr = localStorage.getItem('user');
           if (userStr) {
             try {
               const localUserData = JSON.parse(userStr);
-              console.log('🔍 Données localStorage utilisées comme fallback:', localUserData);
-              console.log('🔍 Tous les champs disponibles dans localStorage:', Object.keys(localUserData));
+              logger.debug('Données localStorage utilisées comme fallback:', localUserData);
+              logger.debug('Tous les champs disponibles dans localStorage:', Object.keys(localUserData));
               setUserData(localUserData);
             } catch (error) {
-              console.error('❌ Erreur parsing user localStorage:', error);
+              logger.error('Erreur parsing user localStorage:', error);
             }
           }
         }
       } catch (error) {
-        console.error('❌ Erreur lors du chargement des données utilisateur:', error);
-        console.log('🔄 Utilisation des données localStorage comme fallback...');
+        logger.error('Erreur lors du chargement des données utilisateur:', error);
+        logger.debug('Utilisation des données localStorage comme fallback...');
         
         // Fallback vers les données localStorage en cas d'erreur
         const userStr = localStorage.getItem('user');
         if (userStr) {
           try {
             const localUserData = JSON.parse(userStr);
-            console.log('✅ Données localStorage utilisées comme fallback:', localUserData);
-            console.log('🔍 Tous les champs disponibles dans localStorage:', Object.keys(localUserData));
+            logger.success('Données localStorage utilisées comme fallback:', localUserData);
+            logger.debug('Tous les champs disponibles dans localStorage:', Object.keys(localUserData));
             setUserData(localUserData);
           } catch (error) {
-            console.error('❌ Erreur parsing user localStorage:', error);
+            logger.error('Erreur parsing user localStorage:', error);
           }
         }
       } finally {
@@ -96,7 +97,7 @@ const SettingsPage: React.FC = () => {
         const user = JSON.parse(userStr);
         return `${user.firstName || 'Client'} ${user.lastName || 'AmCbunq'}`;
       } catch (error) {
-        console.error('❌ Erreur parsing user:', error);
+        logger.error('Erreur parsing user dans getUserName:', error);
       }
     }
     return 'Client AmCbunq';
@@ -115,7 +116,7 @@ const SettingsPage: React.FC = () => {
         const user = JSON.parse(userStr);
         return user.email || 'client@amcbunq.com';
       } catch (error) {
-        console.error('❌ Erreur parsing user:', error);
+        logger.error('Erreur parsing user dans getUserEmail:', error);
       }
     }
     return 'client@amcbunq.com';
@@ -134,7 +135,7 @@ const SettingsPage: React.FC = () => {
         const user = JSON.parse(userStr);
         return user.firstName || 'Client';
       } catch (error) {
-        console.error('❌ Erreur parsing user:', error);
+        logger.error('Erreur parsing user dans getUserFirstName:', error);
       }
     }
     return 'Client';
@@ -153,7 +154,7 @@ const SettingsPage: React.FC = () => {
         const user = JSON.parse(userStr);
         return user.lastName || 'AmCbunq';
       } catch (error) {
-        console.error('❌ Erreur parsing user:', error);
+        logger.error('Erreur parsing user dans getUserLastName:', error);
       }
     }
     return 'AmCbunq';
@@ -169,7 +170,7 @@ const SettingsPage: React.FC = () => {
 
   // Fonction pour récupérer la date de naissance de l'utilisateur connecté
   const getUserDateOfBirth = (): string => {
-    console.log('🔍 getUserDateOfBirth - userData:', userData);
+    logger.debug('getUserDateOfBirth - userData:', userData);
     
     if (userData) {
       // Essayer différents noms de champs possibles (dob est le nom correct utilisé dans la DB)
@@ -177,12 +178,12 @@ const SettingsPage: React.FC = () => {
       
       for (const field of possibleFields) {
         if (userData[field]) {
-          console.log(`✅ Date de naissance trouvée dans le champ '${field}':`, userData[field]);
+          logger.success(`Date de naissance trouvée dans le champ '${field}':`, userData[field]);
           
           // Si c'est un timestamp Firebase
           if (userData[field]._seconds) {
             const date = new Date(userData[field]._seconds * 1000);
-            console.log('🔍 Timestamp converti en date:', date);
+            logger.debug('Timestamp converti en date:', date);
             return date.toISOString().split('T')[0];
           }
           // Si c'est déjà une date
@@ -196,8 +197,8 @@ const SettingsPage: React.FC = () => {
         }
       }
       
-      console.log('⚠️ Aucun champ de date de naissance trouvé dans userData');
-      console.log('🔍 Champs disponibles dans userData:', Object.keys(userData));
+      logger.warn('Aucun champ de date de naissance trouvé dans userData');
+      logger.debug('Champs disponibles dans userData:', Object.keys(userData));
     }
     
     // Fallback vers localStorage
@@ -205,17 +206,17 @@ const SettingsPage: React.FC = () => {
     if (userStr) {
       try {
         const user = JSON.parse(userStr);
-        console.log('🔍 getUserDateOfBirth - Fallback localStorage user:', user);
+        logger.debug('getUserDateOfBirth - Fallback localStorage user:', user);
         
         const possibleFields = ['dob', 'birthDate', 'dateOfBirth', 'birthdate', 'date_de_naissance'];
         for (const field of possibleFields) {
           if (user[field]) {
-            console.log(`✅ Date de naissance trouvée dans localStorage champ '${field}':`, user[field]);
+            logger.success(`Date de naissance trouvée dans localStorage champ '${field}':`, user[field]);
             return user[field];
           }
         }
       } catch (error) {
-        console.error('❌ Erreur parsing user localStorage:', error);
+        logger.error('Erreur parsing user localStorage dans getUserDateOfBirth:', error);
       }
     }
     
@@ -224,7 +225,7 @@ const SettingsPage: React.FC = () => {
 
   // Fonction pour récupérer le lieu de naissance de l'utilisateur connecté
   const getUserPlaceOfBirth = (): string => {
-    console.log('🔍 getUserPlaceOfBirth - userData:', userData);
+    logger.debug('getUserPlaceOfBirth - userData:', userData);
     
     if (userData) {
       // Essayer différents noms de champs possibles (pob est le nom correct utilisé dans la DB)
@@ -232,13 +233,13 @@ const SettingsPage: React.FC = () => {
       
       for (const field of possibleFields) {
         if (userData[field]) {
-          console.log(`✅ Lieu de naissance trouvé dans le champ '${field}':`, userData[field]);
+          logger.success(`Lieu de naissance trouvé dans le champ '${field}':`, userData[field]);
           return userData[field];
         }
       }
       
-      console.log('⚠️ Aucun champ de lieu de naissance trouvé dans userData');
-      console.log('🔍 Champs disponibles dans userData:', Object.keys(userData));
+      logger.warn('Aucun champ de lieu de naissance trouvé dans userData');
+      logger.debug('Champs disponibles dans userData:', Object.keys(userData));
     }
     
     // Fallback vers localStorage
@@ -246,17 +247,17 @@ const SettingsPage: React.FC = () => {
     if (userStr) {
       try {
         const user = JSON.parse(userStr);
-        console.log('🔍 getUserPlaceOfBirth - Fallback localStorage user:', user);
+        logger.debug('getUserPlaceOfBirth - Fallback localStorage user:', user);
         
         const possibleFields = ['pob', 'birthPlace', 'placeOfBirth', 'birthplace', 'lieu_de_naissance'];
         for (const field of possibleFields) {
           if (user[field]) {
-            console.log(`✅ Lieu de naissance trouvé dans localStorage champ '${field}':`, user[field]);
+            logger.success(`Lieu de naissance trouvé dans localStorage champ '${field}':`, user[field]);
             return user[field];
           }
         }
       } catch (error) {
-        console.error('❌ Erreur parsing user localStorage:', error);
+        logger.error('Erreur parsing user localStorage dans getUserPlaceOfBirth:', error);
       }
     }
     

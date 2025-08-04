@@ -24,6 +24,7 @@ import { useNotifications, useKycSync } from '../../hooks/useNotifications';
 import NotificationContainer from '../../components/NotificationContainer';
 import ConfirmationDialog from '../../components/ConfirmationDialog';
 import VerificationState from '../../components/VerificationState';
+import { logger } from '../../utils/logger';
 
 interface Beneficiary {
   id: string;
@@ -92,7 +93,7 @@ const TransfersPage: React.FC = () => {
         const userId = FirebaseDataService.getCurrentUserId();
         
         if (!userId) {
-          console.error('Aucun utilisateur connecté');
+          logger.error('Aucun utilisateur connecté');
           return;
         }
 
@@ -118,7 +119,7 @@ const TransfersPage: React.FC = () => {
 
         // Charger les virements
         const firebaseTransfers = await FirebaseDataService.getUserTransfers(userId);
-        console.log('🔍 Virements reçus dans TransfersPage:', firebaseTransfers);
+        logger.debug('Virements reçus dans TransfersPage:', firebaseTransfers);
         
         const mappedTransfers: Transfer[] = firebaseTransfers.map(trans => {
           // Utiliser parseFirestoreDate pour une conversion sécurisée
@@ -149,7 +150,7 @@ const TransfersPage: React.FC = () => {
 
         // Récupérer les vrais bénéficiaires de Firestore
         const firebaseBeneficiaries = await FirebaseDataService.getUserBeneficiaries(userId);
-        console.log('🔍 Bénéficiaires reçus dans TransfersPage:', firebaseBeneficiaries);
+        logger.debug('Bénéficiaires reçus dans TransfersPage:', firebaseBeneficiaries);
         
         const mappedBeneficiaries: Beneficiary[] = firebaseBeneficiaries.map(ben => {
           // Utiliser parseFirestoreDate pour une conversion sécurisée
@@ -186,7 +187,7 @@ const TransfersPage: React.FC = () => {
         const userId = FirebaseDataService.getCurrentUserId();
         if (userId) {
           const firebaseAccounts = await FirebaseDataService.getUserAccounts(userId);
-          console.log('🔍 Comptes reçus dans TransfersPage:', firebaseAccounts);
+          logger.debug('Comptes reçus dans TransfersPage:', firebaseAccounts);
           
                                const mappedAccounts = firebaseAccounts.map(account => ({
             id: account.id,
@@ -307,7 +308,7 @@ const TransfersPage: React.FC = () => {
         lastUsed: new Date()
       };
 
-      console.log('Ajout du bénéficiaire:', newBeneficiary);
+              logger.debug('Ajout du bénéficiaire:', newBeneficiary);
       
       // Appel API réel pour créer le bénéficiaire
       const createdBeneficiary = await FirebaseDataService.createBeneficiary(newBeneficiary);
@@ -326,7 +327,7 @@ const TransfersPage: React.FC = () => {
         setBeneficiaries(prev => [...prev, addedBeneficiary]);
         setShowAddBeneficiary(false);
         resetFormData();
-        console.log('Bénéficiaire ajouté avec succès !');
+        logger.success('Bénéficiaire ajouté avec succès !');
       }
     } catch (error) {
       console.error('Erreur lors de l\'ajout du bénéficiaire:', error);
@@ -359,7 +360,7 @@ const TransfersPage: React.FC = () => {
         isFavorite: formData.isFavorite
       };
 
-      console.log('Mise à jour du bénéficiaire:', updateData);
+              logger.debug('Mise à jour du bénéficiaire:', updateData);
 
       // Appel API réel pour mettre à jour le bénéficiaire
       const updatedBeneficiary = await FirebaseDataService.updateBeneficiary(editingBeneficiary.id, updateData);
@@ -381,11 +382,11 @@ const TransfersPage: React.FC = () => {
         setShowEditBeneficiary(false);
         setEditingBeneficiary(null);
         resetFormData();
-        console.log('Bénéficiaire mis à jour avec succès !');
+        logger.success('Bénéficiaire mis à jour avec succès !');
       }
     } catch (error) {
       console.error('Erreur lors de la mise à jour du bénéficiaire:', error);
-      console.log('❌ Erreur lors de la mise à jour du bénéficiaire:', (error as Error).message);
+              logger.error('Erreur lors de la mise à jour du bénéficiaire:', (error as Error).message);
     }
   };
 
@@ -394,7 +395,7 @@ const TransfersPage: React.FC = () => {
       const userId = FirebaseDataService.getCurrentUserId();
       if (!userId) return;
 
-      console.log('Suppression du bénéficiaire:', beneficiaryId);
+              logger.debug('Suppression du bénéficiaire:', beneficiaryId);
 
       // Appel API réel pour supprimer le bénéficiaire
       const success = await FirebaseDataService.deleteBeneficiary(beneficiaryId, userId);
@@ -402,11 +403,11 @@ const TransfersPage: React.FC = () => {
       if (success) {
         const beneficiaryToDelete = beneficiaries.find(b => b.id === beneficiaryId);
         setBeneficiaries(prev => prev.filter(b => b.id !== beneficiaryId));
-        console.log('✅ Bénéficiaire supprimé avec succès:', beneficiaryToDelete?.name || 'Bénéficiaire');
+        logger.success('Bénéficiaire supprimé avec succès:', beneficiaryToDelete?.name || 'Bénéficiaire');
       }
     } catch (error) {
       console.error('Erreur lors de la suppression du bénéficiaire:', error);
-      console.log('❌ Erreur lors de la suppression du bénéficiaire:', (error as Error).message);
+              logger.error('Erreur lors de la suppression du bénéficiaire:', (error as Error).message);
     }
   };
 
@@ -417,12 +418,12 @@ const TransfersPage: React.FC = () => {
 
       // Validation des données
       if (!formData.fromAccount || !formData.toAccount || !formData.amount || !formData.description) {
-        console.log('⚠️ Champs manquants: Veuillez remplir tous les champs obligatoires pour effectuer le virement.');
+        logger.warn('Champs manquants: Veuillez remplir tous les champs obligatoires pour effectuer le virement.');
         return;
       }
 
       if (parseFloat(formData.amount) <= 0) {
-        console.log('⚠️ Montant invalide: Le montant du virement doit être supérieur à 0.');
+        logger.warn('Montant invalide: Le montant du virement doit être supérieur à 0.');
         return;
       }
 
@@ -453,7 +454,7 @@ const TransfersPage: React.FC = () => {
         date: transferType === 'scheduled' ? new Date(formData.scheduledDate) : new Date()
       };
 
-      console.log('Création du virement:', newTransfer);
+              logger.debug('Création du virement:', newTransfer);
 
       // Appel API réel pour créer le virement
       const createdTransfer = await FirebaseDataService.createTransfer(newTransfer);
@@ -479,14 +480,14 @@ const TransfersPage: React.FC = () => {
         
         // Message de succès différent selon le type de virement
         if (transferType === 'internal') {
-          console.log('✅ Virement interne créé avec succès:', formatCurrency(parseFloat(formData.amount)));
+          logger.success('Virement interne créé avec succès:', formatCurrency(parseFloat(formData.amount)));
         } else if (transferType === 'scheduled') {
-          console.log('✅ Virement programmé avec succès:', formatCurrency(parseFloat(formData.amount)));
+                      logger.success('Virement programmé avec succès:', formatCurrency(parseFloat(formData.amount)));
         }
       }
     } catch (error) {
       console.error('Erreur lors de la création du virement:', error);
-      console.log('❌ Erreur lors de la création du virement:', (error as Error).message);
+              logger.error('Erreur lors de la création du virement:', (error as Error).message);
     }
   };
 
@@ -503,7 +504,7 @@ const TransfersPage: React.FC = () => {
     if (!pendingTransferData) return;
 
     try {
-      console.log('Création du virement externe confirmé:', pendingTransferData);
+              logger.debug('Création du virement externe confirmé:', pendingTransferData);
 
       // Appel API réel pour créer le virement
       const createdTransfer = await FirebaseDataService.createTransfer(pendingTransferData);
@@ -526,11 +527,11 @@ const TransfersPage: React.FC = () => {
         setShowTransferForm(false);
         resetFormData();
         
-        console.log('✅ Virement externe soumis avec succès:', formatCurrency(pendingTransferData.amount));
+        logger.success('Virement externe soumis avec succès:', formatCurrency(pendingTransferData.amount));
       }
     } catch (error) {
       console.error('Erreur lors de la création du virement externe:', error);
-      console.log('❌ Erreur lors de la création du virement externe:', (error as Error).message);
+              logger.error('Erreur lors de la création du virement externe:', (error as Error).message);
     } finally {
       setPendingTransferData(null);
     }

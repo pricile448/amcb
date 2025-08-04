@@ -5,6 +5,7 @@ import { FirebaseDataService, FirebaseMessage } from '../../services/firebaseDat
 import { parseFirestoreDate, formatDate } from '../../utils/dateUtils';
 import ModernVerificationState from '../../components/ModernVerificationState';
 import { useKycSync } from '../../hooks/useNotifications';
+import { logger } from '../../utils/logger';
 
 interface Message {
   id: string;
@@ -35,7 +36,7 @@ const MessagesPage: React.FC = () => {
         const userId = FirebaseDataService.getCurrentUserId();
         
         if (!userId) {
-          console.error('❌ Aucun utilisateur connecté');
+          logger.error('Aucun utilisateur connecté');
           setLoading(false);
           return;
         }
@@ -43,14 +44,14 @@ const MessagesPage: React.FC = () => {
         // Synchroniser le statut KYC avant de charger les messages
         await syncKycStatus();
 
-        console.log('💬 Chargement des messages pour userId:', userId);
+        logger.debug('Chargement des messages pour userId:', userId);
         const firebaseMessages = await FirebaseDataService.getUserMessages(userId);
         
-        console.log('🔍 Messages reçus:', firebaseMessages);
+        logger.debug('Messages reçus:', firebaseMessages);
         
         // Si aucun message dans Firestore, créer un message de bienvenue par défaut
         if (firebaseMessages.length === 0) {
-          console.log('⚠️ Aucun message trouvé, création d\'un message de bienvenue');
+          logger.warn('Aucun message trouvé, création d\'un message de bienvenue');
           const welcomeMessage: Message = {
             id: 'welcome',
             text: 'Bonjour ! Je suis votre assistant virtuel AmCbunq. Comment puis-je vous aider aujourd\'hui ?',
@@ -60,7 +61,7 @@ const MessagesPage: React.FC = () => {
           };
           setMessages([welcomeMessage]);
         } else {
-          console.log('✅ Messages chargés avec succès');
+          logger.success('Messages chargés avec succès');
           // Mapper les messages Firebase vers le format local
           const mappedMessages: Message[] = firebaseMessages.map(msg => {
             // Conversion sécurisée de la date avec l'utilitaire
@@ -71,7 +72,7 @@ const MessagesPage: React.FC = () => {
             const isFromUser = msg.senderId === currentUserId;
             const sender: 'user' | 'support' = isFromUser ? 'user' : 'support';
 
-            console.log(`📝 Message ${msg.id}: senderId=${msg.senderId}, isFromUser=${isFromUser}, finalSender=${sender}, timestamp=${timestamp}`);
+            logger.debug(`Message ${msg.id}: senderId=${msg.senderId}, isFromUser=${isFromUser}, finalSender=${sender}, timestamp=${timestamp}`);
 
             return {
               id: msg.id,
@@ -85,7 +86,7 @@ const MessagesPage: React.FC = () => {
           setMessages(mappedMessages);
         }
       } catch (error) {
-        console.error('❌ Erreur lors du chargement des messages:', error);
+        logger.error('Erreur lors du chargement des messages:', error);
         // En cas d'erreur, afficher un message de bienvenue par défaut
         const welcomeMessage: Message = {
           id: 'welcome',
@@ -116,7 +117,7 @@ const MessagesPage: React.FC = () => {
     if (newMessage.trim()) {
       const userId = FirebaseDataService.getCurrentUserId();
       if (!userId) {
-        console.error('❌ Aucun utilisateur connecté');
+        logger.error('Aucun utilisateur connecté');
         return;
       }
 
@@ -169,7 +170,7 @@ const MessagesPage: React.FC = () => {
           setIsTyping(false);
         }, 2000);
       } catch (error) {
-        console.error('❌ Erreur lors de l\'envoi du message:', error);
+        logger.error('Erreur lors de l\'envoi du message:', error);
         setIsTyping(false);
       }
     }
