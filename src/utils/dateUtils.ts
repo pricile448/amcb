@@ -1,6 +1,7 @@
 /**
  * Utilitaires pour la gestion des dates dans l'application
  */
+import { logger } from './logger';
 
 /**
  * Convertit une date Firestore en objet Date JavaScript
@@ -210,7 +211,7 @@ export const isMobileScreen = (): boolean => {
                    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   
   // Debug: afficher les informations de détection
-  console.log('📱 Mobile detection:', {
+  logger.debug('Mobile detection:', {
     innerWidth: window.innerWidth,
     innerHeight: window.innerHeight,
     userAgent: navigator.userAgent,
@@ -240,7 +241,7 @@ export const formatUserNameForDisplay = (firstName: string, lastName: string): s
   }
   
   // Debug: afficher les informations de troncature
-  console.log('👤 User name formatting:', {
+  logger.debug('User name formatting:', {
     firstName,
     lastName,
     isMobile,

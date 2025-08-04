@@ -22,6 +22,7 @@ import { FirebaseDataService, FirebaseAccount, FirebaseTransaction } from '../..
 import { parseFirestoreDate, formatDate, formatAmount, truncateTransactionDescription, formatUserNameForDisplay } from '../../utils/dateUtils';
 import { useKycSync } from '../../hooks/useNotifications';
 import EmailVerificationBanner from '../../components/EmailVerificationBanner';
+import { logger } from '../../utils/logger';
 
 // Utiliser FirebaseAccount au lieu de l'interface locale
 type Account = FirebaseAccount;
@@ -66,12 +67,12 @@ const DashboardPage: React.FC = () => {
         // Charger les comptes
         const firebaseAccounts = await FirebaseDataService.getUserAccounts(userId);
         const mappedAccounts: Account[] = firebaseAccounts.map(acc => {
-          console.log('🔍 Dashboard - Account data:', acc);
-          console.log('🔍 Dashboard - Account name:', acc.name);
-          console.log('🔍 Dashboard - Account type:', acc.accountType);
+          logger.debug('Dashboard - Account data:', acc);
+          logger.debug('Dashboard - Account name:', acc.name);
+          logger.debug('Dashboard - Account type:', acc.accountType);
           
           const translatedName = translateAccountName(acc.name || acc.accountType || 'Compte');
-          console.log('🔍 Dashboard - Translated name:', translatedName);
+          logger.debug('Dashboard - Translated name:', translatedName);
           
           return {
             ...acc, // Garder toutes les propriétés originales
@@ -169,22 +170,22 @@ const DashboardPage: React.FC = () => {
   };
 
   const translateAccountName = (name: string): string => {
-    console.log('🔍 Dashboard translateAccountName called with:', name);
+    logger.debug('Dashboard translateAccountName called with:', name);
     const lowerName = name.toLowerCase();
-    console.log('🔍 Dashboard lowercase name:', lowerName);
+    logger.debug('Dashboard lowercase name:', lowerName);
     
     switch (lowerName) {
       case 'checking':
-        console.log('🔍 Dashboard translating checking to Compte courant');
+        logger.debug('Dashboard translating checking to Compte courant');
         return 'Compte courant';
       case 'savings':
-        console.log('🔍 Dashboard translating savings to Compte épargne');
+        logger.debug('Dashboard translating savings to Compte épargne');
         return 'Compte épargne';
       case 'credit':
-        console.log('🔍 Dashboard translating credit to Carte de crédit');
+        logger.debug('Dashboard translating credit to Carte de crédit');
         return 'Carte de crédit';
       default:
-        console.log('🔍 Dashboard no translation found, returning original:', name);
+        logger.debug('Dashboard no translation found, returning original:', name);
         return name;
     }
   };
@@ -207,7 +208,7 @@ const DashboardPage: React.FC = () => {
       <EmailVerificationBanner 
         userEmail={getUserEmail()}
         onVerificationComplete={() => {
-          console.log('✅ Email vérifié avec succès');
+          logger.success('Email vérifié avec succès');
           // Recharger les données si nécessaire
         }}
       />

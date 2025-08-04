@@ -158,18 +158,18 @@ export class FirebaseDataService {
       const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel');
       
       if (isProduction) {
-        console.log('🔍 FirebaseDataService.getNotifications - Production: Utilisation directe Firestore');
+        logger.debug(🔍 FirebaseDataService.getNotifications - Production: Utilisation directe Firestore');
         
         // Récupérer les données utilisateur depuis Firestore
         const userData = await this.getUserData(userId);
-        console.log('🔍 FirebaseDataService.getNotifications - UserData:', userData);
+        logger.debug(🔍 FirebaseDataService.getNotifications - UserData:', userData);
         
         if (userData && userData.notifications) {
-          console.log('🔍 FirebaseDataService.getNotifications - Notifications trouvées:', userData.notifications);
+          logger.debug(🔍 FirebaseDataService.getNotifications - Notifications trouvées:', userData.notifications);
           return userData.notifications;
         }
         
-        console.log('🔍 FirebaseDataService.getNotifications - Aucune notification trouvée');
+        logger.debug(🔍 FirebaseDataService.getNotifications - Aucune notification trouvée');
         return [];
       }
       
@@ -186,7 +186,7 @@ export class FirebaseDataService {
       }
 
       const data = await response.json();
-      console.log('✅ Notifications récupérées depuis Firestore:', data.length);
+      logger.debug(✅ Notifications récupérées depuis Firestore:', data.length);
       return data;
     } catch (error) {
       console.error('Erreur lors de la récupération des notifications:', error);
@@ -207,7 +207,7 @@ export class FirebaseDataService {
       }
 
       const data = await response.json();
-      console.log('✅ Notification ajoutée via Firestore:', data.id);
+      logger.debug(✅ Notification ajoutée via Firestore:', data.id);
       return data;
     } catch (error) {
       console.error('Erreur lors de l\'ajout de notification:', error);
@@ -228,7 +228,7 @@ export class FirebaseDataService {
       }
 
       const data = await response.json();
-      console.log('✅ Notification mise à jour via Firestore:', notificationId);
+      logger.debug(✅ Notification mise à jour via Firestore:', notificationId);
       return data;
     } catch (error) {
       console.error('Erreur lors de la mise à jour de notification:', error);
@@ -249,7 +249,7 @@ export class FirebaseDataService {
         throw new Error(`Erreur HTTP: ${response.status}`);
       }
 
-      console.log('✅ Notification supprimée via Firestore:', notificationId);
+      logger.debug(✅ Notification supprimée via Firestore:', notificationId);
       return true;
     } catch (error) {
       console.error('Erreur lors de la suppression de notification:', error);
@@ -315,18 +315,18 @@ export class FirebaseDataService {
       const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel') || window.location.hostname.includes('render');
       
       if (isProduction) {
-        console.log('🔍 FirebaseDataService.getUserTransactions - Production: Utilisation directe Firestore');
+        logger.debug(🔍 FirebaseDataService.getUserTransactions - Production: Utilisation directe Firestore');
         
         // Récupérer les données utilisateur depuis Firestore
         const userData = await this.getUserData(userId);
-        console.log('🔍 FirebaseDataService.getUserTransactions - UserData:', userData);
+        logger.debug(🔍 FirebaseDataService.getUserTransactions - UserData:', userData);
         
         if (userData && userData.transactions) {
-          console.log('🔍 FirebaseDataService.getUserTransactions - Transactions trouvées:', userData.transactions);
+          logger.debug(🔍 FirebaseDataService.getUserTransactions - Transactions trouvées:', userData.transactions);
           return userData.transactions;
         }
         
-        console.log('🔍 FirebaseDataService.getUserTransactions - Aucune transaction trouvée');
+        logger.debug(🔍 FirebaseDataService.getUserTransactions - Aucune transaction trouvée');
         return [];
       }
       
@@ -375,18 +375,18 @@ export class FirebaseDataService {
       const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel') || window.location.hostname.includes('render');
       
       if (isProduction) {
-        console.log('🔍 FirebaseDataService.getUserTransfers - Production: Utilisation directe Firestore');
+        logger.debug(🔍 FirebaseDataService.getUserTransfers - Production: Utilisation directe Firestore');
         
         // Récupérer les données utilisateur depuis Firestore
         const userData = await this.getUserData(userId);
-        console.log('🔍 FirebaseDataService.getUserTransfers - UserData:', userData);
+        logger.debug(🔍 FirebaseDataService.getUserTransfers - UserData:', userData);
         
         if (userData && userData.transfers) {
-          console.log('🔍 FirebaseDataService.getUserTransfers - Virements trouvés:', userData.transfers);
+          logger.debug(🔍 FirebaseDataService.getUserTransfers - Virements trouvés:', userData.transfers);
           return userData.transfers;
         }
         
-        console.log('🔍 FirebaseDataService.getUserTransfers - Aucun virement trouvé');
+        logger.debug(🔍 FirebaseDataService.getUserTransfers - Aucun virement trouvé');
         return [];
       }
       
@@ -401,8 +401,8 @@ export class FirebaseDataService {
       }
 
       const data = await response.json();
-      console.log('🔍 Données brutes virements reçues:', data);
-      console.log('🔍 Virements array:', data.transfers);
+      logger.debug(🔍 Données brutes virements reçues:', data);
+      logger.debug(🔍 Virements array:', data.transfers);
       return data.transfers || [];
     } catch (error) {
       console.error('Erreur FirebaseDataService.getUserTransfers:', error);
@@ -417,18 +417,18 @@ export class FirebaseDataService {
       const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel') || window.location.hostname.includes('render');
       
       if (isProduction) {
-        console.log('🔍 FirebaseDataService.getUserBeneficiaries - Production: Utilisation directe Firestore');
+        logger.debug(🔍 FirebaseDataService.getUserBeneficiaries - Production: Utilisation directe Firestore');
         
         // Récupérer les données utilisateur depuis Firestore
         const userData = await this.getUserData(userId);
-        console.log('🔍 FirebaseDataService.getUserBeneficiaries - UserData:', userData);
+        logger.debug(🔍 FirebaseDataService.getUserBeneficiaries - UserData:', userData);
         
         if (userData && userData.beneficiaries) {
-          console.log('🔍 FirebaseDataService.getUserBeneficiaries - Bénéficiaires trouvés:', userData.beneficiaries);
+          logger.debug(🔍 FirebaseDataService.getUserBeneficiaries - Bénéficiaires trouvés:', userData.beneficiaries);
           return userData.beneficiaries;
         }
         
-        console.log('🔍 FirebaseDataService.getUserBeneficiaries - Aucun bénéficiaire trouvé');
+        logger.debug(🔍 FirebaseDataService.getUserBeneficiaries - Aucun bénéficiaire trouvé');
         return [];
       }
       
@@ -443,8 +443,8 @@ export class FirebaseDataService {
       }
 
       const data = await response.json();
-      console.log('🔍 Données brutes bénéficiaires reçues:', data);
-      console.log('🔍 Bénéficiaires array:', data.beneficiaries);
+      logger.debug(🔍 Données brutes bénéficiaires reçues:', data);
+      logger.debug(🔍 Bénéficiaires array:', data.beneficiaries);
       return data.beneficiaries || [];
     } catch (error) {
       console.error('Erreur FirebaseDataService.getUserBeneficiaries:', error);
@@ -459,18 +459,18 @@ export class FirebaseDataService {
       const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel') || window.location.hostname.includes('render');
       
       if (isProduction) {
-        console.log('🔍 FirebaseDataService.getUserBudgets - Production: Utilisation directe Firestore');
+        logger.debug(🔍 FirebaseDataService.getUserBudgets - Production: Utilisation directe Firestore');
         
         // Récupérer les données utilisateur depuis Firestore
         const userData = await this.getUserData(userId);
-        console.log('🔍 FirebaseDataService.getUserBudgets - UserData:', userData);
+        logger.debug(🔍 FirebaseDataService.getUserBudgets - UserData:', userData);
         
         if (userData && userData.budgets) {
-          console.log('🔍 FirebaseDataService.getUserBudgets - Budgets trouvés:', userData.budgets);
+          logger.debug(🔍 FirebaseDataService.getUserBudgets - Budgets trouvés:', userData.budgets);
           return userData.budgets;
         }
         
-        console.log('🔍 FirebaseDataService.getUserBudgets - Aucun budget trouvé');
+        logger.debug(🔍 FirebaseDataService.getUserBudgets - Aucun budget trouvé');
         return [];
       }
       
@@ -485,8 +485,8 @@ export class FirebaseDataService {
       }
 
       const data = await response.json();
-      console.log('🔍 Données brutes budgets reçues:', data);
-      console.log('🔍 Budgets array:', data.budgets);
+      logger.debug(🔍 Données brutes budgets reçues:', data);
+      logger.debug(🔍 Budgets array:', data.budgets);
       return data.budgets || [];
     } catch (error) {
       console.error('Erreur FirebaseDataService.getUserBudgets:', error);
@@ -496,33 +496,33 @@ export class FirebaseDataService {
 
   // Récupérer les messages de l'utilisateur depuis la collection chats
   static async getUserMessages(userId: string): Promise<FirebaseMessage[]> {
-    console.log('💬 Récupération des messages depuis la collection chats pour userId:', userId);
+    logger.debug(💬 Récupération des messages depuis la collection chats pour userId:', userId);
     try {
       // FORCER l'utilisation de Firestore en production
       const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel') || window.location.hostname.includes('render');
       
       if (isProduction) {
-        console.log('🔍 FirebaseDataService.getUserMessages - Production: Utilisation directe Firestore');
+        logger.debug(🔍 FirebaseDataService.getUserMessages - Production: Utilisation directe Firestore');
         
         try {
           // 1. Chercher tous les chats où l'utilisateur est participant
-          console.log('🔍 FirebaseDataService.getUserMessages - Recherche des chats pour userId:', userId);
+          logger.debug(🔍 FirebaseDataService.getUserMessages - Recherche des chats pour userId:', userId);
           const chatsQuery = query(collection(db, 'chats'), where('participants', 'array-contains', userId));
           const chatsSnapshot = await getDocs(chatsQuery);
           
           if (chatsSnapshot.empty) {
-            console.log('🔍 FirebaseDataService.getUserMessages - Aucun chat trouvé pour cet utilisateur');
+            logger.debug(🔍 FirebaseDataService.getUserMessages - Aucun chat trouvé pour cet utilisateur');
             return [];
           }
           
-          console.log('🔍 FirebaseDataService.getUserMessages - Chats trouvés:', chatsSnapshot.docs.length);
+          logger.debug(🔍 FirebaseDataService.getUserMessages - Chats trouvés:', chatsSnapshot.docs.length);
           
           // 2. Récupérer tous les messages de tous les chats de l'utilisateur
           const allMessages: FirebaseMessage[] = [];
           
           for (const chatDoc of chatsSnapshot.docs) {
             const chatId = chatDoc.id;
-            console.log('🔍 FirebaseDataService.getUserMessages - Traitement du chat:', chatId);
+            logger.debug(🔍 FirebaseDataService.getUserMessages - Traitement du chat:', chatId);
             
             // 3. Accéder à la sous-collection messages de ce chat
             const messagesQuery = query(collection(db, 'chats', chatId, 'messages'));
@@ -534,7 +534,7 @@ export class FirebaseDataService {
                 ...doc.data()
               })) as FirebaseMessage[];
               
-              console.log('🔍 FirebaseDataService.getUserMessages - Messages trouvés dans le chat', chatId, ':', chatMessages.length);
+              logger.debug(🔍 FirebaseDataService.getUserMessages - Messages trouvés dans le chat', chatId, ':', chatMessages.length);
               allMessages.push(...chatMessages);
             }
           }
@@ -546,7 +546,7 @@ export class FirebaseDataService {
             return timeA.getTime() - timeB.getTime();
           });
           
-          console.log('🔍 FirebaseDataService.getUserMessages - Total messages récupérés:', allMessages.length);
+          logger.debug(🔍 FirebaseDataService.getUserMessages - Total messages récupérés:', allMessages.length);
           return allMessages;
           
         } catch (firestoreError) {
@@ -567,7 +567,7 @@ export class FirebaseDataService {
       }
 
       const data = await response.json();
-      console.log('✅ Messages de la collection chat récupérés avec succès:', data);
+      logger.debug(✅ Messages de la collection chat récupérés avec succès:', data);
       return data.messages || [];
     } catch (error) {
       console.error('❌ Erreur FirebaseDataService.getUserMessages:', error);
@@ -577,7 +577,7 @@ export class FirebaseDataService {
 
   // Envoyer un nouveau message
   static async sendMessage(userId: string, text: string, sender: 'user' | 'support'): Promise<FirebaseMessage | null> {
-    console.log('💬 Envoi d\'un nouveau message pour userId:', userId);
+    logger.debug(💬 Envoi d\'un nouveau message pour userId:', userId);
     try {
       const response = await fetch(`${API_CONFIG.BASE_URL}/api/chat/${userId}`, {
         method: 'POST',
@@ -591,7 +591,7 @@ export class FirebaseDataService {
       }
 
       const data = await response.json();
-      console.log('✅ Message envoyé avec succès:', data);
+      logger.debug(✅ Message envoyé avec succès:', data);
       return data.message || null;
     } catch (error) {
       console.error('❌ Erreur FirebaseDataService.sendMessage:', error);
@@ -624,25 +624,25 @@ export class FirebaseDataService {
 
   // Récupérer les données IBAN de l'utilisateur
   static async getUserIban(userId: string): Promise<FirebaseIban | null> {
-    console.log('🏦 Récupération des données IBAN pour userId:', userId);
+    logger.debug(🏦 Récupération des données IBAN pour userId:', userId);
     
     try {
       // FORCER l'utilisation de Firestore en production
       const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel') || window.location.hostname.includes('render');
       
       if (isProduction) {
-        console.log('🔍 FirebaseDataService.getUserIban - Production: Utilisation directe Firestore');
+        logger.debug(🔍 FirebaseDataService.getUserIban - Production: Utilisation directe Firestore');
         
         // Récupérer les données utilisateur depuis Firestore
         const userData = await this.getUserData(userId);
-        console.log('🔍 FirebaseDataService.getUserIban - UserData:', userData);
+        logger.debug(🔍 FirebaseDataService.getUserIban - UserData:', userData);
         
         if (userData && userData.iban) {
-          console.log('🔍 FirebaseDataService.getUserIban - IBAN trouvé:', userData.iban);
+          logger.debug(🔍 FirebaseDataService.getUserIban - IBAN trouvé:', userData.iban);
           return userData.iban;
         }
         
-        console.log('🔍 FirebaseDataService.getUserIban - Aucun IBAN trouvé');
+        logger.debug(🔍 FirebaseDataService.getUserIban - Aucun IBAN trouvé');
         return null;
       }
       
@@ -652,14 +652,14 @@ export class FirebaseDataService {
         headers: this.getAuthHeaders()
       });
 
-      console.log('🔍 Données brutes IBAN reçues:', response);
+      logger.debug(🔍 Données brutes IBAN reçues:', response);
       
       if (!response.ok) {
         throw new Error(`Erreur HTTP: ${response.status}`);
       }
 
       const data = await response.json();
-      console.log('🔍 IBAN object:', data.iban);
+      logger.debug(🔍 IBAN object:', data.iban);
       
       return data.success ? data.iban : null;
     } catch (error) {
@@ -717,7 +717,7 @@ export class FirebaseDataService {
     try {
       // Vérifier le cache d'abord
       if (userDataCache.has(userId)) {
-        console.log('👤 Données utilisateur récupérées du cache');
+        logger.debug(👤 Données utilisateur récupérées du cache');
         return userDataCache.get(userId);
       }
 
@@ -728,7 +728,7 @@ export class FirebaseDataService {
         // Mettre en cache
         userDataCache.set(userId, userData);
         
-        console.log('👤 Données utilisateur chargées:', userData);
+        logger.debug(👤 Données utilisateur chargées:', userData);
         return userData;
       }
       return null;
@@ -740,26 +740,26 @@ export class FirebaseDataService {
 
   // Méthode alternative pour récupérer les données utilisateur
   static async getUserDataAlternative(userId: string): Promise<any | null> {
-    console.log('🔄 Tentative de récupération alternative pour userId:', userId);
+    logger.debug(🔄 Tentative de récupération alternative pour userId:', userId);
     
     try {
       // Essayer de récupérer depuis le localStorage d'abord
       const userStr = localStorage.getItem('user');
       if (userStr) {
         const user = JSON.parse(userStr);
-        console.log('🔍 Utilisateur trouvé dans localStorage:', user);
-        console.log('🔍 ID dans localStorage:', user.id);
-        console.log('🔍 ID recherché:', userId);
+        logger.debug(🔍 Utilisateur trouvé dans localStorage:', user);
+        logger.debug(🔍 ID dans localStorage:', user.id);
+        logger.debug(🔍 ID recherché:', userId);
         
         // Si l'utilisateur a un ID correspondant, retourner ses données
         if (user.id === userId) {
-          console.log('✅ Correspondance trouvée dans localStorage');
+          logger.debug(✅ Correspondance trouvée dans localStorage');
           return user;
         } else {
-          console.log('❌ ID ne correspond pas dans localStorage');
+          logger.debug(❌ ID ne correspond pas dans localStorage');
         }
       } else {
-        console.log('❌ Aucun utilisateur dans localStorage');
+        logger.debug(❌ Aucun utilisateur dans localStorage');
       }
       
       // Si pas dans localStorage, essayer d'autres endpoints
@@ -789,7 +789,7 @@ export class FirebaseDataService {
         }
       }
       
-      console.log('⚠️ Aucune méthode alternative n\'a fonctionné');
+      logger.debug(⚠️ Aucune méthode alternative n\'a fonctionné');
       return null;
     } catch (error) {
       console.error('❌ Erreur dans getUserDataAlternative:', error);
@@ -817,7 +817,7 @@ export class FirebaseDataService {
     // Essayer de récupérer depuis accessToken si user n'existe pas
     const token = localStorage.getItem('accessToken');
     if (token) {
-      console.log('🔍 FirebaseDataService.getCurrentUserId - Token trouvé, mais pas d\'utilisateur');
+      logger.debug(🔍 FirebaseDataService.getCurrentUserId - Token trouvé, mais pas d\'utilisateur');
     }
     
     return null;
@@ -825,7 +825,7 @@ export class FirebaseDataService {
 
   // Test: Simuler les données Firestore pour le débogage
   static async testKycSync(userId: string): Promise<void> {
-    console.log('🧪 Test: Simulation de la synchronisation KYC');
+    logger.debug(🧪 Test: Simulation de la synchronisation KYC');
     
     // Simuler des données Firestore avec kycStatus = 'pending'
     const mockUserData = {
@@ -838,7 +838,7 @@ export class FirebaseDataService {
       isPhoneVerified: false
     };
     
-    console.log('🧪 Données simulées:', mockUserData);
+    logger.debug(🧪 Données simulées:', mockUserData);
     
     // Mettre à jour le localStorage
     const userStr = localStorage.getItem('user');
@@ -849,7 +849,7 @@ export class FirebaseDataService {
         verificationStatus: mockUserData.kycStatus
       };
       localStorage.setItem('user', JSON.stringify(updatedUser));
-      console.log('🧪 Test: localStorage mis à jour avec:', updatedUser);
+      logger.debug(🧪 Test: localStorage mis à jour avec:', updatedUser);
     }
   }
 
@@ -858,7 +858,7 @@ export class FirebaseDataService {
     try {
       // Vérifier le cache d'abord
       if (kycStatusCache.has(userId)) {
-        console.log('🔄 Statut KYC récupéré du cache:', kycStatusCache.get(userId));
+        logger.debug(🔄 Statut KYC récupéré du cache:', kycStatusCache.get(userId));
         return kycStatusCache.get(userId) || 'unverified';
       }
 
@@ -880,7 +880,7 @@ export class FirebaseDataService {
           localStorage.setItem('user', JSON.stringify(user));
         }
         
-        console.log('🔄 Statut KYC synchronisé:', status);
+        logger.debug(🔄 Statut KYC synchronisé:', status);
         return status;
       }
       return 'unverified';
@@ -894,7 +894,7 @@ export class FirebaseDataService {
   static clearCache(): void {
     userDataCache.clear();
     kycStatusCache.clear();
-    console.log('🗑️ Cache vidé');
+    logger.debug(🗑️ Cache vidé');
   }
 
   // Méthodes pour les bénéficiaires
