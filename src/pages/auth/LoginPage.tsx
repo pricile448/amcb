@@ -63,8 +63,10 @@ const LoginPage: React.FC = () => {
       
       const userData = userDoc.data();
       const isEmailVerified = userData.emailVerified || false;
+      const kycStatus = userData.kycStatus || userData.verificationStatus || 'unverified';
       
       logger.debug(`📧 Statut emailVerified: ${isEmailVerified}`);
+      logger.debug(`🔐 Statut KYC: ${kycStatus}`);
       
       if (!isEmailVerified) {
         // Déconnecter l'utilisateur
@@ -89,6 +91,8 @@ const LoginPage: React.FC = () => {
         id: user.uid,
         email: user.email,
         emailVerified: isEmailVerified,
+        kycStatus: kycStatus,
+        verificationStatus: kycStatus, // Compatibilité avec l'ancien format
         displayName: user.displayName || 'Utilisateur',
         photoURL: user.photoURL
       };
