@@ -13,9 +13,11 @@ async function testResend() {
   try {
     console.log('\n📧 Test d\'envoi d\'email...');
     
-         const result = await resend.emails.send({
-       from: 'onboarding@resend.dev',
-       to: ['pricilemenayamondo@gmail.com'],
+    // TODO: Une fois le domaine amccredit.com configuré dans Resend,
+    // remplacer 'onboarding@resend.dev' par 'noreply@amccredit.com'
+    const result = await resend.emails.send({
+      from: 'onboarding@resend.dev', // À changer pour 'noreply@amccredit.com'
+      to: ['pricilemenayamondo@gmail.com'],
       subject: 'Test de connexion Resend - AMCB',
       html: `
         <h1>Test de connexion Resend</h1>
