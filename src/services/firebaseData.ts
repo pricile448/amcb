@@ -158,18 +158,18 @@ export class FirebaseDataService {
       const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel');
       
       if (isProduction) {
-        console.log('🔍 FirebaseDataService.getNotifications - Production: Utilisation directe Firestore');
+        logger.debug('FirebaseDataService.getNotifications - Production: Utilisation directe Firestore');
         
         // Récupérer les données utilisateur depuis Firestore
         const userData = await this.getUserData(userId);
-        console.log('🔍 FirebaseDataService.getNotifications - UserData:', userData);
+        logger.debug('FirebaseDataService.getNotifications - UserData:', userData);
         
         if (userData && userData.notifications) {
-          console.log('🔍 FirebaseDataService.getNotifications - Notifications trouvées:', userData.notifications);
+          logger.debug('FirebaseDataService.getNotifications - Notifications trouvées:', userData.notifications);
           return userData.notifications;
         }
         
-        console.log('🔍 FirebaseDataService.getNotifications - Aucune notification trouvée');
+        logger.debug('FirebaseDataService.getNotifications - Aucune notification trouvée');
         return [];
       }
       
@@ -186,10 +186,10 @@ export class FirebaseDataService {
       }
 
       const data = await response.json();
-      console.log('✅ Notifications récupérées depuis Firestore:', data.length);
+      logger.success('Notifications récupérées depuis Firestore:', data.length);
       return data;
     } catch (error) {
-      console.error('Erreur lors de la récupération des notifications:', error);
+      logger.error('Erreur lors de la récupération des notifications:', error);
       return [];
     }
   }
@@ -207,10 +207,10 @@ export class FirebaseDataService {
       }
 
       const data = await response.json();
-      console.log('✅ Notification ajoutée via Firestore:', data.id);
+      logger.success('Notification ajoutée via Firestore:', data.id);
       return data;
     } catch (error) {
-      console.error('Erreur lors de l\'ajout de notification:', error);
+      logger.error('Erreur lors de l\'ajout de notification:', error);
       return null;
     }
   }
@@ -228,10 +228,10 @@ export class FirebaseDataService {
       }
 
       const data = await response.json();
-      console.log('✅ Notification mise à jour via Firestore:', notificationId);
+      logger.success('Notification mise à jour via Firestore:', notificationId);
       return data;
     } catch (error) {
-      console.error('Erreur lors de la mise à jour de notification:', error);
+      logger.error('Erreur lors de la mise à jour de notification:', error);
       return null;
     }
   }
@@ -249,10 +249,10 @@ export class FirebaseDataService {
         throw new Error(`Erreur HTTP: ${response.status}`);
       }
 
-      console.log('✅ Notification supprimée via Firestore:', notificationId);
+      logger.success('Notification supprimée via Firestore:', notificationId);
       return true;
     } catch (error) {
-      console.error('Erreur lors de la suppression de notification:', error);
+      logger.error('Erreur lors de la suppression de notification:', error);
       return false;
     }
   }
@@ -303,7 +303,7 @@ export class FirebaseDataService {
       logger.debug('FirebaseDataService.getUserAccounts - Data reçue:', data);
       return data.accounts || [];
     } catch (error) {
-      console.error('❌ Erreur FirebaseDataService.getUserAccounts:', error);
+      logger.error('Erreur FirebaseDataService.getUserAccounts:', error);
       return [];
     }
   }
@@ -315,18 +315,18 @@ export class FirebaseDataService {
       const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel') || window.location.hostname.includes('render');
       
       if (isProduction) {
-        console.log('🔍 FirebaseDataService.getUserTransactions - Production: Utilisation directe Firestore');
+        logger.debug('FirebaseDataService.getUserTransactions - Production: Utilisation directe Firestore');
         
         // Récupérer les données utilisateur depuis Firestore
         const userData = await this.getUserData(userId);
-        console.log('🔍 FirebaseDataService.getUserTransactions - UserData:', userData);
+        logger.debug('FirebaseDataService.getUserTransactions - UserData:', userData);
         
         if (userData && userData.transactions) {
-          console.log('🔍 FirebaseDataService.getUserTransactions - Transactions trouvées:', userData.transactions);
+          logger.debug('FirebaseDataService.getUserTransactions - Transactions trouvées:', userData.transactions);
           return userData.transactions;
         }
         
-        console.log('🔍 FirebaseDataService.getUserTransactions - Aucune transaction trouvée');
+        logger.debug('FirebaseDataService.getUserTransactions - Aucune transaction trouvée');
         return [];
       }
       
@@ -343,7 +343,7 @@ export class FirebaseDataService {
       const data = await response.json();
       return data.transactions || [];
     } catch (error) {
-      console.error('Erreur FirebaseDataService.getUserTransactions:', error);
+      logger.error('Erreur FirebaseDataService.getUserTransactions:', error);
       return [];
     }
   }
@@ -363,7 +363,7 @@ export class FirebaseDataService {
       const data = await response.json();
       return data.documents || [];
     } catch (error) {
-      console.error('Erreur FirebaseDataService.getUserDocuments:', error);
+      logger.error('Erreur FirebaseDataService.getUserDocuments:', error);
       return [];
     }
   }
@@ -375,18 +375,18 @@ export class FirebaseDataService {
       const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel') || window.location.hostname.includes('render');
       
       if (isProduction) {
-        console.log('🔍 FirebaseDataService.getUserTransfers - Production: Utilisation directe Firestore');
+        logger.debug('FirebaseDataService.getUserTransfers - Production: Utilisation directe Firestore');
         
         // Récupérer les données utilisateur depuis Firestore
         const userData = await this.getUserData(userId);
-        console.log('🔍 FirebaseDataService.getUserTransfers - UserData:', userData);
+        logger.debug('FirebaseDataService.getUserTransfers - UserData:', userData);
         
         if (userData && userData.transfers) {
-          console.log('🔍 FirebaseDataService.getUserTransfers - Virements trouvés:', userData.transfers);
+          logger.debug('FirebaseDataService.getUserTransfers - Virements trouvés:', userData.transfers);
           return userData.transfers;
         }
         
-        console.log('🔍 FirebaseDataService.getUserTransfers - Aucun virement trouvé');
+        logger.debug('FirebaseDataService.getUserTransfers - Aucun virement trouvé');
         return [];
       }
       
@@ -401,11 +401,11 @@ export class FirebaseDataService {
       }
 
       const data = await response.json();
-      console.log('🔍 Données brutes virements reçues:', data);
-      console.log('🔍 Virements array:', data.transfers);
+      logger.debug('Données brutes virements reçues:', data);
+      logger.debug('Virements array:', data.transfers);
       return data.transfers || [];
     } catch (error) {
-      console.error('Erreur FirebaseDataService.getUserTransfers:', error);
+      logger.error('Erreur FirebaseDataService.getUserTransfers:', error);
       return [];
     }
   }
@@ -417,18 +417,18 @@ export class FirebaseDataService {
       const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel') || window.location.hostname.includes('render');
       
       if (isProduction) {
-        console.log('🔍 FirebaseDataService.getUserBeneficiaries - Production: Utilisation directe Firestore');
+        logger.debug('FirebaseDataService.getUserBeneficiaries - Production: Utilisation directe Firestore');
         
         // Récupérer les données utilisateur depuis Firestore
         const userData = await this.getUserData(userId);
-        console.log('🔍 FirebaseDataService.getUserBeneficiaries - UserData:', userData);
+        logger.debug('FirebaseDataService.getUserBeneficiaries - UserData:', userData);
         
         if (userData && userData.beneficiaries) {
-          console.log('🔍 FirebaseDataService.getUserBeneficiaries - Bénéficiaires trouvés:', userData.beneficiaries);
+          logger.debug('FirebaseDataService.getUserBeneficiaries - Bénéficiaires trouvés:', userData.beneficiaries);
           return userData.beneficiaries;
         }
         
-        console.log('🔍 FirebaseDataService.getUserBeneficiaries - Aucun bénéficiaire trouvé');
+        logger.debug('FirebaseDataService.getUserBeneficiaries - Aucun bénéficiaire trouvé');
         return [];
       }
       
@@ -443,11 +443,11 @@ export class FirebaseDataService {
       }
 
       const data = await response.json();
-      console.log('🔍 Données brutes bénéficiaires reçues:', data);
-      console.log('🔍 Bénéficiaires array:', data.beneficiaries);
+      logger.debug('Données brutes bénéficiaires reçues:', data);
+      logger.debug('Bénéficiaires array:', data.beneficiaries);
       return data.beneficiaries || [];
     } catch (error) {
-      console.error('Erreur FirebaseDataService.getUserBeneficiaries:', error);
+      logger.error('Erreur FirebaseDataService.getUserBeneficiaries:', error);
       return [];
     }
   }
@@ -459,18 +459,18 @@ export class FirebaseDataService {
       const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel') || window.location.hostname.includes('render');
       
       if (isProduction) {
-        console.log('🔍 FirebaseDataService.getUserBudgets - Production: Utilisation directe Firestore');
+        logger.debug('FirebaseDataService.getUserBudgets - Production: Utilisation directe Firestore');
         
         // Récupérer les données utilisateur depuis Firestore
         const userData = await this.getUserData(userId);
-        console.log('🔍 FirebaseDataService.getUserBudgets - UserData:', userData);
+        logger.debug('FirebaseDataService.getUserBudgets - UserData:', userData);
         
         if (userData && userData.budgets) {
-          console.log('🔍 FirebaseDataService.getUserBudgets - Budgets trouvés:', userData.budgets);
+          logger.debug('FirebaseDataService.getUserBudgets - Budgets trouvés:', userData.budgets);
           return userData.budgets;
         }
         
-        console.log('🔍 FirebaseDataService.getUserBudgets - Aucun budget trouvé');
+        logger.debug('FirebaseDataService.getUserBudgets - Aucun budget trouvé');
         return [];
       }
       
@@ -485,44 +485,44 @@ export class FirebaseDataService {
       }
 
       const data = await response.json();
-      console.log('🔍 Données brutes budgets reçues:', data);
-      console.log('🔍 Budgets array:', data.budgets);
+      logger.debug('Données brutes budgets reçues:', data);
+      logger.debug('Budgets array:', data.budgets);
       return data.budgets || [];
     } catch (error) {
-      console.error('Erreur FirebaseDataService.getUserBudgets:', error);
+      logger.error('Erreur FirebaseDataService.getUserBudgets:', error);
       return [];
     }
   }
 
   // Récupérer les messages de l'utilisateur depuis la collection chats
   static async getUserMessages(userId: string): Promise<FirebaseMessage[]> {
-    console.log('💬 Récupération des messages depuis la collection chats pour userId:', userId);
+    logger.debug('Récupération des messages depuis la collection chats pour userId:', userId);
     try {
       // FORCER l'utilisation de Firestore en production
       const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel') || window.location.hostname.includes('render');
       
       if (isProduction) {
-        console.log('🔍 FirebaseDataService.getUserMessages - Production: Utilisation directe Firestore');
+        logger.debug('FirebaseDataService.getUserMessages - Production: Utilisation directe Firestore');
         
         try {
           // 1. Chercher tous les chats où l'utilisateur est participant
-          console.log('🔍 FirebaseDataService.getUserMessages - Recherche des chats pour userId:', userId);
+          logger.debug('FirebaseDataService.getUserMessages - Recherche des chats pour userId:', userId);
           const chatsQuery = query(collection(db, 'chats'), where('participants', 'array-contains', userId));
           const chatsSnapshot = await getDocs(chatsQuery);
           
           if (chatsSnapshot.empty) {
-            console.log('🔍 FirebaseDataService.getUserMessages - Aucun chat trouvé pour cet utilisateur');
+            logger.debug('FirebaseDataService.getUserMessages - Aucun chat trouvé pour cet utilisateur');
             return [];
           }
           
-          console.log('🔍 FirebaseDataService.getUserMessages - Chats trouvés:', chatsSnapshot.docs.length);
+          logger.debug('FirebaseDataService.getUserMessages - Chats trouvés:', chatsSnapshot.docs.length);
           
           // 2. Récupérer tous les messages de tous les chats de l'utilisateur
           const allMessages: FirebaseMessage[] = [];
           
           for (const chatDoc of chatsSnapshot.docs) {
             const chatId = chatDoc.id;
-            console.log('🔍 FirebaseDataService.getUserMessages - Traitement du chat:', chatId);
+            logger.debug('FirebaseDataService.getUserMessages - Traitement du chat:', chatId);
             
             // 3. Accéder à la sous-collection messages de ce chat
             const messagesQuery = query(collection(db, 'chats', chatId, 'messages'));
@@ -534,7 +534,7 @@ export class FirebaseDataService {
                 ...doc.data()
               })) as FirebaseMessage[];
               
-              console.log('🔍 FirebaseDataService.getUserMessages - Messages trouvés dans le chat', chatId, ':', chatMessages.length);
+              logger.debug('FirebaseDataService.getUserMessages - Messages trouvés dans le chat', chatId, ':', chatMessages.length);
               allMessages.push(...chatMessages);
             }
           }
@@ -546,11 +546,11 @@ export class FirebaseDataService {
             return timeA.getTime() - timeB.getTime();
           });
           
-          console.log('🔍 FirebaseDataService.getUserMessages - Total messages récupérés:', allMessages.length);
+          logger.debug('FirebaseDataService.getUserMessages - Total messages récupérés:', allMessages.length);
           return allMessages;
           
         } catch (firestoreError) {
-          console.error('❌ Erreur accès collection chats:', firestoreError);
+          logger.error('Erreur accès collection chats:', firestoreError);
           return [];
         }
       }
@@ -562,22 +562,22 @@ export class FirebaseDataService {
       });
 
       if (!response.ok) {
-        console.error('❌ Erreur HTTP:', response.status, response.statusText);
+        logger.error('Erreur HTTP:', response.status, response.statusText);
         return [];
       }
 
       const data = await response.json();
-      console.log('✅ Messages de la collection chat récupérés avec succès:', data);
+      logger.success('Messages de la collection chat récupérés avec succès:', data);
       return data.messages || [];
     } catch (error) {
-      console.error('❌ Erreur FirebaseDataService.getUserMessages:', error);
+      logger.error('Erreur FirebaseDataService.getUserMessages:', error);
       return [];
     }
   }
 
   // Envoyer un nouveau message
   static async sendMessage(userId: string, text: string, sender: 'user' | 'support'): Promise<FirebaseMessage | null> {
-    console.log('💬 Envoi d\'un nouveau message pour userId:', userId);
+    logger.debug('Envoi d\'un nouveau message pour userId:', userId);
     try {
       const response = await fetch(`${API_CONFIG.BASE_URL}/api/chat/${userId}`, {
         method: 'POST',
@@ -586,15 +586,15 @@ export class FirebaseDataService {
       });
 
       if (!response.ok) {
-        console.error('❌ Erreur HTTP:', response.status, response.statusText);
+        logger.error('Erreur HTTP:', response.status, response.statusText);
         return null;
       }
 
       const data = await response.json();
-      console.log('✅ Message envoyé avec succès:', data);
+      logger.success('Message envoyé avec succès:', data);
       return data.message || null;
     } catch (error) {
-      console.error('❌ Erreur FirebaseDataService.sendMessage:', error);
+      logger.error('Erreur FirebaseDataService.sendMessage:', error);
       return null;
     }
   }
@@ -617,32 +617,32 @@ export class FirebaseDataService {
       const data = await response.json();
       return data.success;
     } catch (error) {
-      console.error('Erreur FirebaseDataService.requestIban:', error);
+      logger.error('Erreur FirebaseDataService.requestIban:', error);
       return false;
     }
   }
 
   // Récupérer les données IBAN de l'utilisateur
   static async getUserIban(userId: string): Promise<FirebaseIban | null> {
-    console.log('🏦 Récupération des données IBAN pour userId:', userId);
+    logger.debug('Récupération des données IBAN pour userId:', userId);
     
     try {
       // FORCER l'utilisation de Firestore en production
       const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel') || window.location.hostname.includes('render');
       
       if (isProduction) {
-        console.log('🔍 FirebaseDataService.getUserIban - Production: Utilisation directe Firestore');
+        logger.debug('FirebaseDataService.getUserIban - Production: Utilisation directe Firestore');
         
         // Récupérer les données utilisateur depuis Firestore
         const userData = await this.getUserData(userId);
-        console.log('🔍 FirebaseDataService.getUserIban - UserData:', userData);
+        logger.debug('FirebaseDataService.getUserIban - UserData:', userData);
         
         if (userData && userData.iban) {
-          console.log('🔍 FirebaseDataService.getUserIban - IBAN trouvé:', userData.iban);
+          logger.debug('FirebaseDataService.getUserIban - IBAN trouvé:', userData.iban);
           return userData.iban;
         }
         
-        console.log('🔍 FirebaseDataService.getUserIban - Aucun IBAN trouvé');
+        logger.debug('FirebaseDataService.getUserIban - Aucun IBAN trouvé');
         return null;
       }
       
@@ -652,18 +652,18 @@ export class FirebaseDataService {
         headers: this.getAuthHeaders()
       });
 
-      console.log('🔍 Données brutes IBAN reçues:', response);
+      logger.debug('Données brutes IBAN reçues:', response);
       
       if (!response.ok) {
         throw new Error(`Erreur HTTP: ${response.status}`);
       }
 
       const data = await response.json();
-      console.log('🔍 IBAN object:', data.iban);
+      logger.debug('IBAN object:', data.iban);
       
       return data.success ? data.iban : null;
     } catch (error) {
-      console.error('❌ Erreur FirebaseDataService.getUserIban:', error);
+      logger.error('Erreur FirebaseDataService.getUserIban:', error);
       return null;
     }
   }
@@ -687,7 +687,7 @@ export class FirebaseDataService {
       const data = await response.json();
       return data.success;
     } catch (error) {
-      console.error('Erreur FirebaseDataService.submitKycDocuments:', error);
+      logger.error('Erreur FirebaseDataService.submitKycDocuments:', error);
       return false;
     }
   }
@@ -707,7 +707,7 @@ export class FirebaseDataService {
       const data = await response.json();
       return data.success ? data : null;
     } catch (error) {
-      console.error('Erreur FirebaseDataService.getKycDocuments:', error);
+      logger.error('Erreur FirebaseDataService.getKycDocuments:', error);
       return null;
     }
   }
@@ -717,7 +717,7 @@ export class FirebaseDataService {
     try {
       // Vérifier le cache d'abord
       if (userDataCache.has(userId)) {
-        console.log('👤 Données utilisateur récupérées du cache');
+        logger.debug('Données utilisateur récupérées du cache');
         return userDataCache.get(userId);
       }
 
@@ -728,38 +728,38 @@ export class FirebaseDataService {
         // Mettre en cache
         userDataCache.set(userId, userData);
         
-        console.log('👤 Données utilisateur chargées:', userData);
+        logger.debug('Données utilisateur chargées:', userData);
         return userData;
       }
       return null;
     } catch (error) {
-      console.error('❌ Erreur chargement données utilisateur:', error);
+      logger.error('Erreur chargement données utilisateur:', error);
       return null;
     }
   }
 
   // Méthode alternative pour récupérer les données utilisateur
   static async getUserDataAlternative(userId: string): Promise<any | null> {
-    console.log('🔄 Tentative de récupération alternative pour userId:', userId);
+    logger.debug('Tentative de récupération alternative pour userId:', userId);
     
     try {
       // Essayer de récupérer depuis le localStorage d'abord
       const userStr = localStorage.getItem('user');
       if (userStr) {
         const user = JSON.parse(userStr);
-        console.log('🔍 Utilisateur trouvé dans localStorage:', user);
-        console.log('🔍 ID dans localStorage:', user.id);
-        console.log('🔍 ID recherché:', userId);
+        logger.debug('Utilisateur trouvé dans localStorage:', user);
+        logger.debug('ID dans localStorage:', user.id);
+        logger.debug('ID recherché:', userId);
         
         // Si l'utilisateur a un ID correspondant, retourner ses données
         if (user.id === userId) {
-          console.log('✅ Correspondance trouvée dans localStorage');
+          logger.success('Correspondance trouvée dans localStorage');
           return user;
         } else {
-          console.log('❌ ID ne correspond pas dans localStorage');
+          logger.debug('ID ne correspond pas dans localStorage');
         }
       } else {
-        console.log('❌ Aucun utilisateur dans localStorage');
+        logger.debug('Aucun utilisateur dans localStorage');
       }
       
       // Si pas dans localStorage, essayer d'autres endpoints
@@ -771,7 +771,7 @@ export class FirebaseDataService {
       
       for (const endpoint of endpoints) {
         try {
-          console.log(`🔄 Tentative avec l'endpoint: ${endpoint}`);
+          logger.debug(`Tentative avec l'endpoint: ${endpoint}`);
           const response = await fetch(`${API_CONFIG.BASE_URL}${endpoint}`, {
             method: 'GET',
             headers: this.getAuthHeaders()
@@ -779,20 +779,20 @@ export class FirebaseDataService {
           
           if (response.ok) {
             const data = await response.json();
-            console.log(`✅ Données récupérées depuis ${endpoint}:`, data);
+            logger.success(`Données récupérées depuis ${endpoint}:`, data);
             return data.user || data;
           } else {
-            console.log(`❌ Endpoint ${endpoint} retourne ${response.status}`);
+            logger.debug(`Endpoint ${endpoint} retourne ${response.status}`);
           }
         } catch (endpointError) {
-          console.log(`❌ Erreur avec l'endpoint ${endpoint}:`, endpointError);
+          logger.debug(`Erreur avec l'endpoint ${endpoint}:`, endpointError);
         }
       }
       
-      console.log('⚠️ Aucune méthode alternative n\'a fonctionné');
+      logger.warn('Aucune méthode alternative n\'a fonctionné');
       return null;
     } catch (error) {
-      console.error('❌ Erreur dans getUserDataAlternative:', error);
+      logger.error('Erreur dans getUserDataAlternative:', error);
       return null;
     }
   }
@@ -809,7 +809,7 @@ export class FirebaseDataService {
         logger.debug('FirebaseDataService.getCurrentUserId - User parsé:', user);
         return user.id;
       } catch (error) {
-        console.error('❌ Erreur parsing user:', error);
+        logger.error('Erreur parsing user:', error);
         return null;
       }
     }
@@ -885,7 +885,7 @@ export class FirebaseDataService {
       }
       return 'unverified';
     } catch (error) {
-      console.error('❌ Erreur synchronisation KYC:', error);
+      logger.error('Erreur synchronisation KYC:', error);
       return 'unverified';
     }
   }
@@ -914,7 +914,7 @@ export class FirebaseDataService {
       const data = await response.json();
       return data.beneficiary;
     } catch (error) {
-      console.error('Erreur lors de la création du bénéficiaire:', error);
+      logger.error('Erreur lors de la création du bénéficiaire:', error);
       throw error;
     }
   }
@@ -935,7 +935,7 @@ export class FirebaseDataService {
       const data = await response.json();
       return data.beneficiary;
     } catch (error) {
-      console.error('Erreur lors de la mise à jour du bénéficiaire:', error);
+      logger.error('Erreur lors de la mise à jour du bénéficiaire:', error);
       throw error;
     }
   }
@@ -955,7 +955,7 @@ export class FirebaseDataService {
 
       return true;
     } catch (error) {
-      console.error('Erreur lors de la suppression du bénéficiaire:', error);
+      logger.error('Erreur lors de la suppression du bénéficiaire:', error);
       throw error;
     }
   }
@@ -986,7 +986,7 @@ export class FirebaseDataService {
       const data = await response.json();
       return data.transfer;
     } catch (error) {
-      console.error('Erreur lors de la création du virement:', error);
+      logger.error('Erreur lors de la création du virement:', error);
       throw error;
     }
   }

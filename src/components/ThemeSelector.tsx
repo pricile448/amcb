@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTheme } from '../contexts/ThemeContext';
+import { logger } from '../utils/logger';
 
 interface ThemeSelectorProps {
   className?: string;
@@ -15,7 +16,7 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
   const { theme, setTheme } = useTheme();
 
   const handleThemeChange = (newTheme: 'light' | 'dark' | 'auto') => {
-    console.log('🎨 Changing theme to:', newTheme);
+    logger.debug('🎨 Changing theme to:', newTheme);
     setTheme(newTheme);
   };
 

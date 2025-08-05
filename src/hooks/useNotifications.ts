@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { FirebaseDataService, FirebaseNotification } from '../services/firebaseData';
+import { logger } from '../utils/logger';
 
 export interface Notification {
   id: string;
@@ -57,7 +58,7 @@ export const useNotifications = () => {
         throw new Error('Format de données invalide');
       }
     } catch (error) {
-      console.error('❌ Erreur chargement notifications:', error);
+      logger.error('Erreur chargement notifications:', error);
       setError(error instanceof Error ? error.message : 'Erreur inconnue');
     } finally {
       setLoading(false);
@@ -81,7 +82,7 @@ export const useNotifications = () => {
         setUnreadCount(prev => Math.max(0, prev - 1));
       }
     } catch (error) {
-      console.error('❌ Erreur marquage notification:', error);
+      logger.error('Erreur marquage notification:', error);
     }
   }, [userId]);
 
@@ -94,14 +95,14 @@ export const useNotifications = () => {
         await markAsRead(notif.id);
       }
     } catch (error) {
-      console.error('❌ Erreur marquage toutes notifications:', error);
+      logger.error('Erreur marquage toutes notifications:', error);
     }
   }, [notifications, markAsRead]);
 
   // Fonction pour supprimer une notification (réservée aux admins)
   const deleteNotification = useCallback(async (notificationId: string) => {
     // Cette fonction est réservée aux admins uniquement
-    console.log('🔒 Suppression de notification réservée aux admins');
+    logger.debug('Suppression de notification réservée aux admins');
     return false;
   }, []);
 
@@ -127,14 +128,14 @@ export const useNotifications = () => {
       const safeTitle = title || 'Succès';
       const safeMessage = message || '';
       const fullMessage = safeMessage ? `${safeTitle}: ${safeMessage}` : safeTitle;
-      console.log('✅ Success:', fullMessage);
+      logger.success('Success:', fullMessage);
       // Ici vous pouvez intégrer avec un système de toast comme react-hot-toast
     },
     showError: (title: string | null, message?: string | null) => {
       const safeTitle = title || 'Erreur';
       const safeMessage = message || '';
       const fullMessage = safeMessage ? `${safeTitle}: ${safeMessage}` : safeTitle;
-      console.error('❌ Error:', fullMessage);
+      logger.error('Error:', fullMessage);
       // Ici vous pouvez intégrer avec un système de toast comme react-hot-toast
     }
   };
@@ -152,7 +153,7 @@ export const useKycSync = () => {
     if (force) {
       FirebaseDataService.clearCache();
       setHasInitialized(false);
-      console.log('🔄 Synchronisation KYC forcée...');
+      logger.debug('Synchronisation KYC forcée...');
     }
     
     // Éviter les synchronisations multiples si déjà initialisé
@@ -179,13 +180,13 @@ export const useKycSync = () => {
             setUserStatus(status);
             setIsUnverified(status !== 'verified');
             setHasInitialized(true);
-            console.log('🔄 Statut KYC synchronisé:', status);
+            logger.debug('Statut KYC synchronisé:', status);
             return status;
           }
         }
       }
     } catch (error) {
-      console.error('❌ Erreur lors de la synchronisation KYC:', error);
+      logger.error('Erreur lors de la synchronisation KYC:', error);
       setUserStatus('unverified');
       setIsUnverified(true);
       setHasInitialized(true);

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { CreditCard, Lock, Unlock, Eye, EyeOff, Plus, Settings, Trash2 } from 'lucide-react';
 import VerificationState from '../../components/VerificationState';
 import { useKycSync } from '../../hooks/useNotifications';
+import { logger } from '../../utils/logger';
 
 interface Card {
   id: string;

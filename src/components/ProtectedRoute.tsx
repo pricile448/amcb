@@ -3,6 +3,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../config/firebase';
 import { useKycSync } from '../hooks/useNotifications';
+import { logger } from '../utils/logger';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -16,12 +17,12 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log('🔐 ProtectedRoute - État d\'authentification:', user ? 'Connecté' : 'Non connecté');
       if (user) {
-        console.log('✅ Utilisateur connecté:', user.email);
+        logger.debug('🔐 ProtectedRoute - État d\'authentification:', 'Connecté');
+        logger.debug('✅ Utilisateur connecté:', user.email);
         setIsAuthenticated(true);
       } else {
-        console.log('❌ Aucun utilisateur connecté');
+        logger.debug('🔐 ProtectedRoute - État d\'authentification:', 'Non connecté');
         setIsAuthenticated(false);
       }
       setIsLoading(false);

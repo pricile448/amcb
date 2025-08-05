@@ -9,6 +9,8 @@ import toast from "react-hot-toast";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../config/firebase";
 
+import { logger } from '../../utils/logger';
+
 const loginSchema = z.object({
   email: z.string().email("Email invalide"),
   password: z.string().min(6, "Le mot de passe doit contenir au moins 6 caractères"),
@@ -38,7 +40,7 @@ const LoginPage: React.FC = () => {
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
     try {
-      console.log(`🔐 Tentative de connexion Firebase pour: ${data.email}`);
+      logger.debug(`🔐 Tentative de connexion Firebase pour: ${data.email}`);
       
       // Utiliser Firebase Auth directement
       const userCredential = await signInWithEmailAndPassword(
@@ -47,7 +49,7 @@ const LoginPage: React.FC = () => {
         data.password
       );
       
-      console.log(`✅ Connexion Firebase réussie pour: ${data.email}`);
+      logger.success(`✅ Connexion Firebase réussie pour: ${data.email}`);
       
       // Vérifier le statut emailVerified dans Firestore
       const { doc, getDoc } = await import('firebase/firestore');
@@ -62,7 +64,7 @@ const LoginPage: React.FC = () => {
       const userData = userDoc.data();
       const isEmailVerified = userData.emailVerified || false;
       
-      console.log(`📧 Statut emailVerified: ${isEmailVerified}`);
+      logger.debug(`📧 Statut emailVerified: ${isEmailVerified}`);
       
       if (!isEmailVerified) {
         // Déconnecter l'utilisateur
@@ -92,13 +94,13 @@ const LoginPage: React.FC = () => {
       };
       
       localStorage.setItem('user', JSON.stringify(userDataForStorage));
-      console.log('✅ Utilisateur stocké dans localStorage:', userDataForStorage);
+      logger.success('✅ Utilisateur stocké dans localStorage:', userDataForStorage);
       
       toast.success(t("auth.loginSuccess"));
       navigate(from, { replace: true });
       
     } catch (error: any) {
-      console.error("Login error:", error);
+      logger.error("Login error:", error);
       
       // Gérer les erreurs Firebase spécifiques
       if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {

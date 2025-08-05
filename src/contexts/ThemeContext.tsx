@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { logger } from '../utils/logger';
 
 type Theme = 'light' | 'dark' | 'auto';
 
@@ -35,28 +36,28 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     if (themeToApply === 'dark') {
       root.classList.add('dark');
       setIsDark(true);
-      console.log('🌙 Dark theme applied globally');
+      logger.debug('🌙 Dark theme applied globally');
     } else if (themeToApply === 'light') {
       root.classList.add('light');
       setIsDark(false);
-      console.log('☀️ Light theme applied globally');
+      logger.debug('☀️ Light theme applied globally');
     } else if (themeToApply === 'auto') {
       // Auto theme - check system preference
       const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
       if (isDarkMode) {
         root.classList.add('dark');
         setIsDark(true);
-        console.log('🌙 Auto theme: Dark mode detected and applied globally');
+        logger.debug('🌙 Auto theme: Dark mode detected and applied globally');
       } else {
         root.classList.add('light');
         setIsDark(false);
-        console.log('☀️ Auto theme: Light mode detected and applied globally');
+        logger.debug('☀️ Auto theme: Light mode detected and applied globally');
       }
     }
   };
 
   const setTheme = (newTheme: Theme) => {
-    console.log('🎨 Changing global theme to:', newTheme);
+    logger.debug('🎨 Changing global theme to:', newTheme);
     setThemeState(newTheme);
     applyTheme(newTheme);
     
@@ -68,7 +69,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     // Load saved theme on mount
     const savedTheme = localStorage.getItem('theme') as Theme | null;
     const themeToApply = savedTheme || 'light';
-    console.log('📱 Loading saved global theme:', themeToApply);
+    logger.debug('📱 Loading saved global theme:', themeToApply);
     setThemeState(themeToApply);
     applyTheme(themeToApply);
     
@@ -76,7 +77,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleSystemThemeChange = () => {
       if (themeToApply === 'auto') {
-        console.log('🔄 System theme changed, updating global auto theme');
+        logger.debug('🔄 System theme changed, updating global auto theme');
         applyTheme('auto');
       }
     };
@@ -87,6 +88,19 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
       mediaQuery.removeEventListener('change', handleSystemThemeChange);
     };
   }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = () => {
+      logger.debug('🔄 System theme changed, updating global auto theme');
+      if (theme === 'auto') {
+        applyTheme('auto');
+      }
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, [theme]);
 
   const value = {
     theme,

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { Sun, Moon, Monitor } from 'lucide-react';
+import { logger } from '../utils/logger';
 
 interface ThemeToggleProps {
   className?: string;
@@ -14,7 +15,7 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({
   const { theme, setTheme } = useTheme();
 
   const handleThemeChange = (newTheme: 'light' | 'dark' | 'auto') => {
-    console.log('🎨 Changing theme to:', newTheme);
+    logger.debug('🎨 Changing theme to:', newTheme);
     setTheme(newTheme);
   };
 

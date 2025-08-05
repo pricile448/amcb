@@ -39,6 +39,7 @@ import NotificationDropdown from "../components/NotificationDropdown";
 import { FirebaseDataService } from "../services/firebaseData";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase";
+import { logger } from "../utils/logger";
 
 
 const DashboardLayout: React.FC = () => {
@@ -164,17 +165,15 @@ const DashboardLayout: React.FC = () => {
     { name: t("nav.documents"), href: "/dashboard/documents", icon: FileText },
   ];
 
-  const handleLogout = () => {
-    // Vider le cache avant la déconnexion
-    FirebaseDataService.clearCache();
-    
-    // Déconnexion Firebase
-    signOut(auth).then(() => {
-      console.log('✅ Déconnexion réussie');
-      navigate('/connexion');
-    }).catch((error) => {
-      console.error('❌ Erreur lors de la déconnexion:', error);
-    });
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      localStorage.removeItem('user');
+      logger.success('✅ Déconnexion réussie');
+      navigate('/login');
+    } catch (error) {
+      logger.error('Erreur lors de la déconnexion:', error);
+    }
   };
 
   // Fonction pour fermer la sidebar sur mobile lors du clic sur un lien
