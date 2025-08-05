@@ -7,7 +7,9 @@ import { z } from "zod";
 import { Eye, EyeOff, Mail, Lock, User, Phone, Calendar, MapPin, Building, Briefcase, DollarSign, Flag, Home } from "lucide-react";
 import toast from "react-hot-toast";
 import { AuthService } from "../../services/api";
-
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { auth, db } from "../../config/firebase";
 import VerificationCodeModal from "../../components/VerificationCodeModal";
 import { EmailVerificationService } from "../../services/emailVerification";
 import { API_CONFIG } from "../../config/api";
@@ -64,17 +66,72 @@ const RegisterPage: React.FC = () => {
     try {
       logger.debug('🔐 Début du processus d\'inscription pour:', data.email);
 
-      // 1. Créer l'utilisateur via l'API backend
-      const response = await fetch(`${API_CONFIG.BASE_URL}/api/auth/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      let userId: string | undefined;
+
+      // En développement, utiliser l'API backend si disponible
+      if (import.meta.env.DEV && API_CONFIG.BASE_URL) {
+        try {
+          logger.debug('🔄 Tentative d\'inscription via API backend...');
+          
+          const response = await fetch(`${API_CONFIG.BASE_URL}/api/auth/register`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              firstName: data.firstName,
+              lastName: data.lastName,
+              email: data.email,
+              password: data.password,
+              phone: data.phone,
+              birthDate: data.birthDate,
+              birthPlace: data.birthPlace,
+              nationality: data.nationality,
+              residenceCountry: data.residenceCountry,
+              address: data.address,
+              city: data.city,
+              postalCode: data.postalCode,
+              profession: data.profession,
+              salary: data.salary
+            })
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            if (result.success) {
+              userId = result.userId;
+              logger.success('✅ Compte créé avec succès via API backend');
+            } else {
+              throw new Error(result.error || 'Erreur lors de la création du compte');
+            }
+          } else {
+            throw new Error(`Erreur HTTP: ${response.status}`);
+          }
+        } catch (apiError) {
+          logger.warn('⚠️ API backend non disponible, utilisation de Firebase Auth:', apiError);
+          // Fallback vers Firebase Auth
+          throw apiError;
+        }
+      }
+
+      // En production ou si l'API backend échoue, utiliser Firebase Auth
+      if (!userId) {
+        logger.debug('🔄 Utilisation de Firebase Auth pour l\'inscription...');
+        
+        // 1. Créer l'utilisateur dans Firebase Auth
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          data.email,
+          data.password
+        );
+
+        userId = userCredential.user.uid;
+
+        // 2. Sauvegarder les données utilisateur dans Firestore
+        await setDoc(doc(db, 'users', userId), {
           firstName: data.firstName,
           lastName: data.lastName,
           email: data.email,
-          password: data.password,
           phone: data.phone,
           birthDate: data.birthDate,
           birthPlace: data.birthPlace,
@@ -84,27 +141,21 @@ const RegisterPage: React.FC = () => {
           city: data.city,
           postalCode: data.postalCode,
           profession: data.profession,
-          salary: data.salary
-        })
-      });
+          salary: data.salary,
+          createdAt: serverTimestamp(),
+          emailVerified: false,
+          kycStatus: 'unverified',
+          verificationStatus: 'unverified',
+          status: 'pending'
+        });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || `Erreur HTTP: ${response.status}`);
+        logger.success('✅ Compte créé avec succès via Firebase Auth');
       }
 
-      const result = await response.json();
-      
-      if (!result.success) {
-        throw new Error(result.error || 'Erreur lors de la création du compte');
-      }
-
-      logger.success('✅ Compte créé avec succès via API backend');
-
-      // 2. Envoyer le code de validation
+      // 3. Envoyer le code de validation
       const verificationResult = await EmailVerificationService.sendVerificationCode(
         data.email, 
-        result.userId
+        userId
       );
       
       if (!verificationResult.success) {
@@ -117,7 +168,7 @@ const RegisterPage: React.FC = () => {
         alert(`Code de vérification (DEV): ${verificationResult.code}`);
       }
 
-      // 3. Afficher la modal de validation
+      // 4. Afficher la modal de validation
       setUserEmail(data.email);
       setShowVerification(true);
       
