@@ -7,11 +7,11 @@ import { z } from "zod";
 import { Eye, EyeOff, Mail, Lock, User, Phone, Calendar, MapPin, Building, Briefcase, DollarSign, Flag, Home } from "lucide-react";
 import toast from "react-hot-toast";
 import { AuthService } from "../../services/api";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc, serverTimestamp } from "firebase/firestore";
-import { auth, db } from "../../config/firebase";
+
 import VerificationCodeModal from "../../components/VerificationCodeModal";
 import { EmailVerificationService } from "../../services/emailVerification";
+import { API_CONFIG } from "../../config/api";
+import { logger } from "../../utils/logger";
 
 const registerSchema = z.object({
   firstName: z.string().min(2, "Le prénom doit contenir au moins 2 caractères"),
@@ -62,37 +62,49 @@ const RegisterPage: React.FC = () => {
   const onSubmit = async (data: RegisterFormData) => {
     setIsLoading(true);
     try {
-      // 1. Créer l'utilisateur dans Firebase Auth
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        data.email,
-        data.password
-      );
+      logger.debug('🔐 Début du processus d\'inscription pour:', data.email);
 
-      // 2. Sauvegarder les données utilisateur dans Firestore
-      await setDoc(doc(db, 'users', userCredential.user.uid), {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
-        phone: data.phone,
-        birthDate: data.birthDate,
-        birthPlace: data.birthPlace,
-        nationality: data.nationality,
-        residenceCountry: data.residenceCountry,
-        address: data.address,
-        city: data.city,
-        postalCode: data.postalCode,
-        profession: data.profession,
-        salary: data.salary,
-        createdAt: serverTimestamp(),
-        emailVerified: false,
-        status: 'pending'
+      // 1. Créer l'utilisateur via l'API backend
+      const response = await fetch(`${API_CONFIG.BASE_URL}/api/auth/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          password: data.password,
+          phone: data.phone,
+          birthDate: data.birthDate,
+          birthPlace: data.birthPlace,
+          nationality: data.nationality,
+          residenceCountry: data.residenceCountry,
+          address: data.address,
+          city: data.city,
+          postalCode: data.postalCode,
+          profession: data.profession,
+          salary: data.salary
+        })
       });
 
-      // 3. Envoyer le code de validation via le nouveau service
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `Erreur HTTP: ${response.status}`);
+      }
+
+      const result = await response.json();
+      
+      if (!result.success) {
+        throw new Error(result.error || 'Erreur lors de la création du compte');
+      }
+
+      logger.success('✅ Compte créé avec succès via API backend');
+
+      // 2. Envoyer le code de validation
       const verificationResult = await EmailVerificationService.sendVerificationCode(
         data.email, 
-        userCredential.user.uid
+        result.userId
       );
       
       if (!verificationResult.success) {
@@ -101,18 +113,18 @@ const RegisterPage: React.FC = () => {
 
       // En mode développement, afficher le code
       if (verificationResult.code) {
-        console.log('🔍 CODE DE VÉRIFICATION (DEV):', verificationResult.code);
+        logger.debug('🔍 CODE DE VÉRIFICATION (DEV):', verificationResult.code);
         alert(`Code de vérification (DEV): ${verificationResult.code}`);
       }
 
-      // 4. Afficher la modal de validation
+      // 3. Afficher la modal de validation
       setUserEmail(data.email);
       setShowVerification(true);
       
       toast.success('Compte créé ! Veuillez vérifier votre email.');
 
     } catch (error: any) {
-      console.error("Register error:", error);
+      logger.error("Register error:", error);
       toast.error(error.message || t("auth.registerError"));
     } finally {
       setIsLoading(false);
