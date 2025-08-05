@@ -1,5 +1,6 @@
 // Logger utilitaire pour gérer les logs selon l'environnement
 const isDevelopment = import.meta.env.DEV;
+const isProduction = import.meta.env.PROD;
 
 export const logger = {
   // Logs de débogage - seulement en développement
@@ -9,22 +10,28 @@ export const logger = {
     }
   },
 
-  // Logs d'information - toujours affichés
+  // Logs d'information - seulement en développement
   info: (...args: any[]) => {
-    console.log('ℹ️', ...args);
+    if (isDevelopment) {
+      console.log('ℹ️', ...args);
+    }
   },
 
-  // Logs de succès - toujours affichés
+  // Logs de succès - seulement en développement
   success: (...args: any[]) => {
-    console.log('✅', ...args);
+    if (isDevelopment) {
+      console.log('✅', ...args);
+    }
   },
 
-  // Logs d'avertissement - toujours affichés
+  // Logs d'avertissement - seulement en développement
   warn: (...args: any[]) => {
-    console.warn('⚠️', ...args);
+    if (isDevelopment) {
+      console.warn('⚠️', ...args);
+    }
   },
 
-  // Logs d'erreur - toujours affichés
+  // Logs d'erreur - toujours affichés (même en production)
   error: (...args: any[]) => {
     console.error('❌', ...args);
   },
