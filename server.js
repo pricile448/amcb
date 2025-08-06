@@ -96,7 +96,7 @@ function generateVerificationEmailHTML(code, userName) {
 }
 
 // Route pour toutes les autres requêtes - servir l'application React
-app.get('*', (req, res) => {
+app.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
