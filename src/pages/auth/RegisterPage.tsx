@@ -7,12 +7,10 @@ import { z } from "zod";
 import { Eye, EyeOff, Mail, Lock, User, Phone, Calendar, MapPin, Building, Briefcase, DollarSign, Flag, Home } from "lucide-react";
 import toast from "react-hot-toast";
 import { AuthService } from "../../services/api";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../../config/firebase";
-import VerificationCodeModal from "../../components/VerificationCodeModal";
-import { EmailVerificationService } from "../../services/emailVerification";
-import { API_CONFIG } from "../../config/api";
+
 import { logger } from "../../utils/logger";
 
 const registerSchema = z.object({
@@ -46,8 +44,6 @@ const RegisterPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [showVerification, setShowVerification] = useState(false);
-  const [userEmail, setUserEmail] = useState('');
   
   // Récupérer le message d'erreur depuis la page de connexion
   const errorMessage = location.state?.message;
@@ -66,126 +62,90 @@ const RegisterPage: React.FC = () => {
     try {
       logger.debug('🔐 Début du processus d\'inscription pour:', data.email);
 
-      let userId: string | undefined;
-
-      // En développement, utiliser l'API backend si disponible
-      if (import.meta.env.DEV && API_CONFIG.BASE_URL) {
-        try {
-          logger.debug('🔄 Tentative d\'inscription via API backend...');
-          
-          const response = await fetch(`${API_CONFIG.BASE_URL}/api/auth/register`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              firstName: data.firstName,
-              lastName: data.lastName,
-              email: data.email,
-              password: data.password,
-              phone: data.phone,
-              birthDate: data.birthDate,
-              birthPlace: data.birthPlace,
-              nationality: data.nationality,
-              residenceCountry: data.residenceCountry,
-              address: data.address,
-              city: data.city,
-              postalCode: data.postalCode,
-              profession: data.profession,
-              salary: data.salary
-            })
-          });
-
-          if (response.ok) {
-            const result = await response.json();
-            if (result.success) {
-              userId = result.userId;
-              logger.success('✅ Compte créé avec succès via API backend');
-            } else {
-              throw new Error(result.error || 'Erreur lors de la création du compte');
-            }
-          } else {
-            throw new Error(`Erreur HTTP: ${response.status}`);
-          }
-        } catch (apiError) {
-          logger.warn('⚠️ API backend non disponible, utilisation de Firebase Auth:', apiError);
-          // Continue avec Firebase Auth au lieu de lancer une exception
-        }
-      }
-
-      // En production ou si l'API backend échoue, utiliser Firebase Auth
-      if (!userId) {
-        logger.debug('🔄 Utilisation de Firebase Auth pour l\'inscription...');
-        
-        // 1. Créer l'utilisateur dans Firebase Auth
-        const userCredential = await createUserWithEmailAndPassword(
-          auth,
-          data.email,
-          data.password
-        );
-
-        userId = userCredential.user.uid;
-
-        // 2. Sauvegarder les données utilisateur dans Firestore
-        await setDoc(doc(db, 'users', userId), {
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.email,
-          phone: data.phone,
-          birthDate: data.birthDate,
-          birthPlace: data.birthPlace,
-          nationality: data.nationality,
-          residenceCountry: data.residenceCountry,
-          address: data.address,
-          city: data.city,
-          postalCode: data.postalCode,
-          profession: data.profession,
-          salary: data.salary,
-          createdAt: serverTimestamp(),
-          emailVerified: false,
-          kycStatus: 'unverified',
-          verificationStatus: 'unverified',
-          status: 'pending'
-        });
-
-        logger.success('✅ Compte créé avec succès via Firebase Auth');
-      }
-
-      // 3. Envoyer le code de validation
-      const verificationResult = await EmailVerificationService.sendVerificationCode(
-        data.email, 
-        userId
+      // 1. Créer l'utilisateur dans Firebase Auth
+      logger.debug('🔄 Création de l\'utilisateur dans Firebase Auth...');
+      
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
       );
-      
-      if (!verificationResult.success) {
-        throw new Error(verificationResult.error || 'Erreur lors de l\'envoi du code de validation');
-      }
 
-      // En mode développement, afficher le code
-      if (verificationResult.code) {
-        logger.debug('🔍 CODE DE VÉRIFICATION (DEV):', verificationResult.code);
-        alert(`Code de vérification (DEV): ${verificationResult.code}`);
-      }
+      const userId = userCredential.user.uid;
+      logger.success('✅ Utilisateur créé dans Firebase Auth:', userId);
 
-      // 4. Afficher la modal de validation
-      setUserEmail(data.email);
-      setShowVerification(true);
+      // 2. Sauvegarder les données utilisateur dans Firestore
+      logger.debug('🔄 Sauvegarde des données dans Firestore...');
       
-      toast.success('Compte créé ! Veuillez vérifier votre email.');
+      await setDoc(doc(db, 'users', userId), {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        phone: data.phone,
+        birthDate: data.birthDate,
+        birthPlace: data.birthPlace,
+        nationality: data.nationality,
+        residenceCountry: data.residenceCountry,
+        address: data.address,
+        city: data.city,
+        postalCode: data.postalCode,
+        profession: data.profession,
+        salary: data.salary,
+        createdAt: serverTimestamp(),
+        emailVerified: false,
+        kycStatus: 'unverified',
+        verificationStatus: 'unverified',
+        status: 'pending'
+      });
+
+      logger.success('✅ Données utilisateur sauvegardées dans Firestore');
+
+      // 3. Envoyer l'email de vérification Firebase
+      logger.debug('🔄 Envoi de l\'email de vérification Firebase...');
+      
+      await sendEmailVerification(userCredential.user, {
+        url: `${window.location.origin}/dashboard`,
+        handleCodeInApp: false
+      });
+
+      logger.success('✅ Email de vérification envoyé');
+
+      // 4. Afficher le message de succès et rediriger
+      toast.success('Compte créé ! Veuillez vérifier votre email pour activer votre compte.');
+      
+      // Rediriger vers une page d'attente de vérification
+      setTimeout(() => {
+        navigate('/verification-pending', { 
+          state: { 
+            email: data.email,
+            message: 'Vérifiez votre email pour activer votre compte'
+          }
+        });
+      }, 1500);
 
     } catch (error: any) {
       logger.error("Register error:", error);
-      toast.error(error.message || t("auth.registerError"));
+      
+      // Gérer les erreurs Firebase spécifiques
+      let errorMessage = 'Erreur lors de la création du compte';
+      
+      if (error.code === 'auth/email-already-in-use') {
+        errorMessage = 'Cet email est déjà utilisé';
+      } else if (error.code === 'auth/weak-password') {
+        errorMessage = 'Le mot de passe est trop faible';
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = 'Email invalide';
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleVerificationSuccess = () => {
-    setShowVerification(false);
-    toast.success('Email vérifié avec succès !');
-    navigate('/dashboard');
-  };
+
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -655,13 +615,7 @@ const RegisterPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Modal de vérification par email */}
-      <VerificationCodeModal
-        isOpen={showVerification}
-        onClose={() => setShowVerification(false)}
-        email={userEmail}
-        onVerificationSuccess={handleVerificationSuccess}
-      />
+      
     </div>
   );
 };
