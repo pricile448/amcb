@@ -109,8 +109,7 @@ const RegisterPage: React.FC = () => {
           }
         } catch (apiError) {
           logger.warn('⚠️ API backend non disponible, utilisation de Firebase Auth:', apiError);
-          // Fallback vers Firebase Auth
-          throw apiError;
+          // Continue avec Firebase Auth au lieu de lancer une exception
         }
       }
 
