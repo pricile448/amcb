@@ -1,26 +1,26 @@
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
+const express = require('express');
+const cors = require('cors');
 const { Resend } = require('resend');
+require('dotenv').config();
 
-// Initialiser Firebase Admin
-admin.initializeApp();
+const app = express();
+const port = 3001;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
 
 // Initialiser Resend
-const resend = new Resend(functions.config().resend.api_key);
+const resend = new Resend(process.env.VITE_RESEND_API_KEY);
 
-// Fonction pour envoyer un email de vérification
-exports.sendVerificationEmail = functions.https.onCall(async (data, context) => {
+// Endpoint pour l'envoi d'emails
+app.post('/api/send-email', async (req, res) => {
   try {
-    const { email, code, userName } = data;
-
-    // Vérifier que l'utilisateur est authentifié
-    if (!context.auth) {
-      throw new functions.https.HttpsError('unauthenticated', 'Utilisateur non authentifié');
-    }
+    const { email, code, userName } = req.body;
 
     // Vérifier les paramètres requis
     if (!email || !code) {
-      throw new functions.https.HttpsError('invalid-argument', 'Email et code requis');
+      return res.status(400).json({ error: 'Email et code requis' });
     }
 
     // Envoyer l'email via Resend
@@ -32,14 +32,16 @@ exports.sendVerificationEmail = functions.https.onCall(async (data, context) => 
     });
 
     if (result.error) {
-      throw new functions.https.HttpsError('internal', result.error.message);
+      console.error('Erreur Resend:', result.error);
+      return res.status(500).json({ error: result.error.message });
     }
 
-    return { success: true, message: 'Email envoyé avec succès' };
+    console.log('Email envoyé avec succès:', result.data?.id);
+    return res.status(200).json({ success: true, message: 'Email envoyé avec succès' });
 
   } catch (error) {
     console.error('Erreur envoi email:', error);
-    throw new functions.https.HttpsError('internal', error.message);
+    return res.status(500).json({ error: error.message || 'Erreur lors de l\'envoi d\'email' });
   }
 });
 
@@ -85,4 +87,9 @@ function generateVerificationEmailHTML(code, userName) {
     </body>
     </html>
   `;
-} 
+}
+
+// Démarrer le serveur
+app.listen(port, () => {
+  console.log(`🚀 Serveur API de développement démarré sur http://localhost:${port}`);
+}); 
