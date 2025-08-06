@@ -3,14 +3,13 @@
   "version": "1.0.1",
   "description": "AmCbunq Frontend Application",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev": "node vite-dev-server.cjs",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "start": "npx serve -s dist -l 3000",
-    "start:prod": "NODE_ENV=production npx serve -s dist -l 3000",
+    "start": "node server.js",
+    "start:prod": "NODE_ENV=production node server.js",
     "start:full": "node start.cjs",
     "check-ports": "node check-ports.cjs"
   },
