@@ -95,14 +95,8 @@ function generateVerificationEmailHTML(code, userName) {
   `;
 }
 
-// Middleware pour servir l'application React pour toutes les routes non-API
-app.use((req, res, next) => {
-  // Si c'est une route API, passer au middleware suivant
-  if (req.path.startsWith('/api/')) {
-    return next();
-  }
-  
-  // Sinon, servir l'application React
+// Route pour toutes les autres requêtes - servir l'application React
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
