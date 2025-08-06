@@ -19,42 +19,9 @@ export class SecureEmailService {
     try {
       logger.debug('📧 Envoi d\'email de vérification pour:', email);
 
-      // En développement, essayer l'API backend d'abord
-      if (import.meta.env.DEV && API_CONFIG.BASE_URL) {
-        try {
-          const response = await fetch(`${API_CONFIG.BASE_URL}/api/email/send-verification`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              email,
-              code,
-              userName: userName || email
-            })
-          });
-
-          if (response.ok) {
-            const result = await response.json();
-            if (result.success) {
-              logger.success('✅ Email envoyé avec succès via API backend');
-              return { success: true };
-            } else {
-              throw new Error(result.error || 'Erreur lors de l\'envoi d\'email');
-            }
-          } else {
-            throw new Error(`Erreur HTTP: ${response.status}`);
-          }
-        } catch (apiError) {
-          logger.warn('⚠️ API backend non disponible, utilisation de l\'endpoint API:', apiError);
-          // Fallback vers l'endpoint API
-        }
-      }
-
-      // En production ou si l'API backend échoue, utiliser l'endpoint API
-      logger.debug('🔄 Utilisation de l\'endpoint API pour l\'envoi d\'email...');
+      // Utiliser directement le serveur email local (mock ou réel)
+      logger.debug('🔄 Utilisation du serveur email local...');
       
-      // Utiliser le serveur email local (temporairement pour résoudre l'erreur 500)
       const apiUrl = 'http://localhost:3001';
       
       const response = await fetch(`${apiUrl}/api/send-email`, {
