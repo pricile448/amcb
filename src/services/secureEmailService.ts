@@ -54,8 +54,8 @@ export class SecureEmailService {
       // En production ou si l'API backend échoue, utiliser l'endpoint API
       logger.debug('🔄 Utilisation de l\'endpoint API pour l\'envoi d\'email...');
       
-      // En développement, utiliser le serveur local, sinon utiliser l'URL de production
-      const apiUrl = import.meta.env.DEV ? 'http://localhost:3001' : window.location.origin;
+      // Utiliser le serveur email local (temporairement pour résoudre l'erreur 500)
+      const apiUrl = 'http://localhost:3001';
       
       const response = await fetch(`${apiUrl}/api/send-email`, {
         method: 'POST',
