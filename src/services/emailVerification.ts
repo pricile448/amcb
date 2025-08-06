@@ -3,6 +3,7 @@ import { db } from '../config/firebase';
 import { sendEmailVerification } from 'firebase/auth';
 import { auth } from '../config/firebase';
 import { SecureEmailService } from './secureEmailService';
+import { logger } from '../utils/logger';
 
 import { Timestamp } from 'firebase/firestore';
 
@@ -16,7 +17,6 @@ export interface VerificationCode {
 }
 
 export class EmailVerificationService {
-  private static readonly COLLECTION_NAME = 'emailVerificationCodes';
   private static readonly CODE_EXPIRY_MINUTES = 15;
   private static readonly MAX_ATTEMPTS = 3;
 
@@ -25,7 +25,7 @@ export class EmailVerificationService {
    */
   static async sendVerificationCode(email: string, userId: string): Promise<{ success: boolean; code?: string; error?: string }> {
     try {
-      console.log('🔍 EmailVerificationService.sendVerificationCode - Début pour:', email);
+      logger.debug('🔍 EmailVerificationService.sendVerificationCode - Début pour:', email);
 
       // Générer un code à 6 chiffres (DEV et PROD)
       const code = Math.floor(100000 + Math.random() * 900000).toString();
@@ -36,24 +36,22 @@ export class EmailVerificationService {
       const expires = Timestamp.fromDate(expiresDate);
 
       // Créer l'objet de vérification
-      const verificationData: VerificationCode = {
-        code,
-        email,
-        userId,
-        expires,
-        attempts: 0,
-        createdAt: Timestamp.now()
+      const verificationData = {
+        verificationCode: code,
+        verificationCodeExpires: expires,
+        verificationCodeAttempts: 0,
+        verificationCodeCreatedAt: Timestamp.now()
       };
 
-      // Stocker dans Firestore
-      const docRef = doc(db, this.COLLECTION_NAME, userId);
-      await setDoc(docRef, verificationData);
+      // Stocker directement dans le document utilisateur
+      const userDocRef = doc(db, 'users', userId);
+      await updateDoc(userDocRef, verificationData);
 
-      console.log('✅ Code de vérification stocké dans Firestore:', { email, code });
+      logger.success('✅ Code de vérification stocké dans le document utilisateur:', { email, code });
 
       // En mode développement, afficher le code dans la console et alert
       if (import.meta.env.DEV) {
-        console.log('🔍 CODE DE VÉRIFICATION (DEV):', code);
+        logger.debug('🔍 CODE DE VÉRIFICATION (DEV):', code);
         alert(`Code de vérification (DEV): ${code}`);
       }
 
@@ -63,16 +61,16 @@ export class EmailVerificationService {
         const emailResult = await SecureEmailService.sendVerificationEmail(email, code);
         
         if (emailResult.success) {
-          console.log('✅ Code de vérification envoyé par email via Resend');
+          logger.success('✅ Code de vérification envoyé par email via Resend');
         } else {
-          console.error('❌ Erreur envoi email Resend:', emailResult.error);
+          logger.error('❌ Erreur envoi email Resend:', emailResult.error);
           // En cas d'erreur, on garde quand même le code stocké
-          console.log('⚠️ Code disponible dans Firestore pour vérification manuelle');
+          logger.warn('⚠️ Code disponible dans le document utilisateur pour vérification manuelle');
         }
       } catch (emailError) {
-        console.error('❌ Erreur lors de l\'envoi d\'email:', emailError);
+        logger.error('❌ Erreur lors de l\'envoi d\'email:', emailError);
         // En cas d'erreur, on garde quand même le code stocké
-        console.log('⚠️ Code disponible dans Firestore pour vérification manuelle');
+        logger.warn('⚠️ Code disponible dans le document utilisateur pour vérification manuelle');
       }
 
       return {
@@ -82,7 +80,7 @@ export class EmailVerificationService {
       };
 
     } catch (error) {
-      console.error('❌ Erreur lors de l\'envoi du code de vérification:', error);
+      logger.error('❌ Erreur lors de l\'envoi du code de vérification:', error);
       return {
         success: false,
         error: 'Erreur lors de l\'envoi du code de vérification'
@@ -95,27 +93,38 @@ export class EmailVerificationService {
    */
   static async verifyCode(email: string, userId: string, code: string): Promise<{ success: boolean; error?: string }> {
     try {
-      console.log('🔍 EmailVerificationService.verifyCode - Début pour:', email, 'code:', code);
+      logger.debug('🔍 EmailVerificationService.verifyCode - Début pour:', email, 'code:', code);
 
-      // Vérifier que l'email correspond au code stocké (sécurité)
-      // Note: L'utilisateur n'a pas besoin d'être connecté pour vérifier son email
-
-      // Récupérer le code stocké
-      const docRef = doc(db, this.COLLECTION_NAME, userId);
-      const docSnap = await getDoc(docRef);
+      // Récupérer le document utilisateur
+      const userDocRef = doc(db, 'users', userId);
+      const docSnap = await getDoc(userDocRef);
 
       if (!docSnap.exists()) {
+        return {
+          success: false,
+          error: 'Utilisateur non trouvé'
+        };
+      }
+
+      const userData = docSnap.data();
+
+      // Vérifier si un code de vérification existe
+      if (!userData.verificationCode) {
         return {
           success: false,
           error: 'Code expiré ou non trouvé. Veuillez demander un nouveau code.'
         };
       }
 
-      const storedData = docSnap.data() as VerificationCode;
-
-      // Vérifier l'expiration (storedData.expires est déjà un Timestamp)
-      if (new Date() > storedData.expires.toDate()) {
-        await deleteDoc(docRef);
+      // Vérifier l'expiration
+      if (new Date() > userData.verificationCodeExpires.toDate()) {
+        // Supprimer le code expiré
+        await updateDoc(userDocRef, {
+          verificationCode: null,
+          verificationCodeExpires: null,
+          verificationCodeAttempts: null,
+          verificationCodeCreatedAt: null
+        });
         return {
           success: false,
           error: 'Code expiré. Veuillez demander un nouveau code.'
@@ -123,8 +132,14 @@ export class EmailVerificationService {
       }
 
       // Vérifier le nombre de tentatives
-      if (storedData.attempts >= this.MAX_ATTEMPTS) {
-        await deleteDoc(docRef);
+      if (userData.verificationCodeAttempts >= this.MAX_ATTEMPTS) {
+        // Supprimer le code après trop de tentatives
+        await updateDoc(userDocRef, {
+          verificationCode: null,
+          verificationCodeExpires: null,
+          verificationCodeAttempts: null,
+          verificationCodeCreatedAt: null
+        });
         return {
           success: false,
           error: 'Trop de tentatives. Veuillez demander un nouveau code.'
@@ -132,30 +147,29 @@ export class EmailVerificationService {
       }
 
       // Incrémenter les tentatives
-      await setDoc(docRef, {
-        ...storedData,
-        attempts: storedData.attempts + 1
-      }, { merge: true });
+      await updateDoc(userDocRef, {
+        verificationCodeAttempts: (userData.verificationCodeAttempts || 0) + 1
+      });
 
       // Vérifier le code
-      if (storedData.code !== code) {
+      if (userData.verificationCode !== code) {
         return {
           success: false,
-          error: `Code incorrect. Tentatives restantes: ${this.MAX_ATTEMPTS - (storedData.attempts + 1)}`
+          error: `Code incorrect. Tentatives restantes: ${this.MAX_ATTEMPTS - ((userData.verificationCodeAttempts || 0) + 1)}`
         };
       }
 
       // Code correct - supprimer le code et marquer l'email comme vérifié
-      await deleteDoc(docRef);
-
-      // Marquer l'email comme vérifié dans Firestore
-      const userDocRef = doc(db, 'users', userId);
-      await setDoc(userDocRef, {
+      await updateDoc(userDocRef, {
         emailVerified: true,
-        emailVerifiedAt: serverTimestamp()
-      }, { merge: true });
+        emailVerifiedAt: serverTimestamp(),
+        verificationCode: null,
+        verificationCodeExpires: null,
+        verificationCodeAttempts: null,
+        verificationCodeCreatedAt: null
+      });
 
-      console.log('✅ Code vérifié avec succès pour:', email);
+      logger.success('✅ Code vérifié avec succès pour:', email);
 
       return {
         success: true,
@@ -163,7 +177,7 @@ export class EmailVerificationService {
       };
 
     } catch (error: any) {
-      console.error('❌ Erreur lors de la vérification du code:', error);
+      logger.error('❌ Erreur lors de la vérification du code:', error);
       
       // Gérer spécifiquement les erreurs de permissions
       if (error.code === 'permission-denied' || error.message?.includes('permissions')) {
@@ -185,18 +199,22 @@ export class EmailVerificationService {
    */
   static async hasActiveCode(userId: string): Promise<boolean> {
     try {
-      const docRef = doc(db, this.COLLECTION_NAME, userId);
-      const docSnap = await getDoc(docRef);
+      const userDocRef = doc(db, 'users', userId);
+      const docSnap = await getDoc(userDocRef);
 
       if (!docSnap.exists()) {
         return false;
       }
 
-      const storedData = docSnap.data() as VerificationCode;
-      // storedData.expires est déjà un Timestamp, utiliser toDate()
-      return new Date() < storedData.expires.toDate();
+      const userData = docSnap.data();
+      
+      if (!userData.verificationCode || !userData.verificationCodeExpires) {
+        return false;
+      }
+
+      return new Date() < userData.verificationCodeExpires.toDate();
     } catch (error) {
-      console.error('❌ Erreur lors de la vérification du code actif:', error);
+      logger.error('❌ Erreur lors de la vérification du code actif:', error);
       return false;
     }
   }
@@ -206,11 +224,16 @@ export class EmailVerificationService {
    */
   static async deleteCode(userId: string): Promise<void> {
     try {
-      const docRef = doc(db, this.COLLECTION_NAME, userId);
-      await deleteDoc(docRef);
-      console.log('✅ Code de vérification supprimé pour:', userId);
+      const userDocRef = doc(db, 'users', userId);
+      await updateDoc(userDocRef, {
+        verificationCode: null,
+        verificationCodeExpires: null,
+        verificationCodeAttempts: null,
+        verificationCodeCreatedAt: null
+      });
+      logger.success('✅ Code de vérification supprimé pour:', userId);
     } catch (error) {
-      console.error('❌ Erreur lors de la suppression du code:', error);
+      logger.error('❌ Erreur lors de la suppression du code:', error);
     }
   }
 } 

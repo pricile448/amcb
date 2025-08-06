@@ -4,6 +4,17 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.VITE_RESEND_API_KEY);
 
 export default async function handler(req, res) {
+  // Headers CORS pour Render
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  // Gérer les requêtes OPTIONS
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+
   // Vérifier la méthode HTTP
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Méthode non autorisée' });
@@ -17,6 +28,8 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Email et code requis' });
     }
 
+    console.log('📧 Tentative d\'envoi d\'email:', { email, code, userName });
+
     // Envoyer l'email via Resend
     const result = await resend.emails.send({
       from: 'onboarding@resend.dev', // TODO: Changer pour noreply@amccredit.com
@@ -26,15 +39,15 @@ export default async function handler(req, res) {
     });
 
     if (result.error) {
-      console.error('Erreur Resend:', result.error);
+      console.error('❌ Erreur Resend:', result.error);
       return res.status(500).json({ error: result.error.message });
     }
 
-    console.log('Email envoyé avec succès:', result.data?.id);
+    console.log('✅ Email envoyé avec succès:', result.data?.id);
     return res.status(200).json({ success: true, message: 'Email envoyé avec succès' });
 
   } catch (error) {
-    console.error('Erreur envoi email:', error);
+    console.error('❌ Erreur envoi email:', error);
     return res.status(500).json({ error: error.message || 'Erreur lors de l\'envoi d\'email' });
   }
 }
