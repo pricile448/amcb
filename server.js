@@ -95,37 +95,14 @@ function generateVerificationEmailHTML(code, userName) {
   `;
 }
 
-// Route pour toutes les autres requêtes - servir l'application React
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
-
-app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
-
-app.get('/register', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
-
-app.get('/dashboard', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
-
-app.get('/settings', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
-
-app.get('/kyc', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
-
-app.get('/verification', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
-
-// Route catch-all pour toutes les autres routes SPA
-app.get('/*', (req, res) => {
+// Middleware pour servir l'application React pour toutes les routes non-API
+app.use((req, res, next) => {
+  // Si c'est une route API, passer au middleware suivant
+  if (req.path.startsWith('/api/')) {
+    return next();
+  }
+  
+  // Sinon, servir l'application React
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
