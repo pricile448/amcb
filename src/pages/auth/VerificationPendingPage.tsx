@@ -24,10 +24,43 @@ const VerificationPendingPage: React.FC = () => {
         try {
           // Recharger les données utilisateur pour obtenir le statut à jour
           await user.reload();
-          if (user.emailVerified) {
-            logger.success('✅ Email vérifié, redirection vers le dashboard');
-            toast.success('Email vérifié avec succès !');
-            navigate('/dashboard');
+          
+          // Vérifier aussi dans Firestore pour synchroniser les statuts
+          const { doc, getDoc, updateDoc } = await import('firebase/firestore');
+          const { db } = await import('../../config/firebase');
+          
+          const userDoc = await getDoc(doc(db, 'users', user.uid));
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            const authVerified = user.emailVerified;
+            const firestoreVerified = userData.emailVerified || false;
+            
+            logger.debug('🔍 Vérification synchronisation:', {
+              authVerified,
+              firestoreVerified
+            });
+            
+            // Si Firebase Auth dit que l'email est vérifié, synchroniser Firestore
+            if (authVerified && !firestoreVerified) {
+              logger.warn('🔄 Synchronisation nécessaire dans VerificationPending');
+              try {
+                const userDocRef = doc(db, 'users', user.uid);
+                await updateDoc(userDocRef, {
+                  emailVerified: true,
+                  isEmailVerified: true
+                });
+                logger.success('✅ Firestore synchronisé depuis VerificationPending');
+              } catch (updateError) {
+                logger.error('❌ Erreur synchronisation Firestore:', updateError);
+              }
+            }
+            
+            // Rediriger si vérifié (soit Auth soit Firestore)
+            if (authVerified || firestoreVerified) {
+              logger.success('✅ Email vérifié, redirection vers le dashboard');
+              toast.success('Email vérifié avec succès !');
+              navigate('/dashboard');
+            }
           }
         } catch (error) {
           logger.error('Erreur lors de la vérification du statut:', error);
@@ -35,8 +68,8 @@ const VerificationPendingPage: React.FC = () => {
       }
     };
 
-    // Vérifier toutes les 5 secondes
-    const interval = setInterval(checkEmailVerification, 5000);
+    // Vérifier toutes les 3 secondes (plus réactif)
+    const interval = setInterval(checkEmailVerification, 3000);
     
     return () => clearInterval(interval);
   }, [navigate]);
@@ -60,6 +93,11 @@ const VerificationPendingPage: React.FC = () => {
     } finally {
       setIsChecking(false);
     }
+  };
+
+  const handleForceRefresh = () => {
+    logger.info('🔄 Actualisation forcée de la page');
+    window.location.reload();
   };
 
   return (
@@ -100,23 +138,33 @@ const VerificationPendingPage: React.FC = () => {
                 <span>Vérification automatique en cours...</span>
               </div>
               
-              <button
-                onClick={handleResendEmail}
-                disabled={isChecking}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isChecking ? (
-                  <>
-                    <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
-                    Envoi en cours...
-                  </>
-                ) : (
-                  <>
-                    <Mail className="h-4 w-4 mr-2" />
-                    Renvoyer l'email
-                  </>
-                )}
-              </button>
+              <div className="flex space-x-3">
+                <button
+                  onClick={handleResendEmail}
+                  disabled={isChecking}
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isChecking ? (
+                    <>
+                      <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+                      Envoi en cours...
+                    </>
+                  ) : (
+                    <>
+                      <Mail className="h-4 w-4 mr-2" />
+                      Renvoyer l'email
+                    </>
+                  )}
+                </button>
+                
+                <button
+                  onClick={handleForceRefresh}
+                  className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  <RefreshCw className="h-4 w-4 mr-2" />
+                  Actualiser
+                </button>
+              </div>
             </div>
             
             <div className="mt-6">
