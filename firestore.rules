@@ -27,7 +27,7 @@ service cloud.firestore {
           // Permettre la modification du champ notifications
           (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['notifications', 'updatedAt']))
           // Ou d'autres champs autorisés
-          || (request.resource.data.diff(resource.data).affectedKeys().hasAny(['kycStatus', 'verificationStatus', 'lastSignInTime']))
+          || (request.resource.data.diff(resource.data).affectedKeys().hasAny(['kycStatus', 'verificationStatus', 'lastSignInTime', 'emailVerified', 'isEmailVerified']))
         );
       
       // 👮‍♂️ Admins peuvent tout lire/modifier

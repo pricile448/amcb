@@ -27,6 +27,10 @@ const LoginPage: React.FC = () => {
 
   // Récupérer l'URL de retour depuis l'état de navigation
   const from = location.state?.from?.pathname || "/dashboard";
+  
+  // Récupérer le message de succès de vérification email
+  const successMessage = location.state?.message;
+  const emailVerified = location.state?.emailVerified;
 
   const {
     register,
@@ -62,10 +66,50 @@ const LoginPage: React.FC = () => {
       }
       
       const userData = userDoc.data();
-      const isEmailVerified = userData.emailVerified || false;
-      const kycStatus = userData.kycStatus || userData.verificationStatus || 'unverified';
       
-      logger.debug(`📧 Statut emailVerified: ${isEmailVerified}`);
+      // 🔧 Synchroniser le statut email avec Firebase Auth
+      const authVerified = userCredential.user.emailVerified;
+      const firestoreVerified = userData.emailVerified || false;
+      const firestoreIsVerified = userData.isEmailVerified || false;
+      
+      logger.debug('🔍 Synchronisation email:', {
+        authVerified,
+        firestoreVerified,
+        firestoreIsVerified
+      });
+      
+      // Si les statuts sont différents, synchroniser
+      if (authVerified !== firestoreVerified || authVerified !== firestoreIsVerified) {
+        logger.warn('🔄 Synchronisation nécessaire du statut email');
+        
+        try {
+          const { updateDoc } = await import('firebase/firestore');
+          const userDocRef = doc(db, 'users', userCredential.user.uid);
+          
+          const updates: any = {};
+          if (authVerified !== firestoreVerified) {
+            updates.emailVerified = authVerified;
+          }
+          if (authVerified !== firestoreIsVerified) {
+            updates.isEmailVerified = authVerified;
+          }
+          
+          await updateDoc(userDocRef, updates);
+          logger.success('✅ Statut email synchronisé');
+          
+          // Mettre à jour les données locales
+          userData.emailVerified = authVerified;
+          userData.isEmailVerified = authVerified;
+          
+        } catch (updateError) {
+          logger.error('❌ Erreur synchronisation email:', updateError);
+        }
+      }
+      
+      const isEmailVerified = userData.emailVerified || false;
+      let kycStatus = userData.kycStatus || userData.verificationStatus || 'unverified';
+      
+      logger.debug(`📧 Statut emailVerified final: ${isEmailVerified}`);
       logger.debug(`🔐 Statut KYC: ${kycStatus}`);
       
       if (!isEmailVerified) {
@@ -76,7 +120,7 @@ const LoginPage: React.FC = () => {
         toast.error('Veuillez vérifier votre email avant de vous connecter. Vérifiez vos spams ou demandez un nouveau code.');
         
         // Rediriger vers la page d'inscription avec un message
-        navigate('/inscription', { 
+        navigate('/ouvrir-compte', { 
           state: { 
             message: 'Veuillez vérifier votre email avant de vous connecter.',
             email: data.email 
@@ -100,7 +144,13 @@ const LoginPage: React.FC = () => {
       localStorage.setItem('user', JSON.stringify(userDataForStorage));
       logger.success('✅ Utilisateur stocké dans localStorage:', userDataForStorage);
       
-      toast.success(t("auth.loginSuccess"));
+      // Afficher un message spécial si c'est la première connexion après vérification
+      if (emailVerified) {
+        toast.success('Bienvenue ! Votre compte a été vérifié avec succès. Vous pouvez maintenant accéder à toutes les fonctionnalités.');
+      } else {
+        toast.success(t("auth.loginSuccess"));
+      }
+      
       navigate(from, { replace: true });
       
     } catch (error: any) {
@@ -149,6 +199,24 @@ const LoginPage: React.FC = () => {
             {t("auth.login.createAccount")}
           </Link>
         </p>
+        
+        {/* Message de succès après vérification email */}
+        {successMessage && (
+          <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+            <div className="flex">
+              <div className="flex-shrink-0">
+                <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div className="ml-3">
+                <p className="text-sm text-green-800">
+                  {successMessage}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">

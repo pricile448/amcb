@@ -7,9 +7,10 @@ import { z } from "zod";
 import { Eye, EyeOff, Mail, Lock, User, Phone, Calendar, MapPin, Building, Briefcase, DollarSign, Flag, Home } from "lucide-react";
 import toast from "react-hot-toast";
 import { AuthService } from "../../services/api";
-import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../../config/firebase";
+import { sendVerificationEmail } from "../../services/emailService";
 
 import { logger } from "../../utils/logger";
 
@@ -100,13 +101,18 @@ const RegisterPage: React.FC = () => {
 
       logger.success('✅ Données utilisateur sauvegardées dans Firestore');
 
-      // 3. Envoyer l'email de vérification Firebase
-      logger.debug('🔄 Envoi de l\'email de vérification Firebase...');
+      // 3. Envoyer l'email de vérification personnalisé
+      logger.debug('🔄 Envoi de l\'email de vérification personnalisé...');
       
-      await sendEmailVerification(userCredential.user, {
-        url: `${window.location.origin}/dashboard`,
-        handleCodeInApp: false
-      });
+      const emailResult = await sendVerificationEmail(
+        data.email, 
+        userId, 
+        `${data.firstName} ${data.lastName}`
+      );
+
+      if (!emailResult.success) {
+        throw new Error(emailResult.error || 'Erreur lors de l\'envoi de l\'email');
+      }
 
       logger.success('✅ Email de vérification envoyé');
 

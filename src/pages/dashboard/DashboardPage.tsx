@@ -21,7 +21,7 @@ import {
 import { FirebaseDataService, FirebaseAccount, FirebaseTransaction } from '../../services/firebaseData';
 import { parseFirestoreDate, formatDate, formatAmount, truncateTransactionDescription, formatUserNameForDisplay } from '../../utils/dateUtils';
 import { useKycSync } from '../../hooks/useNotifications';
-import EmailVerificationBanner from '../../components/EmailVerificationBanner';
+
 import { logger } from '../../utils/logger';
 
 // Utiliser FirebaseAccount au lieu de l'interface locale
@@ -204,15 +204,6 @@ const DashboardPage: React.FC = () => {
 
   return (
     <div className="space-y-4 md:space-y-6">
-      {/* Banner de vérification email */}
-      <EmailVerificationBanner 
-        userEmail={getUserEmail()}
-        onVerificationComplete={() => {
-          logger.success('Email vérifié avec succès');
-          // Recharger les données si nécessaire
-        }}
-      />
-      
       {/* Header avec RIB */}
       <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-4 md:p-6 text-white">
         <div className="flex items-center justify-between mb-4">

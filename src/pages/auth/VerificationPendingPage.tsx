@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Mail, CheckCircle, RefreshCw } from "lucide-react";
 import { auth } from "../../config/firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import { sendEmailVerification } from "firebase/auth";
 import { logger } from "../../utils/logger";
 import toast from "react-hot-toast";
 
@@ -21,11 +21,16 @@ const VerificationPendingPage: React.FC = () => {
     const checkEmailVerification = async () => {
       const user = auth.currentUser;
       if (user) {
-        await user.reload();
-        if (user.emailVerified) {
-          logger.success('✅ Email vérifié, redirection vers le dashboard');
-          toast.success('Email vérifié avec succès !');
-          navigate('/dashboard');
+        try {
+          // Recharger les données utilisateur pour obtenir le statut à jour
+          await user.reload();
+          if (user.emailVerified) {
+            logger.success('✅ Email vérifié, redirection vers le dashboard');
+            toast.success('Email vérifié avec succès !');
+            navigate('/dashboard');
+          }
+        } catch (error) {
+          logger.error('Erreur lors de la vérification du statut:', error);
         }
       }
     };
@@ -41,10 +46,12 @@ const VerificationPendingPage: React.FC = () => {
     try {
       const user = auth.currentUser;
       if (user) {
-        await user.sendEmailVerification({
-          url: `${window.location.origin}/dashboard`,
+        // Utiliser Firebase Auth natif pour renvoyer l'email
+        await sendEmailVerification(user, {
+          url: `${window.location.origin}/auth/action`,
           handleCodeInApp: false
         });
+        
         toast.success('Email de vérification renvoyé !');
       }
     } catch (error: any) {

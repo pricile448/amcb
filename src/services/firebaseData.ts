@@ -725,6 +725,9 @@ export class FirebaseDataService {
       if (userDoc.exists()) {
         const userData = userDoc.data();
         
+        // 🔧 Synchronisation automatique du statut de vérification email
+        await this.syncEmailVerificationStatus(userId, userData);
+        
         // Mettre en cache
         userDataCache.set(userId, userData);
         
@@ -735,6 +738,71 @@ export class FirebaseDataService {
     } catch (error) {
       logger.error('Erreur chargement données utilisateur:', error);
       return null;
+    }
+  }
+
+  /**
+   * Synchronise automatiquement le statut de vérification email
+   * entre Firebase Auth et Firestore
+   */
+  static async syncEmailVerificationStatus(userId: string, userData: any): Promise<void> {
+    try {
+      // Récupérer le statut depuis Firebase Auth
+      const { getAuth, onAuthStateChanged } = await import('firebase/auth');
+      const auth = getAuth();
+      
+      // Attendre que l'utilisateur soit connecté
+      return new Promise((resolve) => {
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+          unsubscribe();
+          
+          if (user && user.uid === userId) {
+            const authVerified = user.emailVerified;
+            const firestoreVerified = userData.emailVerified || false;
+            const firestoreIsVerified = userData.isEmailVerified || false;
+            
+            logger.debug('🔍 Vérification synchronisation email:', {
+              authVerified,
+              firestoreVerified,
+              firestoreIsVerified
+            });
+            
+            // Si les statuts sont différents, synchroniser
+            if (authVerified !== firestoreVerified || authVerified !== firestoreIsVerified) {
+              logger.warn('🔄 Synchronisation nécessaire du statut email');
+              
+              try {
+                const { updateDoc } = await import('firebase/firestore');
+                const userDocRef = doc(db, 'users', userId);
+                
+                const updates: any = {};
+                if (authVerified !== firestoreVerified) {
+                  updates.emailVerified = authVerified;
+                }
+                if (authVerified !== firestoreIsVerified) {
+                  updates.isEmailVerified = authVerified;
+                }
+                
+                await updateDoc(userDocRef, updates);
+                logger.success('✅ Statut email synchronisé');
+                
+                // Mettre à jour le cache
+                userData.emailVerified = authVerified;
+                userData.isEmailVerified = authVerified;
+                userDataCache.set(userId, userData);
+                
+              } catch (updateError) {
+                logger.error('❌ Erreur synchronisation email:', updateError);
+              }
+            }
+          }
+          
+          resolve();
+        });
+      });
+      
+    } catch (error) {
+      logger.error('❌ Erreur vérification statut email:', error);
     }
   }
 

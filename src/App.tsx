@@ -21,6 +21,7 @@ import LoginPage from './pages/auth/LoginPage'
 import RegisterPage from './pages/auth/RegisterPage'
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage'
 import VerificationPendingPage from './pages/auth/VerificationPendingPage'
+import FirebaseActionPage from './pages/auth/FirebaseActionPage'
 
 // Dashboard Pages
 import DashboardPage from './pages/dashboard/DashboardPage'
@@ -55,6 +56,7 @@ function App() {
           <Route path="ouvrir-compte" element={<RegisterPage />} />
           <Route path="mot-de-passe-oublie" element={<ForgotPasswordPage />} />
           <Route path="verification-pending" element={<VerificationPendingPage />} />
+          <Route path="auth/action" element={<FirebaseActionPage />} />
         </Route>
 
         {/* Protected Dashboard Routes */}
