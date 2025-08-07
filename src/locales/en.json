@@ -37,7 +37,6 @@
     "history": "History",
     "budgets": "Budgets",
     "settings": "Settings",
-    "help": "Help & Support",
     "documents": "My Documents",
     "logout": "Logout"
   },
@@ -90,98 +89,395 @@
       "button": "Open My Account"
     }
   },
-  "auth": {
-    "login": {
-      "title": "Welcome back",
-      "subtitle": "Sign in to your AmCbunq account",
-      "email": "Email",
-      "password": "Password",
-      "forgotPassword": "Forgot password?",
-      "signIn": "Sign In",
-      "noAccount": "Don't have an account?",
-      "signUp": "Sign up"
+  "features": {
+    "hero": {
+      "title": "AmCbunq Features",
+      "subtitle": "Discover everything our platform can do for you"
     },
-    "register": {
-      "title": "Create your account",
-      "subtitle": "Join AmCbunq in just a few steps",
-      "firstName": "First Name",
-      "lastName": "Last Name",
-      "email": "Email",
-      "password": "Password",
-      "confirmPassword": "Confirm Password",
-      "agreeTerms": "I agree to the terms and conditions",
-      "createAccount": "Create Account",
-      "haveAccount": "Already have an account?",
-      "signIn": "Sign in"
+    "security": {
+      "title": "Bank-level security",
+      "description": "Your data is protected by the best encryption technologies",
+      "benefit1": "AES-256 encryption",
+      "benefit2": "Two-factor authentication",
+      "benefit3": "24/7 monitoring"
+    },
+    "accounts": {
+      "title": "Account management",
+      "description": "Manage all your accounts from a single interface",
+      "benefit1": "Current and savings accounts",
+      "benefit2": "Virtual credit cards",
+      "benefit3": "Real-time tracking"
+    },
+    "transactions": {
+      "title": "Instant transactions",
+      "description": "Make transfers and payments in real time",
+      "benefit1": "Instant SEPA transfers",
+      "benefit2": "Card payments",
+      "benefit3": "Detailed history"
+    },
+    "transfers": {
+      "title": "International transfers",
+      "description": "Send money anywhere in the world",
+      "benefit1": "Competitive exchange rates",
+      "benefit2": "Transparent fees",
+      "benefit3": "Real-time tracking"
+    },
+    "international": {
+      "title": "International presence",
+      "description": "Operate in over 50 countries",
+      "benefit1": "Multilingual support",
+      "benefit2": "Multiple currencies",
+      "benefit3": "Local compliance"
+    },
+    "mobile": {
+      "title": "Mobile application",
+      "description": "Manage your finances from your smartphone",
+      "benefit1": "Intuitive interface",
+      "benefit2": "Push notifications",
+      "benefit3": "Biometrics"
+    },
+    "cta": {
+      "title": "Ready to get started?",
+      "description": "Join AmCbunq and discover a new way to manage your finances",
+      "openAccount": "Open Account",
+      "viewPricing": "View Pricing"
     }
   },
-  "dashboard": {
-    "welcome": "Welcome back",
-    "totalBalance": "Total Balance",
-    "recentTransactions": "Recent Transactions",
-    "quickActions": "Quick Actions",
-    "transfer": "Transfer",
-    "pay": "Pay",
-    "topUp": "Top Up",
-    "viewAll": "View All"
+  "pricing": {
+    "hero": {
+      "title": "Transparent pricing",
+      "subtitle": "Simple and transparent pricing, no surprises"
+    },
+    "basic": {
+      "name": "Basic",
+      "price": "€0",
+      "description": "Perfect to get started",
+      "feature1": "Free current account",
+      "feature2": "Free debit card",
+      "feature3": "Free SEPA transfers",
+      "feature4": "Mobile application",
+      "feature5": "Email support"
+    },
+    "premium": {
+      "name": "Premium",
+      "price": "€9.99",
+      "description": "For active users",
+      "feature1": "Everything from Basic plan",
+      "feature2": "Savings account",
+      "feature3": "Credit card",
+      "feature4": "International transfers",
+      "feature5": "Priority support",
+      "feature6": "Travel insurance",
+      "feature7": "Free withdrawals"
+    },
+    "business": {
+      "name": "Business",
+      "price": "€29.99",
+      "description": "For businesses",
+      "feature1": "Everything from Premium plan",
+      "feature2": "Multiple accounts",
+      "feature3": "Integration API",
+      "feature4": "Dedicated support",
+      "feature5": "Advanced reports",
+      "feature6": "Team management",
+      "feature7": "KYC compliance",
+      "feature8": "Personalized training"
+    },
+    "month": "month",
+    "popular": "Popular",
+    "choosePlan": "Choose this plan",
+    "faq": {
+      "title": "Frequently asked questions",
+      "subtitle": "Everything you need to know about our pricing",
+      "q1": "Are there hidden fees?",
+      "a1": "No, all our pricing is transparent. No hidden fees.",
+      "q2": "Can I change plans?",
+      "a2": "Yes, you can change plans anytime from your client space.",
+      "q3": "Are transfers really free?",
+      "a3": "Yes, all SEPA transfers are free on all our plans.",
+      "q4": "What happens if I'm not satisfied?",
+      "a4": "You can close your account anytime without fees."
+    },
+    "cta": {
+      "title": "Ready to get started?",
+      "description": "Choose the plan that suits you and open your account in 5 minutes",
+      "button": "Open Account"
+    }
   },
-  "accounts": {
-    "title": "My Accounts",
-    "totalBalance": "Total Balance",
-    "activeAccounts": "Active Accounts",
-    "monthlyTransactions": "Monthly Transactions",
-    "accountNumber": "Account Number",
-    "balance": "Balance",
-    "lastTransaction": "Last Transaction",
-    "details": "Details",
-    "transfer": "Transfer",
-    "rib": "RIB AmCbunq",
-    "copyRib": "Copy RIB"
-  },
-  "transactions": {
-    "title": "Transaction History",
-    "filter": "Filter",
-    "search": "Search transactions",
-    "date": "Date",
-    "description": "Description",
-    "amount": "Amount",
-    "type": "Type",
-    "status": "Status",
-    "income": "Income",
-    "expense": "Expense",
-    "transfer": "Transfer"
-  },
-  "transfers": {
-    "title": "Transfers",
-    "newTransfer": "New Transfer",
-    "beneficiaries": "Beneficiaries",
-    "addBeneficiary": "Add Beneficiary",
-    "fromAccount": "From Account",
-    "toAccount": "To Account",
-    "amount": "Amount",
-    "description": "Description",
-    "send": "Send",
-    "transferHistory": "Transfer History"
+  "help": {
+    "title": "Help Center",
+    "subtitle": "Quickly find answers to your questions",
+    "searchPlaceholder": "Search in help...",
+    "faqTitle": "Frequently asked questions",
+    "faqSubtitle": "The most asked questions by our customers",
+    "faq1": {
+      "question": "How to open an AmCbunq account?",
+      "answer": "Account opening is done online in 5 minutes. You will need your ID and proof of address."
+    },
+    "faq2": {
+      "question": "How long to receive my card?",
+      "answer": "Your card is shipped within 3-5 business days after account validation."
+    },
+    "faq3": {
+      "question": "Are transfers really free?",
+      "answer": "Yes, all SEPA transfers are free. Only international transfers are charged."
+    },
+    "faq4": {
+      "question": "How to contact support?",
+      "answer": "Our support is available 24/7 by chat, email or phone."
+    },
+    "faq5": {
+      "question": "Is my data secure?",
+      "answer": "Yes, we use military-grade encryption and comply with GDPR."
+    },
+    "contactTitle": "Need help?",
+    "contactSubtitle": "Our team is here to help you",
+    "liveChat": "Live chat",
+    "liveChatDescription": "Get an immediate response",
+    "startChat": "Start chat",
+    "email": "Email",
+    "emailDescription": "Response within 24h",
+    "sendEmail": "Send email",
+    "phone": "Phone",
+    "phoneDescription": "24/7 support",
+    "callUs": "Call us",
+    "quickLinks": "Quick links",
+    "quickLinksSubtitle": "Quickly access useful resources",
+    "gettingStarted": "Getting started",
+    "gettingStartedDescription": "Quick start guide",
+    "accountSecurity": "Account security",
+    "accountSecurityDescription": "Protect your account",
+    "transfers": "Transfers",
+    "transfersDescription": "Make transfers",
+    "troubleshooting": "Troubleshooting",
+    "troubleshootingDescription": "Solve problems",
+    "learnMore": "Learn more"
   },
   "cards": {
     "title": "My Cards",
-    "activeCards": "Active Cards",
-    "cardNumber": "Card Number",
-    "expiryDate": "Expiry Date",
-    "cvv": "CVV",
-    "status": "Status",
-    "block": "Block",
-    "unblock": "Unblock",
-    "orderNew": "Order New Card"
+    "subtitle": "Manage your bank cards and credit cards",
+    "addCard": "Request a new card",
+    "noCards": "No cards available",
+    "noCardsDescription": "You don't have any bank cards yet. Request your first card to start using it.",
+    "requestFirstCard": "Request my first card",
+    "requestCard": "Request a card",
+    "cardTypes": {
+      "debit": "Debit Card",
+      "credit": "Credit Card"
+    },
+    "requestTypes": {
+      "physical": "Physical card",
+      "virtual": "Virtual card",
+      "physicalDescription": "Delivered to your address within 5-7 business days",
+      "virtualDescription": "Available within 24h for online payments"
+    },
+    "status": {
+      "active": "Active",
+      "blocked": "Blocked",
+      "expired": "Expired"
+    },
+    "actions": {
+      "use": "Use",
+      "details": "Details",
+      "settings": "Settings",
+      "delete": "Delete",
+      "request": "Request card"
+    },
+    "info": {
+      "title": "Important information",
+      "virtualAvailable": "Virtual card will be available within 24h",
+      "physicalDelivery": "Physical card will be delivered to your address",
+      "pinSms": "You will receive a PIN code by separate SMS",
+      "secured": "Cards are secured and insured"
+    }
   },
-  "documents": {
-    "title": "My Documents",
-    "upload": "Upload Document",
-    "fileName": "File Name",
-    "uploadDate": "Upload Date",
+  "auth": {
+    "login": {
+      "title": "Login",
+      "subtitle": "Access your AmCbunq account",
+      "createAccount": "Create account",
+      "button": "Login"
+    },
+    "register": {
+      "title": "Create account",
+      "subtitle": "Join AmCbunq in a few steps",
+      "alreadyHaveAccount": "Already have an account?",
+      "button": "Create account"
+    },
+    "email": "Email address",
+    "emailPlaceholder": "your@email.com",
+    "password": "Password",
+    "passwordPlaceholder": "Your password",
+    "confirmPassword": "Confirm password",
+    "confirmPasswordPlaceholder": "Confirm your password",
+    "firstName": "First name",
+    "firstNamePlaceholder": "Your first name",
+    "lastName": "Last name",
+    "lastNamePlaceholder": "Your last name",
+    "phone": "Phone",
+    "phonePlaceholder": "+33 6 12 34 56 78",
+    "birthDate": "Date of birth",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "acceptTerms": "I accept the",
+    "termsAndConditions": "terms and conditions",
+    "or": "or",
+    "loginWithGoogle": "Login with Google",
+    "loginButton": "Login",
+    "registerButton": "Create account",
+    "loggingIn": "Logging in...",
+    "registering": "Creating account...",
+    "loginSuccess": "Login successful",
+    "loginError": "Login error",
+    "registerSuccess": "Account created successfully",
+    "registerError": "Error creating account"
+  },
+  "dashboard": {
+    "welcome": "Hello",
+    "overview": "Overview of your finances",
+    "totalBalance": "Total balance",
+    "totalAccounts": "Accounts",
+    "monthlyIncome": "Monthly income",
+    "monthlyExpenses": "Monthly expenses",
+    "fromLastMonth": "vs last month",
+    "currentAccount": "Current Account",
+    "savingsAccount": "Savings Account",
+    "creditCard": "Credit Card",
+    "accounts": "Accounts",
+    "recentTransactions": "Recent transactions",
+    "viewAll": "View all",
+    "quickActions": "Quick actions",
+    "newTransfer": "New transfer",
+    "newCard": "New card",
+    "contacts": "Contacts",
+    "investments": "Investments"
+  },
+  "accounts": {
+    "title": "My Accounts",
+    "subtitle": "Manage all your bank accounts",
+    "currentAccount": "Current Account",
+    "savingsAccount": "Savings Account",
+    "creditCard": "Credit Card",
+    "balance": "Balance",
+    "currency": "Currency",
     "status": "Status",
-    "download": "Download",
-    "delete": "Delete"
+    "lastTransaction": "Last transaction",
+    "active": "Active",
+    "openNewAccount": "Open account",
+    "showBalance": "Show balance",
+    "hideBalance": "Hide balance",
+    "copyIBAN": "Copy IBAN",
+    "downloadStatement": "Download statement",
+    "transfer": "Transfer",
+    "details": "Details",
+    "summary": "Summary",
+    "totalBalance": "Total balance",
+    "totalAccounts": "Accounts",
+    "monthlySavings": "Monthly savings"
+  },
+  "transactions": {
+    "title": "Transactions",
+    "subtitle": "Your transaction history",
+    "all": "All",
+    "income": "Income",
+    "expense": "Expenses",
+    "transfer": "Transfers",
+    "searchPlaceholder": "Search transaction...",
+    "recentTransactions": "Recent transactions",
+    "export": "Export",
+    "totalIncome": "Total income",
+    "totalExpenses": "Total expenses",
+    "netBalance": "Net balance"
+  },
+  "transfers": {
+    "title": "Transfers",
+    "subtitle": "Make transfers with ease",
+    "newTransfer": "New transfer",
+    "internalTransfer": "Internal transfer",
+    "internalTransferDescription": "Between your AmCbunq accounts",
+    "startInternalTransfer": "Internal transfer",
+    "externalTransfer": "External transfer",
+    "externalTransferDescription": "To other banks",
+    "startExternalTransfer": "External transfer",
+    "transferLimits": "Transfer limits",
+    "dailyLimit": "Daily limit",
+    "monthlyLimit": "Monthly limit",
+    "minimumAmount": "Minimum amount",
+    "processingTime": "Processing time",
+    "businessDays": "business days",
+    "history": "History",
+    "scheduled": "Scheduled",
+    "recentTransfers": "Recent transfers",
+    "viewAll": "View all",
+    "noScheduledTransfers": "No scheduled transfers",
+    "noScheduledTransfersDescription": "You haven't scheduled any transfers yet",
+    "scheduleTransfer": "Schedule transfer",
+    "type": {
+      "internal": "Internal",
+      "external": "External"
+    },
+    "status": {
+      "completed": "Completed",
+      "pending": "Pending",
+      "failed": "Failed"
+    }
+  },
+  "verification": {
+    "title": "Verification",
+    "subtitle": "Complete your account verification",
+    "verificationLevel": "Verification level",
+    "progress": "Progress",
+    "completed": "completed",
+    "documents": "Documents",
+    "steps": "Steps",
+    "uploadedDocuments": "Uploaded documents",
+    "uploadDocument": "Upload document",
+    "view": "View",
+    "reupload": "Re-upload",
+    "requiredDocuments": "Required documents",
+    "identityDocument": "Identity document",
+    "proofOfAddress": "Proof of address",
+    "proofOfIncome": "Proof of income",
+    "bankStatement": "Bank statement",
+    "verificationSteps": "Verification steps",
+    "step1": {
+      "title": "Account creation",
+      "description": "Personal information validated"
+    },
+    "step2": {
+      "title": "Phone verification",
+      "description": "Phone number verified"
+    },
+    "step3": {
+      "title": "Identity documents",
+      "description": "Identity document under verification"
+    },
+    "step4": {
+      "title": "Complete verification",
+      "description": "Access to all features"
+    },
+    "status": {
+      "approved": "Approved",
+      "pending": "Pending",
+      "rejected": "Rejected"
+    },
+    "stepStatus": {
+      "completed": "Completed",
+      "in_progress": "In progress",
+      "pending": "Pending"
+    },
+    "banner": {
+      "unverified": {
+        "title": "Identity verification required",
+        "message": "To access all features, you must validate your identity.",
+        "button": "Validate now"
+      },
+      "pending": {
+        "title": "Verification in progress",
+        "message": "Your documents are being verified. You will receive a notification once completed.",
+        "button": "View status"
+      }
+    }
   },
   "settings": {
     "title": "Settings",
@@ -190,39 +486,39 @@
     "security": "Security",
     "notifications": "Notifications",
     "preferences": "Preferences",
-    "profileSettings": "Profile Settings",
-    "firstName": "First Name",
-    "lastName": "Last Name",
+    "profileSettings": "Profile settings",
+    "firstName": "First name",
+    "lastName": "Last name",
     "email": "Email",
     "phone": "Phone",
-    "dateOfBirth": "Date of Birth",
-    "placeOfBirth": "Place of Birth",
+    "dateOfBirth": "Date of birth",
+    "placeOfBirth": "Place of birth",
     "nationality": "Nationality",
-    "residenceCountry": "Country of Residence",
+    "residenceCountry": "Country of residence",
     "address": "Address",
     "city": "City",
-    "postalCode": "Postal Code",
+    "postalCode": "Postal code",
     "profession": "Profession",
     "salary": "Salary",
-    "saveChanges": "Save Changes",
-    "securitySettings": "Security Settings",
-    "changePassword": "Change Password",
+    "saveChanges": "Save",
+    "securitySettings": "Security settings",
+    "changePassword": "Change password",
     "changePasswordDescription": "Update your password",
     "change": "Change",
-    "twoFactorAuth": "Two-Factor Authentication",
+    "twoFactorAuth": "Two-factor authentication",
     "twoFactorAuthDescription": "Add an extra layer of security",
     "enable": "Enable",
-    "loginHistory": "Login History",
+    "loginHistory": "Login history",
     "loginHistoryDescription": "View your recent logins",
     "view": "View",
-    "notificationSettings": "Notification Settings",
-    "emailNotifications": "Email Notifications",
+    "notificationSettings": "Notification settings",
+    "emailNotifications": "Email notifications",
     "emailNotificationsDescription": "Receive email notifications",
-    "smsNotifications": "SMS Notifications",
+    "smsNotifications": "SMS notifications",
     "smsNotificationsDescription": "Receive SMS notifications",
-    "pushNotifications": "Push Notifications",
+    "pushNotifications": "Push notifications",
     "pushNotificationsDescription": "Receive notifications on your device",
-    "marketingEmails": "Marketing Emails",
+    "marketingEmails": "Marketing emails",
     "marketingEmailsDescription": "Receive our offers and news",
     "language": "Language",
     "currency": "Currency",
@@ -268,30 +564,6 @@
     "beneficiaryUpdated": "Beneficiary updated",
     "beneficiaryDeleted": "Beneficiary deleted"
   },
-  "messages": {
-    "title": "Messages",
-    "subtitle": "AmCbunq Customer Service",
-    "support": "AmCbunq Support",
-    "online": "Online",
-    "quickResponse": "Quick response",
-    "typing": "Support is typing...",
-    "placeholder": "Type your message...",
-    "send": "Send",
-    "faq": "Frequently Asked Questions",
-    "faq1": "How to change my password?",
-    "faq2": "How to make a transfer?",
-    "faq3": "Problem with my bank card",
-    "directContact": "Direct contact",
-    "phone": "01 23 45 67 89",
-    "email": "support@amcbunq.fr",
-    "availability": "24/7",
-    "responseTime": "Response time",
-    "chatResponse": "Immediate",
-    "emailResponse": "2-4h",
-    "phoneResponse": "Immediate",
-    "welcomeMessage": "Hello! I'm your AmCbunq virtual assistant. How can I help you today?",
-    "autoResponse": "Thank you for your message. An advisor will respond to you as soon as possible."
-  },
   "transferMessages": {
     "internalSuccess": "Your transfer of {amount} has been created successfully.",
     "scheduledSuccess": "Your transfer of {amount} has been scheduled successfully.",
@@ -304,7 +576,7 @@
     "beneficiaryUpdateError": "Unable to update beneficiary: {error}",
     "beneficiaryDeleteError": "Unable to delete beneficiary: {error}",
     "externalTransferTitle": "External Transfer",
-    "externalTransferMessage": "External transfers are subject to security review before validation.\n\nYour transfer will be automatically put on hold and processed as soon as possible.\n\nDo you want to continue?",
+    "externalTransferMessage": "External transfers are subject to security review before validation.\\n\\nYour transfer will be automatically put on hold and processed as soon as possible.\\n\\nDo you want to continue?",
     "confirmTransfer": "Confirm Transfer"
   },
   "kyc": {
@@ -339,19 +611,29 @@
     "pending": "Pending",
     "verified": "Verified"
   },
-  "verification": {
-    "banner": {
-      "unverified": {
-        "title": "Identity Verification Required",
-        "message": "To access all AmCbunq features, you must verify your identity.",
-        "button": "Verify Now"
-      },
-      "pending": {
-        "title": "Verification in Progress",
-        "message": "Your documents are being verified. You will receive a notification once completed.",
-        "button": "View Status"
-      }
-    }
+  "messages": {
+    "title": "Messages",
+    "subtitle": "AmCbunq Customer Service",
+    "support": "AmCbunq Support",
+    "online": "Online",
+    "quickResponse": "Quick response",
+    "typing": "Support is typing...",
+    "placeholder": "Type your message...",
+    "send": "Send",
+    "faq": "Frequently Asked Questions",
+    "faq1": "How to change my password?",
+    "faq2": "How to make a transfer?",
+    "faq3": "Problem with my bank card",
+    "directContact": "Direct contact",
+    "phone": "01 23 45 67 89",
+    "email": "support@amcbunq.fr",
+    "availability": "24/7",
+    "responseTime": "Response time",
+    "chatResponse": "Immediate",
+    "emailResponse": "2-4h",
+    "phoneResponse": "Immediate",
+    "welcomeMessage": "Hello! I'm your AmCbunq virtual assistant. How can I help you today?",
+    "autoResponse": "Thank you for your message. An advisor will respond to you as soon as possible."
   },
   "iban": {
     "title": "My IBAN",
@@ -393,5 +675,14 @@
         "notification": "You will receive a notification as soon as your RIB is available."
       }
     }
+  },
+  "documents": {
+    "title": "My Documents",
+    "upload": "Upload Document",
+    "fileName": "File Name",
+    "uploadDate": "Upload Date",
+    "status": "Status",
+    "download": "Download",
+    "delete": "Delete"
   }
-} 
+}

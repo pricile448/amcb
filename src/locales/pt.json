@@ -18,9 +18,620 @@
     "sort": "Ordenar",
     "view": "Ver",
     "download": "Baixar",
-    "upload": "Enviar",
+    "upload": "Upload",
     "yes": "Sim",
     "no": "Não"
+  },
+  "nav": {
+    "features": "Recursos",
+    "pricing": "Preços",
+    "help": "Ajuda",
+    "login": "Entrar",
+    "openAccount": "Abrir conta",
+    "dashboard": "Minha área de cliente",
+    "accounts": "Contas",
+    "iban": "Meu IBAN",
+    "transfers": "Transferências",
+    "cards": "Cartões",
+    "billing": "Faturação",
+    "history": "Histórico",
+    "budgets": "Orçamentos",
+    "settings": "Configurações",
+    "documents": "Meus documentos",
+    "logout": "Sair"
+  },
+  "home": {
+    "hero": {
+      "title": "La banque du futur, aujourd'hui",
+      "subtitle": "Gérez vos finances en toute simplicité avec AmCbunq. Ouverture de compte en 5 minutes, virements instantanés, et une sécurité de niveau bancaire.",
+      "openAccount": "Ouvrir un compte",
+      "learnMore": "En savoir plus"
+    },
+    "features": {
+      "title": "Pourquoi choisir AmCbunq ?",
+      "subtitle": "Une expérience bancaire moderne et sécurisée"
+    },
+    "security": {
+      "title": "Sécurité maximale",
+      "description": "Vos données sont protégées par un cryptage de niveau militaire"
+    },
+    "accounts": {
+      "title": "Comptes multiples",
+      "description": "Courant, épargne, et cartes de crédit en un seul endroit"
+    },
+    "transactions": {
+      "title": "Transactions instantanées",
+      "description": "Virements et paiements en temps réel"
+    },
+    "international": {
+      "title": "International",
+      "description": "Envoyez de l'argent partout dans le monde"
+    },
+    "benefits": {
+      "title": "Avantages AmCbunq",
+      "noFees": "Aucun frais caché",
+      "instant": "Virements instantanés",
+      "secure": "Sécurité bancaire",
+      "support": "Support 24/7",
+      "getStarted": "Commencer maintenant"
+    },
+    "mobile": {
+      "title": "Application mobile",
+      "description": "Gérez vos finances depuis votre smartphone"
+    },
+    "speed": {
+      "title": "Rapidité",
+      "description": "Ouverture de compte en 5 minutes"
+    },
+    "cta": {
+      "title": "Prêt à rejoindre AmCbunq ?",
+      "description": "Rejoignez des milliers de clients satisfaits",
+      "button": "Ouvrir mon compte"
+    }
+  },
+  "features": {
+    "hero": {
+      "title": "Fonctionnalités AmCbunq",
+      "subtitle": "Découvrez tout ce que notre plateforme peut faire pour vous"
+    },
+    "security": {
+      "title": "Sécurité de niveau bancaire",
+      "description": "Vos données sont protégées par les meilleures technologies de cryptage",
+      "benefit1": "Cryptage AES-256",
+      "benefit2": "Authentification à deux facteurs",
+      "benefit3": "Surveillance 24/7"
+    },
+    "accounts": {
+      "title": "Gestion de comptes",
+      "description": "Gérez tous vos comptes depuis une seule interface",
+      "benefit1": "Comptes courants et épargne",
+      "benefit2": "Cartes de crédit virtuelles",
+      "benefit3": "Suivi en temps réel"
+    },
+    "transactions": {
+      "title": "Transactions instantanées",
+      "description": "Effectuez des virements et paiements en temps réel",
+      "benefit1": "Virements SEPA instantanés",
+      "benefit2": "Paiements par carte",
+      "benefit3": "Historique détaillé"
+    },
+    "transfers": {
+      "title": "Virements internationaux",
+      "description": "Envoyez de l'argent partout dans le monde",
+      "benefit1": "Taux de change compétitifs",
+      "benefit2": "Frais transparents",
+      "benefit3": "Suivi en temps réel"
+    },
+    "international": {
+      "title": "Présence internationale",
+      "description": "Opérez dans plus de 50 pays",
+      "benefit1": "Support multilingue",
+      "benefit2": "Devises multiples",
+      "benefit3": "Conformité locale"
+    },
+    "mobile": {
+      "title": "Application mobile",
+      "description": "Gérez vos finances depuis votre smartphone",
+      "benefit1": "Interface intuitive",
+      "benefit2": "Notifications push",
+      "benefit3": "Biométrie"
+    },
+    "cta": {
+      "title": "Prêt à commencer ?",
+      "description": "Rejoignez AmCbunq et découvrez une nouvelle façon de gérer vos finances",
+      "openAccount": "Ouvrir un compte",
+      "viewPricing": "Voir les tarifs"
+    }
+  },
+  "pricing": {
+    "hero": {
+      "title": "Tarifs transparents",
+      "subtitle": "Des tarifs simples et transparents, sans surprise"
+    },
+    "basic": {
+      "name": "Basique",
+      "price": "0€",
+      "description": "Parfait pour commencer",
+      "feature1": "Compte courant gratuit",
+      "feature2": "Carte de débit gratuite",
+      "feature3": "Virements SEPA gratuits",
+      "feature4": "Application mobile",
+      "feature5": "Support par email"
+    },
+    "premium": {
+      "name": "Premium",
+      "price": "9,99€",
+      "description": "Pour les utilisateurs actifs",
+      "feature1": "Tout du plan Basique",
+      "feature2": "Compte épargne",
+      "feature3": "Carte de crédit",
+      "feature4": "Virements internationaux",
+      "feature5": "Support prioritaire",
+      "feature6": "Assurance voyage",
+      "feature7": "Retraits gratuits"
+    },
+    "business": {
+      "name": "Business",
+      "price": "29,99€",
+      "description": "Pour les entreprises",
+      "feature1": "Tout du plan Premium",
+      "feature2": "Comptes multiples",
+      "feature3": "API d'intégration",
+      "feature4": "Support dédié",
+      "feature5": "Rapports avancés",
+      "feature6": "Gestion d'équipe",
+      "feature7": "Conformité KYC",
+      "feature8": "Formation personnalisée"
+    },
+    "month": "mois",
+    "popular": "Populaire",
+    "choosePlan": "Choisir ce plan",
+    "faq": {
+      "title": "Questions fréquentes",
+      "subtitle": "Tout ce que vous devez savoir sur nos tarifs",
+      "q1": "Y a-t-il des frais cachés ?",
+      "a1": "Non, tous nos tarifs sont transparents. Aucun frais caché.",
+      "q2": "Puis-je changer de plan ?",
+      "a2": "Oui, vous pouvez changer de plan à tout moment depuis votre espace client.",
+      "q3": "Les virements sont-ils vraiment gratuits ?",
+      "a3": "Oui, tous les virements SEPA sont gratuits sur tous nos plans.",
+      "q4": "Que se passe-t-il si je ne suis pas satisfait ?",
+      "a4": "Vous pouvez fermer votre compte à tout moment sans frais."
+    },
+    "cta": {
+      "title": "Prêt à commencer ?",
+      "description": "Choisissez le plan qui vous convient et ouvrez votre compte en 5 minutes",
+      "button": "Ouvrir un compte"
+    }
+  },
+  "help": {
+    "title": "Centre d'aide",
+    "subtitle": "Trouvez rapidement les réponses à vos questions",
+    "searchPlaceholder": "Rechercher dans l'aide...",
+    "faqTitle": "Questions fréquentes",
+    "faqSubtitle": "Les questions les plus posées par nos clients",
+    "faq1": {
+      "question": "Comment ouvrir un compte AmCbunq ?",
+      "answer": "L'ouverture de compte se fait en ligne en 5 minutes. Vous aurez besoin de votre pièce d'identité et d'un justificatif de domicile."
+    },
+    "faq2": {
+      "question": "Combien de temps pour recevoir ma carte ?",
+      "answer": "Votre carte est expédiée sous 3-5 jours ouvrés après validation de votre compte."
+    },
+    "faq3": {
+      "question": "Les virements sont-ils vraiment gratuits ?",
+      "answer": "Oui, tous les virements SEPA sont gratuits. Seuls les virements internationaux sont facturés."
+    },
+    "faq4": {
+      "question": "Comment contacter le support ?",
+      "answer": "Notre support est disponible 24/7 par chat, email ou téléphone."
+    },
+    "faq5": {
+      "question": "Mes données sont-elles sécurisées ?",
+      "answer": "Oui, nous utilisons un cryptage de niveau militaire et respectons le RGPD."
+    },
+    "contactTitle": "Besoin d'aide ?",
+    "contactSubtitle": "Notre équipe est là pour vous aider",
+    "liveChat": "Chat en direct",
+    "liveChatDescription": "Obtenez une réponse immédiate",
+    "startChat": "Démarrer le chat",
+    "email": "Email",
+    "emailDescription": "Réponse sous 24h",
+    "sendEmail": "Envoyer un email",
+    "phone": "Téléphone",
+    "phoneDescription": "Support 24/7",
+    "callUs": "Nous appeler",
+    "quickLinks": "Liens rapides",
+    "quickLinksSubtitle": "Accédez rapidement aux ressources utiles",
+    "gettingStarted": "Premiers pas",
+    "gettingStartedDescription": "Guide de démarrage rapide",
+    "accountSecurity": "Sécurité du compte",
+    "accountSecurityDescription": "Protéger votre compte",
+    "transfers": "Virements",
+    "transfersDescription": "Effectuer des virements",
+    "troubleshooting": "Dépannage",
+    "troubleshootingDescription": "Résoudre les problèmes",
+    "learnMore": "En savoir plus"
+  },
+  "cards": {
+    "title": "Mes Cartes",
+    "subtitle": "Gérez vos cartes bancaires et cartes de crédit",
+    "addCard": "Demander une nouvelle carte",
+    "noCards": "Aucune carte disponible",
+    "noCardsDescription": "Vous n'avez pas encore de cartes bancaires. Demandez votre première carte pour commencer à l'utiliser.",
+    "requestFirstCard": "Demander ma première carte",
+    "requestCard": "Demander une carte",
+    "cardTypes": {
+      "debit": "Carte de Débit",
+      "credit": "Carte de Crédit"
+    },
+    "requestTypes": {
+      "physical": "Carte physique",
+      "virtual": "Carte virtuelle",
+      "physicalDescription": "Livrée à votre adresse sous 5-7 jours ouvrés",
+      "virtualDescription": "Disponible sous 24h pour les paiements en ligne"
+    },
+    "status": {
+      "active": "Active",
+      "blocked": "Bloquée",
+      "expired": "Expirée"
+    },
+    "actions": {
+      "use": "Utiliser",
+      "details": "Détails",
+      "settings": "Paramètres",
+      "delete": "Supprimer",
+      "request": "Demander la carte"
+    },
+    "info": {
+      "title": "Informations importantes",
+      "virtualAvailable": "La carte virtuelle sera disponible sous 24h",
+      "physicalDelivery": "La carte physique sera livrée à votre adresse",
+      "pinSms": "Vous recevrez un code PIN par SMS séparé",
+      "secured": "Les cartes sont sécurisées et assurées"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Entrar",
+      "subtitle": "Acesse sua conta AmCbunq",
+      "createAccount": "Criar conta",
+      "button": "Entrar"
+    },
+    "register": {
+      "title": "Criar conta",
+      "subtitle": "Junte-se ao AmCbunq em poucos passos",
+      "alreadyHaveAccount": "Já tem uma conta?",
+      "button": "Criar conta"
+    },
+    "email": "Endereço de email",
+    "emailPlaceholder": "seu@email.com",
+    "password": "Senha",
+    "passwordPlaceholder": "Votre mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "confirmPasswordPlaceholder": "Confirmez votre mot de passe",
+    "firstName": "Nome",
+    "firstNamePlaceholder": "Votre prénom",
+    "lastName": "Sobrenome",
+    "lastNamePlaceholder": "Votre nom",
+    "phone": "Telefone",
+    "phonePlaceholder": "+351 6 12 34 56 78",
+    "birthDate": "Data de nascimento",
+    "rememberMe": "Se souvenir de moi",
+    "forgotPassword": "Mot de passe oublié ?",
+    "acceptTerms": "J'accepte les",
+    "termsAndConditions": "conditions d'utilisation",
+    "or": "ou",
+    "loginWithGoogle": "Se connecter avec Google",
+    "loginButton": "Se connecter",
+    "registerButton": "Créer un compte",
+    "loggingIn": "Connexion...",
+    "registering": "Création du compte...",
+    "loginSuccess": "Connexion réussie",
+    "loginError": "Erreur de connexion",
+    "registerSuccess": "Compte créé avec succès",
+    "registerError": "Erreur lors de la création du compte"
+  },
+  "dashboard": {
+    "welcome": "Olá",
+    "overview": "Visão geral das suas finanças",
+    "totalBalance": "Saldo total",
+    "totalAccounts": "Contas",
+    "monthlyIncome": "Rendimentos mensais",
+    "monthlyExpenses": "Despesas mensais",
+    "fromLastMonth": "vs mês passado",
+    "currentAccount": "Conta Corrente",
+    "savingsAccount": "Conta Poupança",
+    "creditCard": "Cartão de Crédito",
+    "accounts": "Comptes",
+    "recentTransactions": "Transactions récentes",
+    "viewAll": "Voir tout",
+    "quickActions": "Actions rapides",
+    "newTransfer": "Nouveau virement",
+    "newCard": "Nouvelle carte",
+    "contacts": "Contacts",
+    "investments": "Investissements"
+  },
+  "accounts": {
+    "title": "Mes Comptes",
+    "subtitle": "Gérez tous vos comptes bancaires",
+    "currentAccount": "Compte Courant",
+    "savingsAccount": "Compte Épargne",
+    "creditCard": "Carte de Crédit",
+    "balance": "Solde",
+    "currency": "Devise",
+    "status": "Statut",
+    "lastTransaction": "Dernière transaction",
+    "active": "Actif",
+    "openNewAccount": "Ouvrir un compte",
+    "showBalance": "Afficher le solde",
+    "hideBalance": "Masquer le solde",
+    "copyIBAN": "Copier l'IBAN",
+    "downloadStatement": "Télécharger le relevé",
+    "transfer": "Virement",
+    "details": "Détails",
+    "summary": "Résumé",
+    "totalBalance": "Solde total",
+    "totalAccounts": "Comptes",
+    "monthlySavings": "Épargne mensuelle"
+  },
+  "transactions": {
+    "title": "Transactions",
+    "subtitle": "Historique de vos transactions",
+    "all": "Toutes",
+    "income": "Revenus",
+    "expense": "Dépenses",
+    "transfer": "Virements",
+    "searchPlaceholder": "Rechercher une transaction...",
+    "recentTransactions": "Transactions récentes",
+    "export": "Exporter",
+    "totalIncome": "Revenus totaux",
+    "totalExpenses": "Dépenses totales",
+    "netBalance": "Solde net"
+  },
+  "transfers": {
+    "title": "Virements",
+    "subtitle": "Effectuez des virements en toute simplicité",
+    "newTransfer": "Nouveau virement",
+    "internalTransfer": "Virement interne",
+    "internalTransferDescription": "Entre vos comptes AmCbunq",
+    "startInternalTransfer": "Virement interne",
+    "externalTransfer": "Virement externe",
+    "externalTransferDescription": "Vers d'autres banques",
+    "startExternalTransfer": "Virement externe",
+    "transferLimits": "Limites de virement",
+    "dailyLimit": "Limite quotidienne",
+    "monthlyLimit": "Limite mensuelle",
+    "minimumAmount": "Montant minimum",
+    "processingTime": "Délai de traitement",
+    "businessDays": "jours ouvrés",
+    "history": "Historique",
+    "scheduled": "Programmés",
+    "recentTransfers": "Virements récents",
+    "viewAll": "Voir tout",
+    "noScheduledTransfers": "Aucun virement programmé",
+    "noScheduledTransfersDescription": "Vous n'avez pas encore programmé de virements",
+    "scheduleTransfer": "Programmer un virement",
+    "type": {
+      "internal": "Interne",
+      "external": "Externe"
+    },
+    "status": {
+      "completed": "Terminé",
+      "pending": "En attente",
+      "failed": "Échoué"
+    }
+  },
+  "verification": {
+    "banner": {
+      "unverified": {
+        "title": "Vérification d'identité requise",
+        "message": "Pour accéder à toutes les fonctionnalités d'AmCbunq, vous devez valider votre identité.",
+        "button": "Valider maintenant"
+      },
+      "pending": {
+        "title": "Vérification en cours",
+        "message": "Vos documents sont en cours de vérification. Vous recevrez une notification une fois terminé.",
+        "button": "Voir le statut"
+      }
+    }
+  },
+  "settings": {
+    "title": "Paramètres",
+    "subtitle": "Personnalisez votre expérience",
+    "profile": "Profil",
+    "security": "Sécurité",
+    "notifications": "Notifications",
+    "preferences": "Préférences",
+    "profileSettings": "Paramètres du profil",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Email",
+    "phone": "Téléphone",
+    "dateOfBirth": "Date de naissance",
+    "placeOfBirth": "Lieu de naissance",
+    "nationality": "Nationalité",
+    "residenceCountry": "Pays de résidence",
+    "address": "Adresse",
+    "city": "Ville",
+    "postalCode": "Code postal",
+    "profession": "Profession",
+    "salary": "Salaire",
+    "saveChanges": "Enregistrer",
+    "securitySettings": "Paramètres de sécurité",
+    "changePassword": "Changer le mot de passe",
+    "changePasswordDescription": "Mettez à jour votre mot de passe",
+    "change": "Changer",
+    "twoFactorAuth": "Authentification à deux facteurs",
+    "twoFactorAuthDescription": "Ajoutez une couche de sécurité supplémentaire",
+    "enable": "Activer",
+    "loginHistory": "Historique de connexion",
+    "loginHistoryDescription": "Consultez vos connexions récentes",
+    "view": "Voir",
+    "notificationSettings": "Paramètres de notifications",
+    "emailNotifications": "Notifications par email",
+    "emailNotificationsDescription": "Recevez des notifications par email",
+    "smsNotifications": "Notifications par SMS",
+    "smsNotificationsDescription": "Recevez des notifications par SMS",
+    "pushNotifications": "Notifications push",
+    "pushNotificationsDescription": "Recevez des notifications sur votre appareil",
+    "marketingEmails": "Emails marketing",
+    "marketingEmailsDescription": "Recevez nos offres et actualités",
+    "language": "Langue",
+    "currency": "Devise",
+    "timezone": "Fuseau horaire",
+    "theme": "Thème"
+  },
+  "footer": {
+    "description": "La banque du futur, aujourd'hui. Gérez vos finances en toute simplicité.",
+    "products": "Produits",
+    "support": "Support",
+    "legal": "Légal",
+    "contact": "Contact",
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "rights": "Tous droits réservés"
+  },
+  "errors": {
+    "network": "Erreur de connexion",
+    "unauthorized": "Non autorisé",
+    "forbidden": "Accès interdit",
+    "notFound": "Page non trouvée",
+    "serverError": "Erreur serveur",
+    "validation": "Erreur de validation",
+    "fileTooLarge": "Fichier trop volumineux",
+    "invalidFileType": "Type de fichier non supporté",
+    "transferCreationFailed": "Erreur lors de la création",
+    "beneficiaryAddFailed": "Erreur lors de l'ajout",
+    "beneficiaryUpdateFailed": "Erreur lors de la mise à jour",
+    "beneficiaryDeleteFailed": "Erreur lors de la suppression"
+  },
+  "success": {
+    "accountCreated": "Compte créé avec succès",
+    "loginSuccess": "Connexion réussie",
+    "logoutSuccess": "Déconnexion réussie",
+    "profileUpdated": "Profil mis à jour",
+    "passwordChanged": "Mot de passe modifié",
+    "documentUploaded": "Document téléchargé",
+    "transferCompleted": "Virement effectué",
+    "transferCreated": "Virement créé",
+    "transferScheduled": "Virement programmé",
+    "transferSubmitted": "Virement soumis",
+    "beneficiaryAdded": "Bénéficiaire ajouté",
+    "beneficiaryUpdated": "Bénéficiaire mis à jour",
+    "beneficiaryDeleted": "Bénéficiaire supprimé"
+  },
+  "transferMessages": {
+    "internalSuccess": "Votre virement de {amount} a été créé avec succès.",
+    "scheduledSuccess": "Votre virement de {amount} a été programmé avec succès.",
+    "externalSuccess": "Votre virement externe de {amount} a été soumis et est en attente d'examen.",
+    "creationError": "Impossible de créer le virement : {error}",
+    "beneficiaryAddSuccess": "Le bénéficiaire \"{name}\" a été ajouté avec succès.",
+    "beneficiaryUpdateSuccess": "Les informations de \"{name}\" ont été mises à jour avec succès.",
+    "beneficiaryDeleteSuccess": "Le bénéficiaire \"{name}\" a été supprimé avec succès.",
+    "beneficiaryAddError": "Impossible d'ajouter le bénéficiaire : {error}",
+    "beneficiaryUpdateError": "Impossible de mettre à jour le bénéficiaire : {error}",
+    "beneficiaryDeleteError": "Impossible de supprimer le bénéficiaire : {error}",
+    "externalTransferTitle": "Virement externe",
+    "externalTransferMessage": "Les virements externes sont soumis à un examen de sécurité avant leur validation.\n\nVotre virement sera automatiquement mis en attente et traité dans les plus brefs délais.\n\nVoulez-vous continuer ?",
+    "confirmTransfer": "Confirmer le virement"
+  },
+  "kyc": {
+    "title": "Validation de votre identité",
+    "subtitle": "Pour accéder à toutes les fonctionnalités d'AmCBunq, veuillez fournir les documents suivants",
+    "documentsRequired": "Documents requis",
+    "identityDocument": "Pièce d'identité (Carte nationale, Passeport)",
+    "proofOfAddress": "Justificatif de domicile (Facture, Quittance de loyer)",
+    "proofOfIncome": "Justificatif de revenus (Bulletins de salaire, Avis d'imposition)",
+    "acceptedFormats": "Formats acceptés: PDF, JPG, PNG (max 5MB)",
+    "required": "Requis",
+    "selectFile": "Cliquez pour sélectionner un fichier",
+    "dragDrop": "ou glissez-déposez ici",
+    "fileTooLarge": "Fichier trop volumineux",
+    "fileTooLargeMessage": "Le fichier ne doit pas dépasser 5MB",
+    "removeFile": "Supprimer",
+    "importantInfo": "Informations importantes",
+    "secureProcessing": "• Vos documents sont traités de manière sécurisée et confidentielle",
+    "verificationTime": "• La vérification prend généralement 24-48 heures",
+    "emailNotification": "• Vous recevrez une notification par email une fois la vérification terminée",
+    "accountLimits": "• En attendant, votre compte reste fonctionnel avec des limites",
+    "submitDocuments": "Soumettre les documents",
+    "submitting": "Soumission en cours...",
+    "documentsSubmitted": "Documents soumis",
+    "submissionSuccess": "Vos documents ont été soumis avec succès. Votre compte est en attente de vérification par notre équipe.",
+    "missingDocuments": "Documents manquants",
+    "missingDocumentsMessage": "Veuillez uploader tous les documents requis",
+    "submissionError": "Impossible de soumettre les documents",
+    "validationButton": "Valider votre identité",
+    "verificationInProgress": "Vérification en cours",
+    "unverified": "Non vérifié",
+    "pending": "En attente",
+    "verified": "Vérifié"
+  },
+  "messages": {
+    "title": "Messages",
+    "subtitle": "Service client AmCbunq",
+    "support": "Support AmCbunq",
+    "online": "En ligne",
+    "quickResponse": "Réponse rapide",
+    "typing": "Support en train d'écrire...",
+    "placeholder": "Tapez votre message...",
+    "send": "Envoyer",
+    "faq": "Questions fréquentes",
+    "faq1": "Comment changer mon mot de passe ?",
+    "faq2": "Comment effectuer un virement ?",
+    "faq3": "Problème avec ma carte bancaire",
+    "directContact": "Contact direct",
+    "phone": "01 23 45 67 89",
+    "email": "support@amcbunq.fr",
+    "availability": "24h/24, 7j/7",
+    "responseTime": "Temps de réponse",
+    "chatResponse": "Immédiat",
+    "emailResponse": "2-4h",
+    "phoneResponse": "Immédiat",
+    "welcomeMessage": "Bonjour ! Je suis votre assistant virtuel AmCbunq. Comment puis-je vous aider aujourd'hui ?",
+    "autoResponse": "Merci pour votre message. Un conseiller va vous répondre dans les plus brefs délais."
+  },
+  "iban": {
+    "title": "Mon IBAN",
+    "subtitle": "Votre identifiant bancaire unique",
+    "status": {
+      "available": "Disponible",
+      "processing": "En cours",
+      "request_required": "Demande requise",
+      "unavailable": "Non disponible"
+    },
+    "actions": {
+      "copy": "Copier",
+      "copied": "Copié !",
+      "download": "Télécharger RIB",
+      "share": "Partager",
+      "showDetails": "Afficher les détails",
+      "hideDetails": "Masquer les détails",
+      "requestRib": "Demander mon RIB",
+      "requesting": "Demande en cours..."
+    },
+    "messages": {
+      "ribNotAvailable": "RIB non disponible",
+      "ribNotAvailableDesc": "Pour effectuer des virements, vous devez d'abord demander votre RIB.",
+      "ribProcessing": "RIB en cours de génération",
+      "ribProcessingDesc": "Votre demande de RIB a été enregistrée. Il sera disponible sous 24-48h.",
+      "ribUnavailable": "RIB non disponible",
+      "ribUnavailableDesc": "Votre compte doit être vérifié pour pouvoir demander un RIB.",
+      "ribAvailable": "RIB disponible et actif"
+    },
+    "info": {
+      "title": "Informations importantes",
+      "unavailable": {
+        "title": "RIB non disponible",
+        "description": "Votre compte doit être vérifié pour pouvoir demander un RIB. Veuillez d'abord valider votre identité via la page KYC."
+      },
+      "processing": {
+        "title": "RIB en cours de génération",
+        "description": "Votre demande de RIB a été enregistrée et est en cours de traitement. Le RIB sera disponible sous 24-48h.",
+        "notification": "Vous recevrez une notification dès que votre RIB sera disponible."
+      }
+    }
   },
   "navigation": {
     "home": "Início",
@@ -38,4 +649,4 @@
     "profile": "Perfil",
     "logout": "Sair"
   }
-} 
+}
