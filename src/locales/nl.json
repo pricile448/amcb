@@ -434,6 +434,49 @@
         "message": "Vos documents sont en cours de vérification. Vous recevrez une notification une fois terminé.",
         "button": "Voir le statut"
       }
+    },
+    "identityDocument": "Identiteitsdocument",
+    "proofOfAddress": "Bewijs van adres",
+    "proofOfIncome": "Bewijs van inkomen",
+    "bankStatement": "Bankafschrift",
+    "verificationSteps": "Verificatiestappen",
+    "uploadedDocuments": "Geüploade documenten",
+    "uploadDocument": "Document uploaden",
+    "view": "Bekijken",
+    "reupload": "Opnieuw uploaden",
+    "requiredDocuments": "Vereiste documenten",
+    "title": "Verificatie",
+    "subtitle": "Voltooi je accountverificatie",
+    "verificationLevel": "Verificatieniveau",
+    "progress": "Voortgang",
+    "completed": "voltooid",
+    "documents": "Documenten",
+    "steps": "Stappen",
+    "step1": {
+      "title": "Account aanmaken",
+      "description": "Persoonlijke gegevens gevalideerd"
+    },
+    "step2": {
+      "title": "Telefoonverificatie",
+      "description": "Telefoonnummer geverifieerd"
+    },
+    "step3": {
+      "title": "Identiteitsdocumenten",
+      "description": "Identiteitsdocument wordt geverifieerd"
+    },
+    "step4": {
+      "title": "Volledige verificatie",
+      "description": "Toegang tot alle functies"
+    },
+    "status": {
+      "approved": "Goedgekeurd",
+      "pending": "In behandeling",
+      "rejected": "Afgewezen"
+    },
+    "stepStatus": {
+      "completed": "Voltooid",
+      "in_progress": "Bezig",
+      "pending": "In behandeling"
     }
   },
   "settings": {
@@ -632,6 +675,102 @@
         "notification": "Vous recevrez une notification dès que votre RIB sera disponible."
       }
     }
+  },
+  "pages": {
+    "home": {
+      "title": "Accueil - AmCbunq",
+      "metaDescription": "La banque du futur, aujourd'hui. Gérez vos finances en toute simplicité avec AmCbunq."
+    },
+    "features": {
+      "title": "Fonctionnalités - AmCbunq",
+      "metaDescription": "Découvrez toutes les fonctionnalités d'AmCbunq : comptes, cartes, virements et bien plus."
+    },
+    "pricing": {
+      "title": "Tarifs - AmCbunq",
+      "metaDescription": "Des tarifs transparents et abordables pour tous vos besoins bancaires."
+    },
+    "help": {
+      "title": "Aide - AmCbunq",
+      "metaDescription": "Centre d'aide AmCbunq. Trouvez rapidement les réponses à vos questions."
+    }
+  },
+  "system": {
+    "loading": "Chargement en cours...",
+    "noData": "Aucune donnée disponible",
+    "retry": "Réessayer",
+    "connectionError": "Erreur de connexion",
+    "sessionExpired": "Session expirée",
+    "unauthorized": "Non autorisé",
+    "serverError": "Erreur serveur",
+    "maintenance": "Maintenance en cours"
+  },
+  "status": {
+    "active": "Actif",
+    "inactive": "Inactif",
+    "pending": "En attente",
+    "approved": "Approuvé",
+    "rejected": "Rejeté",
+    "expired": "Expiré",
+    "suspended": "Suspendu",
+    "completed": "Terminé",
+    "processing": "En traitement",
+    "failed": "Échoué"
+  },
+  "actions": {
+    "create": "Créer",
+    "read": "Lire",
+    "update": "Mettre à jour",
+    "delete": "Supprimer",
+    "copy": "Copier",
+    "share": "Partager",
+    "download": "Télécharger",
+    "upload": "Télécharger",
+    "print": "Imprimer",
+    "export": "Exporter",
+    "import": "Importer",
+    "send": "Envoyer",
+    "receive": "Recevoir"
+  },
+  "notifications": {
+    "newMessage": "Nouveau message",
+    "newTransaction": "Nouvelle transaction",
+    "accountUpdated": "Compte mis à jour",
+    "cardBlocked": "Carte bloquée",
+    "transferCompleted": "Virement terminé",
+    "documentRequired": "Document requis",
+    "verificationComplete": "Vérification terminée",
+    "maintenanceScheduled": "Maintenance programmée"
+  },
+  "forms": {
+    "required": "Champ obligatoire",
+    "invalid": "Format invalide",
+    "tooShort": "Trop court",
+    "tooLong": "Trop long",
+    "passwordMismatch": "Les mots de passe ne correspondent pas",
+    "emailInvalid": "Email invalide",
+    "phoneInvalid": "Numéro de téléphone invalide",
+    "dateInvalid": "Date invalide",
+    "amountInvalid": "Montant invalide",
+    "ibanInvalid": "IBAN invalide"
+  },
+  "time": {
+    "now": "Maintenant",
+    "today": "Aujourd'hui",
+    "yesterday": "Hier",
+    "tomorrow": "Demain",
+    "thisWeek": "Cette semaine",
+    "lastWeek": "Semaine dernière",
+    "thisMonth": "Ce mois",
+    "lastMonth": "Mois dernier",
+    "thisYear": "Cette année",
+    "lastYear": "Année dernière"
+  },
+  "currency": {
+    "eur": "Euro",
+    "usd": "Dollar américain",
+    "gbp": "Livre sterling",
+    "chf": "Franc suisse",
+    "jpy": "Yen japonais"
   },
   "navigation": {
     "home": "Home",

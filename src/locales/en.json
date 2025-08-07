@@ -423,6 +423,28 @@
     }
   },
   "verification": {
+    "banner": {
+      "unverified": {
+        "title": "Identity verification required",
+        "message": "To access all features, you must validate your identity.",
+        "button": "Validate now"
+      },
+      "pending": {
+        "title": "Verification in progress",
+        "message": "Your documents are being verified. You will receive a notification once completed.",
+        "button": "View status"
+      }
+    },
+    "identityDocument": "Identity document",
+    "proofOfAddress": "Proof of address",
+    "proofOfIncome": "Proof of income",
+    "bankStatement": "Bank statement",
+    "verificationSteps": "Verification steps",
+    "uploadedDocuments": "Uploaded documents",
+    "uploadDocument": "Upload document",
+    "view": "View",
+    "reupload": "Re-upload",
+    "requiredDocuments": "Required documents",
     "title": "Verification",
     "subtitle": "Complete your account verification",
     "verificationLevel": "Verification level",
@@ -430,16 +452,6 @@
     "completed": "completed",
     "documents": "Documents",
     "steps": "Steps",
-    "uploadedDocuments": "Uploaded documents",
-    "uploadDocument": "Upload document",
-    "view": "View",
-    "reupload": "Re-upload",
-    "requiredDocuments": "Required documents",
-    "identityDocument": "Identity document",
-    "proofOfAddress": "Proof of address",
-    "proofOfIncome": "Proof of income",
-    "bankStatement": "Bank statement",
-    "verificationSteps": "Verification steps",
     "step1": {
       "title": "Account creation",
       "description": "Personal information validated"
@@ -465,18 +477,6 @@
       "completed": "Completed",
       "in_progress": "In progress",
       "pending": "Pending"
-    },
-    "banner": {
-      "unverified": {
-        "title": "Identity verification required",
-        "message": "To access all features, you must validate your identity.",
-        "button": "Validate now"
-      },
-      "pending": {
-        "title": "Verification in progress",
-        "message": "Your documents are being verified. You will receive a notification once completed.",
-        "button": "View status"
-      }
     }
   },
   "settings": {
@@ -675,6 +675,102 @@
         "notification": "You will receive a notification as soon as your RIB is available."
       }
     }
+  },
+  "pages": {
+    "home": {
+      "title": "Home - AmCbunq",
+      "metaDescription": "The bank of the future, today. Manage your finances with ease with AmCbunq."
+    },
+    "features": {
+      "title": "Features - AmCbunq",
+      "metaDescription": "Discover all AmCbunq features: accounts, cards, transfers and much more."
+    },
+    "pricing": {
+      "title": "Pricing - AmCbunq",
+      "metaDescription": "Transparent and affordable pricing for all your banking needs."
+    },
+    "help": {
+      "title": "Help - AmCbunq",
+      "metaDescription": "AmCbunq help center. Quickly find answers to your questions."
+    }
+  },
+  "system": {
+    "loading": "Loading...",
+    "noData": "No data available",
+    "retry": "Retry",
+    "connectionError": "Connection error",
+    "sessionExpired": "Session expired",
+    "unauthorized": "Unauthorized",
+    "serverError": "Server error",
+    "maintenance": "Maintenance in progress"
+  },
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "expired": "Expired",
+    "suspended": "Suspended",
+    "completed": "Completed",
+    "processing": "Processing",
+    "failed": "Failed"
+  },
+  "actions": {
+    "create": "Create",
+    "read": "Read",
+    "update": "Update",
+    "delete": "Delete",
+    "copy": "Copy",
+    "share": "Share",
+    "download": "Download",
+    "upload": "Upload",
+    "print": "Print",
+    "export": "Export",
+    "import": "Import",
+    "send": "Send",
+    "receive": "Receive"
+  },
+  "notifications": {
+    "newMessage": "New message",
+    "newTransaction": "New transaction",
+    "accountUpdated": "Account updated",
+    "cardBlocked": "Card blocked",
+    "transferCompleted": "Transfer completed",
+    "documentRequired": "Document required",
+    "verificationComplete": "Verification complete",
+    "maintenanceScheduled": "Maintenance scheduled"
+  },
+  "forms": {
+    "required": "Required field",
+    "invalid": "Invalid format",
+    "tooShort": "Too short",
+    "tooLong": "Too long",
+    "passwordMismatch": "Passwords don't match",
+    "emailInvalid": "Invalid email",
+    "phoneInvalid": "Invalid phone number",
+    "dateInvalid": "Invalid date",
+    "amountInvalid": "Invalid amount",
+    "ibanInvalid": "Invalid IBAN"
+  },
+  "time": {
+    "now": "Now",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "tomorrow": "Tomorrow",
+    "thisWeek": "This week",
+    "lastWeek": "Last week",
+    "thisMonth": "This month",
+    "lastMonth": "Last month",
+    "thisYear": "This year",
+    "lastYear": "Last year"
+  },
+  "currency": {
+    "eur": "Euro",
+    "usd": "US Dollar",
+    "gbp": "British Pound",
+    "chf": "Swiss Franc",
+    "jpy": "Japanese Yen"
   },
   "documents": {
     "title": "My Documents",

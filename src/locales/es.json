@@ -434,6 +434,49 @@
         "message": "Vos documents sont en cours de vérification. Vous recevrez une notification une fois terminé.",
         "button": "Voir le statut"
       }
+    },
+    "identityDocument": "Documento de identidad",
+    "proofOfAddress": "Comprobante de domicilio",
+    "proofOfIncome": "Comprobante de ingresos",
+    "bankStatement": "Estado de cuenta bancario",
+    "verificationSteps": "Pasos de verificación",
+    "uploadedDocuments": "Documentos subidos",
+    "uploadDocument": "Subir documento",
+    "view": "Ver",
+    "reupload": "Volver a subir",
+    "requiredDocuments": "Documentos requeridos",
+    "title": "Verificación",
+    "subtitle": "Completa la verificación de tu cuenta",
+    "verificationLevel": "Nivel de verificación",
+    "progress": "Progreso",
+    "completed": "completado",
+    "documents": "Documentos",
+    "steps": "Pasos",
+    "step1": {
+      "title": "Creación de cuenta",
+      "description": "Información personal validada"
+    },
+    "step2": {
+      "title": "Verificación telefónica",
+      "description": "Número de teléfono verificado"
+    },
+    "step3": {
+      "title": "Documentos de identidad",
+      "description": "Documento de identidad en verificación"
+    },
+    "step4": {
+      "title": "Verificación completa",
+      "description": "Acceso a todas las funciones"
+    },
+    "status": {
+      "approved": "Aprobado",
+      "pending": "Pendiente",
+      "rejected": "Rechazado"
+    },
+    "stepStatus": {
+      "completed": "Completado",
+      "in_progress": "En progreso",
+      "pending": "Pendiente"
     }
   },
   "settings": {
@@ -632,6 +675,102 @@
         "notification": "Vous recevrez une notification dès que votre RIB sera disponible."
       }
     }
+  },
+  "pages": {
+    "home": {
+      "title": "Inicio - AmCbunq",
+      "metaDescription": "El banco del futuro, hoy. Gestiona tus finanzas con facilidad con AmCbunq."
+    },
+    "features": {
+      "title": "Características - AmCbunq",
+      "metaDescription": "Descubre todas las características de AmCbunq: cuentas, tarjetas, transferencias y mucho más."
+    },
+    "pricing": {
+      "title": "Precios - AmCbunq",
+      "metaDescription": "Precios transparentes y asequibles para todas tus necesidades bancarias."
+    },
+    "help": {
+      "title": "Ayuda - AmCbunq",
+      "metaDescription": "Centro de ayuda AmCbunq. Encuentra rápidamente respuestas a tus preguntas."
+    }
+  },
+  "system": {
+    "loading": "Cargando...",
+    "noData": "No hay datos disponibles",
+    "retry": "Reintentar",
+    "connectionError": "Error de conexión",
+    "sessionExpired": "Sesión expirada",
+    "unauthorized": "No autorizado",
+    "serverError": "Error del servidor",
+    "maintenance": "Mantenimiento en progreso"
+  },
+  "status": {
+    "active": "Activo",
+    "inactive": "Inactivo",
+    "pending": "Pendiente",
+    "approved": "Aprobado",
+    "rejected": "Rechazado",
+    "expired": "Expirado",
+    "suspended": "Suspendido",
+    "completed": "Completado",
+    "processing": "Procesando",
+    "failed": "Fallido"
+  },
+  "actions": {
+    "create": "Créer",
+    "read": "Lire",
+    "update": "Mettre à jour",
+    "delete": "Supprimer",
+    "copy": "Copier",
+    "share": "Partager",
+    "download": "Télécharger",
+    "upload": "Télécharger",
+    "print": "Imprimer",
+    "export": "Exporter",
+    "import": "Importer",
+    "send": "Envoyer",
+    "receive": "Recevoir"
+  },
+  "notifications": {
+    "newMessage": "Nouveau message",
+    "newTransaction": "Nouvelle transaction",
+    "accountUpdated": "Compte mis à jour",
+    "cardBlocked": "Carte bloquée",
+    "transferCompleted": "Virement terminé",
+    "documentRequired": "Document requis",
+    "verificationComplete": "Vérification terminée",
+    "maintenanceScheduled": "Maintenance programmée"
+  },
+  "forms": {
+    "required": "Champ obligatoire",
+    "invalid": "Format invalide",
+    "tooShort": "Trop court",
+    "tooLong": "Trop long",
+    "passwordMismatch": "Les mots de passe ne correspondent pas",
+    "emailInvalid": "Email invalide",
+    "phoneInvalid": "Numéro de téléphone invalide",
+    "dateInvalid": "Date invalide",
+    "amountInvalid": "Montant invalide",
+    "ibanInvalid": "IBAN invalide"
+  },
+  "time": {
+    "now": "Maintenant",
+    "today": "Aujourd'hui",
+    "yesterday": "Hier",
+    "tomorrow": "Demain",
+    "thisWeek": "Cette semaine",
+    "lastWeek": "Semaine dernière",
+    "thisMonth": "Ce mois",
+    "lastMonth": "Mois dernier",
+    "thisYear": "Cette année",
+    "lastYear": "Année dernière"
+  },
+  "currency": {
+    "eur": "Euro",
+    "usd": "Dollar américain",
+    "gbp": "Livre sterling",
+    "chf": "Franc suisse",
+    "jpy": "Yen japonais"
   },
   "navigation": {
     "home": "Inicio",
