@@ -55,11 +55,16 @@ const VerificationPendingPage: React.FC = () => {
               }
             }
             
-            // Rediriger si vérifié (soit Auth soit Firestore)
+            // Rediriger si vérifié vers la page de connexion (PAS le dashboard)
             if (authVerified || firestoreVerified) {
-              logger.success('✅ Email vérifié, redirection vers le dashboard');
-              toast.success('Email vérifié avec succès !');
-              navigate('/dashboard');
+              logger.success('✅ Email vérifié, redirection vers la connexion');
+              toast.success('Email vérifié avec succès ! Veuillez vous connecter avec vos identifiants.');
+              navigate('/connexion', {
+                state: {
+                  message: 'Email vérifié avec succès ! Veuillez vous connecter avec vos identifiants.',
+                  emailVerified: true
+                }
+              });
             }
           }
         } catch (error) {

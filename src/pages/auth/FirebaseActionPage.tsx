@@ -36,38 +36,25 @@ const FirebaseActionPage: React.FC = () => {
             // Appliquer le code de vérification email
             await applyActionCode(auth, oobCode);
             
-            logger.success('✅ Email vérifié avec succès');
-            setIsSuccess(true);
-            toast.success('Email vérifié avec succès !');
-            
-            // Déconnecter l'utilisateur pour forcer une nouvelle connexion
-            await auth.signOut();
-            
-            // Rediriger vers la page de connexion avec un message
-            setTimeout(() => {
-              navigate('/connexion', { 
-                state: { 
-                  message: 'Email vérifié avec succès ! Veuillez vous connecter avec vos identifiants pour accéder à votre compte.',
-                  emailVerified: true 
-                } 
-              });
-            }, 2000);
+                             logger.success('✅ Email vérifié avec succès');
+                 setIsSuccess(true);
+                 
+                 // Déconnecter l'utilisateur pour forcer une nouvelle connexion
+                 await auth.signOut();
+                 
+                 // Afficher le message de succès mais PAS de redirection automatique
+                 toast.success('Email vérifié avec succès ! Vous pouvez maintenant vous connecter avec vos identifiants.');
           } catch (verifyError: any) {
             // Si l'erreur est auth/invalid-action-code, l'email est déjà vérifié
             if (verifyError.code === 'auth/invalid-action-code') {
-              logger.info('✅ Email déjà vérifié - redirection vers connexion');
-              setIsSuccess(true);
-              toast.success('Votre email est déjà vérifié ! Vous pouvez vous connecter directement.');
-              
-              // Rediriger vers la connexion immédiatement
-              setTimeout(() => {
-                navigate('/connexion', { 
-                  state: { 
-                    message: 'Votre email est déjà vérifié. Veuillez vous connecter avec vos identifiants.',
-                    emailVerified: true 
-                  } 
-                });
-              }, 2000);
+                                 logger.info('✅ Email déjà vérifié');
+                   setIsSuccess(true);
+                   
+                   // Déconnecter l'utilisateur si connecté
+                   await auth.signOut();
+                   
+                   // Afficher le message mais PAS de redirection automatique
+                   toast.success('Votre email est déjà vérifié ! Vous pouvez vous connecter avec vos identifiants.');
               return; // Sortir de la fonction
             } else {
               // Relancer l'erreur pour la gestion générale
@@ -200,19 +187,41 @@ const FirebaseActionPage: React.FC = () => {
               
               <p className="mt-2 text-sm text-gray-600">
                 {mode === 'verifyEmail' 
-                  ? 'Votre email a été vérifié avec succès. Vous allez être redirigé vers votre tableau de bord.'
+                  ? 'Votre email a été vérifié avec succès ! Vous pouvez maintenant vous connecter avec vos identifiants.'
                   : 'Votre action a été traitée avec succès.'
                 }
               </p>
               
-              <div className="mt-6">
-                <Link
-                  to="/dashboard"
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                >
-                  Aller au tableau de bord
-                </Link>
-              </div>
+              {mode === 'verifyEmail' && (
+                <div className="mt-6 space-y-4">
+                  <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+                    <div className="flex items-center">
+                      <CheckCircle className="h-5 w-5 text-green-600 mr-2" />
+                      <p className="text-sm text-green-800 font-medium">
+                        Vérification terminée ! Veuillez vous connecter manuellement.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <Link
+                    to="/connexion"
+                    className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                  >
+                    Se connecter avec mes identifiants
+                  </Link>
+                </div>
+              )}
+              
+              {mode !== 'verifyEmail' && (
+                <div className="mt-6">
+                  <Link
+                    to="/dashboard"
+                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  >
+                    Aller au tableau de bord
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>
