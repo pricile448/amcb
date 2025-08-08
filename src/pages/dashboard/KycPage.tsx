@@ -115,13 +115,29 @@ const KycPage: React.FC = () => {
       const uploadResults = [];
       for (const doc of documents) {
         if (doc.uploaded && doc.file) {
-          const result = await kycService.uploadDocument(doc.file, doc.type);
+          // Mapper le type de document pour le service KYC
+          let documentType: 'identity' | 'address' | 'income' | 'bankStatement';
+          switch (doc.type) {
+            case 'identity':
+              documentType = 'identity';
+              break;
+            case 'proof_of_address':
+              documentType = 'address';
+              break;
+            case 'proof_of_income':
+              documentType = 'income';
+              break;
+            default:
+              documentType = 'identity';
+          }
+          
+          const result = await kycService.submitDocument(userId, doc.file, documentType);
           uploadResults.push(result);
         }
       }
 
       // Mettre à jour le statut KYC après tous les uploads
-      await kycService.updateKYCStatus(userId, 'pending', uploadResults);
+      await kycService.updateKYCStatus(userId, 'pending');
 
       // Mettre à jour le statut KYC localement
       await syncKycStatus();
