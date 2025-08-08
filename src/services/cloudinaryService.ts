@@ -36,10 +36,10 @@ class CloudinaryService {
     this.uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'amcb_kyc_documents';
     
     // Validation de la configuration
-    if (!this.cloudName || this.cloudName === 'your-cloud-name') {
+    if (!this.cloudName) {
       throw new Error('VITE_CLOUDINARY_CLOUD_NAME non configuré');
     }
-    if (!this.uploadPreset || this.uploadPreset === 'kyc-documents') {
+    if (!this.uploadPreset) {
       throw new Error('VITE_CLOUDINARY_UPLOAD_PRESET non configuré');
     }
     

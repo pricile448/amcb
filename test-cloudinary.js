@@ -51,3 +51,4 @@ console.log('   - Upload preset mal configuré dans Cloudinary');
 console.log('   - Restrictions de type de fichier');
 console.log('   - Restrictions de taille de fichier');
 console.log('   - Problèmes de CORS');
+
