@@ -33,7 +33,7 @@ class CloudinaryService {
   constructor() {
     // Configuration Cloudinary - à remplacer par vos vraies clés
     this.cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'dxvbuhadg';
-    this.uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'amcb_kyc_documents';
+    this.uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'ml_default';
     
     // Validation de la configuration
     if (!this.cloudName) {
