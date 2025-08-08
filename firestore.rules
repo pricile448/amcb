@@ -17,6 +17,8 @@ service cloud.firestore {
           (resource.data.kycStatus == 'unverified' && request.resource.data.kycStatus == 'pending')
           // Ou garder le même statut (pour autres champs)
           || (resource.data.kycStatus == request.resource.data.kycStatus)
+          // Ou mise à jour avec kycStatusDetails (nouveau format)
+          || (request.resource.data.keys().hasAny(['kycStatus', 'kycStatusDetails', 'updatedAt']))
         );
       
       // 🔔 Règles spécifiques pour les notifications dans le document utilisateur
