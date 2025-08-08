@@ -11,13 +11,13 @@ const PublicLayout: React.FC = () => {
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
 
   const languages = [
-    { code: "fr", name: "Français" },
-    { code: "en", name: "English" },
-    { code: "es", name: "Español" },
-    { code: "pt", name: "Português" },
-    { code: "it", name: "Italiano" },
-    { code: "nl", name: "Nederlands" },
-    { code: "de", name: "Deutsch" },
+    { code: "fr", name: t("languages.fr") as string },
+    { code: "en", name: t("languages.en") as string },
+    { code: "es", name: t("languages.es") as string },
+    { code: "pt", name: t("languages.pt") as string },
+    { code: "it", name: t("languages.it") as string },
+    { code: "nl", name: t("languages.nl") as string },
+    { code: "de", name: t("languages.de") as string },
   ];
 
   const changeLanguage = (lng: string) => {
@@ -73,7 +73,7 @@ const PublicLayout: React.FC = () => {
                 >
                   <Globe className="w-4 h-4" />
                   <span className="text-sm">
-                    {languages.find(lang => lang.code === i18n.language)?.name || "Français"}
+                    {languages.find(lang => lang.code === i18n.language)?.name || (t("languages.fr") as string)}
                   </span>
                 </button>
 

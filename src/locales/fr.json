@@ -336,7 +336,20 @@
     "loginSuccess": "Connexion réussie",
     "loginError": "Erreur de connexion",
     "registerSuccess": "Compte créé avec succès",
-    "registerError": "Erreur lors de la création du compte"
+    "registerError": "Erreur lors de la création du compte",
+    "emailSendError": "Erreur lors de l'envoi de l'email",
+    "accountCreatedSuccess": "Compte créé ! Veuillez vérifier votre email pour activer votre compte.",
+    "verifyEmailMessage": "Vérifiez votre email pour activer votre compte",
+    "accountCreationError": "Erreur lors de la création du compte",
+    "emailAlreadyUsed": "Cet email est déjà utilisé",
+    "passwordTooWeak": "Le mot de passe est trop faible",
+    "userNotFoundInDatabase": "Utilisateur non trouvé dans la base de données",
+    "verifyEmailBeforeLogin": "Veuillez vérifier votre email avant de vous connecter. Vérifiez vos spams ou demandez un nouveau code.",
+    "verifyEmailBeforeLoginShort": "Veuillez vérifier votre email avant de vous connecter.",
+    "welcomeAccountVerified": "Bienvenue ! Votre compte a été vérifié avec succès. Vous pouvez maintenant accéder à toutes les fonctionnalités.",
+    "invalidCredentials": "Email ou mot de passe incorrect",
+    "tooManyAttempts": "Trop de tentatives. Veuillez réessayer plus tard.",
+    "accountDisabled": "Ce compte a été désactivé"
   },
   "dashboard": {
     "welcome": "Bonjour",
@@ -476,7 +489,7 @@
     },
     "status": {
       "approved": "Approuvé",
-      "pending": "En attente", 
+      "pending": "En attente",
       "rejected": "Rejeté"
     },
     "stepStatus": {
@@ -618,28 +631,11 @@
     "verified": "Vérifié"
   },
   "messages": {
-    "title": "Messages",
-    "subtitle": "Service client AmCbunq",
-    "support": "Support AmCbunq",
-    "online": "En ligne",
-    "quickResponse": "Réponse rapide",
-    "typing": "Support en train d'écrire...",
-    "placeholder": "Tapez votre message...",
-    "send": "Envoyer",
-    "faq": "Questions fréquentes",
-    "faq1": "Comment changer mon mot de passe ?",
-    "faq2": "Comment effectuer un virement ?",
-    "faq3": "Problème avec ma carte bancaire",
-    "directContact": "Contact direct",
-    "phone": "01 23 45 67 89",
-    "email": "support@amcbunq.fr",
-    "availability": "24h/24, 7j/7",
-    "responseTime": "Temps de réponse",
-    "chatResponse": "Immédiat",
-    "emailResponse": "2-4h",
-    "phoneResponse": "Immédiat",
-    "welcomeMessage": "Bonjour ! Je suis votre assistant virtuel AmCbunq. Comment puis-je vous aider aujourd'hui ?",
-    "autoResponse": "Merci pour votre message. Un conseiller va vous répondre dans les plus brefs délais."
+    "unavailable": "Messages indisponibles",
+    "temporarilyUnavailable": "Messages temporairement indisponibles",
+    "unavailableUnverified": "Pour accéder au chat avec notre support, vous devez d'abord valider votre identité.",
+    "unavailablePending": "La messagerie sera disponible une fois votre vérification d'identité terminée. Votre dossier est en cours d'examen.",
+    "unavailableVerifyIdentity": "Messages indisponibles - Vérifiez votre identité"
   },
   "iban": {
     "title": "Mon IBAN",
@@ -778,11 +774,34 @@
     "chf": "Franc suisse",
     "jpy": "Yen japonais"
   },
-  "messages": {
-    "unavailable": "Messages indisponibles",
-    "temporarilyUnavailable": "Messages temporairement indisponibles",
-    "unavailableUnverified": "Pour accéder au chat avec notre support, vous devez d'abord valider votre identité.",
-    "unavailablePending": "La messagerie sera disponible une fois votre vérification d'identité terminée. Votre dossier est en cours d'examen.",
-    "unavailableVerifyIdentity": "Messages indisponibles - Vérifiez votre identité"
+  "languages": {
+    "fr": "Français",
+    "en": "English",
+    "es": "Español",
+    "pt": "Português",
+    "it": "Italiano",
+    "nl": "Nederlands",
+    "de": "Deutsch"
+  },
+  "validation": {
+    "firstNameMinLength": "Le prénom doit contenir au moins 2 caractères",
+    "lastNameMinLength": "Le nom doit contenir au moins 2 caractères",
+    "emailInvalid": "Email invalide",
+    "phoneInvalid": "Numéro de téléphone invalide",
+    "birthPlaceMinLength": "Le lieu de naissance doit contenir au moins 2 caractères",
+    "nationalityMinLength": "La nationalité doit contenir au moins 2 caractères",
+    "residenceCountryMinLength": "Le pays de résidence doit contenir au moins 2 caractères",
+    "addressMinLength": "L'adresse doit contenir au moins 5 caractères",
+    "cityMinLength": "La ville doit contenir au moins 2 caractères",
+    "postalCodeMinLength": "Le code postal doit contenir au moins 4 caractères",
+    "professionMinLength": "La profession doit contenir au moins 2 caractères",
+    "salaryRequired": "Le salaire est requis",
+    "passwordMinLength": "Le mot de passe doit contenir au moins 8 caractères",
+    "acceptTermsRequired": "Vous devez accepter les conditions",
+    "passwordMismatch": "Les mots de passe ne correspondent pas",
+    "passwordMinLength6": "Le mot de passe doit contenir au moins 6 caractères"
+  },
+  "placeholders": {
+    "nationality": "Ex: Française"
   }
 }

@@ -62,7 +62,7 @@ const LoginPage: React.FC = () => {
       const userDoc = await getDoc(doc(db, 'users', userCredential.user.uid));
       
       if (!userDoc.exists()) {
-        throw new Error('Utilisateur non trouvé dans la base de données');
+        throw new Error((t("auth.userNotFoundInDatabase") as string));
       }
       
       const userData = userDoc.data();
@@ -117,12 +117,12 @@ const LoginPage: React.FC = () => {
         await auth.signOut();
         localStorage.removeItem('user');
         
-        toast.error('Veuillez vérifier votre email avant de vous connecter. Vérifiez vos spams ou demandez un nouveau code.');
+        toast.error(t("auth.verifyEmailBeforeLogin"));
         
         // Rediriger vers la page d'inscription avec un message
         navigate('/ouvrir-compte', { 
           state: { 
-            message: 'Veuillez vérifier votre email avant de vous connecter.',
+            message: t("auth.verifyEmailBeforeLoginShort"),
             email: data.email 
           } 
         });
@@ -146,7 +146,7 @@ const LoginPage: React.FC = () => {
       
       // Afficher un message spécial si c'est la première connexion après vérification
       if (emailVerified) {
-        toast.success('Bienvenue ! Votre compte a été vérifié avec succès. Vous pouvez maintenant accéder à toutes les fonctionnalités.');
+        toast.success(t("auth.welcomeAccountVerified"));
       } else {
         toast.success(t("auth.loginSuccess"));
       }
@@ -158,16 +158,16 @@ const LoginPage: React.FC = () => {
       
       // Gérer les erreurs Firebase spécifiques
       if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
-        setError('email', { message: 'Email ou mot de passe incorrect' });
-        setError('password', { message: 'Email ou mot de passe incorrect' });
-        toast.error('Email ou mot de passe incorrect');
+        setError('email', { message: (t("auth.invalidCredentials") as string) });
+        setError('password', { message: (t("auth.invalidCredentials") as string) });
+        toast.error((t("auth.invalidCredentials") as string));
       } else if (error.code === 'auth/too-many-requests') {
-        toast.error('Trop de tentatives. Veuillez réessayer plus tard.');
+        toast.error(t("auth.tooManyAttempts"));
       } else if (error.code === 'auth/user-disabled') {
-        toast.error('Ce compte a été désactivé.');
+        toast.error(t("auth.accountDisabled"));
       } else if (error.code === 'auth/invalid-email') {
-        setError('email', { message: 'Email invalide' });
-        toast.error('Email invalide');
+        setError('email', { message: (t("validation.emailInvalid") as string) });
+        toast.error((t("validation.emailInvalid") as string));
       } else {
         toast.error(error.message || t("auth.loginError"));
       }

@@ -336,7 +336,14 @@
     "loginSuccess": "Connexion réussie",
     "loginError": "Erreur de connexion",
     "registerSuccess": "Compte créé avec succès",
-    "registerError": "Erreur lors de la création du compte"
+    "registerError": "Erreur lors de la création du compte",
+    "userNotFoundInDatabase": "Utilizador não encontrado na base de dados",
+    "verifyEmailBeforeLogin": "Por favor verifique o seu email antes de fazer login. Verifique o spam ou solicite um novo código.",
+    "verifyEmailBeforeLoginShort": "Por favor verifique o seu email antes de fazer login.",
+    "welcomeAccountVerified": "Bem-vindo! A sua conta foi verificada com sucesso. Agora pode aceder a todas as funcionalidades.",
+    "invalidCredentials": "Email ou senha incorretos",
+    "tooManyAttempts": "Muitas tentativas. Tente novamente mais tarde.",
+    "accountDisabled": "Esta conta foi desativada"
   },
   "dashboard": {
     "welcome": "Olá",
@@ -798,5 +805,17 @@
     "settings": "Configurações",
     "profile": "Perfil",
     "logout": "Sair"
+  },
+  "languages": {
+    "fr": "Français",
+    "en": "English",
+    "es": "Español",
+    "pt": "Português",
+    "it": "Italiano",
+    "nl": "Nederlands",
+    "de": "Deutsch"
+  },
+  "validation": {
+    "passwordMinLength6": "A senha deve conter pelo menos 6 caracteres"
   }
 }

@@ -111,20 +111,20 @@ const RegisterPage: React.FC = () => {
       );
 
       if (!emailResult.success) {
-        throw new Error(emailResult.error || 'Erreur lors de l\'envoi de l\'email');
+        throw new Error(emailResult.error || (t("auth.emailSendError") as string));
       }
 
       logger.success('✅ Email de vérification envoyé');
 
       // 4. Afficher le message de succès et rediriger
-      toast.success('Compte créé ! Veuillez vérifier votre email pour activer votre compte.');
+      toast.success(t("auth.accountCreatedSuccess"));
       
       // Rediriger vers une page d'attente de vérification
       setTimeout(() => {
         navigate('/verification-pending', { 
           state: { 
             email: data.email,
-            message: 'Vérifiez votre email pour activer votre compte'
+            message: t("auth.verifyEmailMessage")
           }
         });
       }, 1500);
@@ -133,12 +133,12 @@ const RegisterPage: React.FC = () => {
       logger.error("Register error:", error);
       
       // Gérer les erreurs Firebase spécifiques
-      let errorMessage = 'Erreur lors de la création du compte';
+      let errorMessage = t("auth.accountCreationError");
       
       if (error.code === 'auth/email-already-in-use') {
-        errorMessage = 'Cet email est déjà utilisé';
+        errorMessage = t("auth.emailAlreadyUsed");
       } else if (error.code === 'auth/weak-password') {
-        errorMessage = 'Le mot de passe est trop faible';
+        errorMessage = t("auth.passwordTooWeak");
       } else if (error.code === 'auth/invalid-email') {
         errorMessage = 'Email invalide';
       } else if (error.message) {
@@ -359,7 +359,7 @@ const RegisterPage: React.FC = () => {
                     type="text"
                     required
                     className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    placeholder="Ex: Française"
+                    placeholder={t("placeholders.nationality") as string}
                   />
                 </div>
                 {errors.nationality && (

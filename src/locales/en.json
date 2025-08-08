@@ -336,7 +336,20 @@
     "loginSuccess": "Login successful",
     "loginError": "Login error",
     "registerSuccess": "Account created successfully",
-    "registerError": "Error creating account"
+    "registerError": "Error creating account",
+    "emailSendError": "Error sending email",
+    "accountCreatedSuccess": "Account created! Please check your email to activate your account.",
+    "verifyEmailMessage": "Check your email to activate your account",
+    "accountCreationError": "Error creating account",
+    "emailAlreadyUsed": "This email is already used",
+    "passwordTooWeak": "Password is too weak",
+    "userNotFoundInDatabase": "User not found in database",
+    "verifyEmailBeforeLogin": "Please verify your email before logging in. Check your spam or request a new code.",
+    "verifyEmailBeforeLoginShort": "Please verify your email before logging in.",
+    "welcomeAccountVerified": "Welcome! Your account has been verified successfully. You can now access all features.",
+    "invalidCredentials": "Invalid email or password",
+    "tooManyAttempts": "Too many attempts. Please try again later.",
+    "accountDisabled": "This account has been disabled"
   },
   "dashboard": {
     "welcome": "Hello",
@@ -791,5 +804,35 @@
     "status": "Status",
     "download": "Download",
     "delete": "Delete"
+  },
+  "languages": {
+    "fr": "Français",
+    "en": "English",
+    "es": "Español",
+    "pt": "Português",
+    "it": "Italiano",
+    "nl": "Nederlands",
+    "de": "Deutsch"
+  },
+  "validation": {
+    "firstNameMinLength": "First name must contain at least 2 characters",
+    "lastNameMinLength": "Last name must contain at least 2 characters",
+    "emailInvalid": "Invalid email",
+    "phoneInvalid": "Invalid phone number",
+    "birthPlaceMinLength": "Birth place must contain at least 2 characters",
+    "nationalityMinLength": "Nationality must contain at least 2 characters",
+    "residenceCountryMinLength": "Country of residence must contain at least 2 characters",
+    "addressMinLength": "Address must contain at least 5 characters",
+    "cityMinLength": "City must contain at least 2 characters",
+    "postalCodeMinLength": "Postal code must contain at least 4 characters",
+    "professionMinLength": "Profession must contain at least 2 characters",
+    "salaryRequired": "Salary is required",
+    "passwordMinLength": "Password must contain at least 8 characters",
+    "acceptTermsRequired": "You must accept the terms",
+    "passwordMismatch": "Passwords do not match",
+    "passwordMinLength6": "Password must contain at least 6 characters"
+  },
+  "placeholders": {
+    "nationality": "Ex: French"
   }
 }

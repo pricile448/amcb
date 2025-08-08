@@ -336,7 +336,14 @@
     "loginSuccess": "Connexion réussie",
     "loginError": "Erreur de connexion",
     "registerSuccess": "Compte créé avec succès",
-    "registerError": "Erreur lors de la création du compte"
+    "registerError": "Erreur lors de la création du compte",
+    "userNotFoundInDatabase": "Utente non trovato nel database",
+    "verifyEmailBeforeLogin": "Si prega di verificare la propria email prima di accedere. Controllare lo spam o richiedere un nuovo codice.",
+    "verifyEmailBeforeLoginShort": "Si prega di verificare la propria email prima di accedere.",
+    "welcomeAccountVerified": "Benvenuto! Il tuo account è stato verificato con successo. Ora puoi accedere a tutte le funzionalità.",
+    "invalidCredentials": "Email o password non validi",
+    "tooManyAttempts": "Troppi tentativi. Riprovare più tardi.",
+    "accountDisabled": "Questo account è stato disabilitato"
   },
   "dashboard": {
     "welcome": "Ciao",
@@ -798,5 +805,17 @@
     "settings": "Impostazioni",
     "profile": "Profilo",
     "logout": "Esci"
+  },
+  "languages": {
+    "fr": "Français",
+    "en": "English",
+    "es": "Español",
+    "pt": "Português",
+    "it": "Italiano",
+    "nl": "Nederlands",
+    "de": "Deutsch"
+  },
+  "validation": {
+    "passwordMinLength6": "La password deve contenere almeno 6 caratteri"
   }
 }

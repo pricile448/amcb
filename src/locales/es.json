@@ -336,7 +336,20 @@
     "loginSuccess": "Inicio de sesión exitoso",
     "loginError": "Error de inicio de sesión",
     "registerSuccess": "Cuenta creada exitosamente",
-    "registerError": "Error al crear la cuenta"
+    "registerError": "Error al crear la cuenta",
+    "emailSendError": "Error al enviar email",
+    "accountCreatedSuccess": "¡Cuenta creada! Por favor revise su email para activar su cuenta.",
+    "verifyEmailMessage": "Revise su email para activar su cuenta",
+    "accountCreationError": "Error al crear la cuenta",
+    "emailAlreadyUsed": "Este email ya está en uso",
+    "passwordTooWeak": "La contraseña es muy débil",
+    "userNotFoundInDatabase": "Usuario no encontrado en la base de datos",
+    "verifyEmailBeforeLogin": "Por favor verifique su email antes de iniciar sesión. Revise su spam o solicite un nuevo código.",
+    "verifyEmailBeforeLoginShort": "Por favor verifique su email antes de iniciar sesión.",
+    "welcomeAccountVerified": "¡Bienvenido! Su cuenta ha sido verificada exitosamente. Ahora puede acceder a todas las funciones.",
+    "invalidCredentials": "Email o contraseña incorrectos",
+    "tooManyAttempts": "Demasiados intentos. Por favor intente más tarde.",
+    "accountDisabled": "Esta cuenta ha sido desactivada"
   },
   "dashboard": {
     "welcome": "Hola",
@@ -798,5 +811,35 @@
     "settings": "Configuración",
     "profile": "Perfil",
     "logout": "Cerrar sesión"
+  },
+  "languages": {
+    "fr": "Français",
+    "en": "English",
+    "es": "Español",
+    "pt": "Português",
+    "it": "Italiano",
+    "nl": "Nederlands",
+    "de": "Deutsch"
+  },
+  "validation": {
+    "firstNameMinLength": "El nombre debe contener al menos 2 caracteres",
+    "lastNameMinLength": "El apellido debe contener al menos 2 caracteres",
+    "emailInvalid": "Email inválido",
+    "phoneInvalid": "Número de teléfono inválido",
+    "birthPlaceMinLength": "El lugar de nacimiento debe contener al menos 2 caracteres",
+    "nationalityMinLength": "La nacionalidad debe contener al menos 2 caracteres",
+    "residenceCountryMinLength": "El país de residencia debe contener al menos 2 caracteres",
+    "addressMinLength": "La dirección debe contener al menos 5 caracteres",
+    "cityMinLength": "La ciudad debe contener al menos 2 caracteres",
+    "postalCodeMinLength": "El código postal debe contener al menos 4 caracteres",
+    "professionMinLength": "La profesión debe contener al menos 2 caracteres",
+    "salaryRequired": "El salario es requerido",
+    "passwordMinLength": "La contraseña debe contener al menos 8 caracteres",
+    "acceptTermsRequired": "Debe aceptar los términos",
+    "passwordMismatch": "Las contraseñas no coinciden",
+    "passwordMinLength6": "La contraseña debe contener al menos 6 caracteres"
+  },
+  "placeholders": {
+    "nationality": "Ej: Española"
   }
 }

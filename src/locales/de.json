@@ -336,7 +336,14 @@
     "loginSuccess": "Connexion réussie",
     "loginError": "Erreur de connexion",
     "registerSuccess": "Compte créé avec succès",
-    "registerError": "Erreur lors de la création du compte"
+    "registerError": "Erreur lors de la création du compte",
+    "userNotFoundInDatabase": "Benutzer nicht in der Datenbank gefunden",
+    "verifyEmailBeforeLogin": "Bitte verifizieren Sie Ihre E-Mail vor der Anmeldung. Überprüfen Sie Ihren Spam oder fordern Sie einen neuen Code an.",
+    "verifyEmailBeforeLoginShort": "Bitte verifizieren Sie Ihre E-Mail vor der Anmeldung.",
+    "welcomeAccountVerified": "Willkommen! Ihr Konto wurde erfolgreich verifiziert. Sie können jetzt auf alle Funktionen zugreifen.",
+    "invalidCredentials": "Ungültige E-Mail oder Passwort",
+    "tooManyAttempts": "Zu viele Versuche. Bitte versuchen Sie es später erneut.",
+    "accountDisabled": "Dieses Konto wurde deaktiviert"
   },
   "dashboard": {
     "welcome": "Hallo",
@@ -798,5 +805,17 @@
     "settings": "Einstellungen",
     "profile": "Profil",
     "logout": "Abmelden"
+  },
+  "languages": {
+    "fr": "Français",
+    "en": "English",
+    "es": "Español",
+    "pt": "Português",
+    "it": "Italiano",
+    "nl": "Nederlands",
+    "de": "Deutsch"
+  },
+  "validation": {
+    "passwordMinLength6": "Das Passwort muss mindestens 6 Zeichen enthalten"
   }
 }

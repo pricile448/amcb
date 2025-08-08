@@ -336,7 +336,14 @@
     "loginSuccess": "Connexion réussie",
     "loginError": "Erreur de connexion",
     "registerSuccess": "Compte créé avec succès",
-    "registerError": "Erreur lors de la création du compte"
+    "registerError": "Erreur lors de la création du compte",
+    "userNotFoundInDatabase": "Gebruiker niet gevonden in database",
+    "verifyEmailBeforeLogin": "Verifieer eerst uw e-mail voordat u inlogt. Controleer uw spam of vraag een nieuwe code aan.",
+    "verifyEmailBeforeLoginShort": "Verifieer eerst uw e-mail voordat u inlogt.",
+    "welcomeAccountVerified": "Welkom! Uw account is succesvol geverifieerd. U heeft nu toegang tot alle functies.",
+    "invalidCredentials": "Ongeldige e-mail of wachtwoord",
+    "tooManyAttempts": "Te veel pogingen. Probeer het later opnieuw.",
+    "accountDisabled": "Dit account is gedeactiveerd"
   },
   "dashboard": {
     "welcome": "Hallo",
@@ -798,5 +805,17 @@
     "settings": "Instellingen",
     "profile": "Profiel",
     "logout": "Uitloggen"
+  },
+  "languages": {
+    "fr": "Français",
+    "en": "English",
+    "es": "Español",
+    "pt": "Português",
+    "it": "Italiano",
+    "nl": "Nederlands",
+    "de": "Deutsch"
+  },
+  "validation": {
+    "passwordMinLength6": "Wachtwoord moet minimaal 6 tekens bevatten"
   }
 }
