@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Upload, FileText, CheckCircle, AlertCircle, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { FirebaseDataService } from '../../services/firebaseData';
-import { simpleKycService } from '../../services/simpleKycService';
+import { kycService } from '../../services/kycService';
 import { useNotifications, useKycSync } from '../../hooks/useNotifications';
 
 interface KycDocument {
@@ -111,33 +111,17 @@ const KycPage: React.FC = () => {
 
     setSubmitting(true);
     try {
-      // Préparer les données des documents pour le service PHP
-      const documentsToSubmit: {
-        identity?: File;
-        address?: File;
-        income?: File;
-        bankStatement?: File;
-      } = {};
-
+      // Uploader tous les documents requis
+      const uploadResults = [];
       for (const doc of documents) {
         if (doc.uploaded && doc.file) {
-          // Déterminer le type de document pour le service PHP
-          switch (doc.type) {
-            case 'identity':
-              documentsToSubmit.identity = doc.file;
-              break;
-            case 'proof_of_address':
-              documentsToSubmit.address = doc.file;
-              break;
-            case 'proof_of_income':
-              documentsToSubmit.income = doc.file;
-              break;
-          }
+          const result = await kycService.uploadDocument(doc.file, doc.type);
+          uploadResults.push(result);
         }
       }
 
-      // Soumettre tous les documents via le service PHP
-      await simpleKycService.submitAllDocuments(documentsToSubmit, userEmail, userName);
+      // Mettre à jour le statut KYC après tous les uploads
+      await kycService.updateKYCStatus(userId, 'pending', uploadResults);
 
       // Mettre à jour le statut KYC localement
       await syncKycStatus();

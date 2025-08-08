@@ -15,8 +15,10 @@ class SimpleKycService {
   private uploadUrl: string;
 
   constructor() {
-    // URL du formulaire PHP
-    this.uploadUrl = '/kyc-upload.php';
+    // URL du formulaire PHP - utiliser un serveur PHP externe en production
+    this.uploadUrl = import.meta.env.PROD 
+      ? 'https://amcb-kyc-php.onrender.com/' 
+      : '/kyc-upload.php';
     
     logger.debug('SimpleKycService - Configuration:', {
       uploadUrl: this.uploadUrl
