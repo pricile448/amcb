@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: amcbunq-frontend
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: VITE_CLOUDINARY_CLOUD_NAME
+        value: dxvbuhadg
+      - key: VITE_CLOUDINARY_API_KEY
+        value: 221933451899525
+      - key: VITE_CLOUDINARY_API_SECRET
+        value: _-G22OeY5A7QsLbKqr1ll93Cyso
+      - key: VITE_CLOUDINARY_UPLOAD_PRESET
+        value: amcb_kyc_documents
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
