@@ -37,6 +37,45 @@ export const useKycSync = () => {
     }
   };
 
+  // ✅ NOUVEAU: Forcer la synchronisation (ignore tous les caches)
+  const forceSyncKycStatus = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const userId = FirebaseDataService.getCurrentUserId();
+      if (!userId) {
+        logger.warn('useKycSync: Aucun utilisateur connecté');
+        return;
+      }
+
+      logger.debug('🔄 useKycSync: Force sync en cours...');
+      
+      // Vider le cache localStorage
+      localStorage.removeItem('kycStatus');
+      
+      // Forcer la synchronisation via FirebaseDataService (ignore cache)
+      await FirebaseDataService.forceSyncKycStatus(userId);
+      
+      // Récupérer le nouveau statut
+      const status = await kycService.getUserKYCStatus(userId);
+      setKycStatus(status);
+
+      // Mettre à jour le localStorage avec le nouveau statut
+      if (status) {
+        localStorage.setItem('kycStatus', JSON.stringify(status));
+      }
+
+      logger.success('🔄 useKycSync: Force sync réussi:', status);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Erreur force sync KYC';
+      setError(errorMessage);
+      logger.error('🔄 useKycSync: Erreur force sync:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Charger le statut depuis le localStorage au montage
   useEffect(() => {
     const savedStatus = localStorage.getItem('kycStatus');
@@ -60,6 +99,7 @@ export const useKycSync = () => {
     loading,
     error,
     syncKycStatus,
+    forceSyncKycStatus, // ✅ NOUVEAU: Force la synchronisation
     isVerified: kycStatus?.status === 'approved',
     isPending: kycStatus?.status === 'pending',
     isUnverified: kycStatus?.status === 'unverified' || !kycStatus,

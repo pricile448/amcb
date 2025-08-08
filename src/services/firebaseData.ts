@@ -933,6 +933,47 @@ export class FirebaseDataService {
     logger.debug('Cache vidé');
   }
 
+  // ✅ NOUVEAU: Forcer la synchronisation KYC (ignore le cache)
+  static async forceSyncKycStatus(userId: string): Promise<string> {
+    try {
+      logger.debug('🔄 Force sync KYC - Ignore cache pour userId:', userId);
+      
+      // Vider le cache pour cet utilisateur
+      kycStatusCache.delete(userId);
+      
+      const userDoc = await getDoc(doc(db, 'users', userId));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        // Utiliser kycStatus comme priorité, puis verificationStatus comme fallback
+        const status = userData.kycStatus || userData.verificationStatus || 'unverified';
+        
+        logger.debug('🔄 Force sync KYC - Statut récupéré de Firestore:', status);
+        
+        // Mettre en cache avec le nouveau statut
+        kycStatusCache.set(userId, status);
+        
+        // Mettre à jour localStorage
+        const userStr = localStorage.getItem('user');
+        if (userStr) {
+          const user = JSON.parse(userStr);
+          user.verificationStatus = status;
+          user.kycStatus = status;
+          localStorage.setItem('user', JSON.stringify(user));
+        }
+        
+        // Vider aussi le cache kycStatus
+        localStorage.removeItem('kycStatus');
+        
+        logger.success('🔄 Force sync KYC - Statut forcé:', status);
+        return status;
+      }
+      return 'unverified';
+    } catch (error) {
+      logger.error('🔄 Force sync KYC - Erreur:', error);
+      return 'unverified';
+    }
+  }
+
   // Méthodes pour les bénéficiaires
   static async createBeneficiary(beneficiaryData: Omit<FirebaseBeneficiary, 'id'>): Promise<FirebaseBeneficiary | null> {
     try {

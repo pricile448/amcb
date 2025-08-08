@@ -6,33 +6,24 @@ service cloud.firestore {
     
     // 👤 Collection users : Lecture/écriture pour le propriétaire
     match /users/{userId} {
+      // Règle générale : utilisateur peut lire/écrire ses propres données
       allow read, write: if request.auth != null && request.auth.uid == userId;
       
-      // ✅ Permettre la mise à jour du kycStatus : unverified → pending
+      // ✅ Permettre mise à jour KYC status (unverified → pending)
       allow update: if request.auth != null 
         && request.auth.uid == userId
-        && request.auth.uid == resource.data.uid
         && (
-          // Utilisateur peut passer de unverified à pending
+          // Transition KYC autorisée
           (resource.data.kycStatus == 'unverified' && request.resource.data.kycStatus == 'pending')
-          // Ou garder le même statut (pour autres champs)
-          || (resource.data.kycStatus == request.resource.data.kycStatus)
-          // Ou mise à jour avec kycStatusDetails (nouveau format)
-          || (request.resource.data.keys().hasAny(['kycStatus', 'kycStatusDetails', 'updatedAt']))
+          // Ou mise à jour de champs autorisés
+          || request.resource.data.diff(resource.data).affectedKeys().hasAny([
+            'kycStatus', 'kycStatusDetails', 'verificationStatus', 
+            'notifications', 'lastSignInTime', 'emailVerified', 
+            'isEmailVerified', 'updatedAt'
+          ])
         );
       
-      // 🔔 Règles spécifiques pour les notifications dans le document utilisateur
-      // Permettre la lecture/écriture/modification du champ notifications
-      allow update: if request.auth != null 
-        && request.auth.uid == userId
-        && (
-          // Permettre la modification du champ notifications
-          (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['notifications', 'updatedAt']))
-          // Ou d'autres champs autorisés
-          || (request.resource.data.diff(resource.data).affectedKeys().hasAny(['kycStatus', 'verificationStatus', 'lastSignInTime', 'emailVerified', 'isEmailVerified']))
-        );
-      
-      // 👮‍♂️ Admins peuvent tout lire/modifier
+      // 👮‍♂️ Admins peuvent tout faire
       allow read, write: if request.auth != null 
         && exists(/databases/$(database)/documents/users/$(request.auth.uid))
         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
@@ -40,15 +31,16 @@ service cloud.firestore {
     
     // 🧾 Collection kycSubmissions
     match /kycSubmissions/{submissionId} {
-      // ✅ Permettre la création avec tous les champs nécessaires
+      // ✅ Création : utilisateur peut créer ses propres soumissions
       allow create: if request.auth != null 
-        && request.resource.data.userId == request.auth.uid;
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.keys().hasAll(['id', 'userId', 'documentType', 'fileName', 'status']);
       
-      // Utilisateur peut lire ses propres soumissions
+      // ✅ Lecture : utilisateur peut lire ses propres soumissions
       allow read: if request.auth != null 
-        && request.auth.uid == resource.data.userId;
+        && resource.data.userId == request.auth.uid;
       
-      // Admins peuvent tout faire
+      // 👮‍♂️ Admins peuvent tout faire
       allow read, write: if request.auth != null 
         && exists(/databases/$(database)/documents/users/$(request.auth.uid))
         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
@@ -56,15 +48,12 @@ service cloud.firestore {
     
     // 🏦 Collection accounts : Comptes bancaires
     match /accounts/{accountId} {
-      // Utilisateur peut lire ses propres comptes
       allow read: if request.auth != null 
         && resource.data.userId == request.auth.uid;
       
-      // Utilisateur peut créer/modifier ses propres comptes
       allow create, update: if request.auth != null 
         && request.resource.data.userId == request.auth.uid;
       
-      // Admins peuvent tout faire
       allow read, write: if request.auth != null 
         && exists(/databases/$(database)/documents/users/$(request.auth.uid))
         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
@@ -72,15 +61,12 @@ service cloud.firestore {
     
     // 💰 Collection transactions : Transactions bancaires
     match /transactions/{transactionId} {
-      // Utilisateur peut lire ses propres transactions
       allow read: if request.auth != null 
         && resource.data.userId == request.auth.uid;
       
-      // Utilisateur peut créer ses propres transactions
       allow create: if request.auth != null 
         && request.resource.data.userId == request.auth.uid;
       
-      // Admins peuvent tout faire
       allow read, write: if request.auth != null 
         && exists(/databases/$(database)/documents/users/$(request.auth.uid))
         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
@@ -88,15 +74,12 @@ service cloud.firestore {
     
     // 📄 Collection documents : Documents utilisateur
     match /documents/{documentId} {
-      // Utilisateur peut lire ses propres documents
       allow read: if request.auth != null 
         && resource.data.userId == request.auth.uid;
       
-      // Utilisateur peut créer/modifier/supprimer ses propres documents
       allow create, update, delete: if request.auth != null 
         && request.resource.data.userId == request.auth.uid;
       
-      // Admins peuvent tout faire
       allow read, write: if request.auth != null 
         && exists(/databases/$(database)/documents/users/$(request.auth.uid))
         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
@@ -104,15 +87,12 @@ service cloud.firestore {
     
     // 🔄 Collection transfers : Virements
     match /transfers/{transferId} {
-      // Utilisateur peut lire ses propres virements
       allow read: if request.auth != null 
         && resource.data.userId == request.auth.uid;
       
-      // Utilisateur peut créer ses propres virements
       allow create: if request.auth != null 
         && request.resource.data.userId == request.auth.uid;
       
-      // Admins peuvent tout faire
       allow read, write: if request.auth != null 
         && exists(/databases/$(database)/documents/users/$(request.auth.uid))
         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
@@ -120,24 +100,19 @@ service cloud.firestore {
     
     // 👥 Collection beneficiaries : Bénéficiaires
     match /beneficiaries/{beneficiaryId} {
-      // Utilisateur peut lire ses propres bénéficiaires
       allow read: if request.auth != null 
         && resource.data.userId == request.auth.uid;
       
-      // Utilisateur peut créer ses propres bénéficiaires
       allow create: if request.auth != null 
         && request.resource.data.userId == request.auth.uid;
       
-      // Utilisateur peut modifier ses propres bénéficiaires
       allow update: if request.auth != null 
         && resource.data.userId == request.auth.uid
         && request.resource.data.userId == request.auth.uid;
       
-      // Utilisateur peut supprimer ses propres bénéficiaires
       allow delete: if request.auth != null 
         && resource.data.userId == request.auth.uid;
       
-      // Admins peuvent tout faire
       allow read, write: if request.auth != null 
         && exists(/databases/$(database)/documents/users/$(request.auth.uid))
         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
@@ -145,46 +120,34 @@ service cloud.firestore {
     
     // 💬 Collection chats : Messages de support
     match /chats/{chatId} {
-      // Utilisateur peut lire ses propres chats (où il est participant)
       allow read: if request.auth != null 
         && (
-          // Soit il est le créateur du chat
           resource.data.userId == request.auth.uid
-          // Soit il est dans la liste des participants
           || request.auth.uid in resource.data.participants
         );
       
-      // Utilisateur peut créer ses propres chats
       allow create: if request.auth != null 
         && request.resource.data.userId == request.auth.uid;
       
-      // Admins peuvent tout faire
       allow read, write: if request.auth != null 
         && exists(/databases/$(database)/documents/users/$(request.auth.uid))
         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
       
-      // 💬 Sous-collection messages : Messages dans chaque chat
+      // 💬 Sous-collection messages
       match /messages/{messageId} {
-        // Utilisateur peut lire les messages des chats où il est participant
         allow read: if request.auth != null 
           && (
-            // Soit il est le créateur du chat parent
             get(/databases/$(database)/documents/chats/$(chatId)).data.userId == request.auth.uid
-            // Soit il est dans la liste des participants du chat parent
             || request.auth.uid in get(/databases/$(database)/documents/chats/$(chatId)).data.participants
           );
         
-        // Utilisateur peut créer des messages dans les chats où il est participant
         allow create: if request.auth != null 
           && (
-            // Soit il est le créateur du chat parent
             get(/databases/$(database)/documents/chats/$(chatId)).data.userId == request.auth.uid
-            // Soit il est dans la liste des participants du chat parent
             || request.auth.uid in get(/databases/$(database)/documents/chats/$(chatId)).data.participants
           )
           && request.resource.data.senderId == request.auth.uid;
         
-        // Admins peuvent tout faire
         allow read, write: if request.auth != null 
           && exists(/databases/$(database)/documents/users/$(request.auth.uid))
           && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
@@ -193,11 +156,9 @@ service cloud.firestore {
     
     // 📧 Collection emailVerificationCodes : Codes de vérification email
     match /emailVerificationCodes/{userId} {
-      // Utilisateur peut créer/lire/modifier/supprimer ses propres codes
       allow create, read, update, delete: if request.auth != null 
         && request.auth.uid == userId;
       
-      // Admins peuvent tout faire
       allow read, write: if request.auth != null 
         && exists(/databases/$(database)/documents/users/$(request.auth.uid))
         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
@@ -208,4 +169,4 @@ service cloud.firestore {
       allow read, write: if false;
     }
   }
-} 
+}
