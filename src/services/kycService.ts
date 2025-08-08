@@ -165,7 +165,22 @@ class KYCService {
       }
 
       const currentData = userDoc.data();
-      const currentKYCStatus = currentData.kycStatus || { status: 'unverified', lastUpdated: new Date() };
+      
+      // ✅ Gérer les deux formats: chaîne simple OU objet complet
+      let currentKYCStatus: any;
+      if (typeof currentData.kycStatus === 'string') {
+        // Format chaîne simple → convertir en objet
+        currentKYCStatus = { 
+          status: currentData.kycStatus, 
+          lastUpdated: new Date() 
+        };
+      } else {
+        // Format objet OU null/undefined
+        currentKYCStatus = currentData.kycStatus || { 
+          status: 'unverified', 
+          lastUpdated: new Date() 
+        };
+      }
 
       const updatedKYCStatus: KYCStatus = {
         ...currentKYCStatus,
@@ -187,8 +202,10 @@ class KYCService {
           break;
       }
 
+      // ✅ FIX: Sauvegarder kycStatus comme chaîne simple + détails séparés
       await updateDoc(userRef, {
-        kycStatus: updatedKYCStatus,
+        kycStatus: status,  // ← Chaîne simple pour compatibilité UI
+        kycStatusDetails: updatedKYCStatus,  // ← Objet complet pour historique
         updatedAt: serverTimestamp(),
       });
 
@@ -251,6 +268,7 @@ class KYCService {
 
       const userData = userDoc.data();
       const kycStatus = userData.kycStatus;
+      const kycStatusDetails = userData.kycStatusDetails;
 
       if (!kycStatus) {
         logger.debug('KYCService.getUserKYCStatus - Aucun statut KYC trouvé, retour statut par défaut');
@@ -260,14 +278,37 @@ class KYCService {
         };
       }
 
-      // Convertir les timestamps Firestore en Date
-      const convertedStatus: KYCStatus = {
-        ...kycStatus,
-        lastUpdated: kycStatus.lastUpdated?.toDate() || new Date(),
-        submittedAt: kycStatus.submittedAt?.toDate(),
-        approvedAt: kycStatus.approvedAt?.toDate(),
-        rejectedAt: kycStatus.rejectedAt?.toDate(),
-      };
+      // ✅ Gérer format chaîne simple OU objet complet
+      let convertedStatus: KYCStatus;
+      
+      if (typeof kycStatus === 'string') {
+        // Format chaîne simple → utiliser kycStatusDetails si disponible
+        if (kycStatusDetails) {
+          convertedStatus = {
+            ...kycStatusDetails,
+            status: kycStatus, // S'assurer que le statut principal est correct
+            lastUpdated: kycStatusDetails.lastUpdated?.toDate() || new Date(),
+            submittedAt: kycStatusDetails.submittedAt?.toDate(),
+            approvedAt: kycStatusDetails.approvedAt?.toDate(),
+            rejectedAt: kycStatusDetails.rejectedAt?.toDate(),
+          };
+        } else {
+          // Pas de détails → créer objet simple
+          convertedStatus = {
+            status: kycStatus as KYCStatus['status'],
+            lastUpdated: new Date(),
+          };
+        }
+      } else {
+        // Format objet complet (ancien format)
+        convertedStatus = {
+          ...kycStatus,
+          lastUpdated: kycStatus.lastUpdated?.toDate() || new Date(),
+          submittedAt: kycStatus.submittedAt?.toDate(),
+          approvedAt: kycStatus.approvedAt?.toDate(),
+          rejectedAt: kycStatus.rejectedAt?.toDate(),
+        };
+      }
 
       logger.debug('KYCService.getUserKYCStatus - Statut récupéré:', convertedStatus);
       return convertedStatus;
