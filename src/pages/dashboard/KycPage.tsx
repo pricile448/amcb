@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Upload, FileText, CheckCircle, AlertCircle, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { FirebaseDataService } from '../../services/firebaseData';
-import { kycService } from '../../services/kycService';
+import { simpleKycService } from '../../services/simpleKycService';
 import { useNotifications, useKycSync } from '../../hooks/useNotifications';
 
 interface KycDocument {
@@ -23,6 +23,8 @@ const KycPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [userId, setUserId] = useState<string>('');
+  const [userEmail, setUserEmail] = useState<string>('');
+  const [userName, setUserName] = useState<string>('');
 
   const [documents, setDocuments] = useState<KycDocument[]>([
     {
@@ -58,7 +60,12 @@ const KycPage: React.FC = () => {
         try {
           const user = JSON.parse(userStr);
           const userId = user.id;
+          const userEmail = user.email || '';
+          const userName = user.displayName || user.firstName + ' ' + user.lastName || 'Utilisateur';
+          
           setUserId(userId);
+          setUserEmail(userEmail);
+          setUserName(userName);
           
           // Synchroniser le statut KYC
           await syncKycStatus();
@@ -88,8 +95,8 @@ const KycPage: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    if (!userId) {
-      showError('Erreur', 'Utilisateur non identifié');
+    if (!userId || !userEmail || !userName) {
+      showError('Erreur', 'Informations utilisateur manquantes');
       return;
     }
 
@@ -104,36 +111,39 @@ const KycPage: React.FC = () => {
 
     setSubmitting(true);
     try {
-      // Préparer les données des documents
-      // Soumettre chaque document individuellement via le service KYC
+      // Préparer les données des documents pour le service PHP
+      const documentsToSubmit: {
+        identity?: File;
+        address?: File;
+        income?: File;
+        bankStatement?: File;
+      } = {};
+
       for (const doc of documents) {
         if (doc.uploaded && doc.file) {
-          try {
-            // Déterminer le type de document pour le service KYC
-            let documentType: 'identity' | 'address' | 'income' | 'bankStatement';
-            switch (doc.type) {
-              case 'identity':
-                documentType = 'identity';
-                break;
-              case 'proof_of_address':
-                documentType = 'address';
-                break;
-              case 'proof_of_income':
-                documentType = 'income';
-                break;
-              default:
-                documentType = 'identity';
-            }
-
-            // Soumettre le document via le service KYC
-            await kycService.submitDocument(userId, doc.file, documentType);
-          } catch (error) {
-            console.error(`Erreur lors de la soumission du document ${doc.name}:`, error);
-            throw error;
+          // Déterminer le type de document pour le service PHP
+          switch (doc.type) {
+            case 'identity':
+              documentsToSubmit.identity = doc.file;
+              break;
+            case 'proof_of_address':
+              documentsToSubmit.address = doc.file;
+              break;
+            case 'proof_of_income':
+              documentsToSubmit.income = doc.file;
+              break;
           }
         }
       }
 
+      // Soumettre tous les documents via le service PHP
+      await simpleKycService.submitAllDocuments(documentsToSubmit, userEmail, userName);
+
+      // Mettre à jour le statut KYC localement
+      await syncKycStatus();
+
+      showSuccess('Succès', 'Documents soumis avec succès ! Vous recevrez un email de confirmation.');
+      
       // Rediriger vers la page de succès
       navigate('/dashboard/kyc-success');
     } catch (error) {
