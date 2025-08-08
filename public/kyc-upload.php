@@ -1,6 +1,6 @@
 <?php
 // Configuration
-$adminEmail = "votre-email@gmail.com"; // Remplacez par votre email
+$adminEmail = "amcbunq@amccredit.com"; // Email pour recevoir les documents KYC
 $maxFileSize = 10 * 1024 * 1024; // 10MB
 $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
 
