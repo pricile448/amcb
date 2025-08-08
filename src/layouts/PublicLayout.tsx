@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Globe, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const PublicLayout: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -19,6 +19,14 @@ const PublicLayout: React.FC = () => {
     { code: "nl", name: t("languages.nl") as string },
     { code: "de", name: t("languages.de") as string },
   ];
+
+  // Synchroniser la langue au chargement
+  useEffect(() => {
+    const storedLanguage = localStorage.getItem('i18nextLng');
+    if (storedLanguage && storedLanguage !== i18n.language) {
+      i18n.changeLanguage(storedLanguage);
+    }
+  }, [i18n]);
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);

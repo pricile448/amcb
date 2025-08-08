@@ -21,12 +21,20 @@ const resources = {
   de: { translation: de },
 }
 
+// Fonction pour obtenir la langue depuis localStorage
+const getStoredLanguage = () => {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('i18nextLng') || 'fr';
+  }
+  return 'fr';
+};
+
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'fr',
+    lng: getStoredLanguage(),
     fallbackLng: 'fr',
     detection: {
       order: ['localStorage', 'navigator', 'htmlTag'],
