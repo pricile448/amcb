@@ -54,7 +54,7 @@ const MessagesPage: React.FC = () => {
           logger.warn('Aucun message trouvé, création d\'un message de bienvenue');
           const welcomeMessage: Message = {
             id: 'welcome',
-            text: 'Bonjour ! Je suis votre assistant virtuel AmCbunq. Comment puis-je vous aider aujourd\'hui ?',
+            text: t('messages.welcome'),
             sender: 'support',
             timestamp: new Date(),
             status: 'read'
@@ -90,7 +90,7 @@ const MessagesPage: React.FC = () => {
         // En cas d'erreur, afficher un message de bienvenue par défaut
         const welcomeMessage: Message = {
           id: 'welcome',
-          text: 'Bonjour ! Je suis votre assistant virtuel AmCbunq. Comment puis-je vous aider aujourd\'hui ?',
+          text: t('messages.welcome'),
           sender: 'support',
           timestamp: new Date(),
           status: 'read'
@@ -148,7 +148,7 @@ const MessagesPage: React.FC = () => {
 
         // Simuler une réponse du support
         setTimeout(async () => {
-          const supportResponse = await FirebaseDataService.sendMessage(userId, 'Merci pour votre message. Un conseiller va vous répondre dans les plus brefs délais.', 'support');
+          const supportResponse = await FirebaseDataService.sendMessage(userId, t('messages.autoReply'), 'support');
           
           if (supportResponse) {
             // Déterminer le sender basé sur senderId
@@ -202,10 +202,10 @@ const MessagesPage: React.FC = () => {
 
   // Si l'utilisateur n'est pas vérifié ou en cours de vérification, afficher le composant ModernVerificationState
   if (isUnverified) {
-    const title = userStatus === 'pending' ? 'Messages temporairement indisponibles' : 'Messages indisponibles';
+    const title = userStatus === 'pending' ? t('messages.verification.temporarilyUnavailableTitle') : t('messages.unavailable');
     const description = userStatus === 'pending' 
-      ? 'La messagerie sera disponible une fois votre vérification d\'identité terminée. Votre dossier est en cours d\'examen.'
-      : 'Pour accéder au chat avec notre support, vous devez d\'abord valider votre identité.';
+      ? t('messages.verification.pendingDescription')
+      : t('messages.unavailableUnverified');
     
     return (
       <ModernVerificationState
@@ -221,8 +221,8 @@ const MessagesPage: React.FC = () => {
     <div className="max-w-4xl mx-auto h-full flex flex-col">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Messages</h1>
-        <p className="text-gray-600">Service client AmCbunq</p>
+        <h1 className="text-2xl font-bold text-gray-900">{t('messages.title')}</h1>
+        <p className="text-gray-600">{t('messages.subtitle')}</p>
       </div>
 
       {/* Chat Container - Fixed height like WhatsApp */}
@@ -234,13 +234,13 @@ const MessagesPage: React.FC = () => {
               <span className="text-white font-bold text-sm">A</span>
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900">Support AmCbunq</h3>
-              <p className="text-sm text-gray-500">En ligne • Réponse rapide</p>
+              <h3 className="font-semibold text-gray-900">{t('messages.supportName')}</h3>
+              <p className="text-sm text-gray-500">{t('messages.online')} • {t('messages.quickResponse')}</p>
             </div>
           </div>
           <div className="flex items-center space-x-2">
             <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-            <span className="text-sm text-gray-500">En ligne</span>
+            <span className="text-sm text-gray-500">{t('messages.onlineStatus')}</span>
           </div>
         </div>
 
@@ -250,7 +250,7 @@ const MessagesPage: React.FC = () => {
             <div className="flex items-center justify-center h-full">
               <div className="flex items-center space-x-2 text-gray-500">
                 <Loader2 className="w-5 h-5 animate-spin" />
-                <span>Chargement des messages...</span>
+                <span>{t('messages.loading')}</span>
               </div>
             </div>
           ) : (
@@ -287,7 +287,7 @@ const MessagesPage: React.FC = () => {
                   <div className="bg-gray-100 text-gray-900 px-4 py-2 rounded-lg">
                     <div className="flex items-center space-x-1">
                       <Clock className="w-4 h-4" />
-                      <span className="text-sm">Support en train d'écrire...</span>
+                      <span className="text-sm">{t('messages.typing')}</span>
                     </div>
                   </div>
                 </div>
@@ -306,7 +306,7 @@ const MessagesPage: React.FC = () => {
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Tapez votre message..."
+                placeholder={String(t('messages.inputPlaceholder'))}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 rows={1}
                 style={{ minHeight: '40px', maxHeight: '120px' }}

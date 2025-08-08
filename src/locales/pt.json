@@ -846,7 +846,8 @@
       "userNotIdentified": "Usuário não identificado",
       "parsingError": "Erro ao processar usuário:",
       "submissionGenericError": "Ocorreu um erro ao enviar"
-    }
+    },
+    "unverified": "Não verificado"
   },
 
   "billing": {
@@ -1227,8 +1228,10 @@
     "online": "Online",
     "quickResponse": "Resposta rápida",
     "onlineStatus": "Online",
-    "supportName": "Suporte AmCbunq",
-    "verification": {
+          "supportName": "Suporte AmCbunq",
+      "unavailable": "Mensagens indisponíveis",
+      "unavailableUnverified": "Para acessar o chat com nosso suporte, você deve primeiro validar sua identidade.",
+      "verification": {
       "unavailableTitle": "Mensagens indisponíveis",
       "temporarilyUnavailableTitle": "Mensagens temporariamente indisponíveis",
       "unavailableDescription": "Para acessar o chat com nosso suporte, você precisa primeiro validar sua identidade.",
@@ -1664,5 +1667,69 @@
     },
     "backToDashboard": "Voltar ao painel",
     "viewStatus": "Ver o status da minha verificação"
-  }
+  },
+
+  "verificationState": {
+    "titles": {
+      "unverified": "Verificação de identidade necessária",
+      "pending": "Verificação em andamento"
+    },
+    "descriptions": {
+      "unverified": "Para acessar esta funcionalidade, você deve primeiro validar sua identidade.",
+      "pending": "Sua conta está sendo verificada. Você poderá acessar esta funcionalidade uma vez validada."
+    },
+    "features": {
+      "secureAccount": "Conta segura",
+      "personalizedFeatures": "Funcionalidades personalizadas"
+    }
+  },
+
+  "modernVerificationState": {
+    "startVerification": "Iniciar verificação",
+    "featuresAfterVerification": "Funcionalidades disponíveis após verificação",
+    "cards": {
+      "title": "Cartões bancários",
+      "description": "Solicitação de cartões físicos e virtuais"
+    },
+    "transfers": {
+      "title": "Transferências",
+      "description": "Transferências de dinheiro entre contas"
+    },
+    "fullData": {
+      "title": "Dados completos",
+      "description": "Acesso a todas as suas contas e transações"
+    },
+    "supportChat": {
+      "title": "Chat de suporte",
+      "description": "Assistência ao cliente em tempo real"
+    },
+    "securityGuaranteed": "Segurança garantida",
+    "securityDescription": "Seus dados são protegidos por criptografia de nível bancário. A verificação de identidade é obrigatória para sua segurança e a de seus fundos.",
+    "needHelp": "Precisa de ajuda? Entre em contato com nosso suporte em {phoneNumber}",
+    "verificationInProgress": "Verificação em andamento",
+    "dossierEnExamen": "Seu arquivo está em revisão",
+    "dossierEnExamenDescription": "Seu arquivo de verification de identidade está sendo revisado por nossas equipes. Este processo geralmente leva 24 a 48 horas.",
+    "voirStatut": "Ver status",
+    "processusEnCours": "Processo em andamento",
+    "processusEnCoursDescription": "Nossas equipes estão atualmente verificando seus documentos. Você receberá uma notificação assim que a verificação for concluída.",
+    "verificationRequise": "Verificação necessária",
+    "verificationRequiseDescription": "Para acessar todas as funcionalidades, você deve validar sua identidade.",
+    "verificationRejetee": "Verificação rejeitada",
+    "verificationRejeteeDescription": "Seu arquivo foi rejeitado. Por favor, corrija as informações.",
+          "verificationIdentite": "Verificação de identidade"
+    },
+    "kycStatusBanner": {
+      "verificationInProgress": "Verificação em andamento",
+      "verificationInProgressDescription": "Seus documentos estão sendo verificados. Isso pode levar 24-48h.",
+      "verificationRejected": "Verificação rejeitada",
+      "verificationRejectedDescription": "Sua verificação foi rejeitada. Por favor, envie novos documentos.",
+      "verificationRequired": "Verificação necessária",
+      "verificationRequiredDescription": "Para acessar todas as funcionalidades, complete sua verificação de identidade.",
+      "viewStatus": "Ver status",
+      "startVerification": "Iniciar verificação",
+      "submitAgain": "Enviar novamente"
+    },
+    "modernAlert": {
+      "understood": "Entendido"
+    }
 }

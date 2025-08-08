@@ -12,12 +12,14 @@ interface LanguageSelectorProps {
   className?: string;
   showLabel?: boolean;
   variant?: 'dropdown' | 'buttons';
+  onLanguageChange?: () => void;
 }
 
 const LanguageSelector: React.FC<LanguageSelectorProps> = ({ 
   className = '', 
   showLabel = false,
-  variant = 'dropdown'
+  variant = 'dropdown',
+  onLanguageChange
 }) => {
   const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
@@ -38,6 +40,10 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
     i18n.changeLanguage(lng);
     localStorage.setItem('i18nextLng', lng);
     setIsOpen(false);
+    // Appeler la fonction de callback si elle existe
+    if (onLanguageChange) {
+      onLanguageChange();
+    }
   };
 
   if (variant === 'buttons') {

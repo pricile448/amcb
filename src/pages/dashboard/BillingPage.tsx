@@ -126,8 +126,6 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
     return (
       <VerificationState 
         userStatus={userStatus}
-        title="Vérification d'identité requise"
-        description="Pour accéder aux informations de facturation et aux messages de la banque, vous devez d'abord valider votre identité."
       />
     );
   }

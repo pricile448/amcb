@@ -60,7 +60,28 @@
       "documents": "Mes Documents",
       "messages": "Messages",
       "verification": "Vérification d'identité",
-      "transactions": "Transactions"
+      "transactions": "Transactions",
+      "profile": {
+        "myProfile": "Mon profil",
+        "security": "Sécurité",
+        "myCards": "Mes cartes",
+        "documents": "Documents",
+        "logout": "Déconnexion",
+        "verifiedAccount": "Compte vérifié",
+        "verificationInProgress": "Vérification en cours",
+        "unverifiedAccount": "Compte non vérifié",
+        "trustMessage": "Merci de faire confiance à AmCbunq",
+        "verifyIdentityMessage": "Vérifiez votre identité pour débloquer toutes les fonctionnalités"
+      },
+      "notifications": {
+        "title": "Notifications",
+        "markAllAsRead": "Tout marquer comme lu",
+        "markAllAsReadShort": "Tout lu",
+        "noNotifications": "Aucune notification",
+        "noNotificationsMessage": "Vous serez notifié ici des nouvelles activités",
+        "viewAllNotifications": "Voir toutes les notifications",
+        "close": "Fermer"
+      }
     },
   
     "home": {
@@ -852,7 +873,8 @@
         "userNotIdentified": "Utilisateur non identifié",
         "parsingError": "Erreur parsing user:",
         "submissionGenericError": "Une erreur est survenue lors de la soumission"
-      }
+      },
+      "unverified": "Non vérifié"
     },
   
     "billing": {
@@ -1234,6 +1256,8 @@
       "quickResponse": "Réponse rapide",
       "onlineStatus": "En ligne",
       "supportName": "Support AmCbunq",
+      "unavailable": "Messages indisponibles",
+      "unavailableUnverified": "Pour accéder au chat avec notre support, vous devez d'abord valider votre identité.",
       "verification": {
         "unavailableTitle": "Messages indisponibles",
         "temporarilyUnavailableTitle": "Messages temporairement indisponibles",
@@ -1670,5 +1694,69 @@
       },
       "backToDashboard": "Retour au tableau de bord",
       "viewStatus": "Voir le statut de ma vérification"
-    }
+    },
+
+    "verificationState": {
+      "titles": {
+        "unverified": "Vérification d'identité requise",
+        "pending": "Vérification en cours"
+      },
+      "descriptions": {
+        "unverified": "Pour accéder à cette fonctionnalité, vous devez d'abord valider votre identité.",
+        "pending": "Votre compte est en cours de vérification. Vous pourrez accéder à cette fonctionnalité une fois validé."
+      },
+      "features": {
+        "secureAccount": "Compte sécurisé",
+        "personalizedFeatures": "Fonctionnalités personnalisées"
+      }
+    },
+
+      "modernVerificationState": {
+    "startVerification": "Commencer la vérification",
+    "featuresAfterVerification": "Fonctionnalités disponibles après vérification",
+    "cards": {
+      "title": "Cartes bancaires",
+      "description": "Demande de cartes physiques et virtuelles"
+    },
+    "transfers": {
+      "title": "Virements",
+      "description": "Transferts d'argent entre comptes"
+    },
+    "fullData": {
+      "title": "Données complètes",
+      "description": "Accès à tous vos comptes et transactions"
+    },
+    "supportChat": {
+      "title": "Support chat",
+      "description": "Assistance client en temps réel"
+    },
+    "securityGuaranteed": "Sécurité garantie",
+    "securityDescription": "Vos données sont protégées par un chiffrement de niveau bancaire. La vérification d'identité est obligatoire pour votre sécurité et celle de vos fonds.",
+    "needHelp": "Besoin d'aide ? Contactez notre support au {phoneNumber}",
+    "verificationInProgress": "Vérification en cours",
+    "dossierEnExamen": "Votre dossier est en cours d'examen",
+    "dossierEnExamenDescription": "Votre dossier de vérification d'identité est actuellement en cours d'examen par nos équipes. Ce processus prend généralement 24 à 48 heures.",
+    "voirStatut": "Voir le statut",
+    "processusEnCours": "Processus en cours",
+    "processusEnCoursDescription": "Nos équipes vérifient actuellement vos documents. Vous recevrez une notification dès que la vérification sera terminée.",
+    "verificationRequise": "Vérification requise",
+    "verificationRequiseDescription": "Pour accéder à toutes les fonctionnalités, vous devez valider votre identité.",
+    "verificationRejetee": "Vérification rejetée",
+    "verificationRejeteeDescription": "Votre dossier a été rejeté. Veuillez corriger les informations.",
+    "verificationIdentite": "Vérification d'identité"
+  },
+  "kycStatusBanner": {
+    "verificationInProgress": "Vérification en cours",
+    "verificationInProgressDescription": "Vos documents sont en cours de vérification. Cela peut prendre 24-48h.",
+    "verificationRejected": "Vérification rejetée",
+    "verificationRejectedDescription": "Votre vérification a été rejetée. Veuillez soumettre de nouveaux documents.",
+    "verificationRequired": "Vérification requise",
+    "verificationRequiredDescription": "Pour accéder à toutes les fonctionnalités, veuillez compléter votre vérification d'identité.",
+    "viewStatus": "Voir le statut",
+    "startVerification": "Commencer la vérification",
+    "submitAgain": "Soumettre à nouveau"
+  },
+  "modernAlert": {
+    "understood": "Compris"
+  }
 }

@@ -25,15 +25,15 @@ const VerificationState: React.FC<VerificationStateProps> = ({
   const getTitle = () => {
     if (title) return title;
     return userStatus === 'unverified' 
-      ? 'Vérification d\'identité requise' 
-      : 'Vérification en cours';
+      ? t('verificationState.titles.unverified')
+      : t('verificationState.titles.pending');
   };
 
   const getDescription = () => {
     if (description) return description;
     return userStatus === 'unverified'
-      ? 'Pour accéder à cette fonctionnalité, vous devez d\'abord valider votre identité.'
-      : 'Votre compte est en cours de vérification. Vous pourrez accéder à cette fonctionnalité une fois validé.';
+      ? t('verificationState.descriptions.unverified')
+      : t('verificationState.descriptions.pending');
   };
 
   return (
@@ -64,11 +64,11 @@ const VerificationState: React.FC<VerificationStateProps> = ({
             <div className="flex items-center justify-center space-x-4">
               <div className="flex items-center space-x-2 text-sm text-gray-500">
                 <Shield className="w-4 h-4" />
-                <span>Compte sécurisé</span>
+                <span>{t('verificationState.features.secureAccount')}</span>
               </div>
               <div className="flex items-center space-x-2 text-sm text-gray-500">
                 <Target className="w-4 h-4" />
-                <span>Fonctionnalités personnalisées</span>
+                <span>{t('verificationState.features.personalizedFeatures')}</span>
               </div>
             </div>
           )}

@@ -220,8 +220,6 @@ const HistoryPage: React.FC = () => {
     return (
       <VerificationState 
         userStatus={userStatus}
-        title="Vérification d'identité requise"
-        description="Pour consulter l'historique de vos transactions, vous devez d'abord valider votre identité."
       />
     );
   }

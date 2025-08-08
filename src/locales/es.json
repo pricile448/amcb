@@ -43,12 +43,12 @@
   },
 
   "nav": {
-    "features": "Funcionalidades",
+    "features": "Características",
     "pricing": "Precios",
     "help": "Ayuda y Soporte",
     "login": "Iniciar sesión",
     "openAccount": "Abrir cuenta",
-    "dashboard": "Mi espacio cliente",
+    "dashboard": "Mi área de cliente",
     "accounts": "Cuentas",
     "iban": "Mi IBAN",
     "transfers": "Transferencias",
@@ -56,11 +56,32 @@
     "billing": "Facturación",
     "history": "Historial",
     "budgets": "Presupuestos",
-    "settings": "Ajustes",
+    "settings": "Configuración",
     "documents": "Mis Documentos",
     "messages": "Mensajes",
     "verification": "Verificación de identidad",
-    "transactions": "Transacciones"
+    "transactions": "Transacciones",
+    "profile": {
+      "myProfile": "Mi perfil",
+      "security": "Seguridad",
+      "myCards": "Mis tarjetas",
+      "documents": "Documentos",
+      "logout": "Cerrar sesión",
+      "verifiedAccount": "Cuenta verificada",
+      "verificationInProgress": "Verificación en curso",
+      "unverifiedAccount": "Cuenta no verificada",
+      "trustMessage": "Gracias por confiar en AmCbunq",
+      "verifyIdentityMessage": "Verifica tu identidad para desbloquear todas las funciones"
+    },
+    "notifications": {
+      "title": "Notificaciones",
+      "markAllAsRead": "Marcar todo como leído",
+      "markAllAsReadShort": "Todo leído",
+      "noNotifications": "Sin notificaciones",
+      "noNotificationsMessage": "Serás notificado aquí de las nuevas actividades",
+      "viewAllNotifications": "Ver todas las notificaciones",
+      "close": "Cerrar"
+    }
   },
 
   "home": {
@@ -852,7 +873,8 @@
       "userNotIdentified": "Usuario no identificado",
       "parsingError": "Error analizando usuario:",
       "submissionGenericError": "Ocurrió un error al enviar"
-    }
+    },
+    "unverified": "No verificado"
   },
 
   "billing": {
@@ -1233,8 +1255,10 @@
     "online": "En línea",
     "quickResponse": "Respuesta rápida",
     "onlineStatus": "En línea",
-    "supportName": "Soporte AmCbunq",
-    "verification": {
+          "supportName": "Soporte AmCbunq",
+      "unavailable": "Mensajes no disponibles",
+      "unavailableUnverified": "Para acceder al chat con nuestro soporte, primero debe validar su identidad.",
+      "verification": {
       "unavailableTitle": "Mensajes no disponibles",
       "temporarilyUnavailableTitle": "Mensajes temporalmente no disponibles",
       "unavailableDescription": "Para acceder al chat con nuestro soporte, primero debes validar tu identidad.",
@@ -1670,5 +1694,69 @@
     },
     "backToDashboard": "Volver al panel de control",
     "viewStatus": "Ver mi estado de verificación"
-  }
+  },
+
+      "verificationState": {
+      "titles": {
+        "unverified": "Verificación de identidad requerida",
+        "pending": "Verificación en progreso"
+      },
+      "descriptions": {
+        "unverified": "Para acceder a esta función, primero debe validar su identidad.",
+        "pending": "Su cuenta está siendo verificada. Podrá acceder a esta función una vez validada."
+      },
+      "features": {
+        "secureAccount": "Cuenta segura",
+        "personalizedFeatures": "Funciones personalizadas"
+      }
+    },
+
+    "modernVerificationState": {
+      "startVerification": "Iniciar verificación",
+      "featuresAfterVerification": "Funcionalidades disponibles después de la verificación",
+      "cards": {
+        "title": "Tarjetas bancarias",
+        "description": "Solicitud de tarjetas físicas y virtuales"
+      },
+      "transfers": {
+        "title": "Transferencias",
+        "description": "Transferencias de dinero entre cuentas"
+      },
+      "fullData": {
+        "title": "Datos completos",
+        "description": "Acceso a todas tus cuentas y transacciones"
+      },
+      "supportChat": {
+        "title": "Soporte de chat",
+        "description": "Asistencia al cliente en tiempo real"
+      },
+      "securityGuaranteed": "Seguridad garantizada",
+      "securityDescription": "Tus datos están protegidos por cifrado de nivel bancario. La verificación de identidad es obligatoria para tu seguridad y la de tus fondos.",
+      "needHelp": "¿Necesitas ayuda? Contacta con nuestro soporte en el {phoneNumber}",
+      "verificationInProgress": "Verificación en progreso",
+      "dossierEnExamen": "Tu expediente está en revisión",
+      "dossierEnExamenDescription": "Tu expediente de verificación de identidad está siendo revisado por nuestros equipos. Este proceso suele tardar 24 a 48 horas.",
+      "voirStatut": "Ver estado",
+      "processusEnCours": "Proceso en curso",
+      "processusEnCoursDescription": "Nuestros equipos están verificando actualmente tus documentos. Recibirás una notificación tan pronto como se complete la verificación.",
+      "verificationRequise": "Verificación requerida",
+      "verificationRequiseDescription": "Para acceder a todas las funciones, debes validar tu identidad.",
+      "verificationRejetee": "Verificación rechazada",
+      "verificationRejeteeDescription": "Tu expediente ha sido rechazado. Por favor, corrige la información.",
+      "verificationIdentite": "Verificación de identidad"
+    },
+    "kycStatusBanner": {
+      "verificationInProgress": "Verificación en progreso",
+      "verificationInProgressDescription": "Sus documentos están siendo verificados. Esto puede tomar 24-48h.",
+      "verificationRejected": "Verificación rechazada",
+      "verificationRejectedDescription": "Su verificación ha sido rechazada. Por favor, envíe nuevos documentos.",
+      "verificationRequired": "Verificación requerida",
+      "verificationRequiredDescription": "Para acceder a todas las funcionalidades, complete su verificación de identidad.",
+      "viewStatus": "Ver estado",
+      "startVerification": "Comenzar verificación",
+      "submitAgain": "Enviar de nuevo"
+    },
+    "modernAlert": {
+      "understood": "Entendido"
+    }
 }

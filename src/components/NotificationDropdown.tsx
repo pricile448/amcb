@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Bell, X, Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface Notification {
   id: string;
@@ -26,6 +27,7 @@ const NotificationDropdown: React.FC<NotificationDropdownProps> = ({
   onMarkAsRead,
   onMarkAllAsRead
 }) => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -93,15 +95,15 @@ const NotificationDropdown: React.FC<NotificationDropdownProps> = ({
         <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-50 max-w-[calc(100vw-2rem)]">
           {/* Header */}
           <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700 rounded-t-lg">
-            <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100">Notifications</h3>
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100">{t('nav.notifications.title')}</h3>
             <div className="flex items-center space-x-2">
               {unreadCount > 0 && (
                 <button
                   onClick={onMarkAllAsRead}
                   className="text-xs sm:text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
                 >
-                  <span className="hidden sm:inline">Tout marquer comme lu</span>
-                  <span className="sm:hidden">Tout lu</span>
+                  <span className="hidden sm:inline">{t('nav.notifications.markAllAsRead')}</span>
+                  <span className="sm:hidden">{t('nav.notifications.markAllAsReadShort')}</span>
                 </button>
               )}
               <button
@@ -125,9 +127,9 @@ const NotificationDropdown: React.FC<NotificationDropdownProps> = ({
             {notifications.length === 0 ? (
               <div className="p-4 sm:p-8 text-center text-gray-500 dark:text-gray-400">
                 <Bell className="w-8 h-8 sm:w-12 sm:h-12 mx-auto mb-2 sm:mb-3 text-gray-300 dark:text-gray-600" />
-                <p className="text-sm font-medium">Aucune notification</p>
+                <p className="text-sm font-medium">{t('nav.notifications.noNotifications')}</p>
                 <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
-                  Vous serez notifié ici des nouvelles activités
+                  {t('nav.notifications.noNotificationsMessage')}
                 </p>
               </div>
             ) : (
@@ -183,7 +185,7 @@ const NotificationDropdown: React.FC<NotificationDropdownProps> = ({
               className="text-xs sm:text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium block text-center"
               onClick={() => setIsOpen(false)}
             >
-              Voir toutes les notifications
+              {t('nav.notifications.viewAllNotifications')}
             </Link>
           </div>
         </div>
@@ -231,7 +233,7 @@ const NotificationDropdown: React.FC<NotificationDropdownProps> = ({
                 onClick={() => setSelectedNotification(null)}
                 className="px-3 py-2 sm:px-4 sm:py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm sm:text-base"
               >
-                Fermer
+                {t('nav.notifications.close')}
               </button>
             </div>
           </div>

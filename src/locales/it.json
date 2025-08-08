@@ -43,24 +43,45 @@
   },
 
   "nav": {
-    "features": "Funcionalidades",
-    "pricing": "Precios",
-    "help": "Ayuda y Soporte",
-    "login": "Iniciar sesión",
-    "openAccount": "Abrir cuenta",
-    "dashboard": "Mi área de cliente",
-    "accounts": "Cuentas",
-    "iban": "Mi IBAN",
-    "transfers": "Transferencias",
-    "cards": "Tarjetas",
-    "billing": "Facturación",
-    "history": "Historial",
-    "budgets": "Presupuestos",
-    "settings": "Ajustes",
-    "documents": "Mis Documentos",
-    "messages": "Mensajes",
-    "verification": "Verificación de identidad",
-    "transactions": "Transacciones"
+    "features": "Funzionalità",
+    "pricing": "Prezzi",
+    "help": "Aiuto e Supporto",
+    "login": "Accedi",
+    "openAccount": "Apri account",
+    "dashboard": "La mia area cliente",
+    "accounts": "Conti",
+    "iban": "Il mio IBAN",
+    "transfers": "Bonifici",
+    "cards": "Carte",
+    "billing": "Fatturazione",
+    "history": "Cronologia",
+    "budgets": "Budget",
+    "settings": "Impostazioni",
+    "documents": "I miei Documenti",
+    "messages": "Messaggi",
+    "verification": "Verifica identità",
+    "transactions": "Transazioni",
+    "profile": {
+      "myProfile": "Il mio profilo",
+      "security": "Sicurezza",
+      "myCards": "Le mie carte",
+      "documents": "Documenti",
+      "logout": "Disconnetti",
+      "verifiedAccount": "Account verificato",
+      "verificationInProgress": "Verifica in corso",
+      "unverifiedAccount": "Account non verificato",
+      "trustMessage": "Grazie per aver fiducia in AmCbunq",
+      "verifyIdentityMessage": "Verifica la tua identità per sbloccare tutte le funzionalità"
+    },
+    "notifications": {
+      "title": "Notifiche",
+      "markAllAsRead": "Segna tutto come letto",
+      "markAllAsReadShort": "Tutto letto",
+      "noNotifications": "Nessuna notifica",
+      "noNotificationsMessage": "Sarai notificato qui delle nuove attività",
+      "viewAllNotifications": "Visualizza tutte le notifiche",
+      "close": "Chiudi"
+    }
   },
 
   "home": {
@@ -846,7 +867,8 @@
       "userNotIdentified": "Usuario no identificado",
       "parsingError": "Error parsing user:",
       "submissionGenericError": "Ocurrió un error al enviar"
-    }
+    },
+    "unverified": "No verificado"
   },
 
   "billing": {
@@ -1227,7 +1249,9 @@
     "online": "En línea",
     "quickResponse": "Respuesta rápida",
     "onlineStatus": "En línea",
-    "supportName": "Soporte AmCbunq",
+    "supportName": "Supporto AmCbunq",
+    "unavailable": "Messaggi non disponibili",
+    "unavailableUnverified": "Per accedere alla chat con il nostro supporto, devi prima convalidare la tua identità.",
     "verification": {
       "unavailableTitle": "Mensajes no disponibles",
       "temporarilyUnavailableTitle": "Mensajes temporalmente no disponibles",
@@ -1801,5 +1825,69 @@
     },
     "backToDashboard": "Torna alla dashboard",
     "viewStatus": "Visualizza il mio stato di verifica"
-  }
+  },
+
+  "verificationState": {
+    "titles": {
+      "unverified": "Verifica di identità richiesta",
+      "pending": "Verifica in corso"
+    },
+    "descriptions": {
+      "unverified": "Per accedere a questa funzionalità, devi prima convalidare la tua identità.",
+      "pending": "Il tuo account è in fase di verifica. Potrai accedere a questa funzionalità una volta convalidato."
+    },
+    "features": {
+      "secureAccount": "Account sicuro",
+      "personalizedFeatures": "Funzionalità personalizzate"
+    }
+  },
+
+  "modernVerificationState": {
+    "startVerification": "Avvia verifica",
+    "featuresAfterVerification": "Funzionalità disponibili dopo la verifica",
+    "cards": {
+      "title": "Carte bancarie",
+      "description": "Richiesta di carte fisiche e virtuali"
+    },
+    "transfers": {
+      "title": "Bonifici",
+      "description": "Trasferimenti di denaro tra conti"
+    },
+    "fullData": {
+      "title": "Dati completi",
+      "description": "Accesso a tutti i tuoi conti e transazioni"
+    },
+    "supportChat": {
+      "title": "Chat di supporto",
+      "description": "Assistenza clienti in tempo reale"
+    },
+    "securityGuaranteed": "Sicurezza garantita",
+    "securityDescription": "I tuoi dati sono protetti da crittografia di livello bancario. La verifica dell'identità è obbligatoria per la tua sicurezza e quella dei tuoi fondi.",
+    "needHelp": "Hai bisogno di aiuto? Contatta il nostro supporto al {phoneNumber}",
+    "verificationInProgress": "Verifica in corso",
+    "dossierEnExamen": "Il tuo fascicolo è in revisione",
+    "dossierEnExamenDescription": "Il tuo fascicolo di verifica dell'identità è attualmente in revisione da parte dei nostri team. Questo processo richiede solitamente 24-48 ore.",
+    "voirStatut": "Visualizza stato",
+    "processusEnCours": "Processo in corso",
+    "processusEnCoursDescription": "I nostri team stanno attualmente verificando i tuoi documenti. Riceverai una notifica non appena la verifica sarà completata.",
+    "verificationRequise": "Verifica richiesta",
+    "verificationRequiseDescription": "Per accedere a tutte le funzionalità, devi convalidare la tua identità.",
+    "verificationRejetee": "Verifica rifiutata",
+    "verificationRejeteeDescription": "Il tuo fascicolo è stato rifiutato. Correggi le informazioni.",
+          "verificationIdentite": "Verifica dell'identità"
+    },
+    "kycStatusBanner": {
+      "verificationInProgress": "Verifica in corso",
+      "verificationInProgressDescription": "I tuoi documenti sono in fase di verifica. Questo può richiedere 24-48h.",
+      "verificationRejected": "Verifica rifiutata",
+      "verificationRejectedDescription": "La tua verifica è stata rifiutata. Per favore, invia nuovi documenti.",
+      "verificationRequired": "Verifica richiesta",
+      "verificationRequiredDescription": "Per accedere a tutte le funzionalità, completa la verifica della tua identità.",
+      "viewStatus": "Visualizza stato",
+      "startVerification": "Inizia verifica",
+      "submitAgain": "Invia di nuovo"
+    },
+    "modernAlert": {
+      "understood": "Capito"
+    }
 }

@@ -852,7 +852,8 @@
       "userNotIdentified": "Benutzer nicht identifiziert",
       "parsingError": "Fehler beim Parsen des Benutzers:",
       "submissionGenericError": "Beim Einreichen ist ein Fehler aufgetreten"
-    }
+    },
+    "unverified": "Nicht verifiziert"
   },
 
   "billing": {
@@ -1233,8 +1234,10 @@
     "online": "Online",
     "quickResponse": "Schnelle Antwort",
     "onlineStatus": "Online",
-    "supportName": "AmCbunq Support",
-    "verification": {
+          "supportName": "AmCbunq Support",
+      "unavailable": "Nachrichten nicht verfügbar",
+      "unavailableUnverified": "Um auf den Chat mit unserem Support zuzugreifen, müssen Sie zuerst Ihre Identität bestätigen.",
+      "verification": {
       "unavailableTitle": "Nachrichten nicht verfügbar",
       "temporarilyUnavailableTitle": "Nachrichten vorübergehend nicht verfügbar",
       "unavailableDescription": "Für den Chat mit unserem Support müssen Sie zuerst Ihre Identität bestätigen.",
@@ -1670,5 +1673,69 @@
     },
     "backToDashboard": "Zurück zum Dashboard",
     "viewStatus": "Meinen Überprüfungsstatus anzeigen"
-  }
+  },
+
+  "verificationState": {
+    "titles": {
+      "unverified": "Identitätsüberprüfung erforderlich",
+      "pending": "Überprüfung läuft"
+    },
+    "descriptions": {
+      "unverified": "Um auf diese Funktion zuzugreifen, müssen Sie zuerst Ihre Identität bestätigen.",
+      "pending": "Ihr Konto wird überprüft. Sie können auf diese Funktion zugreifen, sobald es bestätigt wurde."
+    },
+    "features": {
+      "secureAccount": "Sicheres Konto",
+      "personalizedFeatures": "Personalisierte Funktionen"
+    }
+  },
+
+  "modernVerificationState": {
+    "startVerification": "Verifizierung starten",
+    "featuresAfterVerification": "Funktionen nach der Verifizierung verfügbar",
+    "cards": {
+      "title": "Bankkarten",
+      "description": "Anfrage für physische und virtuelle Karten"
+    },
+    "transfers": {
+      "title": "Überweisungen",
+      "description": "Geldüberweisungen zwischen Konten"
+    },
+    "fullData": {
+      "title": "Vollständige Daten",
+      "description": "Zugriff auf alle Ihre Konten und Transaktionen"
+    },
+    "supportChat": {
+      "title": "Support-Chat",
+      "description": "Echtzeit-Kundenbetreuung"
+    },
+    "securityGuaranteed": "Sicherheit garantiert",
+    "securityDescription": "Ihre Daten sind durch Bankenstandard-Verschlüsselung geschützt. Die Identitätsprüfung ist für Ihre Sicherheit und die Ihrer Gelder obligatorisch.",
+    "needHelp": "Benötigen Sie Hilfe? Kontaktieren Sie unseren Support unter {phoneNumber}",
+    "verificationInProgress": "Verifizierung läuft",
+    "dossierEnExamen": "Ihre Akte wird geprüft",
+    "dossierEnExamenDescription": "Ihre Identitätsverifizierungsakte wird derzeit von unseren Teams geprüft. Dieser Prozess dauert normalerweise 24-48 Stunden.",
+    "voirStatut": "Status anzeigen",
+    "processusEnCours": "Prozess läuft",
+    "processusEnCoursDescription": "Unsere Teams überprüfen derzeit Ihre Dokumente. Sie erhalten eine Benachrichtigung, sobald die Verifizierung abgeschlossen ist.",
+    "verificationRequise": "Verifizierung erforderlich",
+    "verificationRequiseDescription": "Um auf alle Funktionen zuzugreifen, müssen Sie Ihre Identität bestätigen.",
+    "verificationRejetee": "Verifizierung abgelehnt",
+    "verificationRejeteeDescription": "Ihre Akte wurde abgelehnt. Bitte korrigieren Sie die Informationen.",
+          "verificationIdentite": "Identitätsverifizierung"
+    },
+    "kycStatusBanner": {
+      "verificationInProgress": "Verifizierung läuft",
+      "verificationInProgressDescription": "Ihre Dokumente werden überprüft. Dies kann 24-48h dauern.",
+      "verificationRejected": "Verifizierung abgelehnt",
+      "verificationRejectedDescription": "Ihre Verifizierung wurde abgelehnt. Bitte reichen Sie neue Dokumente ein.",
+      "verificationRequired": "Verifizierung erforderlich",
+      "verificationRequiredDescription": "Um auf alle Funktionen zuzugreifen, vervollständigen Sie bitte Ihre Identitätsverifizierung.",
+      "viewStatus": "Status anzeigen",
+      "startVerification": "Verifizierung starten",
+      "submitAgain": "Erneut einreichen"
+    },
+    "modernAlert": {
+      "understood": "Verstanden"
+    }
 }

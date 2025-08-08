@@ -846,7 +846,8 @@
       "userNotIdentified": "Gebruiker niet geïdentificeerd",
       "parsingError": "Fout bij verwerken gebruiker:",
       "submissionGenericError": "Er is een fout opgetreden bij het indienen"
-    }
+    },
+    "unverified": "Niet geverifieerd"
   },
 
   "billing": {
@@ -1227,8 +1228,10 @@
     "online": "Online",
     "quickResponse": "Snel antwoord",
     "onlineStatus": "Online",
-    "supportName": "AmCbunq Ondersteuning",
-    "verification": {
+          "supportName": "AmCbunq Ondersteuning",
+      "unavailable": "Berichten niet beschikbaar",
+      "unavailableUnverified": "Om toegang te krijgen tot de chat met onze ondersteuning, moet u eerst uw identiteit valideren.",
+      "verification": {
       "unavailableTitle": "Berichten niet beschikbaar",
       "temporarilyUnavailableTitle": "Berichten tijdelijk niet beschikbaar",
       "unavailableDescription": "Om te chatten met onze ondersteuning, moet u eerst uw identiteit valideren.",
@@ -1664,5 +1667,69 @@
     },
     "backToDashboard": "Terug naar dashboard",
     "viewStatus": "Bekijk de status van mijn verificatie"
-  }
+  },
+
+  "verificationState": {
+    "titles": {
+      "unverified": "Identiteitsverificatie vereist",
+      "pending": "Verificatie in behandeling"
+    },
+    "descriptions": {
+      "unverified": "Om toegang te krijgen tot deze functie, moet u eerst uw identiteit valideren.",
+      "pending": "Uw account wordt geverifieerd. U kunt toegang krijgen tot deze functie zodra deze is gevalideerd."
+    },
+    "features": {
+      "secureAccount": "Veilig account",
+      "personalizedFeatures": "Gepersonaliseerde functies"
+    }
+  },
+
+  "modernVerificationState": {
+    "startVerification": "Verificatie starten",
+    "featuresAfterVerification": "Functies beschikbaar na verificatie",
+    "cards": {
+      "title": "Bankkaarten",
+      "description": "Aanvraag voor fysieke en virtuele kaarten"
+    },
+    "transfers": {
+      "title": "Overschrijvingen",
+      "description": "Geldoverboekingen tussen rekeningen"
+    },
+    "fullData": {
+      "title": "Volledige gegevens",
+      "description": "Toegang tot al uw rekeningen en transacties"
+    },
+    "supportChat": {
+      "title": "Ondersteuningschat",
+      "description": "Realtime klantenondersteuning"
+    },
+    "securityGuaranteed": "Veiligheid gegarandeerd",
+    "securityDescription": "Uw gegevens zijn beschermd met bankniveau-encryptie. Identiteitsverificatie is verplicht voor uw veiligheid en die van uw geld.",
+    "needHelp": "Hulp nodig? Neem contact op met onze ondersteuning via {phoneNumber}",
+    "verificationInProgress": "Verificatie in uitvoering",
+    "dossierEnExamen": "Uw dossier wordt beoordeeld",
+    "dossierEnExamenDescription": "Uw identiteitsverificatiedossier wordt momenteel beoordeeld door onze teams. Dit proces duurt meestal 24-48 uur.",
+    "voirStatut": "Status bekijken",
+    "processusEnCours": "Proces in uitvoering",
+    "processusEnCoursDescription": "Onze teams controleren momenteel uw documenten. U ontvangt een melding zodra de verificatie is voltooid.",
+    "verificationRequise": "Verificatie vereist",
+    "verificationRequiseDescription": "Om toegang te krijgen tot alle functies, moet u uw identiteit valideren.",
+    "verificationRejetee": "Verificatie afgewezen",
+    "verificationRejeteeDescription": "Uw dossier is afgewezen. Corrigeer de informatie.",
+          "verificationIdentite": "Identiteitsverificatie"
+    },
+    "kycStatusBanner": {
+      "verificationInProgress": "Verificatie in uitvoering",
+      "verificationInProgressDescription": "Uw documenten worden geverifieerd. Dit kan 24-48u duren.",
+      "verificationRejected": "Verificatie afgewezen",
+      "verificationRejectedDescription": "Uw verificatie is afgewezen. Dien nieuwe documenten in.",
+      "verificationRequired": "Verificatie vereist",
+      "verificationRequiredDescription": "Om toegang te krijgen tot alle functies, voltooi uw identiteitsverificatie.",
+      "viewStatus": "Status bekijken",
+      "startVerification": "Verificatie starten",
+      "submitAgain": "Opnieuw indienen"
+    },
+    "modernAlert": {
+      "understood": "Begrepen"
+    }
 }

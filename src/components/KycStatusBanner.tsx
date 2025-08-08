@@ -26,8 +26,8 @@ const KycStatusBanner: React.FC<KycStatusBannerProps> = ({
         bgColor: 'bg-yellow-50',
         borderColor: 'border-yellow-200',
         textColor: 'text-yellow-800',
-        title: 'Vérification en cours',
-        description: 'Vos documents sont en cours de vérification. Cela peut prendre 24-48h.',
+        title: t('kycStatusBanner.verificationInProgress'),
+        description: t('kycStatusBanner.verificationInProgressDescription'),
       };
     }
 
@@ -37,8 +37,8 @@ const KycStatusBanner: React.FC<KycStatusBannerProps> = ({
         bgColor: 'bg-red-50',
         borderColor: 'border-red-200',
         textColor: 'text-red-800',
-        title: 'Vérification rejetée',
-        description: kycStatus.rejectionReason || 'Votre vérification a été rejetée. Veuillez soumettre de nouveaux documents.',
+        title: t('kycStatusBanner.verificationRejected'),
+        description: kycStatus.rejectionReason || t('kycStatusBanner.verificationRejectedDescription'),
       };
     }
 
@@ -48,8 +48,8 @@ const KycStatusBanner: React.FC<KycStatusBannerProps> = ({
         bgColor: 'bg-blue-50',
         borderColor: 'border-blue-200',
         textColor: 'text-blue-800',
-        title: 'Vérification requise',
-        description: 'Pour accéder à toutes les fonctionnalités, veuillez compléter votre vérification d\'identité.',
+        title: t('kycStatusBanner.verificationRequired'),
+        description: t('kycStatusBanner.verificationRequiredDescription'),
       };
     }
 
@@ -80,14 +80,14 @@ const KycStatusBanner: React.FC<KycStatusBannerProps> = ({
               className={`inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md ${config.textColor} ${config.bgColor} hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
             >
               <Shield className="w-4 h-4 mr-2" />
-              {isPending ? 'Voir le statut' : 'Commencer la vérification'}
+              {isPending ? t('kycStatusBanner.viewStatus') : t('kycStatusBanner.startVerification')}
             </a>
             {isRejected && (
               <button
                 onClick={() => window.location.href = '/dashboard/verification'}
                 className={`inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md ${config.textColor} ${config.bgColor} hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500`}
               >
-                Soumettre à nouveau
+                {t('kycStatusBanner.submitAgain')}
               </button>
             )}
           </div>

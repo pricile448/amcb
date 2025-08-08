@@ -159,28 +159,29 @@ const KycPage: React.FC = () => {
   // Si le statut est "pending", afficher un message de statut
   if (userStatus === 'pending') {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gray-50 py-4 sm:py-8">
+        <div className="max-w-4xl mx-auto px-3 sm:px-4 lg:px-8">
           {/* Header */}
-          <div className="mb-8">
+          <div className="mb-6 sm:mb-8">
             <button
               onClick={() => navigate('/dashboard')}
-              className="flex items-center text-gray-600 hover:text-gray-900 mb-4"
+              className="flex items-center text-gray-600 hover:text-gray-900 mb-3 sm:mb-4 text-sm sm:text-base"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Retour au tableau de bord
+              <span className="hidden sm:inline">Retour au tableau de bord</span>
+              <span className="sm:hidden">Retour</span>
             </button>
             
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <div className="flex items-center mb-4">
-                <div className="bg-yellow-100 p-3 rounded-full mr-4">
-                  <AlertCircle className="w-6 h-6 text-yellow-600" />
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+              <div className="flex flex-col sm:flex-row sm:items-center mb-4">
+                <div className="bg-yellow-100 p-2 sm:p-3 rounded-full mr-0 sm:mr-4 mb-3 sm:mb-0 self-start">
+                  <AlertCircle className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-600" />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold text-gray-900">
+                  <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
                     Vérification en cours
                   </h1>
-                  <p className="text-gray-600">
+                  <p className="text-sm sm:text-base text-gray-600 mt-1">
                     Votre dossier est en cours d'examen par nos équipes
                   </p>
                 </div>
@@ -189,27 +190,27 @@ const KycPage: React.FC = () => {
           </div>
 
           {/* Status Message */}
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-8 text-center">
-            <div className="mb-6">
-              <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <AlertCircle className="w-8 h-8 text-yellow-600" />
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 sm:p-8 text-center">
+            <div className="mb-4 sm:mb-6">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                <AlertCircle className="w-6 h-6 sm:w-8 sm:h-8 text-yellow-600" />
               </div>
-              <h2 className="text-xl font-semibold text-yellow-800 mb-2">Vérification en cours</h2>
-              <p className="text-yellow-700 mb-4">
+              <h2 className="text-lg sm:text-xl font-semibold text-yellow-800 mb-2">Vérification en cours</h2>
+              <p className="text-sm sm:text-base text-yellow-700 mb-3 sm:mb-4">
                 Vos documents ont été soumis et sont actuellement en cours d'examen par nos équipes.
               </p>
-              <p className="text-sm text-yellow-600">
+              <p className="text-xs sm:text-sm text-yellow-600">
                 Ce processus prend généralement 24 à 48 heures. Vous recevrez une notification dès que la vérification sera terminée.
               </p>
             </div>
             
-            <div className="bg-white rounded-lg p-4 border border-yellow-200">
-              <h3 className="font-medium text-gray-900 mb-2">Documents soumis</h3>
-              <div className="space-y-2 text-sm text-gray-600">
+            <div className="bg-white rounded-lg p-3 sm:p-4 border border-yellow-200">
+              <h3 className="font-medium text-gray-900 mb-2 text-sm sm:text-base">Documents soumis</h3>
+              <div className="space-y-2 text-xs sm:text-sm text-gray-600">
                 {documents.map((doc) => (
                   <div key={doc.id} className="flex items-center justify-between">
-                    <span>{doc.name}</span>
-                    <CheckCircle className="w-4 h-4 text-green-500" />
+                    <span className="truncate flex-1 mr-2">{doc.name}</span>
+                    <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-green-500 flex-shrink-0" />
                   </div>
                 ))}
               </div>
@@ -221,28 +222,29 @@ const KycPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 py-4 sm:py-8">
+      <div className="max-w-4xl mx-auto px-3 sm:px-4 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <button
             onClick={() => navigate('/dashboard')}
-            className="flex items-center text-gray-600 hover:text-gray-900 mb-4"
+            className="flex items-center text-gray-600 hover:text-gray-900 mb-3 sm:mb-4 text-sm sm:text-base"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Retour au tableau de bord
+            <span className="hidden sm:inline">Retour au tableau de bord</span>
+            <span className="sm:hidden">Retour</span>
           </button>
           
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center mb-4">
-              <div className="bg-blue-100 p-3 rounded-full mr-4">
-                <FileText className="w-6 h-6 text-blue-600" />
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+            <div className="flex flex-col sm:flex-row sm:items-center mb-4">
+              <div className="bg-blue-100 p-2 sm:p-3 rounded-full mr-0 sm:mr-4 mb-3 sm:mb-0 self-start">
+                <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">
+                <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
                   {t('kyc.title')}
                 </h1>
-                <p className="text-gray-600">
+                <p className="text-sm sm:text-base text-gray-600 mt-1">
                   {t('kyc.subtitle')}
                 </p>
               </div>
@@ -251,32 +253,32 @@ const KycPage: React.FC = () => {
         </div>
 
         {/* Documents Section */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-6">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 mb-6">
+          <h2 className="text-base sm:text-lg font-semibold text-gray-900 mb-4 sm:mb-6">
             {t('kyc.documentsRequired')}
           </h2>
 
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {documents.map((document) => (
-              <div key={document.id} className="border border-gray-200 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <div>
-                    <h3 className="font-medium text-gray-900">
+              <div key={document.id} className="border border-gray-200 rounded-lg p-3 sm:p-4">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
+                  <div className="mb-2 sm:mb-0">
+                    <h3 className="font-medium text-gray-900 text-sm sm:text-base">
                       {document.name}
                     </h3>
-                                         <p className="text-sm text-gray-500">
-                       {t('kyc.acceptedFormats')}
-                     </p>
-                   </div>
-                   {document.required && (
-                     <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">
-                       {t('kyc.required')}
-                     </span>
-                   )}
+                    <p className="text-xs sm:text-sm text-gray-500 mt-1">
+                      {t('kyc.acceptedFormats')}
+                    </p>
+                  </div>
+                  {document.required && (
+                    <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full self-start">
+                      {t('kyc.required')}
+                    </span>
+                  )}
                 </div>
 
                 {!document.uploaded ? (
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6 text-center hover:border-blue-400 transition-colors">
                     <input
                       type="file"
                       id={`file-${document.id}`}
@@ -286,41 +288,41 @@ const KycPage: React.FC = () => {
                         const file = e.target.files?.[0];
                         if (file && file.size <= 5 * 1024 * 1024) { // 5MB limit
                           handleFileChange(document.id, file);
-                                                 } else if (file) {
-                           showError(t('kyc.fileTooLarge'), t('kyc.fileTooLargeMessage'));
-                         }
+                        } else if (file) {
+                          showError(t('kyc.fileTooLarge'), t('kyc.fileTooLargeMessage'));
+                        }
                       }}
                     />
                     <label htmlFor={`file-${document.id}`} className="cursor-pointer">
-                      <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                                             <p className="text-gray-600">
-                         {t('kyc.selectFile')}
-                       </p>
-                       <p className="text-sm text-gray-500">
-                         {t('kyc.dragDrop')}
-                       </p>
+                      <Upload className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400 mx-auto mb-2" />
+                      <p className="text-sm sm:text-base text-gray-600">
+                        {t('kyc.selectFile')}
+                      </p>
+                      <p className="text-xs sm:text-sm text-gray-500 mt-1">
+                        {t('kyc.dragDrop')}
+                      </p>
                     </label>
                   </div>
                 ) : (
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <CheckCircle className="w-5 h-5 text-green-600 mr-3" />
-                        <div>
-                          <p className="font-medium text-green-900">
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-3 sm:p-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                      <div className="flex items-center mb-2 sm:mb-0">
+                        <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 mr-2 sm:mr-3 flex-shrink-0" />
+                        <div className="min-w-0 flex-1">
+                          <p className="font-medium text-green-900 text-sm sm:text-base truncate">
                             {document.file?.name}
                           </p>
-                          <p className="text-sm text-green-700">
+                          <p className="text-xs sm:text-sm text-green-700">
                             {(document.file?.size || 0) / 1024 / 1024} MB
                           </p>
                         </div>
                       </div>
-                                             <button
-                         onClick={() => removeFile(document.id)}
-                         className="text-red-600 hover:text-red-800 text-sm"
-                       >
-                         {t('kyc.removeFile')}
-                       </button>
+                      <button
+                        onClick={() => removeFile(document.id)}
+                        className="text-red-600 hover:text-red-800 text-xs sm:text-sm self-start sm:self-center"
+                      >
+                        {t('kyc.removeFile')}
+                      </button>
                     </div>
                   </div>
                 )}
@@ -330,38 +332,38 @@ const KycPage: React.FC = () => {
         </div>
 
         {/* Information Section */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
-          <div className="flex items-start">
-            <AlertCircle className="w-5 h-5 text-blue-600 mr-3 mt-0.5" />
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 sm:p-6 mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-start">
+            <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 mr-0 sm:mr-3 mt-0 sm:mt-0.5 mb-2 sm:mb-0 self-start" />
             <div>
-                             <h3 className="font-medium text-blue-900 mb-2">
-                 {t('kyc.importantInfo')}
-               </h3>
-               <ul className="text-sm text-blue-800 space-y-1">
-                 <li>{t('kyc.secureProcessing')}</li>
-                 <li>{t('kyc.verificationTime')}</li>
-                 <li>{t('kyc.emailNotification')}</li>
-                 <li>{t('kyc.accountLimits')}</li>
-               </ul>
+              <h3 className="font-medium text-blue-900 mb-2 text-sm sm:text-base">
+                {t('kyc.importantInfo')}
+              </h3>
+              <ul className="text-xs sm:text-sm text-blue-800 space-y-1">
+                <li>{t('kyc.secureProcessing')}</li>
+                <li>{t('kyc.verificationTime')}</li>
+                <li>{t('kyc.emailNotification')}</li>
+                <li>{t('kyc.accountLimits')}</li>
+              </ul>
             </div>
           </div>
         </div>
 
         {/* Submit Button */}
-        <div className="flex justify-end">
+        <div className="flex justify-center sm:justify-end">
           <button
             onClick={handleSubmit}
             disabled={!allRequiredUploaded || submitting}
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+            className="w-full sm:w-auto bg-blue-600 text-white px-4 sm:px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-sm sm:text-base"
           >
             {submitting ? (
               <>
-                                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                 {t('kyc.submitting')}
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                {t('kyc.submitting')}
               </>
-                         ) : (
-               t('kyc.submitDocuments')
-             )}
+            ) : (
+              t('kyc.submitDocuments')
+            )}
           </button>
         </div>
       </div>

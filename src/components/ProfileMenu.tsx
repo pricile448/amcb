@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { User, Shield, CreditCard as CardIcon, Download, LogOut, Heart, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface ProfileMenuProps {
   isOpen: boolean;
@@ -19,6 +20,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
   userStatus,
   onLogout
 }) => {
+  const { t } = useTranslation();
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -59,17 +61,17 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
                   {userStatus === 'verified' ? (
                     <>
                       <Shield className="w-3 h-3 text-green-500 flex-shrink-0" />
-                      <span className="text-xs text-green-600 dark:text-green-400">Compte vérifié</span>
+                      <span className="text-xs text-green-600 dark:text-green-400">{t('nav.profile.verifiedAccount')}</span>
                     </>
                   ) : userStatus === 'pending' ? (
                     <>
                       <Shield className="w-3 h-3 text-yellow-500 flex-shrink-0" />
-                      <span className="text-xs text-yellow-600 dark:text-yellow-400">Vérification en cours</span>
+                      <span className="text-xs text-yellow-600 dark:text-yellow-400">{t('nav.profile.verificationInProgress')}</span>
                     </>
                   ) : (
                     <>
                       <Shield className="w-3 h-3 text-red-500 flex-shrink-0" />
-                      <span className="text-xs text-red-600 dark:text-red-400">Compte non vérifié</span>
+                      <span className="text-xs text-red-600 dark:text-red-400">{t('nav.profile.unverifiedAccount')}</span>
                     </>
                   )}
                 </div>
@@ -90,7 +92,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
             className="flex items-center px-3 sm:px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer w-full"
           >
             <User className="w-4 h-4 mr-2 sm:mr-3 flex-shrink-0" />
-            <span className="truncate">Mon profil</span>
+            <span className="truncate">{t('nav.profile.myProfile')}</span>
           </Link>
           <Link
             to="/dashboard/parametres"
@@ -98,7 +100,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
             className="flex items-center px-3 sm:px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer w-full"
           >
             <Shield className="w-4 h-4 mr-2 sm:mr-3 flex-shrink-0" />
-            <span className="truncate">Sécurité</span>
+            <span className="truncate">{t('nav.profile.security')}</span>
           </Link>
           <Link
             to="/dashboard/cartes"
@@ -106,7 +108,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
             className="flex items-center px-3 sm:px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer w-full"
           >
             <CardIcon className="w-4 h-4 mr-2 sm:mr-3 flex-shrink-0" />
-            <span className="truncate">Mes cartes</span>
+            <span className="truncate">{t('nav.profile.myCards')}</span>
           </Link>
           <Link
             to="/dashboard/documents"
@@ -114,7 +116,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
             className="flex items-center px-3 sm:px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer w-full"
           >
             <Download className="w-4 h-4 mr-2 sm:mr-3 flex-shrink-0" />
-            <span className="truncate">Documents</span>
+            <span className="truncate">{t('nav.profile.documents')}</span>
           </Link>
         </div>
         <div className="border-t border-gray-200 dark:border-gray-700 py-2">
@@ -124,7 +126,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
               className="flex items-center w-full px-3 sm:px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
             >
               <LogOut className="w-4 h-4 mr-2 sm:mr-3 flex-shrink-0" />
-              <span className="truncate">Déconnexion</span>
+              <span className="truncate">{t('nav.profile.logout')}</span>
             </button>
           ) : (
             <div className="px-3 sm:px-4 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg border border-blue-200 dark:border-blue-700">
@@ -132,9 +134,9 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({
                 <div className="p-1.5 bg-blue-100 dark:bg-blue-800 rounded-full mr-2 sm:mr-3 flex-shrink-0">
                   <Heart className="w-3 h-3 text-blue-600 dark:text-blue-400" />
                 </div>
-                <span className="text-sm font-medium text-blue-800 dark:text-blue-200 truncate">Merci de faire confiance à AmCbunq</span>
+                <span className="text-sm font-medium text-blue-800 dark:text-blue-200 truncate">{t('nav.profile.trustMessage')}</span>
               </div>
-              <p className="text-xs text-blue-600 dark:text-blue-300 ml-6 sm:ml-8">Vérifiez votre identité pour débloquer toutes les fonctionnalités</p>
+              <p className="text-xs text-blue-600 dark:text-blue-300 ml-6 sm:ml-8">{t('nav.profile.verifyIdentityMessage')}</p>
             </div>
           )}
         </div>

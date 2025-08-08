@@ -47,8 +47,8 @@
       "pricing": "Pricing",
       "help": "Help & Support",
       "login": "Login",
-      "openAccount": "Open an account",
-      "dashboard": "My client area",
+      "openAccount": "Open Account",
+      "dashboard": "My Client Area",
       "accounts": "Accounts",
       "iban": "My IBAN",
       "transfers": "Transfers",
@@ -59,8 +59,29 @@
       "settings": "Settings",
       "documents": "My Documents",
       "messages": "Messages",
-      "verification": "Identity verification",
-      "transactions": "Transactions"
+      "verification": "Identity Verification",
+      "transactions": "Transactions",
+      "profile": {
+        "myProfile": "My Profile",
+        "security": "Security",
+        "myCards": "My Cards",
+        "documents": "Documents",
+        "logout": "Logout",
+        "verifiedAccount": "Verified Account",
+        "verificationInProgress": "Verification in Progress",
+        "unverifiedAccount": "Unverified Account",
+        "trustMessage": "Thank you for trusting AmCbunq",
+        "verifyIdentityMessage": "Verify your identity to unlock all features"
+      },
+      "notifications": {
+        "title": "Notifications",
+        "markAllAsRead": "Mark all as read",
+        "markAllAsReadShort": "All read",
+        "noNotifications": "No notifications",
+        "noNotificationsMessage": "You will be notified here of new activities",
+        "viewAllNotifications": "View all notifications",
+        "close": "Close"
+      }
     },
   
     "home": {
@@ -852,7 +873,8 @@
         "userNotIdentified": "User not identified",
         "parsingError": "Error parsing user:",
         "submissionGenericError": "An error occurred during submission"
-      }
+      },
+      "unverified": "Unverified"
     },
   
     "billing": {
@@ -1234,6 +1256,8 @@
       "quickResponse": "Quick response",
       "onlineStatus": "Online",
       "supportName": "AmCbunq Support",
+      "unavailable": "Messages unavailable",
+      "unavailableUnverified": "To access the chat with our support, you must first validate your identity.",
       "verification": {
         "unavailableTitle": "Messages unavailable",
         "temporarilyUnavailableTitle": "Messages temporarily unavailable",
@@ -1670,5 +1694,69 @@
       },
       "backToDashboard": "Back to dashboard",
       "viewStatus": "View my verification status"
+    },
+
+        "verificationState": {
+      "titles": {
+        "unverified": "Identity verification required",
+        "pending": "Verification in progress"
+      },
+      "descriptions": {
+        "unverified": "To access this feature, you must first validate your identity.",
+        "pending": "Your account is being verified. You will be able to access this feature once validated."
+      },
+      "features": {
+        "secureAccount": "Secure account",
+        "personalizedFeatures": "Personalized features"
+      }
+    },
+
+    "modernVerificationState": {
+      "startVerification": "Start verification",
+      "featuresAfterVerification": "Features available after verification",
+      "cards": {
+        "title": "Bank Cards",
+        "description": "Request physical and virtual cards"
+      },
+      "transfers": {
+        "title": "Transfers",
+        "description": "Money transfers between accounts"
+      },
+      "fullData": {
+        "title": "Complete Data",
+        "description": "Access to all your accounts and transactions"
+      },
+      "supportChat": {
+        "title": "Support Chat",
+        "description": "Real-time customer assistance"
+      },
+      "securityGuaranteed": "Security guaranteed",
+      "securityDescription": "Your data is protected by bank-grade encryption. Identity verification is mandatory for your security and that of your funds.",
+      "needHelp": "Need help? Contact our support at {phoneNumber}",
+      "verificationInProgress": "Verification in progress",
+      "dossierEnExamen": "Your file is under review",
+      "dossierEnExamenDescription": "Your identity verification file is currently being reviewed by our teams. This process usually takes 24 to 48 hours.",
+      "voirStatut": "View status",
+      "processusEnCours": "Process in progress",
+      "processusEnCoursDescription": "Our teams are currently verifying your documents. You will receive a notification as soon as the verification is complete.",
+      "verificationRequise": "Verification required",
+      "verificationRequiseDescription": "To access all features, you must validate your identity.",
+      "verificationRejetee": "Verification rejected",
+      "verificationRejeteeDescription": "Your file has been rejected. Please correct the information.",
+      "verificationIdentite": "Identity verification"
+    },
+    "kycStatusBanner": {
+      "verificationInProgress": "Verification in progress",
+      "verificationInProgressDescription": "Your documents are being verified. This may take 24-48h.",
+      "verificationRejected": "Verification rejected",
+      "verificationRejectedDescription": "Your verification has been rejected. Please submit new documents.",
+      "verificationRequired": "Verification required",
+      "verificationRequiredDescription": "To access all features, please complete your identity verification.",
+      "viewStatus": "View status",
+      "startVerification": "Start verification",
+      "submitAgain": "Submit again"
+    },
+    "modernAlert": {
+      "understood": "Understood"
     }
-  }
+}

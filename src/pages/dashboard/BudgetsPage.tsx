@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Plus, TrendingUp, TrendingDown, Target, AlertTriangle, CheckCircle, Shield, Lock } from 'lucide-react';
+import { Plus, TrendingUp, TrendingDown, Target, AlertTriangle, CheckCircle } from 'lucide-react';
 import { FirebaseDataService, FirebaseBudget } from '../../services/firebaseData';
 import { useKycSync } from '../../hooks/useNotifications';
 import { logger } from '../../utils/logger';
+import VerificationState from '../../components/VerificationState';
 
 interface Budget {
   id: string;
@@ -184,42 +185,7 @@ const BudgetsPage: React.FC = () => {
   if (isUnverified) {
     return (
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">Budgets</h1>
-          <p className="text-gray-600">Suivez vos dépenses et respectez vos budgets</p>
-        </div>
-
-        {/* État vierge pour utilisateurs non vérifiés */}
-        <div className="bg-white rounded-lg shadow-sm border p-12 text-center">
-          <div className="max-w-md mx-auto">
-            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Lock className="w-8 h-8 text-gray-400" />
-            </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">
-              {userStatus === 'unverified' 
-                ? 'Vérification d\'identité requise' 
-                : 'Vérification en cours'
-              }
-            </h3>
-            <p className="text-gray-600 mb-6">
-              {userStatus === 'unverified'
-                ? 'Pour créer et gérer vos budgets, vous devez d\'abord valider votre identité.'
-                : 'Votre compte est en cours de vérification. Vous pourrez créer des budgets une fois validé.'
-              }
-            </p>
-            <div className="flex items-center justify-center space-x-4">
-              <div className="flex items-center space-x-2 text-sm text-gray-500">
-                <Shield className="w-4 h-4" />
-                <span>Compte sécurisé</span>
-              </div>
-              <div className="flex items-center space-x-2 text-sm text-gray-500">
-                <Target className="w-4 h-4" />
-                <span>Budgets personnalisés</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <VerificationState userStatus={userStatus} showFeatures={true} />
       </div>
     );
   }
