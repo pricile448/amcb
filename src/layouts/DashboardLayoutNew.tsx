@@ -54,12 +54,12 @@ const DashboardLayoutNew: React.FC = () => {
     if (userStr) {
       try {
         const user = JSON.parse(userStr);
-        return formatUserNameForDisplay(user.firstName || t('common.defaultClient'), user.lastName || t('common.defaultCompany'));
+        return formatUserNameForDisplay(user.firstName || (t('common.defaultClient') as string), user.lastName || (t('common.defaultCompany') as string));
       } catch (error) {
         console.error('❌ Erreur parsing user:', error);
       }
     }
-    return t('common.defaultUser');
+    return t('common.defaultUser') as string;
   };
 
   // Fonction pour récupérer l'email de l'utilisateur connecté
@@ -122,7 +122,7 @@ const DashboardLayoutNew: React.FC = () => {
       '/dashboard/kyc': t('nav.verification'),
     };
 
-    return pathMap[pathname] || t('nav.dashboard');
+    return pathMap[pathname] || (t('nav.dashboard') as string);
   };
 
   const navigationItems = [
