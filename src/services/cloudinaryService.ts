@@ -33,7 +33,7 @@ class CloudinaryService {
   constructor() {
     // Configuration Cloudinary - à remplacer par vos vraies clés
     this.cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'dxvbuhadg';
-    this.uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'ml_default';
+    this.uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'amcb_kyc_documents';
     
     // Validation de la configuration
     if (!this.cloudName) {
@@ -71,12 +71,9 @@ class CloudinaryService {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('upload_preset', this.uploadPreset);
-      formData.append('folder', folder);
-      formData.append('resource_type', 'auto');
       
-      // Ajouter des paramètres supplémentaires pour améliorer la compatibilité
-      formData.append('allowed_formats', 'jpg,jpeg,png,pdf');
-      formData.append('max_bytes', '10485760'); // 10MB
+      // Pour unsigned uploads, seuls certains paramètres sont autorisés
+      // Les restrictions (formats, taille) doivent être configurées dans le preset
 
       logger.debug('CloudinaryService.uploadFile - FormData préparé:', {
         uploadPreset: this.uploadPreset,
