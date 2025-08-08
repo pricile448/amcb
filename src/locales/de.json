@@ -1653,5 +1653,22 @@
       "description": "Unser Support-Team steht Ihnen gerne bei Ihren Dokumenten zur Verfügung.",
       "button": "Support kontaktieren"
     }
+  },
+
+  "kycSuccess": {
+    "title": "Dokumente erfolgreich eingereicht!",
+    "verificationInProgress": "Überprüfung läuft...",
+    "description": "Ihre Dokumente wurden erhalten und werden von unserem Team überprüft.",
+    "waitMessage": "⏰ BITTE WARTEN SIE 24h BIS 48h",
+    "waitDescription": "Unser Team prüft Ihre Dokumente sorgfältig, um Ihre Sicherheit zu gewährleisten.",
+    "nextSteps": "Nächste Schritte:",
+    "steps": {
+      "received": "Dokumente erhalten und registriert",
+      "verification": "Überprüfung durch unser Team (24-48h)",
+      "notification": "E-Mail-Benachrichtigung über das Ergebnis",
+      "access": "Vollzugang zu allen Funktionen"
+    },
+    "backToDashboard": "Zurück zum Dashboard",
+    "viewStatus": "Meinen Überprüfungsstatus anzeigen"
   }
 }

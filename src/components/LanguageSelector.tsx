@@ -120,3 +120,4 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
 };
 
 export default LanguageSelector;
+

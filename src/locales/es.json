@@ -1653,5 +1653,22 @@
     "welcome": "¡Regalo de bienvenida!",
     "description": "Recomienda a un amigo y recibid 50€ cada uno. Condiciones aplicables.",
     "refer": "Recomendar"
+  },
+
+  "kycSuccess": {
+    "title": "¡Documentos enviados con éxito!",
+    "verificationInProgress": "Verificación en progreso...",
+    "description": "Sus documentos han sido recibidos y están siendo verificados por nuestro equipo.",
+    "waitMessage": "⏰ POR FAVOR ESPERE 24h A 48h",
+    "waitDescription": "Nuestro equipo está examinando cuidadosamente sus documentos para asegurar su seguridad.",
+    "nextSteps": "Próximos pasos:",
+    "steps": {
+      "received": "Documentos recibidos y registrados",
+      "verification": "Verificación por nuestro equipo (24-48h)",
+      "notification": "Notificación por email del resultado",
+      "access": "Acceso completo a las funciones"
+    },
+    "backToDashboard": "Volver al panel de control",
+    "viewStatus": "Ver mi estado de verificación"
   }
 }

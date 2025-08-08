@@ -1653,5 +1653,22 @@
         "description": "Notre équipe support est disponible pour vous aider avec vos documents.",
         "button": "Contacter le support"
       }
+    },
+
+    "kycSuccess": {
+      "title": "Documents soumis avec succès !",
+      "verificationInProgress": "Vérification en cours...",
+      "description": "Vos documents ont été reçus et sont en cours de vérification par notre équipe.",
+      "waitMessage": "⏰ VEUILLEZ PATIENTER 24h À 48h",
+      "waitDescription": "Notre équipe examine vos documents avec attention pour assurer votre sécurité.",
+      "nextSteps": "Prochaines étapes :",
+      "steps": {
+        "received": "Documents reçus et enregistrés",
+        "verification": "Vérification par notre équipe (24-48h)",
+        "notification": "Notification par email du résultat",
+        "access": "Accès complet aux fonctionnalités"
+      },
+      "backToDashboard": "Retour au tableau de bord",
+      "viewStatus": "Voir le statut de ma vérification"
     }
 }

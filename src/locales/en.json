@@ -1653,5 +1653,22 @@
       "welcome": "Welcome gift!",
       "description": "Refer a friend and get €50 each. Applicable conditions.",
       "refer": "Refer"
+    },
+
+    "kycSuccess": {
+      "title": "Documents submitted successfully!",
+      "verificationInProgress": "Verification in progress...",
+      "description": "Your documents have been received and are being verified by our team.",
+      "waitMessage": "⏰ PLEASE WAIT 24h TO 48h",
+      "waitDescription": "Our team is carefully examining your documents to ensure your security.",
+      "nextSteps": "Next steps:",
+      "steps": {
+        "received": "Documents received and registered",
+        "verification": "Verification by our team (24-48h)",
+        "notification": "Email notification of the result",
+        "access": "Full access to features"
+      },
+      "backToDashboard": "Back to dashboard",
+      "viewStatus": "View my verification status"
     }
   }
