@@ -1505,6 +1505,150 @@
     "description": "Indique um amigo e receba 50€ cada. Condições aplicáveis.",
     "refer": "Indicar"
   },
+
+  "documents": {
+    "title": "Meus Documentos",
+    "subtitle": "Acesse todos seus documentos bancários com segurança",
+    "showDocumentation": "Mostrar documentação",
+    "hideDocumentation": "Ocultar documentação",
+    "types": {
+      "contract": "Contrato",
+      "policy": "Política",
+      "terms": "Condições",
+      "legal": "Legal",
+      "document": "Documento"
+    },
+    "list": {
+      "accountContract": {
+        "title": "Contrato de conta bancária",
+        "description": "Condições gerais de sua conta AmCbunq",
+        "detailedDescription": "Este contrato define as condições gerais de abertura e uso de sua conta bancária AmCbunq. Inclui os direitos e obrigações de cada parte, as condições de funcionamento da conta, as taxas aplicáveis e as modalidades de rescisão.",
+        "usage": "Consulte este documento para entender seus direitos e obrigações como titular da conta. É importante conservá-lo pois pode ser solicitado para procedimentos administrativos ou em caso de litígio.",
+        "importance": "Documento legal obrigatório",
+        "validityPeriod": "Válido até 31/12/2024"
+      },
+      "privacyPolicy": {
+        "title": "Política de privacidade",
+        "description": "Como protegemos seus dados pessoais",
+        "detailedDescription": "Esta política detalha como o AmCbunq coleta, usa, armazena e protege seus dados pessoais em conformidade com o GDPR. Explica seus direitos em matéria de proteção de dados e como exercê-los.",
+        "usage": "Leia atentamente esta política para entender como seus dados são processados. Você pode exercer seus direitos (acesso, retificação, exclusão) entrando em contato com nosso delegado de proteção de dados.",
+        "importance": "Conformidade GDPR",
+        "validityPeriod": "Atualização trimestral"
+      },
+      "termsOfService": {
+        "title": "Condições de uso",
+        "description": "Regras de uso de nossos serviços bancários",
+        "detailedDescription": "Estas condições regem o uso de todos nossos serviços bancários online, móveis e físicos. Cobrem as regras de segurança, limites de uso, responsabilidades e sanções em caso de não conformidade.",
+        "usage": "Aceite estas condições para usar nossos serviços. Podem ser modificadas com aviso prévio de 30 dias. Em caso de modificação, você será notificado por email e em sua área do cliente.",
+        "importance": "Condições de acesso aos serviços",
+        "validityPeriod": "Versão em vigor"
+      },
+      "legalNotice": {
+        "title": "Aviso legal",
+        "description": "Informações legais e regulamentares",
+        "detailedDescription": "Este aviso contém as informações legais obrigatórias sobre o AmCbunq: identidade do estabelecimento, autorizações bancárias, supervisão, garantias dos depósitos e coordenadas das autoridades de controle.",
+        "usage": "Consulte este aviso para verificar a legalidade de nossas atividades e conhecer suas garantias. Estas informações são importantes para sua segurança e a conformidade de nossos serviços.",
+        "importance": "Obrigação legal",
+        "validityPeriod": "Atualização anual"
+      },
+      "cardContract": {
+        "title": "Contrato de cartão bancário",
+        "description": "Condições específicas de seu cartão bancário",
+        "detailedDescription": "Este contrato detalha as condições de emissão e uso de seu cartão bancário: limites, taxas, seguros, responsabilidades em caso de perda ou roubo e procedimentos de contestação.",
+        "usage": "Conserve este documento com seu cartão. Contém as informações essenciais sobre seus direitos e obrigações, especialmente em caso de fraude ou contestação de transação.",
+        "importance": "Proteção jurídica",
+        "validityPeriod": "Válido durante a duração de validade do cartão"
+      },
+      "securityPolicy": {
+        "title": "Política de segurança",
+        "description": "Medidas de segurança para proteger sua conta",
+        "detailedDescription": "Esta política detalha as medidas de segurança implementadas pelo AmCbunq para proteger sua conta e seus dados: autenticação multi-fatores, monitoramento de transações, criptografia de dados e procedimentos em caso de incidente.",
+        "usage": "Siga estas recomendações para proteger sua conta. Em caso de suspeita de comprometimento, entre em contato imediatamente com nosso serviço de segurança.",
+        "importance": "Segurança da conta",
+        "validityPeriod": "Atualização contínua"
+      }
+    },
+    "documentInfo": {
+      "version": "Versão",
+      "lastUpdated": "Última atualização",
+      "size": "Tamanho",
+      "validity": "Validade"
+    },
+    "actions": {
+      "view": "Consultar",
+      "download": "Baixar",
+      "downloading": "Baixando..."
+    },
+    "alerts": {
+      "unavailable": {
+        "title": "Documento indisponível",
+        "message": "Este documento não está disponível no momento. Tente novamente mais tarde."
+      },
+      "downloadSuccess": {
+        "title": "Download realizado",
+        "message": "O documento {{title}} foi baixado com sucesso."
+      },
+      "downloadError": {
+        "title": "Erro de download",
+        "message": "Ocorreu um erro durante o download do documento."
+      }
+    },
+    "documentation": {
+      "title": "Documentação dos Documentos",
+      "types": {
+        "title": "Tipos de documentos",
+        "contract": {
+          "description": "Contratos bancários e condições gerais"
+        },
+        "policy": {
+          "description": "Políticas de privacidade e segurança"
+        },
+        "terms": {
+          "description": "Condições de uso dos serviços"
+        },
+        "legal": {
+          "description": "Avisos legais e informações regulamentares"
+        }
+      },
+      "format": {
+        "title": "Formato de download",
+        "pdf": "Formato PDF padrão",
+        "compatible": "Compatível com todos os leitores",
+        "signature": "Assinatura eletrônica incluída",
+        "retention": "Conservação segura"
+      },
+      "importantInfo": {
+        "title": "Informações importantes",
+        "keepCopy": "Conserve uma cópia de seus documentos",
+        "regularUpdates": "Os documentos são atualizados regularmente",
+        "notifications": "Você será notificado das modificações",
+        "contactLegal": "Entre em contato com o serviço jurídico se necessário"
+      }
+    },
+    "info": {
+      "title": "Informações importantes",
+      "legal": {
+        "title": "Documentos legais",
+        "upToDate": "Todos os documentos estão atualizados",
+        "secureDownload": "Download seguro garantido",
+        "retention": "Conservação conforme a regulamentação",
+        "notifications": "Notificações automáticas das atualizações"
+      },
+      "security": {
+        "title": "Segurança e conformidade",
+        "protected": "Documentos protegidos por criptografia",
+        "access": "Acesso controlado e rastreado",
+        "history": "Histórico das consultas disponível",
+        "signature": "Assinatura eletrônica verificada"
+      }
+    },
+    "contact": {
+      "title": "Precisa de ajuda?",
+      "description": "Nossa equipe de suporte está disponível para ajudá-lo com seus documentos.",
+      "button": "Contatar suporte"
+    }
+  },
+
   "kycSuccess": {
     "title": "Documentos enviados com sucesso!",
     "verificationInProgress": "Verificação em andamento...",
