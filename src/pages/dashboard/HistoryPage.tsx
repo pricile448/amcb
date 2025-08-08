@@ -67,9 +67,9 @@ const HistoryPage: React.FC = () => {
           // Déterminer le nom du compte
           let accountName = trans.accountId;
           if (accountName === 'checking-1') {
-            accountName = t('history.accounts.checking');
+            accountName = String(t('history.accounts.checking'));
           } else if (accountName === 'savings-1') {
-            accountName = t('history.accounts.savings');
+            accountName = String(t('history.accounts.savings'));
           }
           
           logger.debug(`History Transaction ${trans.id}: amount=${amount}, type=${transactionType}, date=${parsedDate}, category=${trans.category}`);
@@ -85,25 +85,25 @@ const HistoryPage: React.FC = () => {
           // Corriger les descriptions pour utiliser les noms d'affichage des comptes
           let correctedDescription = trans.description;
           if (trans.description.includes('savings-1')) {
-            correctedDescription = trans.description.replace('savings-1', t('history.accounts.savings'));
+            correctedDescription = trans.description.replace('savings-1', String(t('history.accounts.savings')));
           }
           if (trans.description.includes('checking-1')) {
-            correctedDescription = trans.description.replace('checking-1', t('history.accounts.checking'));
+            correctedDescription = trans.description.replace('checking-1', String(t('history.accounts.checking')));
           }
           if (trans.description.includes('credit-1')) {
-            correctedDescription = trans.description.replace('credit-1', t('history.accounts.credit'));
+            correctedDescription = trans.description.replace('credit-1', String(t('history.accounts.credit')));
           }
           
           return {
             id: trans.id,
             type: transactionType,
-            category: trans.category || t('history.categories.other'),
+            category: trans.category || String(t('history.categories.other')),
             description: truncateTransactionDescription(correctedDescription || 'Transaction'),
             amount: amount,
             currency: trans.currency || 'EUR',
             date: parsedDate,
             status: status,
-            account: accountName || t('history.accounts.default'),
+            account: accountName || String(t('history.accounts.default')),
             reference: trans.reference || trans.id
           };
         });
@@ -164,13 +164,13 @@ const HistoryPage: React.FC = () => {
   const getStatusText = (status: string) => {
     switch (status) {
       case 'completed':
-        return t('history.status.completed');
+        return String(t('history.status.completed'));
       case 'pending':
-        return t('history.status.pending');
+        return String(t('history.status.pending'));
       case 'failed':
-        return t('history.status.failed');
+        return String(t('history.status.failed'));
       default:
-        return t('history.status.unknown');
+        return String(t('history.status.unknown'));
     }
   };
 
@@ -303,7 +303,7 @@ const HistoryPage: React.FC = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
               <input
                 type="text"
-                placeholder={t('history.search.placeholder')}
+                placeholder={String(t('history.search.placeholder'))}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
