@@ -1504,5 +1504,22 @@
     "welcome": "Cadeau de bienvenue !",
     "description": "Parrainez un ami et recevez 50€ chacun. Conditions applicables.",
     "refer": "Parrainer"
+  },
+
+  "kycSuccess": {
+    "title": "Documenten succesvol ingediend!",
+    "verificationInProgress": "Verificatie in behandeling...",
+    "description": "Uw documenten zijn ontvangen en worden gecontroleerd door ons team.",
+    "waitMessage": "⏰ WACHT 24u TOT 48u",
+    "waitDescription": "Ons team onderzoekt uw documenten zorgvuldig om uw veiligheid te waarborgen.",
+    "nextSteps": "Volgende stappen:",
+    "steps": {
+      "received": "Documenten ontvangen en geregistreerd",
+      "verification": "Verificatie door ons team (24-48u)",
+      "notification": "E-mailmelding van het resultaat",
+      "access": "Volledige toegang tot functionaliteiten"
+    },
+    "backToDashboard": "Terug naar dashboard",
+    "viewStatus": "Bekijk de status van mijn verificatie"
   }
 }
