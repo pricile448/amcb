@@ -34,114 +34,114 @@ const DocumentsPage: React.FC = () => {
   const documents: Document[] = [
     {
       id: '1',
-      title: 'Contrat de compte bancaire',
+      title: t('documents.list.accountContract.title'),
       type: 'contract',
-      description: 'Conditions générales de votre compte AmCbunq',
-      detailedDescription: 'Ce contrat définit les conditions générales d\'ouverture et d\'utilisation de votre compte bancaire AmCbunq. Il inclut les droits et obligations de chaque partie, les conditions de fonctionnement du compte, les frais applicables, et les modalités de résiliation.',
-      usage: 'Consultez ce document pour comprendre vos droits et obligations en tant que titulaire de compte. Il est important de le conserver car il peut être demandé pour des démarches administratives ou en cas de litige.',
-      importance: 'Document légal obligatoire',
+      description: t('documents.list.accountContract.description'),
+      detailedDescription: t('documents.list.accountContract.detailedDescription'),
+      usage: t('documents.list.accountContract.usage'),
+      importance: t('documents.list.accountContract.importance'),
       version: 'v2.1',
       lastUpdated: '15/01/2024',
       size: '245 KB',
       icon: <FileText className="w-5 h-5" />,
       color: 'text-blue-600',
       available: true,
-      validityPeriod: 'Valide jusqu\'au 31/12/2024'
+      validityPeriod: t('documents.list.accountContract.validityPeriod') || 'Valid until 31/12/2024'
     },
     {
       id: '2',
-      title: 'Politique de confidentialité',
+      title: t('documents.list.privacyPolicy.title'),
       type: 'policy',
-      description: 'Comment nous protégeons vos données personnelles',
-      detailedDescription: 'Cette politique détaille comment AmCbunq collecte, utilise, stocke et protège vos données personnelles conformément au RGPD. Elle explique vos droits en matière de protection des données et comment les exercer.',
-      usage: 'Lisez attentivement cette politique pour comprendre comment vos données sont traitées. Vous pouvez exercer vos droits (accès, rectification, suppression) en contactant notre délégué à la protection des données.',
-      importance: 'Conformité RGPD',
+      description: t('documents.list.privacyPolicy.description'),
+      detailedDescription: t('documents.list.privacyPolicy.detailedDescription'),
+      usage: t('documents.list.privacyPolicy.usage'),
+      importance: t('documents.list.privacyPolicy.importance'),
       version: 'v1.8',
       lastUpdated: '10/01/2024',
       size: '180 KB',
       icon: <Shield className="w-5 h-5" />,
       color: 'text-green-600',
       available: true,
-      validityPeriod: 'Mise à jour trimestrielle'
+      validityPeriod: t('documents.list.privacyPolicy.validityPeriod') || 'Quarterly updates'
     },
     {
       id: '3',
-      title: 'Conditions d\'utilisation',
+      title: t('documents.list.termsOfService.title'),
       type: 'terms',
-      description: 'Règles d\'utilisation de nos services bancaires',
-      detailedDescription: 'Ces conditions régissent l\'utilisation de tous nos services bancaires en ligne, mobiles et physiques. Elles couvrent les règles de sécurité, les limites d\'utilisation, les responsabilités et les sanctions en cas de non-respect.',
-      usage: 'Acceptez ces conditions pour utiliser nos services. Elles peuvent être modifiées avec un préavis de 30 jours. En cas de modification, vous serez notifié par email et dans votre espace client.',
-      importance: 'Conditions d\'accès aux services',
+      description: t('documents.list.termsOfService.description'),
+      detailedDescription: t('documents.list.termsOfService.detailedDescription'),
+      usage: t('documents.list.termsOfService.usage'),
+      importance: t('documents.list.termsOfService.importance'),
       version: 'v2.0',
       lastUpdated: '05/01/2024',
       size: '320 KB',
       icon: <BookOpen className="w-5 h-5" />,
       color: 'text-purple-600',
       available: true,
-      validityPeriod: 'Version en vigueur'
+      validityPeriod: t('documents.list.termsOfService.validityPeriod') || 'Current version'
     },
     {
       id: '4',
-      title: 'Avis légal',
+      title: t('documents.list.legalNotice.title'),
       type: 'legal',
-      description: 'Informations légales et réglementaires',
-      detailedDescription: 'Cet avis contient les informations légales obligatoires sur AmCbunq : identité de l\'établissement, autorisations bancaires, supervision, garanties des dépôts, et coordonnées des autorités de contrôle.',
-      usage: 'Consultez cet avis pour vérifier la légalité de nos activités et connaître vos garanties. Ces informations sont importantes pour votre sécurité et la conformité de nos services.',
-      importance: 'Obligation légale',
+      description: t('documents.list.legalNotice.description'),
+      detailedDescription: t('documents.list.legalNotice.detailedDescription'),
+      usage: t('documents.list.legalNotice.usage'),
+      importance: t('documents.list.legalNotice.importance'),
       version: 'v1.5',
       lastUpdated: '20/12/2023',
       size: '156 KB',
       icon: <Scale className="w-5 h-5" />,
       color: 'text-orange-600',
       available: true,
-      validityPeriod: 'Mise à jour annuelle'
+      validityPeriod: t('documents.list.legalNotice.validityPeriod') || 'Annual updates'
     },
     {
       id: '5',
-      title: 'Contrat de carte bancaire',
+      title: t('documents.list.cardContract.title'),
       type: 'contract',
-      description: 'Conditions spécifiques à votre carte bancaire',
-      detailedDescription: 'Ce contrat détaille les conditions d\'émission et d\'utilisation de votre carte bancaire : plafonds, frais, assurances, responsabilités en cas de perte ou vol, et procédures de contestation.',
-      usage: 'Conservez ce document avec votre carte. Il contient les informations essentielles sur vos droits et obligations, notamment en cas de fraude ou de contestation de transaction.',
-      importance: 'Protection juridique',
+      description: t('documents.list.cardContract.description'),
+      detailedDescription: t('documents.list.cardContract.detailedDescription'),
+      usage: t('documents.list.cardContract.usage'),
+      importance: t('documents.list.cardContract.importance'),
       version: 'v1.9',
       lastUpdated: '12/12/2023',
       size: '198 KB',
       icon: <FileText className="w-5 h-5" />,
       color: 'text-blue-600',
       available: true,
-      validityPeriod: 'Valide pendant la durée de validité de la carte'
+      validityPeriod: t('documents.list.cardContract.validityPeriod') || 'Valid for card duration'
     },
     {
       id: '6',
-      title: 'Politique de sécurité',
+      title: t('documents.list.securityPolicy.title'),
       type: 'policy',
-      description: 'Mesures de sécurité pour protéger votre compte',
-      detailedDescription: 'Cette politique détaille les mesures de sécurité mises en place par AmCbunq pour protéger votre compte et vos données : authentification multi-facteurs, surveillance des transactions, cryptage des données, et procédures en cas d\'incident.',
-      usage: 'Suivez ces recommandations pour sécuriser votre compte. En cas de suspicion de compromission, contactez immédiatement notre service sécurité.',
-      importance: 'Sécurité du compte',
+      description: t('documents.list.securityPolicy.description'),
+      detailedDescription: t('documents.list.securityPolicy.detailedDescription'),
+      usage: t('documents.list.securityPolicy.usage'),
+      importance: t('documents.list.securityPolicy.importance'),
       version: 'v1.7',
       lastUpdated: '08/12/2023',
       size: '142 KB',
       icon: <Lock className="w-5 h-5" />,
       color: 'text-red-600',
       available: true,
-      validityPeriod: 'Mise à jour continue'
+      validityPeriod: t('documents.list.securityPolicy.validityPeriod') || 'Continuous updates'
     }
   ];
 
   const getTypeLabel = (type: string) => {
     switch (type) {
       case 'contract':
-        return 'Contrat';
+        return t('documents.types.contract');
       case 'policy':
-        return 'Politique';
+        return t('documents.types.policy');
       case 'terms':
-        return 'Conditions';
+        return t('documents.types.terms');
       case 'legal':
-        return 'Légal';
+        return t('documents.types.legal');
       default:
-        return 'Document';
+        return t('documents.types.document');
     }
   };
 
@@ -235,8 +235,8 @@ startxref
   const handleDownload = async (doc: Document) => {
     if (!doc.available) {
       setAlertConfig({
-        title: 'Document indisponible',
-        message: 'Ce document n\'est pas disponible pour le moment.',
+        title: t('documents.alerts.unavailable.title'),
+        message: t('documents.alerts.unavailable.message'),
         type: 'warning'
       });
       setShowAlert(true);
@@ -268,15 +268,15 @@ startxref
       URL.revokeObjectURL(url);
       
       setAlertConfig({
-        title: 'Téléchargement réussi',
-        message: `Le document "${doc.title}" a été téléchargé en PDF avec succès !`,
+        title: t('documents.alerts.downloadSuccess.title'),
+        message: t('documents.alerts.downloadSuccess.message', { title: doc.title }),
         type: 'success'
       });
       setShowAlert(true);
     } catch (error) {
       setAlertConfig({
-        title: 'Erreur de téléchargement',
-        message: 'Une erreur est survenue lors du téléchargement. Veuillez réessayer.',
+        title: t('documents.alerts.downloadError.title'),
+        message: t('documents.alerts.downloadError.message'),
         type: 'error'
       });
       setShowAlert(true);
@@ -288,8 +288,8 @@ startxref
   const handleView = (doc: Document) => {
     if (!doc.available) {
       setAlertConfig({
-        title: 'Document indisponible',
-        message: 'Ce document n\'est pas disponible pour le moment.',
+        title: t('documents.alerts.unavailable.title'),
+        message: t('documents.alerts.unavailable.message'),
         type: 'warning'
       });
       setShowAlert(true);
@@ -305,7 +305,7 @@ startxref
       
       ${doc.description}
       
-      Ceci est un aperçu simulé du document. Pour le télécharger en PDF, utilisez le bouton "Télécharger".
+      Ceci est un aperçu simulé du document. Pour le télécharger en PDF, utilisez le bouton t("common.upload").
     `;
     
     const newWindow = window.open('', '_blank', 'width=800,height=600');
@@ -343,7 +343,7 @@ startxref
                 <strong>Usage:</strong> ${doc.usage}
               </div>
               
-              <p><em>Ceci est un aperçu simulé du document. Pour le télécharger en PDF, utilisez le bouton "Télécharger" sur la page principale.</em></p>
+              <p><em>Ceci est un aperçu simulé du document. Pour le télécharger en PDF, utilisez le bouton t("common.upload") sur la page principale.</em></p>
             </div>
           </body>
         </html>
@@ -363,15 +363,15 @@ startxref
       <div className="mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Mes Documents</h1>
-            <p className="text-gray-600">Contrats, politiques et conditions d'utilisation</p>
+            <h1 className="text-2xl font-bold text-gray-900">{t('documents.title')}</h1>
+            <p className="text-gray-600">{t('documents.subtitle')}</p>
           </div>
           <button
             onClick={() => setShowDocumentation(!showDocumentation)}
             className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             <Info className="w-4 h-4 mr-2" />
-            {showDocumentation ? 'Masquer la documentation' : 'Voir la documentation'}
+            {showDocumentation ? t('documents.hideDocumentation') : t('documents.showDocumentation')}
           </button>
         </div>
       </div>
@@ -381,50 +381,50 @@ startxref
         <div className="mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6 border border-blue-200">
           <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
             <Info className="w-5 h-5 mr-2 text-blue-600" />
-            Documentation des Documents
+            {t('documents.documentation.title')}
           </h2>
           
           <div className="grid gap-6 md:grid-cols-2">
             <div>
-              <h3 className="font-semibold text-gray-900 mb-3">Types de Documents</h3>
+              <h3 className="font-semibold text-gray-900 mb-3">{t('documents.documentation.types.title')}</h3>
               <div className="space-y-3">
                 <div className="flex items-center">
-                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mr-3">Contrat</span>
-                  <span className="text-sm text-gray-600">Documents légaux définissant les conditions d'utilisation</span>
+                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mr-3">{t('documents.types.contract')}</span>
+                  <span className="text-sm text-gray-600">{t('documents.documentation.types.contract.description')}</span>
                 </div>
                 <div className="flex items-center">
-                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 mr-3">Politique</span>
-                  <span className="text-sm text-gray-600">Règles et procédures internes de l'établissement</span>
+                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 mr-3">{t('documents.types.policy')}</span>
+                  <span className="text-sm text-gray-600">{t('documents.documentation.types.policy.description')}</span>
                 </div>
                 <div className="flex items-center">
-                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 mr-3">Conditions</span>
-                  <span className="text-sm text-gray-600">Conditions générales d'utilisation des services</span>
+                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 mr-3">{t('documents.types.terms')}</span>
+                  <span className="text-sm text-gray-600">{t('documents.documentation.types.terms.description')}</span>
                 </div>
                 <div className="flex items-center">
-                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800 mr-3">Légal</span>
-                  <span className="text-sm text-gray-600">Informations légales et réglementaires obligatoires</span>
+                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-800 mr-3">{t('documents.types.legal')}</span>
+                  <span className="text-sm text-gray-600">{t('documents.documentation.types.legal.description')}</span>
                 </div>
               </div>
             </div>
             
             <div>
-              <h3 className="font-semibold text-gray-900 mb-3">Format de Téléchargement</h3>
+              <h3 className="font-semibold text-gray-900 mb-3">{t('documents.documentation.format.title')}</h3>
               <div className="space-y-2 text-sm text-gray-600">
                 <div className="flex items-center">
                   <CheckCircle className="w-4 h-4 mr-2 text-green-600" />
-                  Tous les documents sont téléchargés au format PDF
+                  {t('documents.documentation.format.pdf')}
                 </div>
                 <div className="flex items-center">
                   <CheckCircle className="w-4 h-4 mr-2 text-green-600" />
-                  Compatible avec tous les lecteurs PDF
+                  {t('documents.documentation.format.compatible')}
                 </div>
                 <div className="flex items-center">
                   <CheckCircle className="w-4 h-4 mr-2 text-green-600" />
-                  Signature électronique acceptée
+                  {t('documents.documentation.format.signature')}
                 </div>
                 <div className="flex items-center">
                   <CheckCircle className="w-4 h-4 mr-2 text-green-600" />
-                  Conservation recommandée pour 5 ans
+                  {t('documents.documentation.format.retention')}
                 </div>
               </div>
             </div>
@@ -433,13 +433,13 @@ startxref
           <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
             <h4 className="font-semibold text-yellow-800 mb-2 flex items-center">
               <AlertCircle className="w-4 h-4 mr-2" />
-              Informations importantes
+              {t('documents.documentation.importantInfo.title')}
             </h4>
             <ul className="text-sm text-yellow-700 space-y-1">
-              <li>• Conservez une copie de tous vos documents contractuels</li>
-              <li>• Les documents sont mis à jour régulièrement - vérifiez les versions</li>
-              <li>• En cas de modification, vous recevrez une notification</li>
-              <li>• Contactez notre service juridique pour toute question</li>
+              <li>• {t('documents.documentation.importantInfo.keepCopy')}</li>
+              <li>• {t('documents.documentation.importantInfo.regularUpdates')}</li>
+              <li>• {t('documents.documentation.importantInfo.notifications')}</li>
+              <li>• {t('documents.documentation.importantInfo.contactLegal')}</li>
             </ul>
           </div>
         </div>
@@ -466,20 +466,20 @@ startxref
               
               <div className="space-y-1 text-xs text-gray-500">
                 <div className="flex justify-between">
-                  <span>Version:</span>
+                  <span>{t('documents.documentInfo.version')}:</span>
                   <span className="font-medium">{document.version}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Mis à jour:</span>
+                  <span>{t('documents.documentInfo.lastUpdated')}:</span>
                   <span>{document.lastUpdated}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Taille:</span>
+                  <span>{t('documents.documentInfo.size')}:</span>
                   <span>{document.size}</span>
                 </div>
                 {document.validityPeriod && (
                   <div className="flex justify-between">
-                    <span>Validité:</span>
+                    <span>{t('documents.documentInfo.validity')}:</span>
                     <span className="text-xs">{document.validityPeriod}</span>
                   </div>
                 )}
@@ -494,13 +494,13 @@ startxref
                 className="flex-1 flex items-center justify-center px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
               >
                 <Eye className="w-4 h-4 mr-2" />
-                Consulter
+                {t('documents.actions.view')}
               </button>
               <button
                 onClick={() => handleDownload(document)}
                 disabled={!document.available || downloadingDoc === document.id}
                 className="flex items-center justify-center px-3 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-200 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
-                title={downloadingDoc === document.id ? 'Téléchargement PDF en cours...' : 'Télécharger en PDF'}
+                title={downloadingDoc === document.id ? (t('documents.actions.downloading') || 'Downloading...') : (t('documents.actions.download') || 'Download')}
               >
                 {downloadingDoc === document.id ? (
                   <div className="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
@@ -516,25 +516,25 @@ startxref
       {/* Information Section */}
       <div className="mt-8 bg-blue-50 rounded-lg p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">
-          Informations importantes
+          {t('documents.info.title')}
         </h3>
         <div className="grid gap-4 md:grid-cols-2">
           <div>
-            <h4 className="font-medium text-gray-900 mb-2">Documents légaux</h4>
+            <h4 className="font-medium text-gray-900 mb-2">{t('documents.info.legal.title')}</h4>
             <ul className="text-sm text-gray-600 space-y-1">
-              <li>• Tous les documents sont à jour et conformes</li>
-              <li>• Téléchargement au format PDF sécurisé</li>
-              <li>• Conservation recommandée pendant 5 ans</li>
-              <li>• Notification automatique des modifications</li>
+              <li>• {t('documents.info.legal.upToDate')}</li>
+              <li>• {t('documents.info.legal.secureDownload')}</li>
+              <li>• {t('documents.info.legal.retention')}</li>
+              <li>• {t('documents.info.legal.notifications')}</li>
             </ul>
           </div>
           <div>
-            <h4 className="font-medium text-gray-900 mb-2">Sécurité et Conformité</h4>
+            <h4 className="font-medium text-gray-900 mb-2">{t('documents.info.security.title')}</h4>
             <ul className="text-sm text-gray-600 space-y-1">
-              <li>• Documents protégés et authentifiés</li>
-              <li>• Accès 24h/24 à vos contrats</li>
-              <li>• Historique des versions disponible</li>
-              <li>• Signature électronique acceptée</li>
+              <li>• {t('documents.info.security.protected')}</li>
+              <li>• {t('documents.info.security.access')}</li>
+              <li>• {t('documents.info.security.history')}</li>
+              <li>• {t('documents.info.security.signature')}</li>
             </ul>
           </div>
         </div>
@@ -545,10 +545,10 @@ startxref
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              Besoin d'aide ?
+              {t('documents.contact.title')}
             </h3>
             <p className="text-gray-600">
-              Questions sur vos documents ou contrats ? Notre équipe juridique est là pour vous aider.
+              {t('documents.contact.description')}
             </p>
           </div>
           <button 
@@ -556,7 +556,7 @@ startxref
             className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             <ExternalLink className="w-4 h-4 mr-2" />
-            Contacter le support
+            {t('documents.contact.button')}
           </button>
         </div>
       </div>

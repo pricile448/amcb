@@ -186,13 +186,13 @@ const AccountsPage: React.FC = () => {
   const getAccountTypeText = (type: string) => {
     switch (type) {
       case 'current':
-        return 'Compte courant';
+        return t('accountTypes.current');
       case 'savings':
-        return 'Compte épargne';
+        return t('accountTypes.savings');
       case 'credit':
-        return 'Carte de crédit';
+        return t('accountTypes.credit');
       default:
-        return 'Compte';
+        return t('accountTypes.account');
     }
   };
 
@@ -205,13 +205,13 @@ const AccountsPage: React.FC = () => {
     switch (lowerName) {
       case 'checking':
         logger.debug('Translating checking to Compte courant');
-        return 'Compte courant';
+        return t('accountTypes.current');
       case 'savings':
         logger.debug('Translating savings to Compte épargne');
-        return 'Compte épargne';
+        return t('accountTypes.savings');
       case 'credit':
         logger.debug('Translating credit to Carte de crédit');
-        return 'Carte de crédit';
+        return t('accountTypes.credit');
       default:
         logger.debug('No translation found, returning original:', name);
         return name;
@@ -247,13 +247,13 @@ const AccountsPage: React.FC = () => {
   const getStatusText = (status: string) => {
     switch (status) {
       case 'active':
-        return 'Actif';
+        return t('accountStatus.active');
       case 'blocked':
-        return 'Bloqué';
+        return t('accountStatus.blocked');
       case 'pending':
-        return 'En attente';
+        return t('accountStatus.pending');
       default:
-        return 'Inconnu';
+        return t('accountStatus.unknown');
     }
   };
 
@@ -266,7 +266,7 @@ const AccountsPage: React.FC = () => {
 
   const formatDateDisplay = (date: Date) => {
     if (!date || isNaN(date.getTime())) {
-      return 'Date invalide';
+      return t('common.error') || 'Error';
     }
     
     const now = new Date();
@@ -274,9 +274,9 @@ const AccountsPage: React.FC = () => {
     const isYesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000).toDateString() === date.toDateString();
     
     if (isToday) {
-      return `Aujourd'hui à ${date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
+      return `${t('accounts.todayAt') || 'Today at'} ${date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
     } else if (isYesterday) {
-      return `Hier à ${date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
+      return `${t('accounts.yesterdayAt') || 'Yesterday at'} ${date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
     } else {
       return date.toLocaleDateString('fr-FR', { 
         day: '2-digit', 
@@ -294,11 +294,11 @@ const AccountsPage: React.FC = () => {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     if (diffDays === 1) {
-      return 'Aujourd\'hui';
+      return t('accounts.today') || 'Today';
     } else if (diffDays === 2) {
-      return 'Hier';
+      return t('accounts.yesterday') || 'Yesterday';
     } else if (diffDays <= 7) {
-      return `Il y a ${diffDays - 1} jours`;
+      return t('accounts.daysAgo', { count: diffDays - 1 }) || `${diffDays - 1} days ago`;
     } else {
       return date.toLocaleDateString('fr-FR', {
         day: '2-digit',
@@ -364,7 +364,7 @@ const AccountsPage: React.FC = () => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Chargement de vos comptes...</p>
+          <p className="text-gray-600">{t('accounts.loading')}</p>
         </div>
       </div>
     );
@@ -376,8 +376,8 @@ const AccountsPage: React.FC = () => {
       <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-white">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 space-y-3 sm:space-y-0">
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold">Mes Comptes</h1>
-            <p className="text-blue-100 text-sm sm:text-base">Gérez vos comptes et cartes</p>
+            <h1 className="text-xl sm:text-2xl font-bold">{t('accounts.title')}</h1>
+            <p className="text-blue-100 text-sm sm:text-base">{t('accounts.subtitle')}</p>
           </div>
           <div className="flex items-center space-x-3">
             <button
@@ -385,34 +385,34 @@ const AccountsPage: React.FC = () => {
               className="flex items-center space-x-2 px-3 py-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors text-sm"
             >
               {showBalances ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-              <span className="hidden sm:inline">{showBalances ? 'Masquer' : 'Afficher'} les soldes</span>
-              <span className="sm:hidden">{showBalances ? 'Masquer' : 'Afficher'}</span>
+              <span className="hidden sm:inline">{showBalances ? t('accounts.hideBalances') : t('accounts.showBalances')}</span>
+              <span className="sm:hidden">{showBalances ? t('accounts.hide') : t('accounts.show')}</span>
             </button>
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6">
           <div className="bg-white/10 rounded-xl p-3 sm:p-4">
-            <p className="text-blue-100 text-xs sm:text-sm">Solde total</p>
+            <p className="text-blue-100 text-xs sm:text-sm">{t('accounts.totalBalance')}</p>
             <p className="text-lg sm:text-2xl font-bold">
               {showBalances ? formatCurrency(totalBalance, 'EUR') : '••••••••'}
             </p>
           </div>
           <div className="bg-white/10 rounded-xl p-3 sm:p-4">
-            <p className="text-blue-100 text-xs sm:text-sm">Comptes actifs</p>
+            <p className="text-blue-100 text-xs sm:text-sm">{t('accounts.activeAccounts')}</p>
             <p className="text-lg sm:text-2xl font-bold">{displayAccounts.filter(a => a.status === 'active').length}</p>
           </div>
           <div className="bg-white/10 rounded-xl p-3 sm:p-4 sm:col-span-2 lg:col-span-1">
-            <p className="text-blue-100 text-xs sm:text-sm">Statut</p>
+            <p className="text-blue-100 text-xs sm:text-sm">{t('accounts.status')}</p>
             <div className="flex items-center space-x-2">
               <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
                 userStatus === 'verified' ? 'bg-green-100 text-green-800' :
                 userStatus === 'pending' ? 'bg-yellow-100 text-yellow-800' :
                 'bg-red-100 text-red-800'
               }`}>
-                {userStatus === 'verified' ? 'Vérifié' :
-                 userStatus === 'pending' ? 'En cours' :
-                 'Non vérifié'}
+                {userStatus === 'verified' ? t('accountStatus.verified') :
+                 userStatus === 'pending' ? t('accountStatus.pendingVerification') :
+                 t('accountStatus.unverified')}
               </span>
             </div>
           </div>
@@ -422,39 +422,39 @@ const AccountsPage: React.FC = () => {
         <div className="bg-white/10 rounded-xl p-3 sm:p-4">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
             <div>
-              <p className="text-blue-100 text-sm font-medium">RIB AmCbunq</p>
+              <p className="text-blue-100 text-sm font-medium">{t('accounts.ribAmcbunq')}</p>
               <p className="text-sm sm:text-lg font-mono break-all sm:break-normal">
                 {(() => {
                   // PRIORITÉ 1: Vérifier le statut KYC AVANT tout
                   if (userStatus === 'unverified') {
-                    return 'RIB non disponible';
+                    return t('accounts.ribUnavailable');
                   } else if (userStatus === 'pending') {
-                    return 'RIB non disponible';
+                    return t('accounts.ribUnavailable');
                   } else if (userStatus === 'verified') {
                     // Même si vérifié, ne pas afficher l'IBAN sans demande explicite
-                    return 'RIB non disponible';
+                    return t('accounts.ribUnavailable');
                   }
                   
                   // PRIORITÉ 2: Fallback vers les données des comptes seulement si statut OK
                   const firstAccount = accounts[0];
                   if (firstAccount && firstAccount.rib && firstAccount.rib.displayValue) {
                     // Vérifier si l'IBAN est vraiment disponible (pas juste stocké)
-                    return 'RIB non disponible';
+                    return t('accounts.ribUnavailable');
                   }
                   
-                  return 'RIB non disponible';
+                  return t('accounts.ribUnavailable');
                 })()}
               </p>
               <p className="text-blue-100 text-xs">
                 {(() => {
                   if (userStatus === 'unverified') {
-                    return 'Vérifiez votre identité pour accéder à votre RIB';
+                    return t('accounts.ribVerificationRequired');
                   } else if (userStatus === 'pending') {
-                    return 'Vérifiez votre identité pour accéder à votre RIB';
+                    return t('accounts.ribVerificationRequired');
                   } else if (userStatus === 'verified') {
-                    return 'Demandez votre RIB sur la page IBAN';
+                    return t('accounts.ribRequestPage');
                   }
-                  return 'Vérifiez votre identité pour accéder à votre RIB';
+                  return t('accounts.ribVerificationRequired');
                 })()}
               </p>
             </div>
@@ -462,7 +462,7 @@ const AccountsPage: React.FC = () => {
               className="px-3 sm:px-4 py-2 rounded-lg transition-colors text-sm bg-gray-400 text-gray-200 cursor-not-allowed"
               disabled={true}
             >
-              RIB non disponible
+              {t('accounts.ribUnavailable')}
             </button>
           </div>
         </div>
@@ -470,7 +470,7 @@ const AccountsPage: React.FC = () => {
 
       {/* Comptes */}
       <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6">
-        <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">Mes Comptes</h2>
+        <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">{t('accounts.title')}</h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
           {displayAccounts.map((account) => (
             <div key={account.id} className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4 sm:p-6 hover:shadow-lg transition-all duration-300">
@@ -491,32 +491,32 @@ const AccountsPage: React.FC = () => {
 
               <div className="space-y-3 sm:space-y-4">
                 <div>
-                  <p className="text-xs sm:text-sm text-gray-500">Numéro de compte</p>
+                  <p className="text-xs sm:text-sm text-gray-500">{t('accounts.accountNumber')}</p>
                   <p className="font-mono text-xs sm:text-sm text-gray-900 break-all">
                     {(() => {
                       // PRIORITÉ 1: Vérifier le statut KYC AVANT tout
                       if (userStatus === 'unverified') {
-                        return 'RIB non disponible';
+                        return t('accounts.ribUnavailable');
                       } else if (userStatus === 'pending') {
-                        return 'RIB non disponible';
+                        return t('accounts.ribUnavailable');
                       } else if (userStatus === 'verified') {
                         // Même si vérifié, ne pas afficher l'IBAN sans demande explicite
-                        return 'RIB non disponible';
+                        return t('accounts.ribUnavailable');
                       }
                       
                       // PRIORITÉ 2: Fallback vers les données du compte seulement si statut OK
                       if (account.rib && account.rib.displayValue) {
                         // Vérifier si l'IBAN est vraiment disponible (pas juste stocké)
-                        return 'RIB non disponible';
+                        return t('accounts.ribUnavailable');
                       }
                       
-                      return 'RIB non disponible';
+                      return t('accounts.ribUnavailable');
                     })()}
                   </p>
                 </div>
 
                 <div>
-                  <p className="text-xs sm:text-sm text-gray-500">Solde</p>
+                  <p className="text-xs sm:text-sm text-gray-500">{t('accounts.balance')}</p>
                   <p className={`text-lg sm:text-2xl font-bold ${account.balance >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                     {showBalances ? formatCurrency(account.balance, account.currency) : '••••••••'}
                   </p>
@@ -524,7 +524,7 @@ const AccountsPage: React.FC = () => {
 
                 {account.lastTransaction && (
                   <div className="pt-3 border-t border-gray-200">
-                    <p className="text-xs text-gray-500 mb-1">Dernière transaction</p>
+                    <p className="text-xs text-gray-500 mb-1">{t('accounts.lastTransaction')}</p>
                     <div className="flex items-center justify-between">
                       <div className="flex-1 min-w-0">
                         <p className="text-xs sm:text-sm text-gray-900 truncate">{account.lastTransaction.description}</p>
@@ -551,13 +551,13 @@ const AccountsPage: React.FC = () => {
                     onClick={() => handleAccountDetails(account.id)}
                     className="flex-1 bg-blue-600 text-white px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm hover:bg-blue-700 transition-colors font-medium"
                   >
-                    Détails
+                    {t('accounts.details')}
                   </button>
                   <button 
                     onClick={() => handleInternalTransfer(account.id, '')}
                     className="flex-1 bg-green-600 text-white px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm hover:bg-green-700 transition-colors font-medium"
                   >
-                    Virement
+                    {t('accounts.transfer')}
                   </button>
                 </div>
               </div>
@@ -569,23 +569,23 @@ const AccountsPage: React.FC = () => {
       {/* Grand livre des transactions */}
       <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 space-y-3 sm:space-y-0">
-          <h2 className="text-lg sm:text-xl font-bold text-gray-900">Grand livre des transactions</h2>
+          <h2 className="text-lg sm:text-xl font-bold text-gray-900">{t('accounts.transactionLedger')}</h2>
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
-                placeholder="Rechercher..."
+                placeholder={t('accounts.search') || 'Search accounts...'}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
               />
             </div>
             <button className="flex items-center justify-center space-x-2 px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm">
               <Filter className="w-4 h-4" />
-              <span>Filtrer</span>
+              <span>{t('accounts.filter')}</span>
             </button>
             <button className="flex items-center justify-center space-x-2 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm">
               <Download className="w-4 h-4" />
-              <span>Exporter</span>
+              <span>{t('accounts.export')}</span>
             </button>
           </div>
         </div>
@@ -594,12 +594,12 @@ const AccountsPage: React.FC = () => {
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-2 sm:px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                <th className="px-2 sm:px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                <th className="hidden sm:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Compte</th>
-                <th className="hidden lg:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Catégorie</th>
-                <th className="hidden xl:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Référence</th>
-                <th className="px-2 sm:px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Montant</th>
+                <th className="px-2 sm:px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.date')}</th>
+                <th className="px-2 sm:px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.description')}</th>
+                <th className="hidden sm:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.account')}</th>
+                <th className="hidden lg:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.category')}</th>
+                <th className="hidden xl:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.reference')}</th>
+                <th className="px-2 sm:px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.amount')}</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -642,11 +642,11 @@ const AccountsPage: React.FC = () => {
         </div>
 
         <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs sm:text-sm text-gray-500 space-y-2 sm:space-y-0">
-          <span>Affichage de {displayTransactions.length} transactions</span>
+          <span>{t('accounts.displaying')} {displayTransactions.length} {t('accounts.transactions')}</span>
           <div className="flex items-center justify-center sm:justify-end space-x-2">
-            <button className="px-2 sm:px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 text-xs sm:text-sm">Précédent</button>
+            <button className="px-2 sm:px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 text-xs sm:text-sm">{t('accounts.previous')}</button>
             <span className="px-2 sm:px-3 py-1 bg-blue-600 text-white rounded text-xs sm:text-sm">1</span>
-            <button className="px-2 sm:px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 text-xs sm:text-sm">Suivant</button>
+            <button className="px-2 sm:px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 text-xs sm:text-sm">{t('accounts.next')}</button>
           </div>
         </div>
       </div>
@@ -657,7 +657,7 @@ const AccountsPage: React.FC = () => {
           <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg sm:text-xl font-bold text-gray-900">
-                Détails du compte
+                {t('accounts.accountDetails')}
               </h3>
               <button 
                 onClick={() => setShowTransactionDetails(false)}
@@ -669,10 +669,10 @@ const AccountsPage: React.FC = () => {
             {/* Contenu du modal */}
             <div className="space-y-4">
               <div className="bg-gray-50 rounded-lg p-4">
-                <h4 className="font-semibold text-gray-900 mb-2">Informations du compte</h4>
+                <h4 className="font-semibold text-gray-900 mb-2">{t('accounts.accountInfo')}</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-xs sm:text-sm text-gray-500">Numéro de compte</p>
+                    <p className="text-xs sm:text-sm text-gray-500">{t('accounts.accountNumber')}</p>
                     <p className="font-mono text-xs sm:text-sm text-gray-900 break-all">
                       {(() => {
                         const account = accounts.find(acc => acc.id === selectedAccount);
@@ -682,18 +682,18 @@ const AccountsPage: React.FC = () => {
                         
                         // Fallback selon le statut KYC
                         if (userStatus === 'unverified') {
-                          return 'RIB non disponible';
+                          return t('accounts.ribUnavailable');
                         } else if (userStatus === 'pending') {
-                          return 'RIB non disponible';
+                          return t('accounts.ribUnavailable');
                         } else if (userStatus === 'verified') {
-                          return 'RIB non disponible'; // Jusqu'à ce qu'une demande soit faite
+                          return t('accounts.ribUnavailable'); // Jusqu'à ce qu'une demande soit faite
                         }
-                        return 'RIB non disponible';
+                        return t('accounts.ribUnavailable');
                       })()}
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs sm:text-sm text-gray-500">Solde actuel</p>
+                    <p className="text-xs sm:text-sm text-gray-500">{t('accounts.currentBalance')}</p>
                     <p className="text-base sm:text-lg font-bold text-gray-900">
                       {(() => {
                         const account = accounts.find(acc => acc.id === selectedAccount);
@@ -702,7 +702,7 @@ const AccountsPage: React.FC = () => {
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs sm:text-sm text-gray-500">Statut</p>
+                    <p className="text-xs sm:text-sm text-gray-500">{t('accounts.status')}</p>
                     <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
                       (() => {
                         const account = accounts.find(acc => acc.id === selectedAccount);
@@ -714,18 +714,18 @@ const AccountsPage: React.FC = () => {
                     }`}>
                       {(() => {
                         const account = accounts.find(acc => acc.id === selectedAccount);
-                        return account ? getStatusText(account.status) : 'Actif';
+                        return account ? getStatusText(account.status) : t('accountStatus.active');
                       })()}
                     </span>
                   </div>
                   <div>
-                    <p className="text-xs sm:text-sm text-gray-500">Date d'ouverture</p>
+                    <p className="text-xs sm:text-sm text-gray-500">{t('accounts.openingDate')}</p>
                     <p className="text-xs sm:text-sm text-gray-900">
                       {(() => {
                         const account = accounts.find(acc => acc.id === selectedAccount);
                         return account && account.createdAt ? 
                           formatDate(new Date(account.createdAt)) : 
-                          'Non disponible';
+                          t('accounts.notAvailable');
                       })()}
                     </p>
                   </div>
@@ -733,7 +733,7 @@ const AccountsPage: React.FC = () => {
               </div>
               
               <div className="bg-gray-50 rounded-lg p-4">
-                <h4 className="font-semibold text-gray-900 mb-2">Dernières transactions</h4>
+                <h4 className="font-semibold text-gray-900 mb-2">{t('accounts.recentTransactions')}</h4>
                 <div className="space-y-2">
                   {displayTransactions.slice(0, 3).map((transaction) => (
                     <div key={transaction.id} className="flex items-center justify-between p-2 bg-white rounded">
@@ -763,7 +763,7 @@ const AccountsPage: React.FC = () => {
           <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 max-w-md w-full">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg sm:text-xl font-bold text-gray-900">
-                Vérification d'identité requise
+                {t('accounts.verificationRequired')}
               </h3>
               <button 
                 onClick={() => setShowVerificationDialog(false)}
@@ -781,10 +781,10 @@ const AccountsPage: React.FC = () => {
                 </div>
                 <div>
                   <p className="text-sm sm:text-base text-gray-900 font-medium">
-                    {verificationAction === 'transfer' ? 'Virement' : 'Détails du compte'}
+                    {verificationAction === 'transfer' ? t('accounts.transfer') : t('accounts.details')}
                   </p>
                   <p className="text-xs sm:text-sm text-gray-600">
-                    Pour {verificationAction === 'transfer' ? 'effectuer un virement' : 'voir les détails du compte'}, vous devez d'abord valider votre identité.
+                    {verificationAction === 'transfer' ? t('accounts.verificationMessage') : t('accounts.detailsVerificationMessage')}
                   </p>
                 </div>
               </div>
@@ -793,7 +793,7 @@ const AccountsPage: React.FC = () => {
                   onClick={() => setShowVerificationDialog(false)}
                   className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm"
                 >
-                  Annuler
+                  {t('accounts.cancel')}
                 </button>
                 <button
                   onClick={() => {
@@ -803,7 +803,7 @@ const AccountsPage: React.FC = () => {
                   }}
                   className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
                 >
-                  Vérifier mon identité
+                  {t('accounts.verifyIdentity')}
                 </button>
               </div>
             </div>

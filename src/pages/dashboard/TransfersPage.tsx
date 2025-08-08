@@ -265,15 +265,15 @@ const TransfersPage: React.FC = () => {
   const getStatusText = (status: string) => {
     switch (status) {
       case 'completed':
-        return 'Effectué';
+        return t('transfers.status.completed') as string;
       case 'pending':
-        return 'En cours';
+        return t('transfers.status.pending') as string;
       case 'failed':
-        return 'Échoué';
+        return t('transfers.status.failed') as string;
       case 'scheduled':
-        return 'Programmé';
+        return t('transfers.status.scheduled', 'Programmé') as string;
       default:
-        return 'Inconnu';
+        return t('transfers.status.unknown', 'Inconnu') as string;
     }
   };
 
@@ -559,7 +559,7 @@ const TransfersPage: React.FC = () => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Chargement des virements...</p>
+          <p className="text-gray-600">{t('transfers.loading') as string}</p>
         </div>
       </div>
     );
@@ -570,8 +570,8 @@ const TransfersPage: React.FC = () => {
     return (
       <VerificationState 
         userStatus={userStatus}
-        title="Vérification d'identité requise"
-        description="Pour effectuer des virements et gérer vos transferts, vous devez d'abord valider votre identité."
+        title={t('verification.banner.unverified.title') as string}
+        description={t('transfers.verificationRequired') as string}
         showFeatures={true}
       />
     );
@@ -583,8 +583,8 @@ const TransfersPage: React.FC = () => {
       <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-white">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 space-y-3 sm:space-y-0">
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold">Virements</h1>
-            <p className="text-blue-100 text-sm sm:text-base">Gérez vos transferts d'argent</p>
+            <h1 className="text-xl sm:text-2xl font-bold">{t('transfers.title') as string}</h1>
+            <p className="text-blue-100 text-sm sm:text-base">{t('transfers.subtitle') as string}</p>
           </div>
           <div className="flex items-center space-x-3">
                           <button
@@ -592,29 +592,29 @@ const TransfersPage: React.FC = () => {
                 className="bg-white/20 hover:bg-white/30 text-white px-3 sm:px-4 py-2 rounded-lg transition-colors flex items-center space-x-2 text-sm"
               >
               <Plus className="w-4 h-4" />
-              <span className="hidden sm:inline">Nouveau virement</span>
-              <span className="sm:hidden">Nouveau</span>
+              <span className="hidden sm:inline">{t('transfers.newTransfer') as string}</span>
+              <span className="sm:hidden">{t('transfers.newShort', 'Nouveau') as string}</span>
             </button>
           </div>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           <div className="bg-white/10 rounded-xl p-3 sm:p-4">
-            <p className="text-blue-100 text-xs sm:text-sm">Virements ce mois</p>
+            <p className="text-blue-100 text-xs sm:text-sm">{t('transfers.stats.thisMonth') as string}</p>
             <p className="text-lg sm:text-2xl font-bold">{transfers.filter(t => t.status === 'completed').length}</p>
           </div>
           <div className="bg-white/10 rounded-xl p-3 sm:p-4">
-            <p className="text-blue-100 text-xs sm:text-sm">Montant total</p>
+            <p className="text-blue-100 text-xs sm:text-sm">{t('transfers.stats.totalAmount') as string}</p>
             <p className="text-lg sm:text-2xl font-bold">
               {formatCurrency(transfers.filter(t => t.status === 'completed').reduce((sum, t) => sum + t.amount, 0))}
             </p>
           </div>
           <div className="bg-white/10 rounded-xl p-3 sm:p-4">
-            <p className="text-blue-100 text-xs sm:text-sm">Bénéficiaires</p>
+            <p className="text-blue-100 text-xs sm:text-sm">{t('transfers.stats.beneficiaries') as string}</p>
             <p className="text-lg sm:text-2xl font-bold">{beneficiaries.length}</p>
           </div>
           <div className="bg-white/10 rounded-xl p-3 sm:p-4">
-            <p className="text-blue-100 text-xs sm:text-sm">Programmés</p>
+            <p className="text-blue-100 text-xs sm:text-sm">{t('transfers.stats.scheduled') as string}</p>
             <p className="text-lg sm:text-2xl font-bold">{transfers.filter(t => t.status === 'scheduled').length}</p>
           </div>
         </div>
@@ -625,10 +625,10 @@ const TransfersPage: React.FC = () => {
         <div className="border-b border-gray-200 overflow-x-auto">
           <nav className="flex space-x-4 sm:space-x-8 px-4 sm:px-6 min-w-max">
             {[
-              { id: 'new', label: 'Nouveau virement', icon: Plus },
-              { id: 'beneficiaries', label: 'Bénéficiaires', icon: Users },
-              { id: 'scheduled', label: 'Virements programmés', icon: Clock },
-              { id: 'history', label: 'Historique', icon: Calendar }
+              { id: 'new', label: t('transfers.tabs.new') as string, icon: Plus },
+              { id: 'beneficiaries', label: t('transfers.tabs.beneficiaries') as string, icon: Users },
+              { id: 'scheduled', label: t('transfers.tabs.scheduled') as string, icon: Clock },
+              { id: 'history', label: t('transfers.tabs.history') as string, icon: Calendar }
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -664,8 +664,8 @@ const TransfersPage: React.FC = () => {
                       <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
                     </div>
                     <div className="text-center">
-                      <p className="font-semibold text-base sm:text-lg">Virement interne</p>
-                      <p className="text-blue-100 text-xs sm:text-sm">Entre vos comptes</p>
+                      <p className="font-semibold text-base sm:text-lg">{t('transfers.internal') as string}</p>
+                      <p className="text-blue-100 text-xs sm:text-sm">{t('transfers.internalDesc') as string}</p>
                     </div>
                   </div>
                 </button>
@@ -682,8 +682,8 @@ const TransfersPage: React.FC = () => {
                       <Send className="w-5 h-5 sm:w-6 sm:h-6" />
                     </div>
                     <div className="text-center">
-                      <p className="font-semibold text-base sm:text-lg">Virement externe</p>
-                      <p className="text-green-100 text-xs sm:text-sm">Vers un autre compte</p>
+                      <p className="font-semibold text-base sm:text-lg">{t('transfers.external') as string}</p>
+                      <p className="text-green-100 text-xs sm:text-sm">{t('transfers.externalDesc') as string}</p>
                     </div>
                   </div>
                 </button>
@@ -700,15 +700,15 @@ const TransfersPage: React.FC = () => {
                       <Clock className="w-5 h-5 sm:w-6 sm:h-6" />
                     </div>
                     <div className="text-center">
-                      <p className="font-semibold text-base sm:text-lg">Virement programmé</p>
-                      <p className="text-purple-100 text-xs sm:text-sm">Planifier un virement</p>
+                      <p className="font-semibold text-base sm:text-lg">{t('transfers.scheduled') as string}</p>
+                      <p className="text-purple-100 text-xs sm:text-sm">{t('transfers.scheduledDesc') as string}</p>
                     </div>
                   </div>
                 </button>
               </div>
 
               <div className="bg-gray-50 rounded-xl p-4 sm:p-6">
-                <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4">Virements rapides</h3>
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4">{t('transfers.quick.title') as string}</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                                      {beneficiaries.filter(b => b.isFavorite).map((beneficiary) => (
                      <button
@@ -722,7 +722,7 @@ const TransfersPage: React.FC = () => {
                       </div>
                       <p className="text-xs sm:text-sm text-gray-500">{beneficiary.bank}</p>
                       <p className="text-xs text-gray-400 mt-1">
-                        Dernier virement: {beneficiary.lastUsed ? formatDate(beneficiary.lastUsed) : 'Jamais'}
+                        {t('transfers.quick.lastTransfer') as string}: {beneficiary.lastUsed ? formatDate(beneficiary.lastUsed) : (t('transfers.quick.never') as string)}
                       </p>
                     </button>
                   ))}
@@ -735,13 +735,13 @@ const TransfersPage: React.FC = () => {
           {activeTab === 'beneficiaries' && (
             <div className="space-y-4 sm:space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
-                <h3 className="text-base sm:text-lg font-semibold text-gray-900">Mes bénéficiaires</h3>
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900">{t('transfers.beneficiaries.title') as string}</h3>
                 <button
                   onClick={() => setShowAddBeneficiary(true)}
                   className="bg-blue-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 text-sm"
                 >
                   <UserPlus className="w-4 h-4" />
-                  <span>Ajouter un bénéficiaire</span>
+                  <span>{t('transfers.beneficiaries.add') as string}</span>
                 </button>
               </div>
 
@@ -781,8 +781,8 @@ const TransfersPage: React.FC = () => {
                        <button 
                          onClick={() => handleQuickTransfer(beneficiary)}
                          className="flex-1 bg-blue-600 text-white px-3 py-2 rounded-lg text-xs sm:text-sm hover:bg-blue-700 transition-colors"
-                       >
-                         Virement rapide
+                        >
+                          {t('transfers.quickTransfer') as string}
                        </button>
                      </div>
                   </div>
@@ -794,7 +794,7 @@ const TransfersPage: React.FC = () => {
           {/* Virements programmés */}
           {activeTab === 'scheduled' && (
             <div className="space-y-4 sm:space-y-6">
-              <h3 className="text-base sm:text-lg font-semibold text-gray-900">Virements programmés</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900">{t('transfers.scheduled.title') as string}</h3>
               <div className="space-y-3 sm:space-y-4">
                                  {filteredTransfers.filter(t => t.status === 'scheduled').map((transfer) => (
                   <div key={transfer.id} className="bg-white border border-gray-200 rounded-xl p-3 sm:p-4">
@@ -809,7 +809,7 @@ const TransfersPage: React.FC = () => {
                             {getAccountDisplayName(transfer.fromAccount)} → {transfer.beneficiaryName || getAccountDisplayName(transfer.toAccount)}
                           </p>
                           <p className="text-xs text-gray-400">
-                            Programmé pour le {transfer.scheduledDate ? formatDate(transfer.scheduledDate) : ''}
+                            {(t('transfers.scheduled.for') as string)} {transfer.scheduledDate ? formatDate(transfer.scheduledDate) : ''}
                           </p>
                         </div>
                       </div>
@@ -830,13 +830,13 @@ const TransfersPage: React.FC = () => {
           {activeTab === 'history' && (
             <div className="space-y-4 sm:space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
-                <h3 className="text-base sm:text-lg font-semibold text-gray-900">Historique des virements</h3>
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900">{t('transfers.history.title') as string}</h3>
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
                                      <div className="relative">
                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                      <input
                        type="text"
-                       placeholder="Rechercher..."
+                       placeholder={t('transfers.search') as string}
                        value={searchTerm}
                        onChange={(e) => setSearchTerm(e.target.value)}
                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
@@ -847,14 +847,14 @@ const TransfersPage: React.FC = () => {
                      onChange={(e) => setSelectedFilter(e.target.value)}
                      className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                    >
-                     <option value="all">Tous les statuts</option>
-                     <option value="completed">Effectués</option>
-                     <option value="pending">En cours</option>
-                     <option value="scheduled">Programmés</option>
+                     <option value="all">{t('transfers.filter.all') as string}</option>
+                     <option value="completed">{t('transfers.filter.completed') as string}</option>
+                     <option value="pending">{t('transfers.filter.pending') as string}</option>
+                     <option value="scheduled">{t('transfers.filter.scheduled') as string}</option>
                    </select>
                   <button className="flex items-center justify-center space-x-2 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm">
                     <Download className="w-4 h-4" />
-                    <span>Exporter</span>
+                    <span>{t('transfers.export') as string}</span>
                   </button>
                 </div>
               </div>
@@ -905,7 +905,7 @@ const TransfersPage: React.FC = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 max-w-md w-full mx-4">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg sm:text-xl font-bold text-gray-900">Ajouter un bénéficiaire</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900">{t('transfers.beneficiaries.addTitle') as string}</h3>
               <button 
                 onClick={() => setShowAddBeneficiary(false)}
                 className="text-gray-400 hover:text-gray-600"
@@ -915,13 +915,13 @@ const TransfersPage: React.FC = () => {
             </div>
                          <div className="space-y-4">
                <div>
-                 <label className="block text-sm font-medium text-gray-700 mb-1">Nom du bénéficiaire</label>
+                 <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.beneficiaries.form.name') as string}</label>
                  <input
                    type="text"
                    value={formData.beneficiaryName}
                    onChange={(e) => setFormData(prev => ({ ...prev, beneficiaryName: e.target.value }))}
                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                   placeholder="Nom et prénom"
+                   placeholder={t('transfers.beneficiaries.form.namePlaceholder') as string}
                  />
                </div>
                <div>
@@ -931,27 +931,27 @@ const TransfersPage: React.FC = () => {
                    value={formData.beneficiaryIban}
                    onChange={(e) => setFormData(prev => ({ ...prev, beneficiaryIban: e.target.value }))}
                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                   placeholder="FR76 1234 5678 9012 3456 7890 123"
+                   placeholder={t('transfers.beneficiaries.form.ibanPlaceholder', 'FR76 1234 5678 9012 3456 7890 123') as string}
                  />
                </div>
                <div>
-                 <label className="block text-sm font-medium text-gray-700 mb-1">Code BIC/SWIFT</label>
+                 <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.beneficiaries.form.bic') as string}</label>
                  <input
                    type="text"
                    value={formData.beneficiaryBic}
                    onChange={(e) => setFormData(prev => ({ ...prev, beneficiaryBic: e.target.value }))}
                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                   placeholder="BNPAFRPPXXX"
+                   placeholder={t('transfers.beneficiaries.form.bicPlaceholder', 'BNPAFRPPXXX') as string}
                  />
                </div>
                <div>
-                 <label className="block text-sm font-medium text-gray-700 mb-1">Nom de la banque</label>
+                 <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.beneficiaries.form.bank') as string}</label>
                  <input
                    type="text"
                    value={formData.beneficiaryBank}
                    onChange={(e) => setFormData(prev => ({ ...prev, beneficiaryBank: e.target.value }))}
                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                   placeholder="Nom de la banque"
+                   placeholder={t('transfers.beneficiaries.form.bankPlaceholder') as string}
                  />
                </div>
                <div className="flex items-center space-x-2">
@@ -962,7 +962,7 @@ const TransfersPage: React.FC = () => {
                    onChange={(e) => setFormData(prev => ({ ...prev, isFavorite: e.target.checked }))}
                    className="rounded" 
                  />
-                 <label htmlFor="favorite" className="text-sm text-gray-700">Marquer comme favori</label>
+                  <label htmlFor="favorite" className="text-sm text-gray-700">{t('transfers.beneficiaries.form.favorite') as string}</label>
                </div>
                <div className="flex space-x-3 pt-4">
                  <button
@@ -978,7 +978,7 @@ const TransfersPage: React.FC = () => {
                    onClick={handleAddBeneficiary}
                    className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
                  >
-                   Ajouter
+                    {t('common.add') as string}
                  </button>
                </div>
              </div>
@@ -991,7 +991,7 @@ const TransfersPage: React.FC = () => {
          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
            <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 max-w-md w-full mx-4">
              <div className="flex items-center justify-between mb-4">
-               <h3 className="text-lg sm:text-xl font-bold text-gray-900">Modifier le bénéficiaire</h3>
+               <h3 className="text-lg sm:text-xl font-bold text-gray-900">{t('transfers.beneficiaries.editTitle') as string}</h3>
                <button 
                  onClick={() => {
                    setShowEditBeneficiary(false);
@@ -1005,7 +1005,7 @@ const TransfersPage: React.FC = () => {
              </div>
              <div className="space-y-4">
                <div>
-                 <label className="block text-sm font-medium text-gray-700 mb-1">Nom du bénéficiaire</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.beneficiaries.form.name') as string}</label>
                  <input
                    type="text"
                    value={formData.beneficiaryName}
@@ -1015,7 +1015,7 @@ const TransfersPage: React.FC = () => {
                  />
                </div>
                <div>
-                 <label className="block text-sm font-medium text-gray-700 mb-1">IBAN</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">IBAN</label>
                  <input
                    type="text"
                    value={formData.beneficiaryIban}
@@ -1025,7 +1025,7 @@ const TransfersPage: React.FC = () => {
                  />
                </div>
                <div>
-                 <label className="block text-sm font-medium text-gray-700 mb-1">Code BIC/SWIFT</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.beneficiaries.form.bic') as string}</label>
                  <input
                    type="text"
                    value={formData.beneficiaryBic}
@@ -1035,7 +1035,7 @@ const TransfersPage: React.FC = () => {
                  />
                </div>
                <div>
-                 <label className="block text-sm font-medium text-gray-700 mb-1">Nom de la banque</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.beneficiaries.form.bank') as string}</label>
                  <input
                    type="text"
                    value={formData.beneficiaryBank}
@@ -1069,7 +1069,7 @@ const TransfersPage: React.FC = () => {
                    onClick={handleUpdateBeneficiary}
                    className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
                  >
-                   Modifier
+                    {t('common.edit') as string}
                  </button>
                </div>
              </div>
@@ -1083,8 +1083,8 @@ const TransfersPage: React.FC = () => {
           <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 max-w-lg w-full mx-4 max-h-[80vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg sm:text-xl font-bold text-gray-900">
-                {transferType === 'internal' ? 'Virement interne' :
-                 transferType === 'external' ? 'Virement externe' : 'Virement programmé'}
+                {transferType === 'internal' ? (t('transfers.form.title.internal') as string) :
+                 transferType === 'external' ? (t('transfers.form.title.external') as string) : (t('transfers.form.title.scheduled') as string)}
               </h3>
                              <button 
                  onClick={() => {
@@ -1098,13 +1098,13 @@ const TransfersPage: React.FC = () => {
              </div>
              <div className="space-y-4">
                <div>
-                 <label className="block text-sm font-medium text-gray-700 mb-1">Compte source</label>
+                 <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.form.fromAccount') as string}</label>
                  <select 
                    value={formData.fromAccount}
                    onChange={(e) => setFormData(prev => ({ ...prev, fromAccount: e.target.value }))}
                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                  >
-                   <option value="">Sélectionner un compte</option>
+                    <option value="">{t('transfers.form.selectAccount') as string}</option>
                    {accounts.map(account => (
                      <option key={account.id} value={account.id}>
                        {account.displayName} - {formatCurrency(account.balance)}
@@ -1114,13 +1114,13 @@ const TransfersPage: React.FC = () => {
                </div>
                              {transferType === 'internal' ? (
                  <div>
-                   <label className="block text-sm font-medium text-gray-700 mb-1">Compte destination</label>
+                 <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.form.toAccount') as string}</label>
                    <select 
                      value={formData.toAccount}
                      onChange={(e) => setFormData(prev => ({ ...prev, toAccount: e.target.value }))}
                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                    >
-                     <option value="">Sélectionner un compte</option>
+                      <option value="">{t('transfers.form.selectAccount') as string}</option>
                      {accounts.filter(account => account.id !== formData.fromAccount).map(account => (
                        <option key={account.id} value={account.id}>
                          {account.displayName}
@@ -1130,13 +1130,13 @@ const TransfersPage: React.FC = () => {
                  </div>
                ) : (
                  <div>
-                   <label className="block text-sm font-medium text-gray-700 mb-1">Bénéficiaire</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.form.beneficiary') as string}</label>
                    <select 
                      value={formData.toAccount}
                      onChange={(e) => setFormData(prev => ({ ...prev, toAccount: e.target.value }))}
                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                    >
-                     <option value="">Sélectionner un bénéficiaire</option>
+                      <option value="">{t('transfers.form.selectBeneficiary') as string}</option>
                      {beneficiaries.map(beneficiary => (
                        <option key={beneficiary.id} value={beneficiary.id}>
                          {beneficiary.name} - {beneficiary.iban}
@@ -1146,7 +1146,7 @@ const TransfersPage: React.FC = () => {
                  </div>
                )}
                <div>
-                 <label className="block text-sm font-medium text-gray-700 mb-1">Montant</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.form.amount') as string}</label>
                  <input
                    type="number"
                    value={formData.amount}
@@ -1157,18 +1157,18 @@ const TransfersPage: React.FC = () => {
                  />
                </div>
                <div>
-                 <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.form.description') as string}</label>
                  <input
                    type="text"
                    value={formData.description}
                    onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                   placeholder="Libellé du virement"
+                    placeholder={t('transfers.form.descriptionPlaceholder') as string}
                  />
                </div>
                {transferType === 'scheduled' && (
                  <div>
-                   <label className="block text-sm font-medium text-gray-700 mb-1">Date de programmation</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.form.scheduleDate') as string}</label>
                    <input
                      type="date"
                      value={formData.scheduledDate}
@@ -1191,7 +1191,7 @@ const TransfersPage: React.FC = () => {
                    onClick={handleTransfer}
                    className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
                  >
-                   {transferType === 'scheduled' ? 'Programmer' : 'Effectuer'} le virement
+                    {transferType === 'scheduled' ? (t('transfers.form.schedule') as string) : (t('transfers.form.submit') as string)}
                  </button>
                </div>
             </div>

@@ -83,7 +83,7 @@ const DashboardPage: React.FC = () => {
             lastTransaction: {
               date: new Date(),
               amount: 0,
-              description: 'Aucune transaction récente'
+              description: t('transactions.noRecent') || 'Aucune transaction récente'
             }
           };
         });
@@ -138,7 +138,7 @@ const DashboardPage: React.FC = () => {
   };
 
   // Fonction pour traduire les noms des comptes
-  const [userName, setUserName] = useState('Client AmCbunq');
+  const [userName, setUserName] = useState(t('common.defaultUser') || 'Client AmCbunq');
   const [userEmail, setUserEmail] = useState('');
 
   // Charger les données utilisateur
@@ -166,7 +166,7 @@ const DashboardPage: React.FC = () => {
 
   // Fonction pour récupérer l'email de l'utilisateur
   const getUserEmail = (): string => {
-    return userEmail || 'client@amcbunq.com';
+    return userEmail || t('common.defaultUser') || 'client@amcbunq.com';
   };
 
   const translateAccountName = (name: string): string => {
@@ -177,13 +177,13 @@ const DashboardPage: React.FC = () => {
     switch (lowerName) {
       case 'checking':
         logger.debug('Dashboard translating checking to Compte courant');
-        return 'Compte courant';
+        return t('accountTypes.current');
       case 'savings':
         logger.debug('Dashboard translating savings to Compte épargne');
-        return 'Compte épargne';
+        return t('accountTypes.savings');
       case 'credit':
         logger.debug('Dashboard translating credit to Carte de crédit');
-        return 'Carte de crédit';
+        return t('accountTypes.credit');
       default:
         logger.debug('Dashboard no translation found, returning original:', name);
         return name;
@@ -196,7 +196,7 @@ const DashboardPage: React.FC = () => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Chargement de votre tableau de bord...</p>
+          <p className="text-gray-600">{t('common.loading')}</p>
         </div>
       </div>
     );
@@ -208,8 +208,8 @@ const DashboardPage: React.FC = () => {
       <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-4 md:p-6 text-white">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-xl md:text-2xl font-bold">Bonjour, {userName}</h1>
-            <p className="text-blue-100 text-sm md:text-base">Votre tableau de bord financier</p>
+            <h1 className="text-xl md:text-2xl font-bold">{t('dashboard.welcome')}, {userName}</h1>
+            <p className="text-blue-100 text-sm md:text-base">{t('dashboard.overview')}</p>
           </div>
           <div className="flex items-center space-x-2">
             <button
@@ -218,24 +218,24 @@ const DashboardPage: React.FC = () => {
             >
               {showBalances ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               <span className="text-xs md:text-sm font-medium">
-                {showBalances ? 'Masquer' : 'Afficher'} les soldes
+                {showBalances ? t('common.hide') : t('common.show')} {t('dashboard.balances')}
               </span>
             </button>
             <div className="flex items-center space-x-2 bg-blue-500/30 px-2 md:px-3 py-1 rounded-full">
               {userStatus === 'verified' ? (
                 <>
                   <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                  <span className="text-xs md:text-sm font-medium">Vérifié</span>
+                  <span className="text-xs md:text-sm font-medium">{t('verification.status.approved')}</span>
                 </>
               ) : userStatus === 'pending' ? (
                 <>
                   <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                  <span className="text-xs md:text-sm font-medium">En cours</span>
+                  <span className="text-xs md:text-sm font-medium">{t('verification.status.pending')}</span>
                 </>
               ) : (
                 <>
                   <div className="w-2 h-2 bg-red-400 rounded-full"></div>
-                  <span className="text-xs md:text-sm font-medium">Non vérifié</span>
+                  <span className="text-xs md:text-sm font-medium">{t('verification.status.unverified')}</span>
                 </>
               )}
             </div>
@@ -244,13 +244,13 @@ const DashboardPage: React.FC = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mb-4 md:mb-6">
           <div className="bg-white/10 rounded-xl p-3 md:p-4">
-            <p className="text-blue-100 text-xs md:text-sm">Solde total</p>
+            <p className="text-blue-100 text-xs md:text-sm">{t('dashboard.totalBalance')}</p>
             <p className="text-lg md:text-2xl font-bold">
               {showBalances ? formatCurrency(totalBalance, 'EUR') : '••••••••'}
             </p>
           </div>
           <div className="bg-white/10 rounded-xl p-3 md:p-4">
-            <p className="text-blue-100 text-xs md:text-sm">Compte courant</p>
+            <p className="text-blue-100 text-xs md:text-sm">{t('dashboard.currentAccount')}</p>
             <p className="text-lg md:text-2xl font-bold text-green-300">
               {showBalances 
                 ? (currentAccount ? formatCurrency(currentAccount.balance, 'EUR') : '0,00 €')
@@ -259,7 +259,7 @@ const DashboardPage: React.FC = () => {
             </p>
           </div>
           <div className="bg-white/10 rounded-xl p-3 md:p-4">
-            <p className="text-blue-100 text-xs md:text-sm">Compte épargne</p>
+            <p className="text-blue-100 text-xs md:text-sm">{t('dashboard.savingsAccount')}</p>
             <p className="text-lg md:text-2xl font-bold text-blue-300">
               {showBalances 
                 ? (savingsAccount ? formatCurrency(savingsAccount.balance, 'EUR') : '0,00 €')
@@ -278,34 +278,34 @@ const DashboardPage: React.FC = () => {
                 {(() => {
                   // PRIORITÉ 1: Vérifier le statut KYC AVANT tout
                   if (userStatus === 'unverified') {
-                    return 'RIB non disponible';
+                    return t('dashboard.ribUnavailable');
                   } else if (userStatus === 'pending') {
-                    return 'RIB non disponible';
+                    return t('dashboard.ribUnavailable');
                   } else if (userStatus === 'verified') {
                     // Même si vérifié, ne pas afficher l'IBAN sans demande explicite
-                    return 'RIB non disponible';
+                    return t('dashboard.ribUnavailable');
                   }
                   
                   // PRIORITÉ 2: Fallback vers les données des comptes seulement si statut OK
                   const firstAccount = accounts[0];
                   if (firstAccount && firstAccount.rib && firstAccount.rib.displayValue) {
                     // Vérifier si l'IBAN est vraiment disponible (pas juste stocké)
-                    return 'RIB non disponible';
+                    return t('dashboard.ribUnavailable');
                   }
                   
-                  return 'RIB non disponible';
+                  return t('dashboard.ribUnavailable');
                 })()}
               </p>
               <p className="text-blue-100 text-xs">
                 {(() => {
                   if (userStatus === 'unverified') {
-                    return 'Vérifiez votre identité pour accéder à votre RIB';
+                    return t('dashboard.ribVerificationRequired');
                   } else if (userStatus === 'pending') {
-                    return 'Vérifiez votre identité pour accéder à votre RIB';
+                    return t('dashboard.ribVerificationRequired');
                   } else if (userStatus === 'verified') {
-                    return 'Demandez votre RIB sur la page IBAN';
+                    return t('dashboard.ribRequestPage');
                   }
-                  return 'Vérifiez votre identité pour accéder à votre RIB';
+                  return t('dashboard.ribVerificationRequired');
                 })()}
               </p>
             </div>
@@ -313,7 +313,7 @@ const DashboardPage: React.FC = () => {
               className="px-3 md:px-4 py-2 rounded-lg transition-colors text-sm md:text-base bg-gray-400 text-gray-200 cursor-not-allowed"
               disabled={true}
             >
-              RIB non disponible
+              {t('dashboard.ribUnavailable')}
             </button>
           </div>
         </div>
@@ -321,7 +321,7 @@ const DashboardPage: React.FC = () => {
 
       {/* Actions rapides modernisées */}
       <div className="bg-white rounded-2xl shadow-lg p-4 md:p-6">
-        <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-4 md:mb-6">Actions rapides</h2>
+        <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-4 md:mb-6">{t('dashboard.quickActions')}</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           <Link to="/dashboard/virements" className="group bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-4 md:p-6 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg cursor-pointer block">
             <div className="flex flex-col items-center space-y-2 md:space-y-3">
@@ -329,8 +329,8 @@ const DashboardPage: React.FC = () => {
                 <ArrowRight className="w-4 md:w-6 h-4 md:h-6" />
               </div>
               <div className="text-center">
-                <p className="font-semibold text-sm md:text-base">Virement</p>
-                <p className="text-blue-100 text-xs md:text-sm">Transférer</p>
+                <p className="font-semibold text-sm md:text-base">{t('nav.transfers')}</p>
+                <p className="text-blue-100 text-xs md:text-sm">{t('transfers.newTransfer')}</p>
               </div>
             </div>
           </Link>
@@ -341,8 +341,8 @@ const DashboardPage: React.FC = () => {
                 <Plus className="w-4 md:w-6 h-4 md:h-6" />
               </div>
               <div className="text-center">
-                <p className="font-semibold text-sm md:text-base">Dépôt</p>
-                <p className="text-green-100 text-xs md:text-sm">Ajouter</p>
+                <p className="font-semibold text-sm md:text-base">{t('accounts.title')}</p>
+                <p className="text-green-100 text-xs md:text-sm">{t('common.add')}</p>
               </div>
             </div>
           </Link>
@@ -353,8 +353,8 @@ const DashboardPage: React.FC = () => {
                 <CreditCard className="w-4 md:w-6 h-4 md:h-6" />
               </div>
               <div className="text-center">
-                <p className="font-semibold text-sm md:text-base">Cartes</p>
-                <p className="text-purple-100 text-xs md:text-sm">Gérer</p>
+                <p className="font-semibold text-sm md:text-base">{t('nav.cards')}</p>
+                <p className="text-purple-100 text-xs md:text-sm">{t('common.manage')}</p>
               </div>
             </div>
           </Link>
@@ -365,8 +365,8 @@ const DashboardPage: React.FC = () => {
                 <Zap className="w-4 md:w-6 h-4 md:h-6" />
               </div>
               <div className="text-center">
-                <p className="font-semibold text-sm md:text-base">Paiements</p>
-                <p className="text-orange-100 text-xs md:text-sm">Rapides</p>
+                <p className="font-semibold text-sm md:text-base">{t('billing.title')}</p>
+                <p className="text-orange-100 text-xs md:text-sm">{t('payments.quick')}</p>
               </div>
             </div>
           </Link>
@@ -376,8 +376,8 @@ const DashboardPage: React.FC = () => {
       {/* Comptes */}
       <div className="bg-white rounded-2xl shadow-lg p-4 md:p-6">
         <div className="flex items-center justify-between mb-4 md:mb-6">
-          <h2 className="text-lg md:text-xl font-bold text-gray-900">Mes Comptes</h2>
-          <Link to="/dashboard/comptes" className="text-blue-600 hover:text-blue-700 font-medium text-sm md:text-base cursor-pointer">Voir tous</Link>
+          <h2 className="text-lg md:text-xl font-bold text-gray-900">{t('accounts.title')}</h2>
+          <Link to="/dashboard/comptes" className="text-blue-600 hover:text-blue-700 font-medium text-sm md:text-base cursor-pointer">{t('common.view')}</Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {accounts.map((account) => (
@@ -400,14 +400,14 @@ const DashboardPage: React.FC = () => {
                 {showBalances ? formatCurrency(account.balance, account.currency) : '••••••••'}
               </p>
               <p className="text-xs md:text-sm text-gray-500 mb-3">
-                Dernière opération: {account.lastTransaction?.description || 'Aucune transaction récente'}
+                {t('accounts.lastTransaction')}: {account.lastTransaction?.description || t('transactions.noTransactions')}
               </p>
               <div className="flex space-x-2">
                 <Link to="/dashboard/comptes" className="flex-1 bg-blue-600 text-white px-2 md:px-3 py-2 rounded-lg text-xs md:text-sm hover:bg-blue-700 transition-colors text-center cursor-pointer block">
-                  Détails
+                  {t('accounts.details')}
                 </Link>
                 <Link to="/dashboard/virements" className="flex-1 bg-gray-200 text-gray-700 px-2 md:px-3 py-2 rounded-lg text-xs md:text-sm hover:bg-gray-300 transition-colors text-center cursor-pointer block">
-                  Virement
+                  {t('nav.transfers')}
                 </Link>
               </div>
             </div>
@@ -418,8 +418,8 @@ const DashboardPage: React.FC = () => {
       {/* Transactions récentes */}
       <div className="bg-white rounded-2xl shadow-lg p-4 md:p-6">
         <div className="flex items-center justify-between mb-4 md:mb-6">
-          <h2 className="text-lg md:text-xl font-bold text-gray-900">Transactions récentes</h2>
-          <Link to="/dashboard/historique" className="text-blue-600 hover:text-blue-700 font-medium text-sm md:text-base cursor-pointer">Voir toutes</Link>
+          <h2 className="text-lg md:text-xl font-bold text-gray-900">{t('dashboard.recentTransactions')}</h2>
+          <Link to="/dashboard/historique" className="text-blue-600 hover:text-blue-700 font-medium text-sm md:text-base cursor-pointer">{t('common.view')}</Link>
         </div>
         <div className="space-y-3">
           {recentTransactions.map((transaction) => (
@@ -450,15 +450,15 @@ const DashboardPage: React.FC = () => {
           <div className="flex items-center justify-between mb-3 md:mb-4">
             <div className="flex items-center space-x-2">
               <Star className="w-5 md:w-6 h-5 md:h-6" />
-              <h3 className="text-lg md:text-xl font-bold">Offre Spéciale</h3>
+              <h3 className="text-lg md:text-xl font-bold">{t('offers.special')}</h3>
             </div>
             <Sparkles className="w-5 md:w-6 h-5 md:h-6" />
           </div>
           <p className="text-emerald-100 text-sm md:text-base mb-3 md:mb-4">
-            Ouvrez un compte épargne et bénéficiez de 2% d'intérêts pendant 6 mois !
+            {t('offers.savingsAccount')}
           </p>
                       <Link to="/dashboard/parametres" className="bg-white/20 hover:bg-white/30 text-white px-3 md:px-4 py-2 rounded-lg transition-colors text-sm md:text-base cursor-pointer inline-block">
-              En savoir plus
+              {t('common.learnMore')}
             </Link>
         </div>
 
@@ -467,15 +467,15 @@ const DashboardPage: React.FC = () => {
           <div className="flex items-center justify-between mb-3 md:mb-4">
             <div className="flex items-center space-x-2">
               <Shield className="w-5 md:w-6 h-5 md:h-6" />
-              <h3 className="text-lg md:text-xl font-bold">Protection Premium</h3>
+              <h3 className="text-lg md:text-xl font-bold">{t('protection.premium')}</h3>
             </div>
             <Award className="w-5 md:w-6 h-5 md:h-6" />
           </div>
           <p className="text-indigo-100 text-sm md:text-base mb-3 md:mb-4">
-            Protégez vos transactions avec notre assurance fraudes avancée.
+            {t('protection.description')}
           </p>
                       <Link to="/dashboard/parametres" className="bg-white/20 hover:bg-white/30 text-white px-3 md:px-4 py-2 rounded-lg transition-colors text-sm md:text-base cursor-pointer inline-block">
-              Activer
+              {t('common.activate')}
             </Link>
         </div>
       </div>
@@ -486,14 +486,14 @@ const DashboardPage: React.FC = () => {
           <div className="flex items-center space-x-3 md:space-x-4">
             <Gift className="w-10 md:w-12 h-10 md:h-12" />
             <div>
-              <h3 className="text-lg md:text-xl font-bold">Cadeau de bienvenue !</h3>
+              <h3 className="text-lg md:text-xl font-bold">{t('referral.welcome')}</h3>
               <p className="text-rose-100 text-sm md:text-base">
-                Parrainez un ami et recevez 50€ chacun. Conditions applicables.
+                {t('referral.description')}
               </p>
             </div>
           </div>
                       <Link to="/dashboard/parametres" className="bg-white/20 hover:bg-white/30 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg transition-colors font-medium text-sm md:text-base cursor-pointer inline-block">
-              Parrainer
+              {t('referral.refer')}
             </Link>
         </div>
       </div>
