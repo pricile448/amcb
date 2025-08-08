@@ -54,12 +54,12 @@ const DashboardLayoutNew: React.FC = () => {
     if (userStr) {
       try {
         const user = JSON.parse(userStr);
-        return formatUserNameForDisplay(user.firstName || 'Client', user.lastName || 'AmCbunq');
+        return formatUserNameForDisplay(user.firstName || t('common.defaultClient'), user.lastName || t('common.defaultCompany'));
       } catch (error) {
         console.error('❌ Erreur parsing user:', error);
       }
     }
-    return 'Client AmCbunq';
+    return t('common.defaultUser');
   };
 
   // Fonction pour récupérer l'email de l'utilisateur connecté
@@ -106,37 +106,37 @@ const DashboardLayoutNew: React.FC = () => {
 
   const getPageTitle = (pathname: string): string => {
     const pathMap: { [key: string]: string } = {
-      '/dashboard': 'Tableau de bord',
-      '/dashboard/accounts': 'Comptes',
-      '/dashboard/transactions': 'Transactions',
-      '/dashboard/transfers': 'Virements',
-      '/dashboard/iban': 'RIB',
-      '/dashboard/messages': 'Messages',
-      '/dashboard/settings': 'Paramètres',
-      '/dashboard/help': 'Aide',
-      '/dashboard/history': 'Historique',
-      '/dashboard/documents': 'Documents',
-      '/dashboard/billing': 'Facturation',
-      '/dashboard/budgets': 'Budgets',
-      '/dashboard/cards': 'Cartes',
-      '/dashboard/kyc': 'Vérification d\'identité',
+      '/dashboard': t('nav.dashboard'),
+      '/dashboard/accounts': t('nav.accounts'),
+      '/dashboard/transactions': t('nav.transactions'),
+      '/dashboard/transfers': t('nav.transfers'),
+      '/dashboard/iban': t('nav.iban'),
+      '/dashboard/messages': t('nav.messages'),
+      '/dashboard/settings': t('nav.settings'),
+      '/dashboard/help': t('nav.help'),
+      '/dashboard/history': t('nav.history'),
+      '/dashboard/documents': t('nav.documents'),
+      '/dashboard/billing': t('nav.billing'),
+      '/dashboard/budgets': t('nav.budgets'),
+      '/dashboard/cards': t('nav.cards'),
+      '/dashboard/kyc': t('nav.verification'),
     };
 
-    return pathMap[pathname] || 'Dashboard';
+    return pathMap[pathname] || t('nav.dashboard');
   };
 
   const navigationItems = [
-    { name: 'Tableau de bord', href: '/dashboard', icon: Home },
-    { name: 'Comptes', href: '/dashboard/accounts', icon: Building },
-    { name: 'Transactions', href: '/dashboard/transactions', icon: Clock },
-    { name: 'Virements', href: '/dashboard/transfers', icon: Send },
-    { name: 'RIB', href: '/dashboard/iban', icon: CreditCard },
-    { name: 'Messages', href: '/dashboard/messages', icon: MessageCircle },
-    { name: 'Documents', href: '/dashboard/documents', icon: FileText },
-    { name: 'Budgets', href: '/dashboard/budgets', icon: PieChart },
-    { name: 'Cartes', href: '/dashboard/cards', icon: CreditCard },
-    { name: 'Aide', href: '/dashboard/help', icon: HelpCircle },
-    { name: 'Paramètres', href: '/dashboard/settings', icon: Settings },
+    { name: t('nav.dashboard'), href: '/dashboard', icon: Home },
+    { name: t('nav.accounts'), href: '/dashboard/accounts', icon: Building },
+    { name: t('nav.transactions'), href: '/dashboard/transactions', icon: Clock },
+    { name: t('nav.transfers'), href: '/dashboard/transfers', icon: Send },
+    { name: t('nav.iban'), href: '/dashboard/iban', icon: CreditCard },
+    { name: t('nav.messages'), href: '/dashboard/messages', icon: MessageCircle },
+    { name: t('nav.documents'), href: '/dashboard/documents', icon: FileText },
+    { name: t('nav.budgets'), href: '/dashboard/budgets', icon: PieChart },
+    { name: t('nav.cards'), href: '/dashboard/cards', icon: CreditCard },
+    { name: t('nav.help'), href: '/dashboard/help', icon: HelpCircle },
+    { name: t('nav.settings'), href: '/dashboard/settings', icon: Settings },
   ];
 
   return (
@@ -252,8 +252,8 @@ const DashboardLayoutNew: React.FC = () => {
               ) : (
                 <button
                   onClick={() => showModernAlertMessage(
-                    'Messages indisponibles',
-                    'Pour accéder au chat, vous devez d\'abord valider votre identité.',
+                    t('messages.unavailable'),
+                    t('messages.unavailableUnverified'),
                     'warning'
                   )}
                   className="relative p-2 text-gray-400 hover:text-gray-600 transition-colors"

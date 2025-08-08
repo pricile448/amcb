@@ -20,7 +20,10 @@
     "download": "Télécharger",
     "upload": "Télécharger",
     "yes": "Oui",
-    "no": "Non"
+    "no": "Non",
+    "defaultUser": "Client AmCbunq",
+    "defaultClient": "Client",
+    "defaultCompany": "AmCbunq"
   },
   "nav": {
     "features": "Fonctionnalités",
@@ -38,7 +41,10 @@
     "budgets": "Budgets",
     "settings": "Paramètres",
     "documents": "Mes Documents",
-    "logout": "Déconnexion"
+    "logout": "Déconnexion",
+    "messages": "Messages",
+    "verification": "Vérification d'identité",
+    "transactions": "Transactions"
   },
   "home": {
     "hero": {
@@ -771,5 +777,12 @@
     "gbp": "Livre sterling",
     "chf": "Franc suisse",
     "jpy": "Yen japonais"
+  },
+  "messages": {
+    "unavailable": "Messages indisponibles",
+    "temporarilyUnavailable": "Messages temporairement indisponibles",
+    "unavailableUnverified": "Pour accéder au chat avec notre support, vous devez d'abord valider votre identité.",
+    "unavailablePending": "La messagerie sera disponible une fois votre vérification d'identité terminée. Votre dossier est en cours d'examen.",
+    "unavailableVerifyIdentity": "Messages indisponibles - Vérifiez votre identité"
   }
 }

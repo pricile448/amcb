@@ -20,7 +20,10 @@
     "download": "Download",
     "upload": "Upload",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "defaultUser": "AmCbunq Client",
+    "defaultClient": "Client",
+    "defaultCompany": "AmCbunq"
   },
   "nav": {
     "features": "Features",
@@ -38,7 +41,10 @@
     "budgets": "Budgets",
     "settings": "Settings",
     "documents": "My Documents",
-    "logout": "Logout"
+    "logout": "Logout",
+    "messages": "Messages",
+    "verification": "Identity Verification",
+    "transactions": "Transactions"
   },
   "home": {
     "hero": {
@@ -612,6 +618,11 @@
     "verified": "Verified"
   },
   "messages": {
+    "unavailable": "Messages unavailable",
+    "temporarilyUnavailable": "Messages temporarily unavailable",
+    "unavailableUnverified": "To access chat with our support, you must first verify your identity.",
+    "unavailablePending": "Messaging will be available once your identity verification is complete. Your file is under review.",
+    "unavailableVerifyIdentity": "Messages unavailable - Verify your identity",
     "title": "Messages",
     "subtitle": "AmCbunq Customer Service",
     "support": "AmCbunq Support",

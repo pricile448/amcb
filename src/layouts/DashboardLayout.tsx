@@ -65,7 +65,7 @@ const DashboardLayout: React.FC = () => {
     }
   }, [hasInitialized, syncKycStatus]);
 
-  const [userName, setUserName] = useState('Client AmCbunq');
+  const [userName, setUserName] = useState(t('common.defaultUser'));
   const [userDataLoaded, setUserDataLoaded] = useState(false);
 
   // Charger les données utilisateur UNE SEULE FOIS
@@ -99,7 +99,7 @@ const DashboardLayout: React.FC = () => {
       try {
         const user = JSON.parse(userStr);
         const first = user.firstName || 'Client';
-        const last = user.lastName || 'AmCbunq';
+        const last = user.lastName || t('common.defaultCompany');
         
         // Pour la sidebar, utiliser une troncature très agressive
         if (first.length > 8 || last.length > 8) {
@@ -149,7 +149,7 @@ const DashboardLayout: React.FC = () => {
 
 
   const navigation = [
-    { name: "Mon espace client", href: "/dashboard", icon: Home },
+    { name: t("nav.dashboard"), href: "/dashboard", icon: Home },
     { name: t("nav.accounts"), href: "/dashboard/comptes", icon: CreditCard },
     { name: t("nav.iban"), href: "/dashboard/iban", icon: Building },
     { name: t("nav.transfers"), href: "/dashboard/virements", icon: Send },
@@ -222,13 +222,13 @@ const DashboardLayout: React.FC = () => {
     // Pages spéciales
     switch (pathname) {
       case '/dashboard/messages':
-        return 'Messages';
+        return t('nav.messages');
       case '/dashboard/kyc':
-        return 'Vérification d\'identité';
+        return t('nav.verification');
       case '/dashboard/verification':
-        return 'Vérification d\'identité';
+        return t('nav.verification');
       default:
-        return 'Mon espace client';
+        return t('nav.dashboard');
     }
   };
 
@@ -386,14 +386,14 @@ const DashboardLayout: React.FC = () => {
               ) : (
                 <button
                   onClick={() => showModernAlertMessage(
-                    userStatus === 'pending' ? 'Messages temporairement indisponibles' : 'Messages indisponibles',
+                    userStatus === 'pending' ? t('messages.temporarilyUnavailable') : t('messages.unavailable'),
                     userStatus === 'pending' 
-                      ? 'La messagerie sera disponible une fois votre vérification d\'identité terminée. Votre dossier est en cours d\'examen.'
-                      : 'Pour accéder au chat avec notre support, vous devez d\'abord valider votre identité.',
+                      ? t('messages.unavailablePending')
+                      : t('messages.unavailableUnverified'),
                     'warning'
                   )}
                   className="relative p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 transition-all duration-200 group"
-                  title={userStatus === 'pending' ? 'Messages temporairement indisponibles' : 'Messages indisponibles - Vérifiez votre identité'}
+                  title={userStatus === 'pending' ? t('messages.temporarilyUnavailable') : t('messages.unavailableVerifyIdentity')}
                 >
                   <MessageCircle className="w-5 md:w-6 h-5 md:h-6 group-hover:scale-110 transition-transform" />
                   <div className="absolute -top-1 -right-1 w-2 md:w-3 h-2 md:h-3 bg-gray-400 dark:bg-gray-500 rounded-full group-hover:bg-gray-500 dark:group-hover:bg-gray-400 transition-colors"></div>

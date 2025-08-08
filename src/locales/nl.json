@@ -20,7 +20,10 @@
     "download": "Downloaden",
     "upload": "Uploaden",
     "yes": "Ja",
-    "no": "Nee"
+    "no": "Nee",
+    "defaultUser": "AmCbunq Klant",
+    "defaultClient": "Klant",
+    "defaultCompany": "AmCbunq"
   },
   "nav": {
     "features": "Functies",
@@ -38,7 +41,10 @@
     "budgets": "Budgetten",
     "settings": "Instellingen",
     "documents": "Mijn documenten",
-    "logout": "Uitloggen"
+    "logout": "Uitloggen",
+    "messages": "Berichten",
+    "verification": "Identiteitsverificatie",
+    "transactions": "Transacties"
   },
   "home": {
     "hero": {
@@ -612,6 +618,11 @@
     "verified": "Vérifié"
   },
   "messages": {
+    "unavailable": "Berichten niet beschikbaar",
+    "temporarilyUnavailable": "Berichten tijdelijk niet beschikbaar",
+    "unavailableUnverified": "Om toegang te krijgen tot chat met onze ondersteuning, moet u eerst uw identiteit verifiëren.",
+    "unavailablePending": "Messaging zal beschikbaar zijn zodra uw identiteitsverificatie is voltooid. Uw dossier wordt beoordeeld.",
+    "unavailableVerifyIdentity": "Berichten niet beschikbaar - Verifieer uw identiteit",
     "title": "Messages",
     "subtitle": "Service client AmCbunq",
     "support": "Support AmCbunq",

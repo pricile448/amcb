@@ -20,7 +20,10 @@
     "download": "Scarica",
     "upload": "Carica",
     "yes": "Sì",
-    "no": "No"
+    "no": "No",
+    "defaultUser": "Cliente AmCbunq",
+    "defaultClient": "Cliente",
+    "defaultCompany": "AmCbunq"
   },
   "nav": {
     "features": "Caratteristiche",
@@ -38,7 +41,10 @@
     "budgets": "Budget",
     "settings": "Impostazioni",
     "documents": "I miei documenti",
-    "logout": "Esci"
+    "logout": "Esci",
+    "messages": "Messaggi",
+    "verification": "Verifica Identità",
+    "transactions": "Transazioni"
   },
   "home": {
     "hero": {
@@ -612,6 +618,11 @@
     "verified": "Vérifié"
   },
   "messages": {
+    "unavailable": "Messaggi non disponibili",
+    "temporarilyUnavailable": "Messaggi temporaneamente non disponibili",
+    "unavailableUnverified": "Per accedere alla chat con il nostro supporto, devi prima verificare la tua identità.",
+    "unavailablePending": "La messaggistica sarà disponibile una volta completata la verifica dell'identità. Il tuo dossier è in revisione.",
+    "unavailableVerifyIdentity": "Messaggi non disponibili - Verifica la tua identità",
     "title": "Messages",
     "subtitle": "Service client AmCbunq",
     "support": "Support AmCbunq",
