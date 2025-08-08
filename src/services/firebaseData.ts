@@ -668,48 +668,16 @@ export class FirebaseDataService {
     }
   }
 
-  // Méthode pour soumettre les documents KYC
+  // Méthodes KYC dépréciées - Utiliser kycService à la place
+  // Ces méthodes sont conservées pour la compatibilité mais ne sont plus utilisées
   static async submitKycDocuments(userId: string, documents: any[]): Promise<boolean> {
-    try {
-      const response = await fetch(`${API_CONFIG.BASE_URL}/api/kyc/submit`, {
-        method: 'POST',
-        headers: {
-          ...this.getAuthHeaders(),
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ userId, documents })
-      });
-
-      if (!response.ok) {
-        throw new Error('Erreur lors de la soumission des documents KYC');
-      }
-
-      const data = await response.json();
-      return data.success;
-    } catch (error) {
-      logger.error('Erreur FirebaseDataService.submitKycDocuments:', error);
-      return false;
-    }
+    logger.warn('submitKycDocuments est déprécié. Utilisez kycService.submitDocument à la place.');
+    return false;
   }
 
-  // Méthode pour récupérer les documents KYC
   static async getKycDocuments(userId: string): Promise<any | null> {
-    try {
-      const response = await fetch(`${API_CONFIG.BASE_URL}/api/kyc/${userId}`, {
-        method: 'GET',
-        headers: this.getAuthHeaders()
-      });
-
-      if (!response.ok) {
-        throw new Error('Erreur lors de la récupération des documents KYC');
-      }
-
-      const data = await response.json();
-      return data.success ? data : null;
-    } catch (error) {
-      logger.error('Erreur FirebaseDataService.getKycDocuments:', error);
-      return null;
-    }
+    logger.warn('getKycDocuments est déprécié. Utilisez kycService.getUserSubmissions à la place.');
+    return null;
   }
 
   // Méthode pour récupérer les données utilisateur avec cache

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Upload, FileText, CheckCircle, AlertCircle, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { FirebaseDataService } from '../../services/firebaseData';
+import { kycService } from '../../services/kycService';
 import { useNotifications, useKycSync } from '../../hooks/useNotifications';
 
 interface KycDocument {
@@ -104,28 +105,37 @@ const KycPage: React.FC = () => {
     setSubmitting(true);
     try {
       // Préparer les données des documents
-      const documentsData = documents
-        .filter(doc => doc.uploaded && doc.file)
-        .map(doc => ({
-          id: doc.id,
-          type: doc.type,
-          name: doc.name,
-          fileName: doc.file?.name || '',
-          fileSize: doc.file?.size || 0,
-          uploadDate: new Date()
-        }));
+      // Soumettre chaque document individuellement via le service KYC
+      for (const doc of documents) {
+        if (doc.uploaded && doc.file) {
+          try {
+            // Déterminer le type de document pour le service KYC
+            let documentType: 'identity' | 'address' | 'income' | 'bankStatement';
+            switch (doc.type) {
+              case 'identity':
+                documentType = 'identity';
+                break;
+              case 'proof_of_address':
+                documentType = 'address';
+                break;
+              case 'proof_of_income':
+                documentType = 'income';
+                break;
+              default:
+                documentType = 'identity';
+            }
 
-      const success = await FirebaseDataService.submitKycDocuments(userId, documentsData);
-      
-      if (success) {
-        showSuccess(
-          t('kyc.documentsSubmitted'),
-          t('kyc.submissionSuccess')
-        );
-        navigate('/dashboard');
-      } else {
-        showError('Erreur', t('kyc.submissionError'));
+            // Soumettre le document via le service KYC
+            await kycService.submitDocument(userId, doc.file, documentType);
+          } catch (error) {
+            console.error(`Erreur lors de la soumission du document ${doc.name}:`, error);
+            throw error;
+          }
+        }
       }
+
+      // Rediriger vers la page de succès
+      navigate('/dashboard/kyc-success');
     } catch (error) {
       console.error('Erreur lors de la soumission:', error);
       showError('Erreur', 'Une erreur est survenue lors de la soumission');
