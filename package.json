@@ -8,8 +8,8 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "start": "node server.js",
-    "start:prod": "NODE_ENV=production node server.js",
+    "start": "node server-prod.js",
+    "start:prod": "NODE_ENV=production node server-prod.js",
     "start:full": "node start.cjs",
     "check-ports": "node check-ports.cjs"
   },
