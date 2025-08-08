@@ -67,9 +67,9 @@ const HistoryPage: React.FC = () => {
           // Déterminer le nom du compte
           let accountName = trans.accountId;
           if (accountName === 'checking-1') {
-            accountName = 'Compte Courant';
+            accountName = t('history.accounts.checking');
           } else if (accountName === 'savings-1') {
-            accountName = 'Compte Épargne';
+            accountName = t('history.accounts.savings');
           }
           
           logger.debug(`History Transaction ${trans.id}: amount=${amount}, type=${transactionType}, date=${parsedDate}, category=${trans.category}`);
@@ -85,25 +85,25 @@ const HistoryPage: React.FC = () => {
           // Corriger les descriptions pour utiliser les noms d'affichage des comptes
           let correctedDescription = trans.description;
           if (trans.description.includes('savings-1')) {
-            correctedDescription = trans.description.replace('savings-1', 'Compte Épargne');
+            correctedDescription = trans.description.replace('savings-1', t('history.accounts.savings'));
           }
           if (trans.description.includes('checking-1')) {
-            correctedDescription = trans.description.replace('checking-1', 'Compte Courant');
+            correctedDescription = trans.description.replace('checking-1', t('history.accounts.checking'));
           }
           if (trans.description.includes('credit-1')) {
-            correctedDescription = trans.description.replace('credit-1', 'Carte de Crédit');
+            correctedDescription = trans.description.replace('credit-1', t('history.accounts.credit'));
           }
           
           return {
             id: trans.id,
             type: transactionType,
-            category: trans.category || 'Autre',
+            category: trans.category || t('history.categories.other'),
             description: truncateTransactionDescription(correctedDescription || 'Transaction'),
             amount: amount,
             currency: trans.currency || 'EUR',
             date: parsedDate,
             status: status,
-            account: accountName || 'Compte',
+            account: accountName || t('history.accounts.default'),
             reference: trans.reference || trans.id
           };
         });
@@ -164,13 +164,13 @@ const HistoryPage: React.FC = () => {
   const getStatusText = (status: string) => {
     switch (status) {
       case 'completed':
-        return 'Terminé';
+        return t('history.status.completed');
       case 'pending':
-        return 'En attente';
+        return t('history.status.pending');
       case 'failed':
-        return 'Échoué';
+        return t('history.status.failed');
       default:
-        return 'Inconnu';
+        return t('history.status.unknown');
     }
   };
 
@@ -242,8 +242,8 @@ const HistoryPage: React.FC = () => {
     <div className="max-w-6xl mx-auto space-y-4 sm:space-y-6">
       {/* Header */}
       <div className="mb-4 sm:mb-8">
-        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Historique</h1>
-        <p className="text-gray-600 text-sm sm:text-base">Consultez l'historique de vos transactions</p>
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">{t('history.title')}</h1>
+        <p className="text-gray-600 text-sm sm:text-base">{t('history.subtitle')}</p>
       </div>
 
       {/* Summary Cards */}
@@ -251,7 +251,7 @@ const HistoryPage: React.FC = () => {
         <div className="bg-white rounded-lg shadow-sm border p-4 sm:p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs sm:text-sm text-gray-500">Revenus</p>
+              <p className="text-xs sm:text-sm text-gray-500">{t('history.summary.income')}</p>
               <p className="text-lg sm:text-2xl font-bold text-green-600">
                 {totalIncome.toLocaleString('fr-FR', {
                   style: 'currency',
@@ -266,7 +266,7 @@ const HistoryPage: React.FC = () => {
         <div className="bg-white rounded-lg shadow-sm border p-4 sm:p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs sm:text-sm text-gray-500">Dépenses</p>
+              <p className="text-xs sm:text-sm text-gray-500">{t('history.summary.expenses')}</p>
               <p className="text-lg sm:text-2xl font-bold text-red-600">
                 {totalExpenses.toLocaleString('fr-FR', {
                   style: 'currency',
@@ -281,7 +281,7 @@ const HistoryPage: React.FC = () => {
         <div className="bg-white rounded-lg shadow-sm border p-4 sm:p-6 sm:col-span-2 lg:col-span-1">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs sm:text-sm text-gray-500">Solde net</p>
+              <p className="text-xs sm:text-sm text-gray-500">{t('history.summary.netBalance')}</p>
               <p className="text-lg sm:text-2xl font-bold text-gray-900">
                 {(totalIncome - totalExpenses).toLocaleString('fr-FR', {
                   style: 'currency',
@@ -303,7 +303,7 @@ const HistoryPage: React.FC = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
               <input
                 type="text"
-                placeholder="Rechercher une transaction..."
+                placeholder={t('history.search.placeholder')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
@@ -318,10 +318,10 @@ const HistoryPage: React.FC = () => {
               onChange={(e) => setSelectedFilter(e.target.value)}
               className="px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
             >
-              <option value="all">Tous les types</option>
-              <option value="income">Revenus</option>
-              <option value="expense">Dépenses</option>
-              <option value="transfer">Virements</option>
+              <option value="all">{t('history.filters.allTypes')}</option>
+              <option value="income">{t('history.filters.income')}</option>
+              <option value="expense">{t('history.filters.expense')}</option>
+              <option value="transfer">{t('history.filters.transfer')}</option>
             </select>
 
             <select
@@ -329,15 +329,15 @@ const HistoryPage: React.FC = () => {
               onChange={(e) => setSelectedPeriod(e.target.value)}
               className="px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
             >
-              <option value="7days">7 derniers jours</option>
-              <option value="30days">30 derniers jours</option>
-              <option value="90days">90 derniers jours</option>
-              <option value="1year">1 an</option>
+              <option value="7days">{t('history.filters.periods.7Days')}</option>
+              <option value="30days">{t('history.filters.periods.30Days')}</option>
+              <option value="90days">{t('history.filters.periods.90Days')}</option>
+              <option value="1year">{t('history.filters.periods.1Year')}</option>
             </select>
 
             <button className="px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2 text-sm">
               <Download className="w-4 h-4" />
-              <span className="hidden sm:inline">Exporter</span>
+              <span className="hidden sm:inline">{t('history.filters.export')}</span>
             </button>
           </div>
         </div>
@@ -350,22 +350,22 @@ const HistoryPage: React.FC = () => {
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Transaction
+                  {t('history.table.headers.transaction')}
                 </th>
                 <th className="hidden sm:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Catégorie
+                  {t('history.table.headers.category')}
                 </th>
                 <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Montant
+                  {t('history.table.headers.amount')}
                 </th>
                 <th className="hidden lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Date
+                  {t('history.table.headers.date')}
                 </th>
                 <th className="hidden xl:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Statut
+                  {t('history.table.headers.status')}
                 </th>
                 <th className="hidden 2xl:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Référence
+                  {t('history.table.headers.reference')}
                 </th>
               </tr>
             </thead>
@@ -442,9 +442,9 @@ const HistoryPage: React.FC = () => {
         {filteredTransactions.length === 0 && (
           <div className="text-center py-8 sm:py-12">
             <Calendar className="mx-auto h-8 w-8 sm:h-12 sm:w-12 text-gray-400" />
-            <h3 className="mt-2 text-sm font-medium text-gray-900">Aucune transaction trouvée</h3>
+            <h3 className="mt-2 text-sm font-medium text-gray-900">{t('history.emptyState.title')}</h3>
             <p className="mt-1 text-xs sm:text-sm text-gray-500">
-              Essayez de modifier vos critères de recherche.
+              {t('history.emptyState.description')}
             </p>
           </div>
         )}
@@ -453,11 +453,11 @@ const HistoryPage: React.FC = () => {
       {/* Pagination */}
       {filteredTransactions.length > 0 && (
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs sm:text-sm text-gray-500 space-y-2 sm:space-y-0">
-          <span>Affichage de {filteredTransactions.length} transactions</span>
+          <span>{t('history.pagination.showing')} {filteredTransactions.length} {t('history.pagination.transactions')}</span>
           <div className="flex items-center justify-center sm:justify-end space-x-2">
-            <button className="px-2 sm:px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 text-xs sm:text-sm">Précédent</button>
+            <button className="px-2 sm:px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 text-xs sm:text-sm">{t('history.pagination.previous')}</button>
             <span className="px-2 sm:px-3 py-1 bg-blue-600 text-white rounded text-xs sm:text-sm">1</span>
-            <button className="px-2 sm:px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 text-xs sm:text-sm">Suivant</button>
+            <button className="px-2 sm:px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 text-xs sm:text-sm">{t('history.pagination.next')}</button>
           </div>
         </div>
       )}

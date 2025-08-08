@@ -168,27 +168,27 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
       <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-2xl p-4 md:p-6 text-white">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-xl md:text-2xl font-bold">Facturation</h1>
-            <p className="text-green-100 text-sm md:text-base">RIB et messages de la banque</p>
+            <h1 className="text-xl md:text-2xl font-bold">{t('billing.title')}</h1>
+            <p className="text-green-100 text-sm md:text-base">{t('billing.subtitle')}</p>
           </div>
           <div className="flex items-center space-x-2 bg-white/20 px-2 md:px-3 py-1 rounded-full">
             <div className="w-2 h-2 bg-white rounded-full"></div>
-            <span className="text-xs md:text-sm font-medium">Facturation</span>
+            <span className="text-xs md:text-sm font-medium">{t('billing.title')}</span>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
           <div className="bg-white/10 rounded-xl p-3 md:p-4">
-            <p className="text-green-100 text-xs md:text-sm">Type</p>
-            <p className="text-lg md:text-2xl font-bold">RIB Facturation</p>
+            <p className="text-green-100 text-xs md:text-sm">{t('billing.header.type')}</p>
+            <p className="text-lg md:text-2xl font-bold">{t('billing.header.ribBilling')}</p>
           </div>
           <div className="bg-white/10 rounded-xl p-3 md:p-4">
-            <p className="text-green-100 text-xs md:text-sm">Statut</p>
-            <p className="text-lg md:text-2xl font-bold">Actif</p>
+            <p className="text-green-100 text-xs md:text-sm">{t('billing.header.status')}</p>
+            <p className="text-lg md:text-2xl font-bold">{t('billing.header.active')}</p>
           </div>
           <div className="bg-white/10 rounded-xl p-3 md:p-4">
-            <p className="text-green-100 text-xs md:text-sm">Usage</p>
-            <p className="text-lg md:text-2xl font-bold">Validation</p>
+            <p className="text-green-100 text-xs md:text-sm">{t('billing.header.usage')}</p>
+            <p className="text-lg md:text-2xl font-bold">{t('billing.header.validation')}</p>
           </div>
         </div>
       </div>
@@ -196,13 +196,13 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
       {/* RIB de Facturation */}
       <div className="bg-white rounded-2xl shadow-lg p-4 md:p-6">
         <div className="flex items-center justify-between mb-4 md:mb-6">
-          <h2 className="text-lg md:text-xl font-bold text-gray-900">RIB de Facturation</h2>
+          <h2 className="text-lg md:text-xl font-bold text-gray-900">{t('billing.ribSection.title')}</h2>
           <button
             onClick={() => setShowDetails(!showDetails)}
             className="flex items-center space-x-2 px-2 md:px-3 py-2 text-sm text-gray-600 hover:text-gray-900 transition-colors"
           >
             {showDetails ? <FileText className="w-4 h-4" /> : <FileText className="w-4 h-4" />}
-            <span className="text-xs md:text-sm">{showDetails ? 'Masquer' : 'Afficher'} les détails</span>
+            <span className="text-xs md:text-sm">{showDetails ? t('billing.ribSection.hideDetails') : t('billing.ribSection.showDetails')}</span>
           </button>
         </div>
 
@@ -213,15 +213,15 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
                 <Building className="w-5 md:w-6 h-5 md:h-6 text-green-600" />
               </div>
               <div>
-                <h3 className="text-base md:text-lg font-semibold text-gray-900">RIB de Facturation</h3>
-                <p className="text-xs md:text-sm text-gray-500">Pour la validation de compte et les opérations bancaires</p>
+                <h3 className="text-base md:text-lg font-semibold text-gray-900">{t('billing.ribSection.title')}</h3>
+                <p className="text-xs md:text-sm text-gray-500">{t('billing.ribSection.description')}</p>
               </div>
             </div>
           </div>
 
           <div className="space-y-4">
             <div className="bg-white rounded-lg p-3 md:p-4 border border-green-200">
-              <p className="text-xs md:text-sm text-gray-500 mb-2">Numéro IBAN de Facturation</p>
+              <p className="text-xs md:text-sm text-gray-500 mb-2">{t('billing.ribSection.ibanNumber')}</p>
               <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
                 <p className="text-lg md:text-xl font-mono font-bold text-gray-900 break-all">
                   {showDetails ? billingData.billingIban : 'FR76 **** **** **** **** **** ***'}
@@ -236,7 +236,7 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
                 >
                   <Copy className="w-4 h-4" />
                   <span className="font-medium">
-                    {copied ? 'Copié !' : 'Copier'}
+                    {copied ? t('billing.ribSection.copied') : t('billing.ribSection.copy')}
                   </span>
                 </button>
               </div>
@@ -245,11 +245,11 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
             {showDetails && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                 <div className="bg-white rounded-lg p-3 md:p-4 border border-green-200">
-                  <p className="text-xs md:text-sm text-gray-500 mb-2">Code BIC/SWIFT</p>
+                  <p className="text-xs md:text-sm text-gray-500 mb-2">{t('billing.ribSection.bicCode')}</p>
                   <p className="text-sm md:text-lg font-mono font-semibold text-gray-900">{billingData.billingBic}</p>
                 </div>
                 <div className="bg-white rounded-lg p-3 md:p-4 border border-green-200">
-                  <p className="text-xs md:text-sm text-gray-500 mb-2">Titulaire du compte</p>
+                  <p className="text-xs md:text-sm text-gray-500 mb-2">{t('billing.ribSection.accountHolder')}</p>
                   <p className="text-sm md:text-lg font-semibold text-gray-900">{billingData.billingHolder}</p>
                 </div>
               </div>
@@ -258,7 +258,7 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
             <div className="flex flex-col md:flex-row md:items-center md:justify-between pt-4 border-t border-green-200 space-y-3 md:space-y-0">
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                <span className="text-xs md:text-sm text-gray-600">RIB de facturation actif</span>
+                <span className="text-xs md:text-sm text-gray-600">{t('billing.ribSection.activeStatus')}</span>
               </div>
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
                 <button
@@ -266,14 +266,14 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
                   className="flex items-center justify-center space-x-2 px-3 md:px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm"
                 >
                   <Download className="w-4 h-4" />
-                  <span>Télécharger RIB</span>
+                  <span>{t('billing.ribSection.downloadRib')}</span>
                 </button>
                 <button
                   onClick={handleShare}
                   className="flex items-center justify-center space-x-2 px-3 md:px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm"
                 >
                   <Share2 className="w-4 h-4" />
-                  <span>Partager</span>
+                  <span>{t('billing.ribSection.share')}</span>
                 </button>
               </div>
             </div>
@@ -288,7 +288,7 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
             <div className="p-2 bg-blue-100 rounded-lg">
               <MessageSquare className="w-5 h-5 text-blue-600" />
             </div>
-            <h2 className="text-lg md:text-xl font-bold text-gray-900">Message de la Banque</h2>
+            <h2 className="text-lg md:text-xl font-bold text-gray-900">{t('billing.bankMessage.title')}</h2>
           </div>
 
           <div className="bg-blue-50 rounded-xl p-4 md:p-6 border border-blue-200">
@@ -297,7 +297,7 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
                 <CheckCircle className="w-4 h-4 text-blue-600" />
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-gray-900 mb-2">Informations importantes</h3>
+                <h3 className="font-semibold text-gray-900 mb-2">{t('billing.bankMessage.importantInfo')}</h3>
                 <div className="prose prose-sm max-w-none">
                   <pre className="whitespace-pre-wrap text-sm text-gray-700 font-sans leading-relaxed">
                     {billingData.billingText}
@@ -311,7 +311,7 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
 
       {/* Informations importantes */}
       <div className="bg-white rounded-2xl shadow-lg p-4 md:p-6">
-        <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-4">Informations importantes</h2>
+        <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-4">{t('billing.importantInfo.title')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           <div className="space-y-4">
             <div className="flex items-start space-x-3">
@@ -319,10 +319,9 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
                 <Building className="w-4 md:w-5 h-4 md:h-5 text-green-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 text-sm md:text-base">RIB de Facturation</h3>
+                <h3 className="font-semibold text-gray-900 text-sm md:text-base">{t('billing.importantInfo.ribBilling.title')}</h3>
                 <p className="text-xs md:text-sm text-gray-600">
-                  Ce RIB est spécifiquement destiné aux opérations de facturation et de validation de compte. 
-                  Il est différent de votre RIB personnel.
+                  {t('billing.importantInfo.ribBilling.description')}
                 </p>
               </div>
             </div>
@@ -331,10 +330,9 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
                 <CheckCircle className="w-4 md:w-5 h-4 md:h-5 text-blue-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 text-sm md:text-base">Validation de Compte</h3>
+                <h3 className="font-semibold text-gray-900 text-sm md:text-base">{t('billing.importantInfo.accountValidation.title')}</h3>
                 <p className="text-xs md:text-sm text-gray-600">
-                  Utilisez ce RIB pour effectuer les virements de validation requis pour activer 
-                  toutes les fonctionnalités de votre compte.
+                  {t('billing.importantInfo.accountValidation.description')}
                 </p>
               </div>
             </div>
@@ -345,10 +343,9 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
                 <AlertCircle className="w-4 md:w-5 h-4 md:h-5 text-purple-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 text-sm md:text-base">Différence avec RIB Personnel</h3>
+                <h3 className="font-semibold text-gray-900 text-sm md:text-base">{t('billing.importantInfo.difference.title')}</h3>
                 <p className="text-xs md:text-sm text-gray-600">
-                  Ce RIB est différent de votre RIB personnel affiché dans la section "Mon IBAN". 
-                  Il est utilisé uniquement pour les opérations de facturation.
+                  {t('billing.importantInfo.difference.description')}
                 </p>
               </div>
             </div>
@@ -357,10 +354,9 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
                 <FileText className="w-4 md:w-5 h-4 md:h-5 text-orange-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 text-sm md:text-base">Messages de la Banque</h3>
+                <h3 className="font-semibold text-gray-900 text-sm md:text-base">{t('billing.importantInfo.bankMessages.title')}</h3>
                 <p className="text-xs md:text-sm text-gray-600">
-                  Consultez régulièrement les messages de la banque pour rester informé des 
-                  exigences et procédures importantes.
+                  {t('billing.importantInfo.bankMessages.description')}
                 </p>
               </div>
             </div>
@@ -370,33 +366,33 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
 
       {/* Utilisation du RIB de Facturation */}
       <div className="bg-white rounded-2xl shadow-lg p-4 md:p-6">
-        <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-4">Utilisation du RIB de Facturation</h2>
+        <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-4">{t('billing.usage.title')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="text-center p-4 bg-gray-50 rounded-xl">
             <div className="w-10 md:w-12 h-10 md:h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
               <span className="text-green-600 font-bold text-base md:text-lg">1</span>
             </div>
-            <h3 className="font-semibold text-gray-900 mb-2 text-sm md:text-base">Validation de compte</h3>
+            <h3 className="font-semibold text-gray-900 mb-2 text-sm md:text-base">{t('billing.usage.accountValidation.title')}</h3>
             <p className="text-xs md:text-sm text-gray-600">
-              Effectuez le virement de validation requis pour activer toutes les fonctionnalités.
+              {t('billing.usage.accountValidation.description')}
             </p>
           </div>
           <div className="text-center p-4 bg-gray-50 rounded-xl">
             <div className="w-10 md:w-12 h-10 md:h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
               <span className="text-blue-600 font-bold text-base md:text-lg">2</span>
             </div>
-            <h3 className="font-semibold text-gray-900 mb-2 text-sm md:text-base">Opérations bancaires</h3>
+            <h3 className="font-semibold text-gray-900 mb-2 text-sm md:text-base">{t('billing.usage.bankingOperations.title')}</h3>
             <p className="text-xs md:text-sm text-gray-600">
-              Utilisez ce RIB pour les opérations spécifiques demandées par votre conseiller.
+              {t('billing.usage.bankingOperations.description')}
             </p>
           </div>
           <div className="text-center p-4 bg-gray-50 rounded-xl">
             <div className="w-10 md:w-12 h-10 md:h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
               <span className="text-purple-600 font-bold text-base md:text-lg">3</span>
             </div>
-            <h3 className="font-semibold text-gray-900 mb-2 text-sm md:text-base">Facturation</h3>
+            <h3 className="font-semibold text-gray-900 mb-2 text-sm md:text-base">{t('billing.usage.billing.title')}</h3>
             <p className="text-xs md:text-sm text-gray-600">
-              Ce RIB est utilisé pour les opérations de facturation et de gestion de compte.
+              {t('billing.usage.billing.description')}
             </p>
           </div>
         </div>

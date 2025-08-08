@@ -129,13 +129,13 @@ const BudgetsPage: React.FC = () => {
   const getStatusText = (status: string) => {
     switch (status) {
       case 'on-track':
-        return 'Dans les limites';
+        return t('budgets.status.onTrack');
       case 'over-budget':
-        return 'Dépassé';
+        return t('budgets.status.overBudget');
       case 'under-budget':
-        return 'Sous budget';
+        return t('budgets.status.underBudget');
       default:
-        return 'Inconnu';
+        return t('budgets.status.unknown');
     }
   };
 
@@ -228,8 +228,8 @@ const BudgetsPage: React.FC = () => {
     <div className="max-w-6xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Budgets</h1>
-        <p className="text-gray-600">Suivez vos dépenses et respectez vos budgets</p>
+        <h1 className="text-2xl font-bold text-gray-900">{t('budgets.title')}</h1>
+        <p className="text-gray-600">{t('budgets.subtitle')}</p>
       </div>
 
       {/* Summary Cards */}
@@ -237,7 +237,7 @@ const BudgetsPage: React.FC = () => {
         <div className="bg-white rounded-lg shadow-sm border p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500">Budget total</p>
+              <p className="text-sm text-gray-500">{t('budgets.summary.totalBudget')}</p>
               <p className="text-2xl font-bold text-gray-900">
                 {totalBudget.toLocaleString('fr-FR', {
                   style: 'currency',
@@ -252,7 +252,7 @@ const BudgetsPage: React.FC = () => {
         <div className="bg-white rounded-lg shadow-sm border p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500">Dépensé</p>
+              <p className="text-sm text-gray-500">{t('budgets.summary.spent')}</p>
               <p className="text-2xl font-bold text-gray-900">
                 {totalSpent.toLocaleString('fr-FR', {
                   style: 'currency',
@@ -267,7 +267,7 @@ const BudgetsPage: React.FC = () => {
         <div className="bg-white rounded-lg shadow-sm border p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500">Restant</p>
+              <p className="text-sm text-gray-500">{t('budgets.summary.remaining')}</p>
               <p className={`text-2xl font-bold ${remainingBudget >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                 {remainingBudget.toLocaleString('fr-FR', {
                   style: 'currency',
@@ -282,7 +282,7 @@ const BudgetsPage: React.FC = () => {
         <div className="bg-white rounded-lg shadow-sm border p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500">Utilisation</p>
+              <p className="text-sm text-gray-500">{t('budgets.summary.usage')}</p>
               <p className="text-2xl font-bold text-gray-900">
                 {spendingPercentage.toFixed(1)}%
               </p>
@@ -298,10 +298,10 @@ const BudgetsPage: React.FC = () => {
 
       {/* Overall Progress */}
       <div className="bg-white rounded-lg shadow-sm border p-6 mb-8">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Progression globale</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('budgets.progress.title')}</h3>
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">Utilisation du budget</span>
+            <span className="text-sm text-gray-600">{t('budgets.progress.budgetUsage')}</span>
             <span className="text-sm font-medium text-gray-900">
               {spendingPercentage.toFixed(1)}%
             </span>
@@ -324,7 +324,7 @@ const BudgetsPage: React.FC = () => {
       <div className="mb-6">
         <button className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
           <Plus className="w-5 h-5 mr-2" />
-          Créer un nouveau budget
+          {t('budgets.actions.createNew')}
         </button>
       </div>
 
@@ -358,7 +358,7 @@ const BudgetsPage: React.FC = () => {
               {/* Budget Progress */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Progression</span>
+                  <span className="text-sm text-gray-600">{t('budgets.card.progression')}</span>
                   <span className="text-sm font-medium text-gray-900">
                     {percentage.toFixed(1)}%
                   </span>
@@ -374,7 +374,7 @@ const BudgetsPage: React.FC = () => {
               {/* Budget Details */}
               <div className="mt-4 space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-500">Budget</span>
+                  <span className="text-sm text-gray-500">{t('budgets.card.budget')}</span>
                   <span className="text-sm font-medium text-gray-900">
                     {budget.amount.toLocaleString('fr-FR', {
                       style: 'currency',
@@ -383,7 +383,7 @@ const BudgetsPage: React.FC = () => {
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-500">Dépensé</span>
+                  <span className="text-sm text-gray-500">{t('budgets.card.spent')}</span>
                   <span className="text-sm font-medium text-gray-900">
                     {budget.spent.toLocaleString('fr-FR', {
                       style: 'currency',
@@ -392,7 +392,7 @@ const BudgetsPage: React.FC = () => {
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-500">Restant</span>
+                  <span className="text-sm text-gray-500">{t('budgets.card.remaining')}</span>
                   <span className={`text-sm font-medium ${remaining >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                     {remaining.toLocaleString('fr-FR', {
                       style: 'currency',
@@ -406,7 +406,7 @@ const BudgetsPage: React.FC = () => {
               <div className="mt-4 pt-4 border-t">
                 <div className="flex justify-between items-center">
                   <span className="text-xs text-gray-500">
-                    {budget.period === 'monthly' ? 'Mensuel' : 'Annuel'}
+                    {budget.period === 'monthly' ? t('budgets.card.monthly') : t('budgets.card.yearly')}
                   </span>
                   <span className="text-xs text-gray-500">
                     {formatDate(budget.startDate)} - {formatDate(budget.endDate)}
@@ -418,10 +418,10 @@ const BudgetsPage: React.FC = () => {
               <div className="mt-4 pt-4 border-t">
                 <div className="grid grid-cols-2 gap-2">
                   <button className="bg-blue-600 text-white py-2 px-3 rounded-md hover:bg-blue-700 transition-colors text-sm font-medium">
-                    Modifier
+                    {t('budgets.actions.edit')}
                   </button>
                   <button className="bg-gray-100 text-gray-700 py-2 px-3 rounded-md hover:bg-gray-200 transition-colors text-sm font-medium">
-                    Détails
+                    {t('budgets.actions.details')}
                   </button>
                 </div>
               </div>
@@ -433,25 +433,25 @@ const BudgetsPage: React.FC = () => {
       {/* Tips Section */}
       <div className="mt-8 bg-blue-50 rounded-lg p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-3">
-          Conseils pour gérer vos budgets
+          {t('budgets.tips.title')}
         </h3>
         <div className="grid gap-4 md:grid-cols-2">
           <div>
-            <h4 className="font-medium text-gray-900 mb-2">Planification</h4>
+            <h4 className="font-medium text-gray-900 mb-2">{t('budgets.tips.planning.title')}</h4>
             <ul className="text-sm text-gray-600 space-y-1">
-              <li>• Définissez des objectifs réalistes</li>
-              <li>• Suivez vos dépenses régulièrement</li>
-              <li>• Ajustez vos budgets si nécessaire</li>
-              <li>• Prévoyez des imprévus</li>
+              <li>• {t('budgets.tips.planning.tip1')}</li>
+              <li>• {t('budgets.tips.planning.tip2')}</li>
+              <li>• {t('budgets.tips.planning.tip3')}</li>
+              <li>• {t('budgets.tips.planning.tip4')}</li>
             </ul>
           </div>
           <div>
-            <h4 className="font-medium text-gray-900 mb-2">Optimisation</h4>
+            <h4 className="font-medium text-gray-900 mb-2">{t('budgets.tips.optimization.title')}</h4>
             <ul className="text-sm text-gray-600 space-y-1">
-              <li>• Identifiez vos postes de dépenses</li>
-              <li>• Cherchez des alternatives moins chères</li>
-              <li>• Évitez les achats impulsifs</li>
-              <li>• Épargnez les surplus</li>
+              <li>• {t('budgets.tips.optimization.tip1')}</li>
+              <li>• {t('budgets.tips.optimization.tip2')}</li>
+              <li>• {t('budgets.tips.optimization.tip3')}</li>
+              <li>• {t('budgets.tips.optimization.tip4')}</li>
             </ul>
           </div>
         </div>
