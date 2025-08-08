@@ -165,7 +165,16 @@ class KYCService {
       }
 
       const currentData = userDoc.data();
-      const currentKYCStatus = currentData.kycStatus || { status: 'unverified', lastUpdated: new Date() };
+      
+      // Support pour les deux formats : string simple ou objet complexe
+      let currentKYCStatus: any;
+      if (typeof currentData.kycStatus === 'string') {
+        // Format simple : kycStatus est juste une string
+        currentKYCStatus = { status: currentData.kycStatus, lastUpdated: new Date() };
+      } else {
+        // Format complexe : kycStatus est un objet
+        currentKYCStatus = currentData.kycStatus || { status: 'unverified', lastUpdated: new Date() };
+      }
 
       const updatedKYCStatus: KYCStatus = {
         ...currentKYCStatus,
@@ -187,8 +196,10 @@ class KYCService {
           break;
       }
 
+      // Mettre à jour avec le nouveau format (string simple pour compatibilité)
       await updateDoc(userRef, {
-        kycStatus: updatedKYCStatus,
+        kycStatus: status,  // Format simple pour compatibilité avec l'UI
+        kycStatusDetails: updatedKYCStatus,  // Détails complets si nécessaires
         updatedAt: serverTimestamp(),
       });
 

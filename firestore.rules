@@ -38,13 +38,13 @@ service cloud.firestore {
     
     // 🧾 Collection kycSubmissions
     match /kycSubmissions/{submissionId} {
-      // Utilisateur peut créer/lire ses propres soumissions
-      allow create, read: if request.auth != null 
-        && request.auth.uid == resource.data.uid;
-      
       // ✅ Permettre la création avec tous les champs nécessaires
       allow create: if request.auth != null 
-        && request.resource.data.uid == request.auth.uid;
+        && request.resource.data.userId == request.auth.uid;
+      
+      // Utilisateur peut lire ses propres soumissions
+      allow read: if request.auth != null 
+        && request.auth.uid == resource.data.userId;
       
       // Admins peuvent tout faire
       allow read, write: if request.auth != null 
