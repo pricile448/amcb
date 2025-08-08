@@ -32,8 +32,21 @@ class CloudinaryService {
 
   constructor() {
     // Configuration Cloudinary - à remplacer par vos vraies clés
-    this.cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'your-cloud-name';
-    this.uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'kyc-documents';
+    this.cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'dxvbuhadg';
+    this.uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'amcb_kyc_documents';
+    
+    // Validation de la configuration
+    if (!this.cloudName || this.cloudName === 'your-cloud-name') {
+      throw new Error('VITE_CLOUDINARY_CLOUD_NAME non configuré');
+    }
+    if (!this.uploadPreset || this.uploadPreset === 'kyc-documents') {
+      throw new Error('VITE_CLOUDINARY_UPLOAD_PRESET non configuré');
+    }
+    
+    logger.debug('CloudinaryService - Configuration:', {
+      cloudName: this.cloudName,
+      uploadPreset: this.uploadPreset
+    });
   }
 
   /**
@@ -41,21 +54,57 @@ class CloudinaryService {
    */
   async uploadFile(file: File, folder: string = 'kyc-documents'): Promise<CloudinaryUploadResponse> {
     try {
-      logger.debug('CloudinaryService.uploadFile - Début upload:', { fileName: file.name, size: file.size });
+      // Validation du fichier
+      const validation = this.validateFile(file);
+      if (!validation.isValid) {
+        throw new Error(validation.error || 'Fichier invalide');
+      }
+
+      logger.debug('CloudinaryService.uploadFile - Début upload:', { 
+        fileName: file.name, 
+        size: file.size,
+        type: file.type,
+        cloudName: this.cloudName,
+        uploadPreset: this.uploadPreset
+      });
 
       const formData = new FormData();
       formData.append('file', file);
       formData.append('upload_preset', this.uploadPreset);
       formData.append('folder', folder);
       formData.append('resource_type', 'auto');
+      
+      // Ajouter des paramètres supplémentaires pour améliorer la compatibilité
+      formData.append('allowed_formats', 'jpg,jpeg,png,pdf');
+      formData.append('max_bytes', '10485760'); // 10MB
+
+      logger.debug('CloudinaryService.uploadFile - FormData préparé:', {
+        uploadPreset: this.uploadPreset,
+        folder,
+        fileName: file.name
+      });
 
       const response = await fetch(`https://api.cloudinary.com/v1_1/${this.cloudName}/upload`, {
         method: 'POST',
         body: formData,
       });
 
+      logger.debug('CloudinaryService.uploadFile - Response status:', response.status);
+      logger.debug('CloudinaryService.uploadFile - Response headers:', Object.fromEntries(response.headers.entries()));
+
       if (!response.ok) {
-        throw new Error(`Erreur Cloudinary: ${response.status} ${response.statusText}`);
+        // Essayer de récupérer le message d'erreur détaillé
+        let errorMessage = `Erreur Cloudinary: ${response.status} ${response.statusText}`;
+        try {
+          const errorData = await response.text();
+          logger.error('CloudinaryService.uploadFile - Détails erreur:', errorData);
+          if (errorData) {
+            errorMessage += ` - ${errorData}`;
+          }
+        } catch (parseError) {
+          logger.debug('CloudinaryService.uploadFile - Impossible de parser l\'erreur:', parseError);
+        }
+        throw new Error(errorMessage);
       }
 
       const result: CloudinaryUploadResponse = await response.json();
@@ -63,7 +112,8 @@ class CloudinaryService {
       logger.success('CloudinaryService.uploadFile - Upload réussi:', {
         publicId: result.public_id,
         url: result.secure_url,
-        size: result.bytes
+        size: result.bytes,
+        format: result.format
       });
 
       return result;

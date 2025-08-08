@@ -42,18 +42,47 @@ class KYCService {
     documentType: KYCSubmission['documentType']
   ): Promise<KYCSubmission> {
     try {
-      logger.debug('KYCService.submitDocument - Début soumission:', { userId, documentType, fileName: file.name });
+      logger.debug('KYCService.submitDocument - Début soumission:', { 
+        userId, 
+        documentType, 
+        fileName: file.name,
+        fileSize: file.size,
+        fileType: file.type
+      });
 
-      // 1. Valider le fichier
-      const validation = cloudinaryService.validateFile(file);
-      if (!validation.isValid) {
-        throw new Error(validation.error);
+      // 1. Validation de base
+      if (!userId) {
+        throw new Error('ID utilisateur requis');
+      }
+      if (!file) {
+        throw new Error('Fichier requis');
+      }
+      if (!documentType) {
+        throw new Error('Type de document requis');
       }
 
-      // 2. Upload vers Cloudinary
-      const cloudinaryResult = await cloudinaryService.uploadFile(file, `kyc-documents/${userId}`);
+      // 2. Valider le fichier avec Cloudinary
+      const validation = cloudinaryService.validateFile(file);
+      if (!validation.isValid) {
+        throw new Error(validation.error || 'Fichier invalide');
+      }
 
-      // 3. Créer l'objet de soumission
+      logger.debug('KYCService.submitDocument - Fichier validé, début upload Cloudinary');
+
+      // 3. Upload vers Cloudinary avec gestion d'erreur détaillée
+      let cloudinaryResult;
+      try {
+        cloudinaryResult = await cloudinaryService.uploadFile(file, `kyc-documents/${userId}`);
+        logger.debug('KYCService.submitDocument - Upload Cloudinary réussi:', {
+          publicId: cloudinaryResult.public_id,
+          url: cloudinaryResult.secure_url
+        });
+      } catch (cloudinaryError) {
+        logger.error('KYCService.submitDocument - Erreur upload Cloudinary:', cloudinaryError);
+        throw new Error(`Échec de l'upload vers Cloudinary: ${cloudinaryError instanceof Error ? cloudinaryError.message : 'Erreur inconnue'}`);
+      }
+
+      // 4. Créer l'objet de soumission
       const submission: KYCSubmission = {
         id: `${userId}_${documentType}_${Date.now()}`,
         userId,
@@ -67,11 +96,32 @@ class KYCService {
         submittedAt: new Date(),
       };
 
-      // 4. Sauvegarder dans Firestore
-      await this.saveSubmission(submission);
+      logger.debug('KYCService.submitDocument - Objet soumission créé:', submission.id);
 
-      // 5. Mettre à jour le statut KYC de l'utilisateur
-      await this.updateKYCStatus(userId, 'pending');
+      // 5. Sauvegarder dans Firestore
+      try {
+        await this.saveSubmission(submission);
+        logger.debug('KYCService.submitDocument - Sauvegarde Firestore réussie');
+      } catch (firestoreError) {
+        logger.error('KYCService.submitDocument - Erreur sauvegarde Firestore:', firestoreError);
+        // Si Firestore échoue, supprimer le fichier Cloudinary
+        try {
+          await cloudinaryService.deleteFile(cloudinaryResult.public_id);
+          logger.debug('KYCService.submitDocument - Fichier Cloudinary supprimé après échec Firestore');
+        } catch (deleteError) {
+          logger.error('KYCService.submitDocument - Erreur suppression fichier Cloudinary:', deleteError);
+        }
+        throw new Error(`Échec de la sauvegarde: ${firestoreError instanceof Error ? firestoreError.message : 'Erreur inconnue'}`);
+      }
+
+      // 6. Mettre à jour le statut KYC de l'utilisateur
+      try {
+        await this.updateKYCStatus(userId, 'pending');
+        logger.debug('KYCService.submitDocument - Statut KYC mis à jour');
+      } catch (statusError) {
+        logger.error('KYCService.submitDocument - Erreur mise à jour statut KYC:', statusError);
+        // Ne pas faire échouer la soumission si la mise à jour du statut échoue
+      }
 
       logger.success('KYCService.submitDocument - Soumission réussie:', submission.id);
       return submission;
