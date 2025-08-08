@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import i18n from "../../i18n";
 import { Settings, User, Shield, Bell, Globe, CreditCard, Save } from "lucide-react";
 import { FirebaseDataService } from "../../services/firebaseData";
 import { useTheme } from "../../contexts/ThemeContext";
@@ -706,14 +707,21 @@ const SettingsPage: React.FC = () => {
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       {t("settings.language")}
                     </label>
-                    <select className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
-                      <option value="fr">Français</option>
-                      <option value="en">English</option>
-                      <option value="es">Español</option>
-                      <option value="pt">Português</option>
-                      <option value="it">Italiano</option>
-                      <option value="nl">Nederlands</option>
-                      <option value="de">Deutsch</option>
+                    <select 
+                      value={i18n.language}
+                      onChange={(e) => {
+                        i18n.changeLanguage(e.target.value);
+                        localStorage.setItem('i18nextLng', e.target.value);
+                      }}
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                    >
+                      <option value="fr">{t("languages.fr") as string}</option>
+                      <option value="en">{t("languages.en") as string}</option>
+                      <option value="es">{t("languages.es") as string}</option>
+                      <option value="pt">{t("languages.pt") as string}</option>
+                      <option value="it">{t("languages.it") as string}</option>
+                      <option value="nl">{t("languages.nl") as string}</option>
+                      <option value="de">{t("languages.de") as string}</option>
                     </select>
                   </div>
 

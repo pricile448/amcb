@@ -28,6 +28,11 @@ i18n
     resources,
     lng: 'fr',
     fallbackLng: 'fr',
+    detection: {
+      order: ['localStorage', 'navigator', 'htmlTag'],
+      caches: ['localStorage'],
+      lookupLocalStorage: 'i18nextLng',
+    },
     interpolation: {
       escapeValue: false,
     },

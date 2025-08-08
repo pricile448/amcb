@@ -22,6 +22,7 @@ const PublicLayout: React.FC = () => {
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
+    localStorage.setItem('i18nextLng', lng); // Sauvegarder le choix de langue
     setIsLanguageOpen(false);
   };
 

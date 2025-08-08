@@ -58,26 +58,26 @@
       "subtitle": "A modern and secure banking experience"
     },
     "security": {
-      "title": "Maximum security",
-      "description": "Your data is protected by military-grade encryption"
+      "title": "Bank-level Security",
+      "description": "Your data is protected by the latest encryption technologies and security protocols."
     },
     "accounts": {
-      "title": "Multiple accounts",
-      "description": "Current, savings, and credit cards in one place"
+      "title": "Multiple Accounts",
+      "description": "Current, savings, and business accounts adapted to all your needs."
     },
     "transactions": {
-      "title": "Instant transactions",
-      "description": "Real-time transfers and payments"
+      "title": "Instant Transfers",
+      "description": "Send and receive money instantly, 24/7, anywhere in the world."
     },
     "international": {
       "title": "International",
-      "description": "Send money anywhere in the world"
+      "description": "Multi-currency accounts and competitive exchange rates for your international transactions."
     },
     "benefits": {
       "title": "AmCbunq Benefits",
       "noFees": "No hidden fees",
       "instant": "Instant transfers",
-      "secure": "Bank-level security",
+      "secure": "Maximum security",
       "support": "24/7 support",
       "getStarted": "Get Started Now"
     },
