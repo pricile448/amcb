@@ -63,3 +63,4 @@ kycStatusDetails: {
 3. **📋 Monitoring** (vérifier logs d'erreurs)
 
 **Une fois le statut corrigé manuellement, les uploads suivants devraient fonctionner automatiquement !**
+

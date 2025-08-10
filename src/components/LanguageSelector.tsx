@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Globe, ChevronDown } from 'lucide-react';
 
 interface Language {
@@ -23,6 +24,8 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
 }) => {
   const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const languages: Language[] = [
     { code: "fr", name: t("languages.fr") as string, flag: "🇫🇷" },
@@ -37,8 +40,27 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
 
   const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
+    // Sauvegarder immédiatement dans localStorage
     localStorage.setItem('i18nextLng', lng);
+    
+    // Changer la langue
+    i18n.changeLanguage(lng);
+    
+    // Naviguer vers la même page dans la nouvelle langue
+    const currentPath = location.pathname;
+    const pathSegments = currentPath.split('/');
+    
+    // Si le premier segment est une langue valide, la remplacer
+    if (['fr', 'en', 'es', 'it', 'de', 'nl', 'pt'].includes(pathSegments[1])) {
+      pathSegments[1] = lng;
+    } else {
+      // Sinon, insérer la langue au début
+      pathSegments.splice(1, 0, lng);
+    }
+    
+    const newPath = pathSegments.join('/');
+    navigate(newPath, { replace: true });
+    
     setIsOpen(false);
     // Appeler la fonction de callback si elle existe
     if (onLanguageChange) {

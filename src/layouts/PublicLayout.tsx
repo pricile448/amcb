@@ -1,7 +1,6 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import LanguageSelector from "../components/LanguageSelector";
@@ -9,6 +8,7 @@ import LanguageSelector from "../components/LanguageSelector";
 const PublicLayout: React.FC = () => {
   const { t, i18n } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { lang } = useParams<{ lang: string }>();
 
   // Synchroniser la langue au chargement
   useEffect(() => {
@@ -23,6 +23,14 @@ const PublicLayout: React.FC = () => {
     setIsMenuOpen(false);
   };
 
+  // Fonction pour générer les liens avec préfixe de langue
+  const getLink = (path: string) => {
+    if (!lang) return path;
+    // Éviter les doubles slashes
+    const cleanPath = path.startsWith('/') ? path : `/${path}`;
+    return `/${lang}${cleanPath}`;
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -31,7 +39,7 @@ const PublicLayout: React.FC = () => {
           <div className="flex justify-between items-center h-14 sm:h-16">
             {/* Logo */}
             <div className="flex items-center">
-              <Link to="/" className="flex items-center space-x-2">
+              <Link to={getLink('/')} className="flex items-center space-x-2">
                 <div className="w-6 h-6 sm:w-8 sm:h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                   <span className="text-white font-bold text-xs sm:text-sm">A</span>
                 </div>
@@ -42,19 +50,19 @@ const PublicLayout: React.FC = () => {
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-8">
               <Link
-                to="/fonctionnalites"
+                to={getLink('/fonctionnalites')}
                 className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
               >
                 {t("nav.features")}
               </Link>
               <Link
-                to="/tarifs"
+                to={getLink('/tarifs')}
                 className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
               >
                 {t("nav.pricing")}
               </Link>
               <Link
-                to="/aide"
+                to={getLink('/aide')}
                 className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
               >
                 {t("nav.help")}
@@ -67,13 +75,13 @@ const PublicLayout: React.FC = () => {
               <LanguageSelector />
 
               <Link
-                to="/connexion"
+                to={getLink('/connexion')}
                 className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
               >
                 {t("nav.login")}
               </Link>
               <Link
-                to="/ouvrir-compte"
+                to={getLink('/ouvrir-compte')}
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
               >
                 {t("nav.openAccount")}
@@ -98,53 +106,48 @@ const PublicLayout: React.FC = () => {
           <div className="lg:hidden">
             <div className="px-3 sm:px-4 py-3 space-y-1 bg-white border-t shadow-lg">
               {/* Mobile Navigation Links */}
+              <Link
+                to={getLink('/fonctionnalites')}
+                onClick={handleMobileLinkClick}
+                className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                {t("nav.features")}
+              </Link>
+              <Link
+                to={getLink('/tarifs')}
+                onClick={handleMobileLinkClick}
+                className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                {t("nav.pricing")}
+              </Link>
+              <Link
+                to={getLink('/aide')}
+                onClick={handleMobileLinkClick}
+                className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
+              >
+                {t("nav.help")}
+              </Link>
+              
+              {/* Divider */}
+              <div className="border-t border-gray-200 my-2"></div>
+              
+              {/* Mobile Actions */}
+              <div className="px-3 py-2">
+                <LanguageSelector variant="buttons" />
+              </div>
+              
               <div className="space-y-1">
                 <Link
-                  to="/fonctionnalites"
-                  className="block px-3 py-3 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors font-medium text-sm sm:text-base"
+                  to={getLink('/connexion')}
                   onClick={handleMobileLinkClick}
-                >
-                  {t("nav.features")}
-                </Link>
-                <Link
-                  to="/tarifs"
-                  className="block px-3 py-3 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors font-medium text-sm sm:text-base"
-                  onClick={handleMobileLinkClick}
-                >
-                  {t("nav.pricing")}
-                </Link>
-                <Link
-                  to="/aide"
-                  className="block px-3 py-3 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors font-medium text-sm sm:text-base"
-                  onClick={handleMobileLinkClick}
-                >
-                  {t("nav.help")}
-                </Link>
-              </div>
-
-              {/* Mobile Language Selector */}
-              <div className="border-t pt-3">
-                <div className="px-3 py-2">
-                  <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
-                    {t('settings.language')}
-                  </label>
-                  <LanguageSelector variant="buttons" onLanguageChange={handleMobileLinkClick} />
-                </div>
-              </div>
-
-              {/* Mobile Action Buttons */}
-              <div className="border-t pt-3 space-y-2">
-                <Link
-                  to="/connexion"
-                  className="block px-3 py-3 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors font-medium text-sm sm:text-base"
-                  onClick={handleMobileLinkClick}
+                  className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
                 >
                   {t("nav.login")}
                 </Link>
                 <Link
-                  to="/ouvrir-compte"
-                  className="block px-3 py-3 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors font-medium bg-blue-50 text-sm sm:text-base"
+                  to={getLink('/ouvrir-compte')}
                   onClick={handleMobileLinkClick}
+                  className="block px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-center"
                 >
                   {t("nav.openAccount")}
                 </Link>
@@ -160,49 +163,83 @@ const PublicLayout: React.FC = () => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-            <div className="sm:col-span-2 lg:col-span-1">
-              <div className="flex items-center space-x-2 mb-2 sm:mb-3 lg:mb-4">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-xs sm:text-sm">A</span>
+      <footer className="bg-gray-900 text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {/* Company Info */}
+            <div className="col-span-1 md:col-span-2">
+              <div className="flex items-center space-x-2 mb-4">
+                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">A</span>
                 </div>
-                <span className="text-lg sm:text-xl font-bold">AmCbunq</span>
+                <span className="text-xl font-bold">AmCbunq</span>
               </div>
-              <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
+              <p className="text-gray-300 mb-4">
                 {t("footer.description")}
               </p>
+              <div className="flex space-x-4">
+                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  <span className="sr-only">Facebook</span>
+                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
+                  </svg>
+                </a>
+                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  <span className="sr-only">Twitter</span>
+                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                  </svg>
+                </a>
+                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  <span className="sr-only">LinkedIn</span>
+                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path fillRule="evenodd" d="M19 0H5a5 5 0 00-5 5v14a5 5 0 005 5h14a5 5 0 005-5V5a5 5 0 00-5-5zM8 19H5V8h3v11zM6.5 6.732c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zM20 19h-3v-5.604c0-3.368-4-3.113-4 0V19h-3V8h3v1.765c1.396-2.586 7-2.777 7 2.476V19z" clipRule="evenodd" />
+                  </svg>
+                </a>
+              </div>
             </div>
-            
-            <div className="grid grid-cols-3 sm:grid-cols-1 lg:grid-cols-1 gap-4 sm:gap-0">
-              <div>
-                <h3 className="text-sm sm:text-base lg:text-lg font-semibold mb-2 sm:mb-3 lg:mb-4">{t("footer.products")}</h3>
-                <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm text-gray-400">
-                  <li><Link to="/fonctionnalites" className="hover:text-white transition-colors block py-0.5 sm:py-1">{t("nav.features")}</Link></li>
-                  <li><Link to="/tarifs" className="hover:text-white transition-colors block py-0.5 sm:py-1">{t("nav.pricing")}</Link></li>
-                </ul>
-              </div>
-              
-              <div>
-                <h3 className="text-sm sm:text-base lg:text-lg font-semibold mb-2 sm:mb-3 lg:mb-4">{t("footer.support")}</h3>
-                <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm text-gray-400">
-                  <li><Link to="/aide" className="hover:text-white transition-colors block py-0.5 sm:py-1">{t("nav.help")}</Link></li>
-                  <li><Link to="/contact" className="hover:text-white transition-colors block py-0.5 sm:py-1">{t("footer.contact")}</Link></li>
-                </ul>
-              </div>
-              
-              <div>
-                <h3 className="text-sm sm:text-base lg:text-lg font-semibold mb-2 sm:mb-3 lg:mb-4">{t("footer.legal")}</h3>
-                <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm text-gray-400">
-                  <li><Link to="/privacy" className="hover:text-white transition-colors block py-0.5 sm:py-1">{t("footer.privacy")}</Link></li>
-                  <li><Link to="/terms" className="hover:text-white transition-colors block py-0.5 sm:py-1">{t("footer.terms")}</Link></li>
-                </ul>
-              </div>
+
+            {/* Quick Links */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4">{t("footer.quickLinks")}</h3>
+              <ul className="space-y-2">
+                <li>
+                  <Link to={getLink('/fonctionnalites')} className="text-gray-300 hover:text-white transition-colors">
+                    {t("nav.features")}
+                  </Link>
+                </li>
+                <li>
+                  <Link to={getLink('/tarifs')} className="text-gray-300 hover:text-white transition-colors">
+                    {t("nav.pricing")}
+                  </Link>
+                </li>
+                <li>
+                  <Link to={getLink('/aide')} className="text-gray-300 hover:text-white transition-colors">
+                    {t("nav.help")}
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Support */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4">{t("footer.support")}</h3>
+              <ul className="space-y-2">
+                <li>
+                  <Link to={getLink('/aide')} className="text-gray-300 hover:text-white transition-colors">
+                    {t("footer.helpCenter")}
+                  </Link>
+                </li>
+                <li>
+                  <a href="mailto:support@amcbunq.com" className="text-gray-300 hover:text-white transition-colors">
+                    {t("footer.contact")}
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
-          
-          <div className="border-t border-gray-800 mt-4 sm:mt-6 lg:mt-8 pt-4 sm:pt-6 lg:pt-8 text-center text-xs sm:text-sm text-gray-400">
+
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
             <p>&copy; 2024 AmCbunq. {t("footer.rights")}</p>
           </div>
         </div>

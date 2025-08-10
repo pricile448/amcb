@@ -26,7 +26,11 @@ const LoginPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // Récupérer l'URL de retour depuis l'état de navigation
-  const from = location.state?.from?.pathname || "/dashboard";
+  // Utiliser la langue actuelle depuis l'URL
+  const currentLang = location.pathname.split('/')[1];
+  const validLanguages = ['fr', 'en', 'es', 'it', 'de', 'nl', 'pt'];
+  const lang = validLanguages.includes(currentLang) ? currentLang : 'fr';
+  const from = location.state?.from?.pathname || `/${lang}/dashboard`;
   
   // Récupérer le message de succès de vérification email
   const successMessage = location.state?.message;

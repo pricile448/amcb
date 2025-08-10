@@ -1,6 +1,7 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
+import { detectLanguageFromDomain, DEFAULT_LANGUAGE, redirectToCorrectDomain } from './utils/domainLanguageDetector'
 
 // Import des traductions
 import fr from './locales/fr.json'
@@ -21,12 +22,32 @@ const resources = {
   de: { translation: de },
 }
 
-// Fonction pour obtenir la langue depuis localStorage
-const getStoredLanguage = () => {
+// Fonction simplifiée pour obtenir la langue initiale
+const getInitialLanguage = () => {
   if (typeof window !== 'undefined') {
-    return localStorage.getItem('i18nextLng') || 'fr';
+    // 1. Priorité absolue aux préférences utilisateur stockées
+    const storedLanguage = localStorage.getItem('i18nextLng');
+    if (storedLanguage && ['fr', 'en', 'es', 'pt', 'it', 'nl', 'de'].includes(storedLanguage)) {
+      return storedLanguage;
+    }
+    
+    // 2. Si pas de préférence stockée, détecter depuis le domaine
+    const domainLanguage = detectLanguageFromDomain();
+    
+    // 3. Stocker la langue détectée pour la prochaine fois
+    localStorage.setItem('i18nextLng', domainLanguage);
+    
+    return domainLanguage;
   }
-  return 'fr';
+  return DEFAULT_LANGUAGE;
+};
+
+// Détecteur personnalisé pour les domaines
+const domainDetector = {
+  name: 'domainDetector',
+  lookup() {
+    return detectLanguageFromDomain();
+  }
 };
 
 i18n
@@ -34,17 +55,42 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: getStoredLanguage(),
-    fallbackLng: 'fr',
+    lng: getInitialLanguage(),
+    fallbackLng: DEFAULT_LANGUAGE,
     detection: {
-      order: ['localStorage', 'navigator', 'htmlTag'],
+      // ✅ CORRIGÉ: Priorité aux préférences utilisateur
+      order: ['localStorage', 'domainDetector', 'navigator', 'htmlTag'],
       caches: ['localStorage'],
       lookupLocalStorage: 'i18nextLng',
     },
     interpolation: {
       escapeValue: false,
     },
-    debug: process.env.NODE_ENV === 'development',
   })
+
+// Ajouter le détecteur personnalisé
+i18n.services.languageDetector.addDetector(domainDetector);
+
+// Fonction pour changer de langue avec redirection de domaine
+export const changeLanguageWithDomainRedirect = (language: string) => {
+  if (typeof window !== 'undefined') {
+    // Sauvegarder la préférence AVANT tout
+    localStorage.setItem('i18nextLng', language);
+    
+    // Changer la langue dans i18n
+    i18n.changeLanguage(language);
+    
+    // Rediriger vers le bon domaine en production seulement si nécessaire
+    if (process.env.NODE_ENV === 'production') {
+      // Vérifier si on est déjà sur le bon domaine
+      const currentDomain = window.location.hostname;
+      const targetDomain = language === 'fr' ? 'mybunq.amccredit.com' : `${language}.mybunq.amccredit.com`;
+      
+      if (currentDomain !== targetDomain) {
+        redirectToCorrectDomain(language as any);
+      }
+    }
+  }
+};
 
 export default i18n 

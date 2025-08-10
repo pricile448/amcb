@@ -796,7 +796,12 @@
         "rejected": "Rejeté",
         "completed": "Complétée",
         "inProgress": "En cours",
-        "unverified": "Non vérifié"
+        "unverified": "Non vérifié",
+        "current": "Statut actuel",
+        "lastUpdated": "Dernière mise à jour",
+        "synchronizing": "Synchronisation en cours...",
+        "syncError": "Erreur de synchronisation",
+        "realTimeActive": "Synchronisation en temps réel active"
       },
       "stepStatus": {
         "completed": "Terminé",
@@ -819,6 +824,7 @@
         "title": "Validation finale",
         "description": "Validation finale par notre équipe"
       },
+      "loading": "Chargement des données de vérification...",
       "banner": {
         "unverified": {
           "title": "Vérification d'identité requise",
@@ -829,6 +835,11 @@
           "title": "Vérification en cours",
           "message": "Vos documents sont en cours de vérification. Vous recevrez une notification une fois terminé.",
           "button": "Voir le statut"
+        },
+        "rejected": {
+          "title": "Vérification rejetée",
+          "message": "Votre vérification d'identité a été rejetée. Veuillez soumettre de nouveaux documents.",
+          "button": "Soumettre à nouveau"
         }
       }
     },
@@ -840,6 +851,8 @@
       "identityDocument": "Pièce d'identité",
       "proofOfAddress": "Justificatif de domicile",
       "proofOfIncome": "Justificatif de revenus",
+      "bankStatement": "Relevé bancaire",
+      "file": "Fichier",
       "acceptedFormats": "PDF, JPG, PNG (max 5MB)",
       "required": "Requis",
       "selectFile": "Cliquez pour sélectionner un fichier",
@@ -874,7 +887,10 @@
         "parsingError": "Erreur parsing user:",
         "submissionGenericError": "Une erreur est survenue lors de la soumission"
       },
-      "unverified": "Non vérifié"
+      "unverified": "Non vérifié",
+      "identity": "Pièce d'identité",
+      "address": "Justificatif de domicile",
+      "income": "Justificatif de revenus"
     },
   
     "billing": {
@@ -1258,6 +1274,9 @@
       "supportName": "Support AmCbunq",
       "unavailable": "Messages indisponibles",
       "unavailableUnverified": "Pour accéder au chat avec notre support, vous devez d'abord valider votre identité.",
+      "temporarilyUnavailable": "Messages temporairement indisponibles",
+      "unavailablePending": "Messages indisponibles - Vérifiez votre identité",
+      "unavailableVerifyIdentity": "Messages indisponibles - Vérifiez votre identité",
       "verification": {
         "unavailableTitle": "Messages indisponibles",
         "temporarilyUnavailableTitle": "Messages temporairement indisponibles",

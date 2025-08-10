@@ -77,16 +77,6 @@ const KycSuccessPage: React.FC = () => {
                 {t('kycSuccess.backToDashboard')}
               </Link>
             </div>
-            
-            {/* Lien vers la page de vérification */}
-            <div className="mt-4">
-              <Link
-                to="/dashboard/verification"
-                className="text-sm text-blue-600 hover:text-blue-500 transition-colors duration-200"
-              >
-                {t('kycSuccess.viewStatus')}
-              </Link>
-            </div>
           </div>
         </div>
       </div>

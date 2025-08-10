@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import i18n from "../../i18n";
-import { Settings, User, Shield, Bell, Globe, CreditCard, Save, RefreshCcw } from "lucide-react";
+import { Settings, User, Shield, Bell, Globe, CreditCard, Save } from "lucide-react";
 import { FirebaseDataService } from "../../services/firebaseData";
 import { useTheme } from "../../contexts/ThemeContext";
 import ThemeSelector from "../../components/ThemeSelector";
+import LanguageSelector from "../../components/LanguageSelector";
 import { logger } from "../../utils/logger";
-import { useKycSync } from "../../hooks/useKycSync";
 
 const SettingsPage: React.FC = () => {
   const { t } = useTranslation();
@@ -24,7 +24,6 @@ const SettingsPage: React.FC = () => {
     maintenanceAlerts: true
   });
   const { theme, setTheme } = useTheme();
-  const { kycStatus, forceSyncKycStatus, loading: kycLoading } = useKycSync();
 
   // Charger les données utilisateur complètes au montage du composant
   useEffect(() => {
@@ -706,25 +705,14 @@ const SettingsPage: React.FC = () => {
                 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      {t("settings.language")}
-                    </label>
-                    <select 
-                      value={i18n.language}
-                      onChange={(e) => {
-                        i18n.changeLanguage(e.target.value);
-                        localStorage.setItem('i18nextLng', e.target.value);
+                    <LanguageSelector 
+                      showLabel={true}
+                      variant="buttons"
+                      onLanguageChange={() => {
+                        // Optionnel : ajouter une logique supplémentaire après le changement de langue
+                        console.log('Langue changée dans les paramètres');
                       }}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
-                    >
-                      <option value="fr">{t("languages.fr") as string}</option>
-                      <option value="en">{t("languages.en") as string}</option>
-                      <option value="es">{t("languages.es") as string}</option>
-                      <option value="pt">{t("languages.pt") as string}</option>
-                      <option value="it">{t("languages.it") as string}</option>
-                      <option value="nl">{t("languages.nl") as string}</option>
-                      <option value="de">{t("languages.de") as string}</option>
-                    </select>
+                    />
                   </div>
 
                   <div>
@@ -750,38 +738,6 @@ const SettingsPage: React.FC = () => {
                   </div>
 
                   <ThemeSelector label={t("settings.theme") || "Thème"} />
-
-                  {/* ✅ Section Debug - Force Sync KYC */}
-                  <div className="border-t border-gray-200 dark:border-gray-700 pt-6 mt-6">
-                    <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">
-                      🔧 Debug - Statut KYC
-                    </h3>
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                        <div>
-                          <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                            Statut actuel: <span className="font-mono text-blue-600 dark:text-blue-400">
-                              {kycStatus?.status || 'non défini'}
-                            </span>
-                          </p>
-                          <p className="text-xs text-gray-600 dark:text-gray-400">
-                            Dernière mise à jour: {kycStatus?.lastUpdated ? new Date(kycStatus.lastUpdated).toLocaleString() : 'N/A'}
-                          </p>
-                        </div>
-                        <button
-                          onClick={forceSyncKycStatus}
-                          disabled={kycLoading}
-                          className="flex items-center space-x-2 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
-                        >
-                          <RefreshCcw className={`w-4 h-4 ${kycLoading ? 'animate-spin' : ''}`} />
-                          <span>{kycLoading ? 'Sync...' : 'Force Sync'}</span>
-                        </button>
-                      </div>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
-                        ⚠️ Utilisez ce bouton si vos changements manuels dans Firestore ne se reflètent pas dans l'app.
-                      </p>
-                    </div>
-                  </div>
                 </div>
 
                 <div className="flex justify-end">

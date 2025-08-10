@@ -1258,6 +1258,9 @@
           "supportName": "Soporte AmCbunq",
       "unavailable": "Mensajes no disponibles",
       "unavailableUnverified": "Para acceder al chat con nuestro soporte, primero debe validar su identidad.",
+      "temporarilyUnavailable": "Mensajes temporalmente no disponibles",
+      "unavailablePending": "Mensajes no disponibles - Verifica tu identidad",
+      "unavailableVerifyIdentity": "Mensajes no disponibles - Verifica tu identidad",
       "verification": {
       "unavailableTitle": "Mensajes no disponibles",
       "temporarilyUnavailableTitle": "Mensajes temporalmente no disponibles",

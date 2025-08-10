@@ -168,8 +168,8 @@ const KycPage: React.FC = () => {
               className="flex items-center text-gray-600 hover:text-gray-900 mb-3 sm:mb-4 text-sm sm:text-base"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              <span className="hidden sm:inline">Retour au tableau de bord</span>
-              <span className="sm:hidden">Retour</span>
+              <span className="hidden sm:inline">{t('kyc.navigation.backToDashboard')}</span>
+              <span className="sm:hidden">{t('kyc.navigation.backToDashboard')}</span>
             </button>
             
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
@@ -179,10 +179,10 @@ const KycPage: React.FC = () => {
                 </div>
                 <div>
                   <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
-                    Vérification en cours
+                    {t('kyc.pending.title')}
                   </h1>
                   <p className="text-sm sm:text-base text-gray-600 mt-1">
-                    Votre dossier est en cours d'examen par nos équipes
+                    {t('kyc.pending.subtitle')}
                   </p>
                 </div>
               </div>
@@ -195,17 +195,17 @@ const KycPage: React.FC = () => {
               <div className="w-12 h-12 sm:w-16 sm:h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
                 <AlertCircle className="w-6 h-6 sm:w-8 sm:h-8 text-yellow-600" />
               </div>
-              <h2 className="text-lg sm:text-xl font-semibold text-yellow-800 mb-2">Vérification en cours</h2>
+              <h2 className="text-lg sm:text-xl font-semibold text-yellow-800 mb-2">{t('kyc.pending.title')}</h2>
               <p className="text-sm sm:text-base text-yellow-700 mb-3 sm:mb-4">
-                Vos documents ont été soumis et sont actuellement en cours d'examen par nos équipes.
+                {t('kyc.pending.message')}
               </p>
               <p className="text-xs sm:text-sm text-yellow-600">
-                Ce processus prend généralement 24 à 48 heures. Vous recevrez une notification dès que la vérification sera terminée.
+                {t('kyc.pending.timeframe')}
               </p>
             </div>
             
             <div className="bg-white rounded-lg p-3 sm:p-4 border border-yellow-200">
-              <h3 className="font-medium text-gray-900 mb-2 text-sm sm:text-base">Documents soumis</h3>
+              <h3 className="font-medium text-gray-900 mb-2 text-sm sm:text-base">{t('kyc.pending.documentsSubmitted')}</h3>
               <div className="space-y-2 text-xs sm:text-sm text-gray-600">
                 {documents.map((doc) => (
                   <div key={doc.id} className="flex items-center justify-between">
@@ -231,8 +231,8 @@ const KycPage: React.FC = () => {
             className="flex items-center text-gray-600 hover:text-gray-900 mb-3 sm:mb-4 text-sm sm:text-base"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            <span className="hidden sm:inline">Retour au tableau de bord</span>
-            <span className="sm:hidden">Retour</span>
+            <span className="hidden sm:inline">{t('kyc.navigation.backToDashboard')}</span>
+            <span className="sm:hidden">{t('kyc.navigation.backToDashboard')}</span>
           </button>
           
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">

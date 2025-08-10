@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
   Home,
@@ -46,6 +46,7 @@ const DashboardLayout: React.FC = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
+  const { lang } = useParams<{ lang: string }>();
   const { userStatus, syncKycStatus, hasInitialized } = useKycSync();
   const { unreadCount: hookUnreadCount, markAsRead, notifications } = useNotifications();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -98,71 +99,69 @@ const DashboardLayout: React.FC = () => {
     if (userStr) {
       try {
         const user = JSON.parse(userStr);
-        const first = user.firstName || 'Client';
-        const last = user.lastName || (t('common.defaultCompany') as string);
-        
-        // Pour la sidebar, utiliser une troncature très agressive
-        if (first.length > 8 || last.length > 8) {
-          return `${first.charAt(0)}. ${last.charAt(0)}.`;
+        if (user.firstName && user.lastName) {
+          const fullName = formatUserNameForDisplay(user.firstName, user.lastName);
+          // Troncature agressive pour la sidebar
+          return fullName.length > 15 ? fullName.substring(0, 15) + '...' : fullName;
         }
-        
-        return `${first} ${last}`;
       } catch (error) {
-        console.error('❌ Erreur parsing user:', error);
+        console.error('❌ Erreur parsing user localStorage:', error);
       }
     }
-    return 'Client A.';
+    return userName;
   };
 
-
-
-  // Fonction pour récupérer l'email de l'utilisateur connecté
   const getUserEmail = (): string => {
     const userStr = localStorage.getItem('user');
     if (userStr) {
       try {
         const user = JSON.parse(userStr);
-        return user.email || 'client@amcbunq.com';
+        return user.email || 'email@example.com';
       } catch (error) {
-        console.error('❌ Erreur parsing user:', error);
+        console.error('❌ Erreur parsing user localStorage:', error);
       }
     }
-    return 'client@amcbunq.com';
+    return 'email@example.com';
   };
 
-  // Fonction pour récupérer les initiales de l'utilisateur
   const getUserInitials = (): string => {
     const userStr = localStorage.getItem('user');
     if (userStr) {
       try {
         const user = JSON.parse(userStr);
-        const firstName = user.firstName || 'C';
-        const lastName = user.lastName || 'A';
-        return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+        if (user.firstName && user.lastName) {
+          return `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase();
+        }
       } catch (error) {
-        console.error('❌ Erreur parsing user:', error);
+        console.error('❌ Erreur parsing user localStorage:', error);
       }
     }
-    return 'CA';
+    return 'U';
   };
 
-
+  // Fonction pour générer les liens avec préfixe de langue
+  const getDashboardLink = (path: string) => {
+    if (!lang) return `/dashboard${path.startsWith('/') ? path : `/${path}`}`;
+    // Éviter les doubles slashes
+    const cleanPath = path.startsWith('/') ? path : `/${path}`;
+    return `/${lang}/dashboard${cleanPath}`;
+  };
 
   const navigation = [
-    { name: t("nav.dashboard"), href: "/dashboard", icon: Home },
-    { name: t("nav.accounts"), href: "/dashboard/comptes", icon: CreditCard },
-    { name: t("nav.iban"), href: "/dashboard/iban", icon: Building },
-    { name: t("nav.transfers"), href: "/dashboard/virements", icon: Send },
-    { name: t("nav.cards"), href: "/dashboard/cartes", icon: CreditCard },
-    { name: t("nav.billing"), href: "/dashboard/facturation", icon: Receipt },
-    { name: t("nav.history"), href: "/dashboard/historique", icon: Clock },
-    { name: t("nav.budgets"), href: "/dashboard/budgets", icon: PieChart },
+    { name: t("nav.dashboard"), href: getDashboardLink(""), icon: Home },
+    { name: t("nav.accounts"), href: getDashboardLink("/comptes"), icon: CreditCard },
+    { name: t("nav.iban"), href: getDashboardLink("/iban"), icon: Building },
+    { name: t("nav.transfers"), href: getDashboardLink("/virements"), icon: Send },
+    { name: t("nav.cards"), href: getDashboardLink("/cartes"), icon: CreditCard },
+    { name: t("nav.billing"), href: getDashboardLink("/facturation"), icon: Receipt },
+    { name: t("nav.history"), href: getDashboardLink("/historique"), icon: Clock },
+    { name: t("nav.budgets"), href: getDashboardLink("/budgets"), icon: PieChart },
   ];
 
   const settingsNavigation = [
-    { name: t("nav.settings"), href: "/dashboard/parametres", icon: Settings },
-    { name: t("nav.help"), href: "/dashboard/aide", icon: HelpCircle },
-    { name: t("nav.documents"), href: "/dashboard/documents", icon: FileText },
+    { name: t("nav.settings"), href: getDashboardLink("/parametres"), icon: Settings },
+    { name: t("nav.help"), href: getDashboardLink("/aide"), icon: HelpCircle },
+    { name: t("nav.documents"), href: getDashboardLink("/documents"), icon: FileText },
   ];
 
   const handleLogout = async () => {
@@ -170,7 +169,7 @@ const DashboardLayout: React.FC = () => {
       await signOut(auth);
       localStorage.removeItem('user');
       logger.success('✅ Déconnexion réussie');
-      navigate('/login');
+      navigate(`/${lang || 'fr'}/connexion`);
     } catch (error) {
       logger.error('Erreur lors de la déconnexion:', error);
     }
@@ -221,11 +220,11 @@ const DashboardLayout: React.FC = () => {
 
     // Pages spéciales
     switch (pathname) {
-      case '/dashboard/messages':
+      case getDashboardLink('/messages'):
         return t('nav.messages');
-      case '/dashboard/kyc':
+      case getDashboardLink('/kyc'):
         return t('nav.verification');
-      case '/dashboard/verification':
+      case getDashboardLink('/verification'):
         return t('nav.verification');
       default:
         return t('nav.dashboard');
@@ -331,7 +330,7 @@ const DashboardLayout: React.FC = () => {
                   ) : userStatus === 'pending' ? (
                     <>
                       <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                      <span className="text-blue-400 text-xs">{t('kyc.pending')}</span>
+                      <span className="text-blue-400 text-xs">{t('kyc.pending.title')}</span>
                     </>
                   ) : (
                     <>
@@ -377,7 +376,7 @@ const DashboardLayout: React.FC = () => {
               {/* Messages */}
               {userStatus === 'verified' ? (
                 <Link
-                  to="/dashboard/messages"
+                  to={getDashboardLink('/messages')}
                   className="relative p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
                 >
                   <MessageCircle className="w-5 md:w-6 h-5 md:h-6" />

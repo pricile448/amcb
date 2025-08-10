@@ -65,3 +65,4 @@ console.log('📝 Instructions :');
 console.log('1. Modifiez userId avec l\'ID réel de l\'utilisateur');
 console.log('2. Ajoutez votre configuration Firebase');
 console.log('3. Exécutez: node test-kyc-status-update.js');
+

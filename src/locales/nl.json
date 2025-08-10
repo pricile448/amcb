@@ -1231,6 +1231,9 @@
           "supportName": "AmCbunq Ondersteuning",
       "unavailable": "Berichten niet beschikbaar",
       "unavailableUnverified": "Om toegang te krijgen tot de chat met onze ondersteuning, moet u eerst uw identiteit valideren.",
+      "temporarilyUnavailable": "Berichten tijdelijk niet beschikbaar",
+      "unavailablePending": "Berichten niet beschikbaar - Verificeer uw identiteit",
+      "unavailableVerifyIdentity": "Berichten niet beschikbaar - Verificeer uw identiteit",
       "verification": {
       "unavailableTitle": "Berichten niet beschikbaar",
       "temporarilyUnavailableTitle": "Berichten tijdelijk niet beschikbaar",

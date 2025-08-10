@@ -46,7 +46,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   if (!isAuthenticated) {
     // Rediriger vers la page de connexion avec l'URL de retour
-    return <Navigate to="/connexion" state={{ from: location }} replace />;
+    // Utiliser la langue actuelle depuis l'URL
+    const currentLang = location.pathname.split('/')[1];
+    const validLanguages = ['fr', 'en', 'es', 'it', 'de', 'nl', 'pt'];
+    const lang = validLanguages.includes(currentLang) ? currentLang : 'fr';
+    return <Navigate to={`/${lang}/connexion`} state={{ from: location }} replace />;
   }
 
   return <>{children}</>;

@@ -34,10 +34,18 @@ service cloud.firestore {
       // ✅ Création : utilisateur peut créer ses propres soumissions
       allow create: if request.auth != null 
         && request.resource.data.userId == request.auth.uid
-        && request.resource.data.keys().hasAll(['id', 'userId', 'documentType', 'fileName', 'status']);
+        && request.resource.data.keys().hasAll(['id', 'userId', 'documentType', 'cloudinaryUrl', 'cloudinaryPublicId', 'fileName', 'fileSize', 'mimeType', 'submittedAt']);
       
       // ✅ Lecture : utilisateur peut lire ses propres soumissions
       allow read: if request.auth != null 
+        && resource.data.userId == request.auth.uid;
+      
+      // ✅ Mise à jour : utilisateur peut mettre à jour ses propres soumissions
+      allow update: if request.auth != null 
+        && resource.data.userId == request.auth.uid;
+      
+      // ✅ Suppression : utilisateur peut supprimer ses propres soumissions
+      allow delete: if request.auth != null 
         && resource.data.userId == request.auth.uid;
       
       // 👮‍♂️ Admins peuvent tout faire

@@ -14,6 +14,7 @@ import {
 } from 'firebase/firestore';
 import { cloudinaryService, KYCSubmission } from './cloudinaryService';
 import { logger } from '../utils/logger';
+import { KYC_STATUS } from '../constants/kycStatus';
 
 export interface KYCStatus {
   status: 'unverified' | 'pending' | 'approved' | 'rejected';
@@ -27,7 +28,7 @@ export interface KYCStatus {
 export interface KYCUserData {
   userId: string;
   kycStatus: KYCStatus;
-  submissions: KYCSubmission[];
+  submissions: KYCSubmission[]; // ✅ NOUVEAU: Uniquement les liens Cloudinary
   requiredDocuments: string[];
   completedDocuments: string[];
 }
@@ -82,7 +83,7 @@ class KYCService {
         throw new Error(`Échec de l'upload vers Cloudinary: ${cloudinaryError instanceof Error ? cloudinaryError.message : 'Erreur inconnue'}`);
       }
 
-      // 4. Créer l'objet de soumission
+      // 4. Créer l'objet de soumission (uniquement les liens Cloudinary)
       const submission: KYCSubmission = {
         id: `${userId}_${documentType}_${Date.now()}`,
         userId,
@@ -92,38 +93,16 @@ class KYCService {
         fileName: file.name,
         fileSize: cloudinaryResult.bytes,
         mimeType: file.type,
-        status: 'pending',
         submittedAt: new Date(),
       };
 
       logger.debug('KYCService.submitDocument - Objet soumission créé:', submission.id);
 
-      // 5. Sauvegarder dans Firestore
-      try {
-        await this.saveSubmission(submission);
-        logger.debug('KYCService.submitDocument - Sauvegarde Firestore réussie');
-      } catch (firestoreError) {
-        logger.error('KYCService.submitDocument - Erreur sauvegarde Firestore:', firestoreError);
-        // Si Firestore échoue, supprimer le fichier Cloudinary
-        try {
-          await cloudinaryService.deleteFile(cloudinaryResult.public_id);
-          logger.debug('KYCService.submitDocument - Fichier Cloudinary supprimé après échec Firestore');
-        } catch (deleteError) {
-          logger.error('KYCService.submitDocument - Erreur suppression fichier Cloudinary:', deleteError);
-        }
-        throw new Error(`Échec de la sauvegarde: ${firestoreError instanceof Error ? firestoreError.message : 'Erreur inconnue'}`);
-      }
+      // 5. Sauvegarder la soumission dans Firestore
+      // ✅ CORRIGÉ: saveSubmission met maintenant à jour automatiquement le statut KYC
+      await this.saveSubmission(submission);
 
-      // 6. Mettre à jour le statut KYC de l'utilisateur
-      try {
-        await this.updateKYCStatus(userId, 'pending');
-        logger.debug('KYCService.submitDocument - Statut KYC mis à jour');
-      } catch (statusError) {
-        logger.error('KYCService.submitDocument - Erreur mise à jour statut KYC:', statusError);
-        // Ne pas faire échouer la soumission si la mise à jour du statut échoue
-      }
-
-      logger.success('KYCService.submitDocument - Soumission réussie:', submission.id);
+      logger.success('KYCService.submitDocument - Document soumis avec succès:', submission.id);
       return submission;
 
     } catch (error) {
@@ -137,21 +116,38 @@ class KYCService {
    */
   private async saveSubmission(submission: KYCSubmission): Promise<void> {
     try {
+      // ✅ CORRIGÉ: Sauvegarder dans kycSubmissions avec l'ID de soumission
       const submissionRef = doc(db, 'kycSubmissions', submission.id);
-      await setDoc(submissionRef, {
+      
+      // Préparer les données pour Firestore (conversion des dates)
+      const submissionData = {
         ...submission,
         submittedAt: serverTimestamp(),
+        // Convertir les dates en timestamps Firestore
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      };
+      
+      await setDoc(submissionRef, submissionData);
+      
+      logger.debug('KYCService.saveSubmission - Soumission sauvegardée dans Firestore:', {
+        collection: 'kycSubmissions',
+        documentId: submission.id,
+        userId: submission.userId,
+        documentType: submission.documentType
       });
-
-      logger.debug('KYCService.saveSubmission - Sauvegarde réussie:', submission.id);
+      
+      // ✅ NOUVEAU: Mettre à jour le statut KYC de l'utilisateur
+      await this.updateKYCStatus(submission.userId, KYC_STATUS.PENDING);
+      
     } catch (error) {
-      logger.error('KYCService.saveSubmission - Erreur sauvegarde:', error);
+      logger.error('KYCService.saveSubmission - Erreur sauvegarde Firestore:', error);
       throw error;
     }
   }
 
   /**
-   * Mettre à jour le statut KYC de l'utilisateur
+   * Mettre à jour le statut KYC d'un utilisateur
    */
   async updateKYCStatus(userId: string, status: KYCStatus['status'], rejectionReason?: string): Promise<void> {
     try {
@@ -177,7 +173,7 @@ class KYCService {
       } else {
         // Format objet OU null/undefined
         currentKYCStatus = currentData.kycStatus || { 
-          status: 'unverified', 
+          status: KYC_STATUS.UNVERIFIED, // ✅ NOUVEAU: Utiliser la constante
           lastUpdated: new Date() 
         };
       }
@@ -190,13 +186,13 @@ class KYCService {
 
       // Ajouter des timestamps spécifiques selon le statut
       switch (status) {
-        case 'pending':
+        case KYC_STATUS.PENDING: // ✅ NOUVEAU: Utiliser la constante
           updatedKYCStatus.submittedAt = new Date();
           break;
-        case 'approved':
+        case KYC_STATUS.APPROVED: // ✅ NOUVEAU: Utiliser la constante
           updatedKYCStatus.approvedAt = new Date();
           break;
-        case 'rejected':
+        case KYC_STATUS.REJECTED: // ✅ NOUVEAU: Utiliser la constante
           updatedKYCStatus.rejectedAt = new Date();
           updatedKYCStatus.rejectionReason = rejectionReason;
           break;
@@ -239,7 +235,6 @@ class KYCService {
           ...data,
           id: doc.id,
           submittedAt: data.submittedAt?.toDate() || new Date(),
-          reviewedAt: data.reviewedAt?.toDate(),
         } as KYCSubmission);
       });
 
@@ -273,7 +268,7 @@ class KYCService {
       if (!kycStatus) {
         logger.debug('KYCService.getUserKYCStatus - Aucun statut KYC trouvé, retour statut par défaut');
         return {
-          status: 'unverified',
+          status: KYC_STATUS.UNVERIFIED, // ✅ NOUVEAU: Utiliser la constante
           lastUpdated: new Date(),
         };
       }
@@ -319,7 +314,7 @@ class KYCService {
   }
 
   /**
-   * Vérifier si tous les documents requis sont soumis
+   * Vérifier les documents requis pour un utilisateur
    */
   async checkRequiredDocuments(userId: string): Promise<{
     required: string[];
@@ -331,9 +326,7 @@ class KYCService {
       const requiredDocuments = ['identity', 'address', 'income', 'bankStatement'];
       const submissions = await this.getUserSubmissions(userId);
       
-      const submittedTypes = submissions
-        .filter(sub => sub.status !== 'rejected')
-        .map(sub => sub.documentType);
+      const submittedTypes = submissions.map(sub => sub.documentType);
       
       const missing = requiredDocuments.filter(docType => !submittedTypes.includes(docType as any));
       const isComplete = missing.length === 0;
@@ -399,18 +392,16 @@ class KYCService {
     try {
       const submissions = await this.getUserSubmissions(userId);
       const total = submissions.length;
-      const pending = submissions.filter(s => s.status === 'pending').length;
-      const approved = submissions.filter(s => s.status === 'approved').length;
-      const rejected = submissions.filter(s => s.status === 'rejected').length;
       
+      // ✅ NOUVEAU: Les soumissions n'ont plus de statut, on compte juste les documents
       const { isComplete } = await this.checkRequiredDocuments(userId);
-      const completionPercentage = isComplete ? 100 : (approved / 4) * 100;
+      const completionPercentage = isComplete ? 100 : (total / 4) * 100;
 
       return {
         totalSubmissions: total,
-        pendingSubmissions: pending,
-        approvedSubmissions: approved,
-        rejectedSubmissions: rejected,
+        pendingSubmissions: 0, // ✅ NOUVEAU: Plus de statut dans les soumissions
+        approvedSubmissions: 0, // ✅ NOUVEAU: Plus de statut dans les soumissions
+        rejectedSubmissions: 0, // ✅ NOUVEAU: Plus de statut dans les soumissions
         completionPercentage: Math.round(completionPercentage),
       };
     } catch (error) {

@@ -1237,6 +1237,9 @@
           "supportName": "AmCbunq Support",
       "unavailable": "Nachrichten nicht verfügbar",
       "unavailableUnverified": "Um auf den Chat mit unserem Support zuzugreifen, müssen Sie zuerst Ihre Identität bestätigen.",
+      "temporarilyUnavailable": "Nachrichten vorübergehend nicht verfügbar",
+      "unavailablePending": "Nachrichten nicht verfügbar - Verifizieren Sie Ihre Identität",
+      "unavailableVerifyIdentity": "Nachrichten nicht verfügbar - Verifizieren Sie Ihre Identität",
       "verification": {
       "unavailableTitle": "Nachrichten nicht verfügbar",
       "temporarilyUnavailableTitle": "Nachrichten vorübergehend nicht verfügbar",

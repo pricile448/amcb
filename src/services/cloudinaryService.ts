@@ -20,10 +20,7 @@ export interface KYCSubmission {
   fileName: string;
   fileSize: number;
   mimeType: string;
-  status: 'pending' | 'approved' | 'rejected';
   submittedAt: Date;
-  reviewedAt?: Date;
-  reviewerNotes?: string;
 }
 
 class CloudinaryService {

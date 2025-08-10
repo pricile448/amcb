@@ -1258,6 +1258,9 @@
       "supportName": "AmCbunq Support",
       "unavailable": "Messages unavailable",
       "unavailableUnverified": "To access the chat with our support, you must first validate your identity.",
+      "temporarilyUnavailable": "Messages temporarily unavailable",
+      "unavailablePending": "Messages unavailable - Verify your identity",
+      "unavailableVerifyIdentity": "Messages unavailable - Verify your identity",
       "verification": {
         "unavailableTitle": "Messages unavailable",
         "temporarilyUnavailableTitle": "Messages temporarily unavailable",

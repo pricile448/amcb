@@ -11,6 +11,8 @@ import { Toaster } from 'react-hot-toast';
 
 import DashboardLayout from './layouts/DashboardLayout';
 import PublicLayout from './layouts/PublicLayout';
+import LanguageWrapper from './components/LanguageWrapper';
+import LanguageRedirect from './components/LanguageRedirect';
 
 // Public Pages
 import HomePage from './pages/public/HomePage'
@@ -47,40 +49,46 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<PublicLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path="fonctionnalites" element={<FeaturesPage />} />
-          <Route path="tarifs" element={<PricingPage />} />
-          <Route path="aide" element={<HelpPage />} />
-          <Route path="connexion" element={<LoginPage />} />
-          <Route path="ouvrir-compte" element={<RegisterPage />} />
-          <Route path="mot-de-passe-oublie" element={<ForgotPasswordPage />} />
-          <Route path="verification-pending" element={<VerificationPendingPage />} />
-          <Route path="auth/action" element={<FirebaseActionPage />} />
-        </Route>
+        {/* Root redirect to language */}
+        <Route path="/" element={<LanguageRedirect />} />
+        
+        {/* Language-prefixed routes */}
+        <Route path="/:lang" element={<LanguageWrapper />}>
+          {/* Public Routes */}
+          <Route element={<PublicLayout />}>
+            <Route index element={<HomePage />} />
+            <Route path="fonctionnalites" element={<FeaturesPage />} />
+            <Route path="tarifs" element={<PricingPage />} />
+            <Route path="aide" element={<HelpPage />} />
+            <Route path="connexion" element={<LoginPage />} />
+            <Route path="ouvrir-compte" element={<RegisterPage />} />
+            <Route path="mot-de-passe-oublie" element={<ForgotPasswordPage />} />
+            <Route path="verification-pending" element={<VerificationPendingPage />} />
+            <Route path="auth/action" element={<FirebaseActionPage />} />
+          </Route>
 
-        {/* Protected Dashboard Routes */}
-        <Route path="/dashboard" element={
-          <ProtectedRoute>
-            <DashboardLayout />
-          </ProtectedRoute>
-        }>
-          <Route index element={<DashboardPage />} />
-          <Route path="comptes" element={<AccountsPage />} />
-          <Route path="iban" element={<IbanPage />} />
-          <Route path="virements" element={<TransfersPage />} />
-          <Route path="cartes" element={<CardsPage />} />
-          <Route path="facturation" element={<BillingPage />} />
-          <Route path="kyc" element={<KycPage />} />
-          <Route path="historique" element={<HistoryPage />} />
-          <Route path="budgets" element={<BudgetsPage />} />
-          <Route path="parametres" element={<SettingsPage />} />
-          <Route path="aide" element={<DashboardHelpPage />} />
-          <Route path="documents" element={<DocumentsPage />} />
-          <Route path="messages" element={<MessagesPage />} />
-          <Route path="verification" element={<VerificationPage />} />
-          <Route path="kyc-success" element={<KycSuccessPage />} />
+          {/* Protected Dashboard Routes */}
+          <Route path="dashboard" element={
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }>
+            <Route index element={<DashboardPage />} />
+            <Route path="comptes" element={<AccountsPage />} />
+            <Route path="iban" element={<IbanPage />} />
+            <Route path="virements" element={<TransfersPage />} />
+            <Route path="cartes" element={<CardsPage />} />
+            <Route path="facturation" element={<BillingPage />} />
+            <Route path="kyc" element={<KycPage />} />
+            <Route path="historique" element={<HistoryPage />} />
+            <Route path="budgets" element={<BudgetsPage />} />
+            <Route path="parametres" element={<SettingsPage />} />
+            <Route path="aide" element={<DashboardHelpPage />} />
+            <Route path="documents" element={<DocumentsPage />} />
+            <Route path="messages" element={<MessagesPage />} />
+            <Route path="verification" element={<VerificationPage />} />
+            <Route path="kyc-success" element={<KycSuccessPage />} />
+          </Route>
         </Route>
       </Routes>
 
