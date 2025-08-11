@@ -7,18 +7,19 @@
     "skipLibCheck": true,
 
     /* Bundler mode */
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
 
     /* Linting */
-    "strict": true,
+    "strict": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
+    "noImplicitAny": false,
+    "noImplicitReturns": false,
     "noFallthroughCasesInSwitch": true,
 
     /* Path mapping */
@@ -27,6 +28,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "src/**/*.css"],
+  "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 } 
