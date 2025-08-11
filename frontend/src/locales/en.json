@@ -1,5 +1,12 @@
 {
-    "common": {
+  "modernAlert": {
+    "understood": "Understood",
+    "ok": "OK",
+    "continue": "Continue",
+    "dismiss": "Dismiss"
+  },
+
+  "common": {
       "loading": "Loading...",
       "error": "Error",
       "success": "Success",

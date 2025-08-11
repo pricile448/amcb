@@ -1,4 +1,11 @@
 {
+  "modernAlert": {
+    "understood": "Entendido",
+    "ok": "OK",
+    "continue": "Continuar",
+    "dismiss": "Cerrar"
+  },
+
   "common": {
     "loading": "Cargando...",
     "error": "Error",

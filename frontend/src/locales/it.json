@@ -1,4 +1,11 @@
 {
+  "modernAlert": {
+    "understood": "Capito",
+    "ok": "OK",
+    "continue": "Continua",
+    "dismiss": "Chiudi"
+  },
+
   "common": {
     "loading": "Cargando...",
     "error": "Error",
