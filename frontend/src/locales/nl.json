@@ -451,7 +451,23 @@
     "emailVerifiedMessage": "Uw e-mail is succesvol geverifieerd! U kunt nu inloggen met uw inloggegevens.",
     "actionSuccessMessage": "Uw actie is succesvol verwerkt.",
     "verificationComplete": "Verificatie voltooid! Log handmatig in.",
-    "loginWithCredentials": "Inloggen met mijn inloggegevens"
+    "loginWithCredentials": "Inloggen met mijn inloggegevens",
+    "verificationPending": {
+      "title": "Verifieer uw e-mail",
+      "subtitle": "Verifieer uw e-mail om uw account te activeren",
+      "emailLabel": "E-mail:",
+      "automaticVerification": "Automatische verificatie bezig...",
+      "resendEmail": "E-mail opnieuw verzenden",
+      "refresh": "Vernieuwen",
+      "returnToLogin": "Terug naar inloggen",
+      "sending": "Verzenden...",
+      "emailSent": "Verificatie-e-mail verzonden!",
+      "emailError": "Fout bij het verzenden van verificatie-e-mail"
+    },
+    "processing": {
+      "title": "Verwerken...",
+      "message": "Even geduld terwijl we uw verzoek verwerken."
+    }
   },
 
   "dashboard": {
@@ -1475,7 +1491,6 @@
     "cardBlocked": "Kaart geblokkeerd",
     "transferCompleted": "Overschrijving voltooid",
     "documentRequired": "Document vereist",
-    "verificationComplete": "Verificatie voltooid",
     "maintenanceScheduled": "Onderhoud gepland"
   },
 

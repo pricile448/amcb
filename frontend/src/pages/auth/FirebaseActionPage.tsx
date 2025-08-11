@@ -155,11 +155,11 @@ const FirebaseActionPage: React.FC = () => {
               </div>
               
               <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-                Traitement en cours...
+                {t('auth.processing.title')}
               </h2>
               
               <p className="mt-2 text-sm text-gray-600">
-                Veuillez patienter pendant que nous traitons votre demande.
+                {t('auth.processing.message')}
               </p>
             </div>
           </div>

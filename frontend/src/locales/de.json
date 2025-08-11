@@ -457,7 +457,23 @@
     "emailVerifiedMessage": "Ihre E-Mail wurde erfolgreich bestätigt! Sie können sich jetzt mit Ihren Anmeldedaten anmelden.",
     "actionSuccessMessage": "Ihre Aktion wurde erfolgreich verarbeitet.",
     "verificationComplete": "Bestätigung abgeschlossen! Bitte melden Sie sich manuell an.",
-    "loginWithCredentials": "Mit meinen Anmeldedaten anmelden"
+    "loginWithCredentials": "Mit meinen Anmeldedaten anmelden",
+    "verificationPending": {
+      "title": "Bestätigen Sie Ihre E-Mail",
+      "subtitle": "Bestätigen Sie Ihre E-Mail, um Ihr Konto zu aktivieren",
+      "emailLabel": "E-Mail:",
+      "automaticVerification": "Automatische Bestätigung läuft...",
+      "resendEmail": "E-Mail erneut senden",
+      "refresh": "Aktualisieren",
+      "returnToLogin": "Zurück zur Anmeldung",
+      "sending": "Wird gesendet...",
+      "emailSent": "Bestätigungs-E-Mail gesendet!",
+      "emailError": "Fehler beim Senden der Bestätigungs-E-Mail"
+    },
+    "processing": {
+      "title": "Wird verarbeitet...",
+      "message": "Bitte warten Sie, während wir Ihre Anfrage bearbeiten."
+    }
   },
 
   "dashboard": {
@@ -1481,7 +1497,6 @@
     "cardBlocked": "Karte gesperrt",
     "transferCompleted": "Überweisung abgeschlossen",
     "documentRequired": "Dokument erforderlich",
-    "verificationComplete": "Verifizierung abgeschlossen",
     "maintenanceScheduled": "Wartung geplant"
   },
 

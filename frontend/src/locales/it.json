@@ -322,7 +322,23 @@
     "emailVerifiedMessage": "La tua email è stata verificata con successo! Ora puoi accedere con le tue credenziali.",
     "actionSuccessMessage": "La tua azione è stata elaborata con successo.",
     "verificationComplete": "Verifica completata! Si prega di accedere manualmente.",
-    "loginWithCredentials": "Accedi con le mie credenziali"
+    "loginWithCredentials": "Accedi con le mie credenziali",
+    "verificationPending": {
+      "title": "Verifica la tua email",
+      "subtitle": "Verifica la tua email per attivare il tuo account",
+      "emailLabel": "Email:",
+      "automaticVerification": "Verifica automatica in corso...",
+      "resendEmail": "Rinvia email",
+      "refresh": "Aggiorna",
+      "returnToLogin": "Torna al login",
+      "sending": "Invio in corso...",
+      "emailSent": "Email di verifica inviata!",
+      "emailError": "Errore nell'invio dell'email di verifica"
+    },
+    "processing": {
+      "title": "Elaborazione in corso...",
+      "message": "Si prega di attendere mentre elaboriamo la tua richiesta."
+    }
   },
 
   "dashboard": {
@@ -1342,7 +1358,6 @@
     "cardBlocked": "Tarjeta bloqueada",
     "transferCompleted": "Transferencia completada",
     "documentRequired": "Documento requerido",
-    "verificationComplete": "Verificación completada",
     "maintenanceScheduled": "Mantenimiento programado"
   },
 

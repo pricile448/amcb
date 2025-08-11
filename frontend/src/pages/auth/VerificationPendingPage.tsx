@@ -91,11 +91,11 @@ const VerificationPendingPage: React.FC = () => {
           handleCodeInApp: false
         });
         
-        toast.success('Email de vérification renvoyé !');
+        toast.success(t('auth.verificationPending.emailSent'));
       }
     } catch (error: any) {
       logger.error('Erreur lors du renvoi de l\'email:', error);
-      toast.error('Erreur lors du renvoi de l\'email');
+      toast.error(t('auth.verificationPending.emailError'));
     } finally {
       setIsChecking(false);
     }
@@ -125,23 +125,23 @@ const VerificationPendingPage: React.FC = () => {
             </div>
             
             <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-              Vérifiez votre email
+              {t('auth.verificationPending.title')}
             </h2>
             
             <p className="mt-2 text-sm text-gray-600">
-              {message}
+              {t('auth.verificationPending.subtitle')}
             </p>
             
             <div className="mt-4 p-4 bg-blue-50 rounded-lg">
               <p className="text-sm text-blue-800">
-                <strong>Email :</strong> {email}
+                <strong>{t('auth.verificationPending.emailLabel')}</strong> {email}
               </p>
             </div>
             
             <div className="mt-6 space-y-4">
               <div className="flex items-center justify-center space-x-2 text-sm text-gray-600">
                 <CheckCircle className="h-4 w-4 text-green-500" />
-                <span>Vérification automatique en cours...</span>
+                <span>{t('auth.verificationPending.automaticVerification')}</span>
               </div>
               
               <div className="flex space-x-3">
@@ -153,12 +153,12 @@ const VerificationPendingPage: React.FC = () => {
                   {isChecking ? (
                     <>
                       <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
-                      Envoi en cours...
+                      {t('auth.verificationPending.sending')}
                     </>
                   ) : (
                     <>
                       <Mail className="h-4 w-4 mr-2" />
-                      Renvoyer l'email
+                      {t('auth.verificationPending.resendEmail')}
                     </>
                   )}
                 </button>
@@ -168,7 +168,7 @@ const VerificationPendingPage: React.FC = () => {
                   className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
                   <RefreshCw className="h-4 w-4 mr-2" />
-                  Actualiser
+                  {t('auth.verificationPending.refresh')}
                 </button>
               </div>
             </div>
@@ -178,7 +178,7 @@ const VerificationPendingPage: React.FC = () => {
                 to="/connexion"
                 className="text-sm text-blue-600 hover:text-blue-500"
               >
-                Retour à la connexion
+                {t('auth.verificationPending.returnToLogin')}
               </AuthLink>
             </div>
           </div>

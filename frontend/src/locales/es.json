@@ -478,7 +478,23 @@
     "emailVerifiedMessage": "¡Su email ha sido verificado exitosamente! Ahora puede iniciar sesión con sus credenciales.",
     "actionSuccessMessage": "Su acción ha sido procesada exitosamente.",
     "verificationComplete": "¡Verificación completa! Por favor inicie sesión manualmente.",
-    "loginWithCredentials": "Iniciar sesión con mis credenciales"
+    "loginWithCredentials": "Iniciar sesión con mis credenciales",
+    "verificationPending": {
+      "title": "Verifica tu email",
+      "subtitle": "Verifica tu email para activar tu cuenta",
+      "emailLabel": "Email:",
+      "automaticVerification": "Verificación automática en progreso...",
+      "resendEmail": "Reenviar email",
+      "refresh": "Actualizar",
+      "returnToLogin": "Volver al inicio de sesión",
+      "sending": "Enviando...",
+      "emailSent": "¡Email de verificación enviado!",
+      "emailError": "Error al enviar el email de verificación"
+    },
+    "processing": {
+      "title": "Procesando...",
+      "message": "Por favor espera mientras procesamos tu solicitud."
+    }
   },
 
   "dashboard": {
@@ -1502,7 +1518,6 @@
     "cardBlocked": "Tarjeta bloqueada",
     "transferCompleted": "Transferencia completada",
     "documentRequired": "Documento requerido",
-    "verificationComplete": "Verificación completada",
     "maintenanceScheduled": "Mantenimiento programado"
   },
 

@@ -451,7 +451,23 @@
     "emailVerifiedMessage": "Seu email foi verificado com sucesso! Agora você pode fazer login com suas credenciais.",
     "actionSuccessMessage": "Sua ação foi processada com sucesso.",
     "verificationComplete": "Verificação concluída! Por favor, faça login manualmente.",
-    "loginWithCredentials": "Fazer login com minhas credenciais"
+    "loginWithCredentials": "Fazer login com minhas credenciais",
+    "verificationPending": {
+      "title": "Verifique o seu email",
+      "subtitle": "Verifique o seu email para ativar a sua conta",
+      "emailLabel": "Email:",
+      "automaticVerification": "Verificação automática em andamento...",
+      "resendEmail": "Reenviar email",
+      "refresh": "Atualizar",
+      "returnToLogin": "Voltar ao login",
+      "sending": "A enviar...",
+      "emailSent": "Email de verificação enviado!",
+      "emailError": "Erro ao enviar email de verificação"
+    },
+    "processing": {
+      "title": "A processar...",
+      "message": "Por favor aguarde enquanto processamos o seu pedido."
+    }
   },
 
   "dashboard": {
@@ -1475,7 +1491,6 @@
     "cardBlocked": "Cartão bloqueado",
     "transferCompleted": "Transferência concluída",
     "documentRequired": "Documento necessário",
-    "verificationComplete": "Verificação concluída",
     "maintenanceScheduled": "Manutenção agendada"
   },
 

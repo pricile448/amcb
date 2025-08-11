@@ -478,7 +478,23 @@
     "emailVerifiedMessage": "Votre email a été vérifié avec succès ! Vous pouvez maintenant vous connecter avec vos identifiants.",
     "actionSuccessMessage": "Votre action a été traitée avec succès.",
     "verificationComplete": "Vérification terminée ! Veuillez vous connecter manuellement.",
-    "loginWithCredentials": "Se connecter avec mes identifiants"
+    "loginWithCredentials": "Se connecter avec mes identifiants",
+          "verificationPending": {
+        "title": "Vérifiez votre email",
+        "subtitle": "Vérifiez votre email pour activer votre compte",
+        "emailLabel": "Email :",
+        "automaticVerification": "Vérification automatique en cours...",
+        "resendEmail": "Renvoyer l'email",
+        "refresh": "Actualiser",
+        "returnToLogin": "Retour à la connexion",
+        "sending": "Envoi en cours...",
+        "emailSent": "Email de vérification renvoyé !",
+        "emailError": "Erreur lors du renvoi de l'email"
+      },
+      "processing": {
+        "title": "Traitement en cours...",
+        "message": "Veuillez patienter pendant que nous traitons votre demande."
+      }
   },
 
   "dashboard": {
