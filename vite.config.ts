@@ -21,6 +21,11 @@ export default defineConfig({
       }
     }
   },
+  preview: {
+    port: 3000,
+    host: '0.0.0.0',
+    allowedHosts: ['amcbunq.onrender.com', '.onrender.com', 'localhost', '127.0.0.1']
+  },
   build: {
     outDir: 'dist',
     sourcemap: true,
@@ -32,9 +37,5 @@ export default defineConfig({
         },
       },
     },
-  },
-  preview: {
-    port: 3000,
-    host: true,
-  },
+  }
 }) 
