@@ -113,7 +113,7 @@ const HelpPage: React.FC = () => {
   };
 
   const handleEmail = () => {
-    const subject = encodeURIComponent(t('help.contact.email.subject'));
+    const subject = encodeURIComponent(t('help.contact.email.subject') || 'Demande d\'aide');
     window.open(`mailto:support@amcbunq.fr?subject=${subject}`, '_self');
   };
 
@@ -124,13 +124,13 @@ const HelpPage: React.FC = () => {
 
   const handleAppointment = () => {
     // Ouverture d'un modal ou redirection vers une page de rendez-vous
-    alert(t('help.appointment.alert'));
+    alert(t('help.appointment.alert') || 'Fonctionnalité de rendez-vous à venir');
   };
 
   const handleResourceClick = (resource: string) => {
     switch (resource) {
       case 'guide':
-        alert(t('help.resources.guide.alert'));
+        alert(t('help.resources.guide.alert') || 'Guide utilisateur - Redirection vers PDF');
         break;
       case 'conditions':
         window.location.href = getDashboardLink('documents');
@@ -139,7 +139,7 @@ const HelpPage: React.FC = () => {
         window.location.href = getDashboardLink('documents');
         break;
       case 'tarifs':
-        alert(t('help.resources.fees.alert'));
+        alert(t('help.resources.fees.alert') || 'Tarifs - Redirection vers la page des prix');
         break;
       default:
         break;
@@ -149,26 +149,26 @@ const HelpPage: React.FC = () => {
   const contactMethods = [
     {
       icon: <Phone className="w-6 h-6" />,
-      title: t('help.contact.phone.title'),
-      description: t('help.contact.phone.description'),
-      contact: t('help.contact.phone.number'),
-      action: t('help.contact.phone.action'),
+      title: t('help.contact.phone.title') || 'Téléphone',
+      description: t('help.contact.phone.description') || 'Service client 24/7',
+      contact: t('help.contact.phone.number') || '01 23 45 67 89',
+      action: t('help.contact.phone.action') || 'Appeler maintenant',
       onClick: handlePhoneCall
     },
     {
       icon: <MessageCircle className="w-6 h-6" />,
-      title: t('help.contact.chat.title'),
-      description: t('help.contact.chat.description'),
-      contact: t('help.contact.chat.availability'),
-      action: t('help.contact.chat.action'),
+      title: t('help.contact.chat.title') || 'Chat en ligne',
+      description: t('help.contact.chat.description') || 'Réponse immédiate',
+      contact: t('help.contact.chat.availability') || 'Disponible 24/7',
+      action: t('help.contact.chat.action') || 'Démarrer le chat',
       onClick: handleChat
     },
     {
       icon: <Mail className="w-6 h-6" />,
-      title: t('help.contact.email.title'),
-      description: t('help.contact.email.description'),
-      contact: t('help.contact.email.address'),
-      action: t('help.contact.email.action'),
+      title: t('help.contact.email.title') || 'E-mail',
+      description: t('help.contact.email.description') || 'Réponse sous 24h',
+      contact: t('help.contact.email.address') || 'support@amcbunq.fr',
+      action: t('help.contact.email.action') || 'Envoyer un email',
       onClick: handleEmail
     }
   ];
@@ -177,8 +177,8 @@ const HelpPage: React.FC = () => {
     <div className="max-w-6xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">{t('help.title')}</h1>
-        <p className="text-gray-600">{t('help.subtitle')}</p>
+        <h1 className="text-2xl font-bold text-gray-900">{t('help.title') || 'Aide & Support'}</h1>
+        <p className="text-gray-600">{t('help.subtitle') || 'Trouvez rapidement l\'aide dont vous avez besoin'}</p>
       </div>
 
       {/* Search */}
