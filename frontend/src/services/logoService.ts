@@ -1,5 +1,4 @@
 // Service de gestion des logos - UNIQUEMENT Cloudinary
-import { logger } from '../utils/logger';
 import { LOGO_CONFIG, CLOUDINARY_CONFIG, getCloudinaryUrl } from '../config/logos';
 
 export interface LogoConfig {
@@ -15,8 +14,6 @@ class LogoService {
       url: LOGO_CONFIG.main.url,
       cloudName: CLOUDINARY_CONFIG.cloudName
     };
-
-    logger.debug('LogoService - Configuration:', this.config);
   }
 
   /**
@@ -57,19 +54,6 @@ class LogoService {
     format?: 'auto' | 'webp' | 'jpg' | 'png';
   } = {}): string {
     return getCloudinaryUrl(logoName, options);
-  }
-
-  /**
-   * Vérifier si l'URL du logo est valide
-   */
-  async validateLogoUrl(url: string): Promise<boolean> {
-    try {
-      const response = await fetch(url, { method: 'HEAD' });
-      return response.ok;
-    } catch (error) {
-      logger.warn('LogoService.validateLogoUrl - Erreur validation:', error);
-      return false;
-    }
   }
 
   /**
