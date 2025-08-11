@@ -1,0 +1,42 @@
+{
+  "fr-FR": "[MISSING] fr-FR",
+  "firebase/auth": "[MISSING] firebase/auth",
+  "firebase/firestore": "[MISSING] firebase/firestore",
+  "verification": {
+    "status": {
+      "${document": {
+        "status}": "[MISSING] verification.status.${document.status}"
+      }
+    },
+    "stepStatus": {
+      "${step": {
+        "status}": "[MISSING] verification.stepStatus.${step.status}"
+      }
+    }
+  },
+  " ": "[MISSING]  ",
+  "T": "[MISSING] T",
+  "a": "[MISSING] a",
+  "Fonctionnalité de prise de rendez-vous à venir": {
+    " Contactez-nous par téléphone au 01 23 45 67 89": {
+      "": "[MISSING] Fonctionnalité de prise de rendez-vous à venir. Contactez-nous par téléphone au 01 23 45 67 89."
+    }
+  },
+  "Grille tarifaire - Redirection vers la page des tarifs": "[MISSING] Grille tarifaire - Redirection vers la page des tarifs",
+  "": {
+    "": {
+      "/": {
+        "": {
+          "/config/firebase": "[MISSING] ../../config/firebase"
+        }
+      }
+    }
+  },
+  "mode": "[MISSING] mode",
+  "oobCode": "[MISSING] oobCode",
+  "continueUrl": "[MISSING] continueUrl",
+  "🧹 Données localStorage nettoyées avec succès !": "[MISSING] 🧹 Données localStorage nettoyées avec succès !",
+  "❌ Erreur lors du nettoyage": "[MISSING] ❌ Erreur lors du nettoyage",
+  "✅ Données restaurées depuis Firestore !": "[MISSING] ✅ Données restaurées depuis Firestore !",
+  "❌ Erreur lors de la restauration": "[MISSING] ❌ Erreur lors de la restauration"
+}

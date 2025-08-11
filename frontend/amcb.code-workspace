@@ -1,0 +1,44 @@
+{
+  "folders": [
+    {
+      "name": "Frontend",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "css.validate": false,
+    "less.validate": false,
+    "scss.validate": false,
+    "css.lint.unknownAtRules": "ignore",
+    "css.lint.unknownVendorSpecificProperties": "ignore",
+    "css.lint.unknownUnits": "ignore",
+    "css.lint.validProperties": "ignore",
+    "files.associations": {
+      "*.css": "tailwindcss"
+    },
+    "tailwindCSS.includeLanguages": {
+      "css": "css"
+    },
+    "tailwindCSS.experimental.classRegex": [
+      ["@apply\\s+([^;}]+)", "([^;}]+)"],
+      ["className\\s*=\\s*[\"'`]([^\"'`]*)[\"'`]", "([^\"'`]*)"]
+    ],
+    "emmet.includeLanguages": {
+      "css": "tailwindcss"
+    },
+    "files.exclude": {
+      "**/node_modules": true
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/dist": true
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "bradlc.vscode-tailwindcss",
+      "esbenp.prettier-vscode",
+      "ms-vscode.vscode-typescript-next"
+    ]
+  }
+} 

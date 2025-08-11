@@ -1,0 +1,4 @@
+# Logo PNG Fallback
+# This file should contain a PNG version of the logo.svg for browsers that don't support SVG
+# The PNG should be generated from the SVG logo with dimensions 280x90 pixels
+# For now, the SVG logo is used as the primary format

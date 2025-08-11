@@ -1,0 +1,203 @@
+services:
+  # Service principal - Français (domaine existant)
+  - type: web
+    name: mybunq-frontend-fr
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: node server-prod.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: VITE_DEFAULT_LANGUAGE
+        value: fr
+      - key: VITE_DOMAIN_LANGUAGE
+        value: fr
+      - key: VITE_CLOUDINARY_CLOUD_NAME
+        value: dxvbuhadg
+      - key: VITE_CLOUDINARY_API_KEY
+        value: 221933451899525
+      - key: VITE_CLOUDINARY_API_SECRET
+        value: _-G22OeY5A7QsLbKqr1ll93Cyso
+      - key: VITE_CLOUDINARY_UPLOAD_PRESET
+        value: amcb_kyc_documents
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    domains:
+      - mybunq.amccredit.com
+      - www.mybunq.amccredit.com
+
+  # Service Anglais
+  - type: web
+    name: mybunq-frontend-en
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: node server-prod.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: VITE_DEFAULT_LANGUAGE
+        value: en
+      - key: VITE_DOMAIN_LANGUAGE
+        value: en
+      - key: VITE_CLOUDINARY_CLOUD_NAME
+        value: dxvbuhadg
+      - key: VITE_CLOUDINARY_API_KEY
+        value: 221933451899525
+      - key: VITE_CLOUDINARY_API_SECRET
+        value: _-G22OeY5A7QsLbKqr1ll93Cyso
+      - key: VITE_CLOUDINARY_UPLOAD_PRESET
+        value: amcb_kyc_documents
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    domains:
+      - en.mybunq.amccredit.com
+      - mybunq-en.amccredit.com
+
+  # Service Espagnol  
+  - type: web
+    name: mybunq-frontend-es
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: node server-prod.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: VITE_DEFAULT_LANGUAGE
+        value: es
+      - key: VITE_DOMAIN_LANGUAGE
+        value: es
+      - key: VITE_CLOUDINARY_CLOUD_NAME
+        value: dxvbuhadg
+      - key: VITE_CLOUDINARY_API_KEY
+        value: 221933451899525
+      - key: VITE_CLOUDINARY_API_SECRET
+        value: _-G22OeY5A7QsLbKqr1ll93Cyso
+      - key: VITE_CLOUDINARY_UPLOAD_PRESET
+        value: amcb_kyc_documents
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    domains:
+      - es.mybunq.amccredit.com
+      - mybunq-es.amccredit.com
+
+  # Service Portugais
+  - type: web
+    name: mybunq-frontend-pt
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: node server-prod.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: VITE_DEFAULT_LANGUAGE
+        value: pt
+      - key: VITE_DOMAIN_LANGUAGE
+        value: pt
+      - key: VITE_CLOUDINARY_CLOUD_NAME
+        value: dxvbuhadg
+      - key: VITE_CLOUDINARY_API_KEY
+        value: 221933451899525
+      - key: VITE_CLOUDINARY_API_SECRET
+        value: _-G22OeY5A7QsLbKqr1ll93Cyso
+      - key: VITE_CLOUDINARY_UPLOAD_PRESET
+        value: amcb_kyc_documents
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    domains:
+      - pt.mybunq.amccredit.com
+      - mybunq-pt.amccredit.com
+
+  # Service Italien
+  - type: web
+    name: mybunq-frontend-it
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: node server-prod.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: VITE_DEFAULT_LANGUAGE
+        value: it
+      - key: VITE_DOMAIN_LANGUAGE
+        value: it
+      - key: VITE_CLOUDINARY_CLOUD_NAME
+        value: dxvbuhadg
+      - key: VITE_CLOUDINARY_API_KEY
+        value: 221933451899525
+      - key: VITE_CLOUDINARY_API_SECRET
+        value: _-G22OeY5A7QsLbKqr1ll93Cyso
+      - key: VITE_CLOUDINARY_UPLOAD_PRESET
+        value: amcb_kyc_documents
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    domains:
+      - it.mybunq.amccredit.com
+      - mybunq-it.amccredit.com
+
+  # Service Néerlandais
+  - type: web
+    name: mybunq-frontend-nl
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: node server-prod.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: VITE_DEFAULT_LANGUAGE
+        value: nl
+      - key: VITE_DOMAIN_LANGUAGE
+        value: nl
+      - key: VITE_CLOUDINARY_CLOUD_NAME
+        value: dxvbuhadg
+      - key: VITE_CLOUDINARY_API_KEY
+        value: 221933451899525
+      - key: VITE_CLOUDINARY_API_SECRET
+        value: _-G22OeY5A7QsLbKqr1ll93Cyso
+      - key: VITE_CLOUDINARY_UPLOAD_PRESET
+        value: amcb_kyc_documents
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    domains:
+      - nl.mybunq.amccredit.com
+      - mybunq-nl.amccredit.com
+
+  # Service Allemand
+  - type: web
+    name: mybunq-frontend-de
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: node server-prod.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: VITE_DEFAULT_LANGUAGE
+        value: de
+      - key: VITE_DOMAIN_LANGUAGE
+        value: de
+      - key: VITE_CLOUDINARY_CLOUD_NAME
+        value: dxvbuhadg
+      - key: VITE_CLOUDINARY_API_KEY
+        value: 221933451899525
+      - key: VITE_CLOUDINARY_API_SECRET
+        value: _-G22OeY5A7QsLbKqr1ll93Cyso
+      - key: VITE_CLOUDINARY_UPLOAD_PRESET
+        value: amcb_kyc_documents
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    domains:
+      - de.mybunq.amccredit.com
+      - mybunq-de.amccredit.com
