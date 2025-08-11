@@ -391,15 +391,15 @@
   "auth": {
     "login": {
       "title": "Anmeldung",
-      "subtitle": "Zugriff auf Ihr AmCbunq-Konto",
+      "noAccount": "Haben Sie noch kein Konto?",
       "createAccount": "Konto erstellen",
       "button": "Anmelden"
     },
     "register": {
       "title": "Konto erstellen",
-      "subtitle": "Werden Sie in wenigen Schritten AmCbunq-Kunde",
+      "subtitle": "Werden Sie AmCbunq-Kunde und entdecken Sie eine neue Art, Ihre Finanzen zu verwalten",
       "alreadyHaveAccount": "Haben Sie bereits ein Konto?",
-      "button": "Konto erstellen"
+      "button": "Mein Konto erstellen"
     },
     "email": "E-Mail-Adresse",
     "emailPlaceholder": "ihre@email.com",
@@ -412,35 +412,39 @@
     "lastName": "Nachname",
     "lastNamePlaceholder": "Ihr Nachname",
     "phone": "Telefon",
-    "phonePlaceholder": "+49 123 456789",
+    "phonePlaceholder": "Ihre Telefonnummer",
     "birthDate": "Geburtsdatum",
+    "birthPlace": "Geburtsort",
+    "nationality": "Staatsangehörigkeit",
+    "residenceCountry": "Land des Wohnsitzes",
+    "address": "Adresse",
+    "city": "Stadt",
+    "postalCode": "Postleitzahl",
+    "profession": "Beruf",
+    "salary": "Monatliches Gehalt",
     "rememberMe": "Angemeldet bleiben",
     "forgotPassword": "Passwort vergessen?",
-    "acceptTerms": "Ich akzeptiere die",
-    "termsAndConditions": "Nutzungsbedingungen",
-    "or": "oder",
-    "loginWithGoogle": "Mit Google anmelden",
-    "loginButton": "Anmelden",
-    "registerButton": "Konto erstellen",
     "loggingIn": "Anmeldung...",
     "registering": "Konto wird erstellt...",
-    "loginSuccess": "Anmeldung erfolgreich",
-    "loginError": "Anmeldefehler",
-    "registerSuccess": "Konto erfolgreich erstellt",
-    "registerError": "Fehler bei der Kontoerstellung",
-    "emailSendError": "Fehler beim Senden der E-Mail",
-    "accountCreatedSuccess": "Konto erstellt! Bitte überprüfen Sie Ihre E-Mail, um Ihr Konto zu aktivieren.",
+    "or": "oder",
+    "loginWithGoogle": "Mit Google anmelden",
+    "acceptTerms": "Ich akzeptiere die",
+    "termsAndConditions": "Nutzungsbedingungen",
+    "accountCreatedSuccess": "Konto erfolgreich erstellt!",
     "verifyEmailMessage": "Überprüfen Sie Ihre E-Mail, um Ihr Konto zu aktivieren",
     "accountCreationError": "Fehler bei der Kontoerstellung",
-    "emailAlreadyUsed": "Diese E-Mail wird bereits verwendet",
+    "emailAlreadyUsed": "Diese E-Mail-Adresse wird bereits verwendet",
     "passwordTooWeak": "Passwort ist zu schwach",
-    "userNotFoundInDatabase": "Benutzer nicht in der Datenbank gefunden",
-    "verifyEmailBeforeLogin": "Bitte bestätigen Sie Ihre E-Mail, bevor Sie sich anmelden. Überprüfen Sie Ihren Spam-Ordner oder fordern Sie einen neuen Code an.",
-    "verifyEmailBeforeLoginShort": "Bitte bestätigen Sie Ihre E-Mail, bevor Sie sich anmelden.",
-    "welcomeAccountVerified": "Willkommen! Ihr Konto wurde erfolgreich verifiziert. Sie können jetzt auf alle Funktionen zugreifen.",
+    "emailSendError": "Fehler beim Senden der Bestätigungs-E-Mail",
+    "loginSuccess": "Anmeldung erfolgreich!",
+    "loginError": "Anmeldefehler",
     "invalidCredentials": "Falsche E-Mail oder falsches Passwort",
-    "tooManyAttempts": "Zu viele Versuche. Bitte versuchen Sie es später erneut.",
-    "accountDisabled": "Dieses Konto wurde deaktiviert"
+    "tooManyAttempts": "Zu viele Versuche. Versuchen Sie es später erneut",
+    "accountDisabled": "Dieses Konto wurde deaktiviert",
+    "userNotFoundInDatabase": "Benutzer nicht in der Datenbank gefunden",
+    "verifyEmailBeforeLogin": "Bitte bestätigen Sie Ihre E-Mail, bevor Sie sich anmelden",
+    "verifyEmailBeforeLoginShort": "Überprüfen Sie Ihre E-Mail, um fortzufahren",
+    "welcomeAccountVerified": "Willkommen! Ihr Konto ist jetzt verifiziert"
   },
 
   "dashboard": {
@@ -1747,5 +1751,18 @@
     },
     "securityGuaranteed": "Sicherheit garantiert",
     "securityDescription": "Ihre Daten sind durch bankübliche Sicherheitsmaßnahmen geschützt."
+  },
+
+  "validation": {
+    "emailInvalid": "Ungültige E-Mail-Adresse",
+    "passwordMinLength": "Das Passwort muss mindestens {{min}} Zeichen enthalten",
+    "passwordMismatch": "Passwörter stimmen nicht überein",
+    "required": "Dieses Feld ist erforderlich",
+    "minLength": "Dieses Feld muss mindestens {{min}} Zeichen enthalten"
+  },
+
+  "placeholders": {
+    "nationality": "z.B. Deutsch",
+    "residenceCountry": "z.B. Deutschland"
   }
 }

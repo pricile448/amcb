@@ -38,8 +38,7 @@ const CloudinaryLogoDemo: React.FC = () => {
                     className="w-80 h-auto transition-all duration-500 group-hover:scale-110 group-hover:shadow-2xl rounded-xl"
                     onError={(e) => {
                       console.error('Erreur de chargement du logo Cloudinary:', e);
-                      const target = e.target as HTMLImageElement;
-                      target.src = '/logo.svg';
+                      // Pas de fallback local - on garde l'image cassée pour débugger
                     }}
                   />
                 </div>

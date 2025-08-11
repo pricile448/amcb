@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import LocalizedLink from "../../components/LocalizedLink";
+import LogoTest from "../../components/LogoTest";
 import {
   Shield,
   CreditCard,
@@ -202,6 +203,13 @@ const HomePage: React.FC = () => {
             {t("home.cta.button")}
             <ArrowRight className="ml-2 w-5 h-5" />
           </LocalizedLink>
+        </div>
+      </section>
+
+      {/* Test des Logos - À SUPPRIMER APRÈS TEST */}
+      <section className="py-10 bg-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <LogoTest />
         </div>
       </section>
     </div>

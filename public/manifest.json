@@ -11,21 +11,21 @@
   "lang": "en",
   "icons": [
     {
-      "src": "/favicon.svg",
+      "src": "https://res.cloudinary.com/dxvbuhadg/image/upload/v1754875302/logo_xjrpnj.png",
       "sizes": "32x32",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/logo-simple.svg",
+      "src": "https://res.cloudinary.com/dxvbuhadg/image/upload/v1754875302/logo_xjrpnj.png",
       "sizes": "120x60",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/logo.svg",
+      "src": "https://res.cloudinary.com/dxvbuhadg/image/upload/v1754875302/logo_xjrpnj.png",
       "sizes": "280x90",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any"
     }
   ],
@@ -39,7 +39,7 @@
       "url": "/dashboard",
       "icons": [
         {
-          "src": "/logo-simple.svg",
+          "src": "https://res.cloudinary.com/dxvbuhadg/image/upload/v1754875302/logo_xjrpnj.png",
           "sizes": "120x60"
         }
       ]

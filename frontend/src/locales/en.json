@@ -412,15 +412,15 @@
     "auth": {
       "login": {
         "title": "Login",
-        "subtitle": "Access your AmCbunq account",
+        "noAccount": "Don't have an account?",
         "createAccount": "Create an account",
         "button": "Log in"
       },
       "register": {
         "title": "Create an account",
-        "subtitle": "Join AmCbunq in a few steps",
+        "subtitle": "Join AmCbunq and discover a new way to manage your finances",
         "alreadyHaveAccount": "Already have an account?",
-        "button": "Create account"
+        "button": "Create my account"
       },
       "email": "Email address",
       "emailPlaceholder": "your@email.com",
@@ -433,35 +433,39 @@
       "lastName": "Last name",
       "lastNamePlaceholder": "Your last name",
       "phone": "Phone",
-      "phonePlaceholder": "+33 6 12 34 56 78",
+      "phonePlaceholder": "Your phone number",
       "birthDate": "Date of birth",
+      "birthPlace": "Place of birth",
+      "nationality": "Nationality",
+      "residenceCountry": "Country of residence",
+      "address": "Address",
+      "city": "City",
+      "postalCode": "Postal code",
+      "profession": "Profession",
+      "salary": "Monthly salary",
       "rememberMe": "Remember me",
       "forgotPassword": "Forgot password?",
-      "acceptTerms": "I accept the",
-      "termsAndConditions": "terms of use",
-      "or": "or",
-      "loginWithGoogle": "Log in with Google",
-      "loginButton": "Log in",
-      "registerButton": "Create account",
       "loggingIn": "Logging in...",
       "registering": "Creating account...",
-      "loginSuccess": "Login successful",
-      "loginError": "Login error",
-      "registerSuccess": "Account created successfully",
-      "registerError": "Error creating account",
-      "emailSendError": "Error sending email",
-      "accountCreatedSuccess": "Account created! Please check your email to activate your account.",
+      "or": "or",
+      "loginWithGoogle": "Log in with Google",
+      "acceptTerms": "I accept the",
+      "termsAndConditions": "terms of use",
+      "accountCreatedSuccess": "Account created successfully!",
       "verifyEmailMessage": "Check your email to activate your account",
       "accountCreationError": "Error creating account",
-      "emailAlreadyUsed": "This email is already used",
+      "emailAlreadyUsed": "This email address is already used",
       "passwordTooWeak": "Password is too weak",
-      "userNotFoundInDatabase": "User not found in database",
-      "verifyEmailBeforeLogin": "Please verify your email before logging in. Check your spam or request a new code.",
-      "verifyEmailBeforeLoginShort": "Please verify your email before logging in.",
-      "welcomeAccountVerified": "Welcome! Your account has been successfully verified. You can now access all features.",
+      "emailSendError": "Error sending verification email",
+      "loginSuccess": "Login successful!",
+      "loginError": "Login error",
       "invalidCredentials": "Incorrect email or password",
-      "tooManyAttempts": "Too many attempts. Please try again later.",
-      "accountDisabled": "This account has been disabled"
+      "tooManyAttempts": "Too many attempts. Try again later",
+      "accountDisabled": "This account has been disabled",
+      "userNotFoundInDatabase": "User not found in database",
+      "verifyEmailBeforeLogin": "Please verify your email before logging in",
+      "verifyEmailBeforeLoginShort": "Check your email to continue",
+      "welcomeAccountVerified": "Welcome! Your account is now verified"
     },
   
     "dashboard": {
@@ -1569,7 +1573,8 @@
     },
 
     "placeholders": {
-      "nationality": "Ex: French"
+      "nationality": "Ex: French",
+      "residenceCountry": "Ex: France"
     },
 
     "payments": {
@@ -1784,5 +1789,18 @@
       },
       "securityGuaranteed": "Security guaranteed",
       "securityDescription": "Your data is protected by bank-level security measures."
+    },
+
+    "validation": {
+      "emailInvalid": "Invalid email address",
+      "passwordMinLength": "Password must contain at least {{min}} characters",
+      "passwordMismatch": "Passwords do not match",
+      "required": "This field is required",
+      "minLength": "This field must contain at least {{min}} characters"
+    },
+
+    "placeholders": {
+      "nationality": "Ex: French",
+      "residenceCountry": "Ex: France"
     }
   }

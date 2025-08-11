@@ -156,17 +156,17 @@ const RegisterPage: React.FC = () => {
 
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-6 sm:py-12 px-4 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
           <AuthLink to="/" className="flex items-center">
             <Logo variant="simple" size="lg" showTagline={false} />
           </AuthLink>
         </div>
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        <h2 className="mt-4 sm:mt-6 text-center text-2xl sm:text-3xl font-extrabold text-gray-900">
           {t("auth.register.title")}
         </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
+        <p className="mt-2 text-center text-sm text-gray-600 px-2">
           {t("auth.register.subtitle")}{" "}
           <AuthLink
             to="/connexion"
@@ -177,8 +177,8 @@ const RegisterPage: React.FC = () => {
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <div className="mt-6 sm:mt-8 sm:mx-auto sm:w-full sm:max-w-2xl">
+        <div className="bg-white py-6 sm:py-8 px-4 sm:px-6 lg:px-10 shadow sm:rounded-lg">
           {/* Message d'erreur depuis la page de connexion */}
           {errorMessage && (
             <div className="mb-6 bg-red-50 border-l-4 border-red-400 p-4">
@@ -195,403 +195,431 @@ const RegisterPage: React.FC = () => {
             </div>
           )}
           
-          <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <form className="space-y-4 sm:space-y-6" onSubmit={handleSubmit(onSubmit)}>
+            {/* Informations personnelles */}
+            <div className="space-y-4 sm:space-y-6">
+              <h3 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
+                Informations personnelles
+              </h3>
+              
+              <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
+                    {t("auth.firstName")}
+                  </label>
+                  <div className="mt-1 relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <User className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      {...register("firstName")}
+                      id="firstName"
+                      name="firstName"
+                      type="text"
+                      autoComplete="given-name"
+                      required
+                      className="appearance-none block w-full pl-10 pr-3 py-3 sm:py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-base sm:text-sm"
+                      placeholder={t("auth.firstNamePlaceholder") as string}
+                    />
+                  </div>
+                  {errors.firstName && (
+                    <p className="mt-2 text-sm text-red-600">{errors.firstName.message}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
+                    {t("auth.lastName")}
+                  </label>
+                  <div className="mt-1 relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <User className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      {...register("lastName")}
+                      id="lastName"
+                      name="lastName"
+                      type="text"
+                      autoComplete="family-name"
+                      required
+                      className="appearance-none block w-full pl-10 pr-3 py-3 sm:py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-base sm:text-sm"
+                      placeholder={t("auth.lastNamePlaceholder") as string}
+                    />
+                  </div>
+                  {errors.lastName && (
+                    <p className="mt-2 text-sm text-red-600">{errors.lastName.message}</p>
+                  )}
+                </div>
+              </div>
+
               <div>
-                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
-                  {t("auth.firstName")}
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  {t("auth.email")}
                 </label>
                 <div className="mt-1 relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <User className="h-5 w-5 text-gray-400" />
+                    <Mail className="h-5 w-5 text-gray-400" />
                   </div>
                   <input
-                    {...register("firstName")}
-                    id="firstName"
-                    name="firstName"
-                    type="text"
-                    autoComplete="given-name"
+                    {...register("email")}
+                    id="email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    defaultValue={prefillEmail || ''}
                     required
-                    className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    placeholder={t("auth.firstNamePlaceholder") as string}
+                    className="appearance-none block w-full pl-10 pr-3 py-3 sm:py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-base sm:text-sm"
+                    placeholder={t("auth.emailPlaceholder") as string}
                   />
                 </div>
-                {errors.firstName && (
-                  <p className="mt-2 text-sm text-red-600">{errors.firstName.message}</p>
+                {errors.email && (
+                  <p className="mt-2 text-sm text-red-600">{errors.email.message}</p>
                 )}
               </div>
 
               <div>
-                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
-                  {t("auth.lastName")}
+                <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+                  {t("auth.phone")}
                 </label>
                 <div className="mt-1 relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <User className="h-5 w-5 text-gray-400" />
+                    <Phone className="h-5 w-5 text-gray-400" />
                   </div>
                   <input
-                    {...register("lastName")}
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                    autoComplete="family-name"
+                    {...register("phone")}
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    autoComplete="tel"
                     required
-                    className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    placeholder={t("auth.lastNamePlaceholder") as string}
+                    className="appearance-none block w-full pl-10 pr-3 py-3 sm:py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-base sm:text-sm"
+                    placeholder={t("auth.phonePlaceholder") as string}
                   />
                 </div>
-                {errors.lastName && (
-                  <p className="mt-2 text-sm text-red-600">{errors.lastName.message}</p>
+                {errors.phone && (
+                  <p className="mt-2 text-sm text-red-600">{errors.phone.message}</p>
                 )}
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="birthDate" className="block text-sm font-medium text-gray-700">
+                    {t("auth.birthDate")}
+                  </label>
+                  <div className="mt-1 relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <Calendar className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      {...register("birthDate")}
+                      id="birthDate"
+                      name="birthDate"
+                      type="date"
+                      required
+                      className="appearance-none block w-full pl-10 pr-3 py-3 sm:py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-base sm:text-sm"
+                    />
+                  </div>
+                  {errors.birthDate && (
+                    <p className="mt-2 text-sm text-red-600">{errors.birthDate.message}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label htmlFor="birthPlace" className="block text-sm font-medium text-gray-700">
+                    Lieu de naissance
+                  </label>
+                  <div className="mt-1 relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <MapPin className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      {...register("birthPlace")}
+                      id="birthPlace"
+                      name="birthPlace"
+                      type="text"
+                      required
+                      className="appearance-none block w-full pl-10 pr-3 py-3 sm:py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-base sm:text-sm"
+                      placeholder="Ex: Paris"
+                    />
+                  </div>
+                  {errors.birthPlace && (
+                    <p className="mt-2 text-sm text-red-600">{errors.birthPlace.message}</p>
+                  )}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="nationality" className="block text-sm font-medium text-gray-700">
+                    Nationalité
+                  </label>
+                  <div className="mt-1 relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <Flag className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      {...register("nationality")}
+                      id="nationality"
+                      name="nationality"
+                      type="text"
+                      required
+                      className="appearance-none block w-full pl-10 pr-3 py-3 sm:py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-base sm:text-sm"
+                      placeholder={t("placeholders.nationality") as string}
+                    />
+                  </div>
+                  {errors.nationality && (
+                    <p className="mt-2 text-sm text-red-600">{errors.nationality.message}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label htmlFor="residenceCountry" className="block text-sm font-medium text-gray-700">
+                    Pays de résidence
+                  </label>
+                  <div className="mt-1 relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <Flag className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      {...register("residenceCountry")}
+                      id="residenceCountry"
+                      name="residenceCountry"
+                      type="text"
+                      required
+                      className="appearance-none block w-full pl-10 pr-3 py-3 sm:py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-base sm:text-sm"
+                      placeholder="Ex: France"
+                    />
+                  </div>
+                  {errors.residenceCountry && (
+                    <p className="mt-2 text-sm text-red-600">{errors.residenceCountry.message}</p>
+                  )}
+                </div>
               </div>
             </div>
 
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                {t("auth.email")}
-              </label>
-              <div className="mt-1 relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  {...register("email")}
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  defaultValue={prefillEmail || ''}
-                  required
-                  className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  placeholder={t("auth.emailPlaceholder") as string}
-                />
-              </div>
-              {errors.email && (
-                <p className="mt-2 text-sm text-red-600">{errors.email.message}</p>
-              )}
-            </div>
-
-            <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-                {t("auth.phone")}
-              </label>
-              <div className="mt-1 relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Phone className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  {...register("phone")}
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  autoComplete="tel"
-                  required
-                  className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  placeholder={t("auth.phonePlaceholder") as string}
-                />
-              </div>
-              {errors.phone && (
-                <p className="mt-2 text-sm text-red-600">{errors.phone.message}</p>
-              )}
-            </div>
-
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-              <div>
-                <label htmlFor="birthDate" className="block text-sm font-medium text-gray-700">
-                  {t("auth.birthDate")}
-                </label>
-                <div className="mt-1 relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Calendar className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    {...register("birthDate")}
-                    id="birthDate"
-                    name="birthDate"
-                    type="date"
-                    required
-                    className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  />
-                </div>
-                {errors.birthDate && (
-                  <p className="mt-2 text-sm text-red-600">{errors.birthDate.message}</p>
-                )}
-              </div>
-
-              <div>
-                <label htmlFor="birthPlace" className="block text-sm font-medium text-gray-700">
-                  Lieu de naissance
-                </label>
-                <div className="mt-1 relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <MapPin className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    {...register("birthPlace")}
-                    id="birthPlace"
-                    name="birthPlace"
-                    type="text"
-                    required
-                    className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    placeholder="Ex: Paris"
-                  />
-                </div>
-                {errors.birthPlace && (
-                  <p className="mt-2 text-sm text-red-600">{errors.birthPlace.message}</p>
-                )}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-              <div>
-                <label htmlFor="nationality" className="block text-sm font-medium text-gray-700">
-                  Nationalité
-                </label>
-                <div className="mt-1 relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Flag className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    {...register("nationality")}
-                    id="nationality"
-                    name="nationality"
-                    type="text"
-                    required
-                    className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    placeholder={t("placeholders.nationality") as string}
-                  />
-                </div>
-                {errors.nationality && (
-                  <p className="mt-2 text-sm text-red-600">{errors.nationality.message}</p>
-                )}
-              </div>
-
-              <div>
-                <label htmlFor="residenceCountry" className="block text-sm font-medium text-gray-700">
-                  Pays de résidence
-                </label>
-                <div className="mt-1 relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Flag className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    {...register("residenceCountry")}
-                    id="residenceCountry"
-                    name="residenceCountry"
-                    type="text"
-                    required
-                    className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    placeholder="Ex: France"
-                  />
-                </div>
-                {errors.residenceCountry && (
-                  <p className="mt-2 text-sm text-red-600">{errors.residenceCountry.message}</p>
-                )}
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+            {/* Adresse */}
+            <div className="space-y-4 sm:space-y-6">
+              <h3 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
                 Adresse
-              </label>
-              <div className="mt-1 relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Home className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  {...register("address")}
-                  id="address"
-                  name="address"
-                  type="text"
-                  required
-                  className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  placeholder="Ex: 3 RUE DE AGES"
-                />
-              </div>
-              {errors.address && (
-                <p className="mt-2 text-sm text-red-600">{errors.address.message}</p>
-              )}
-            </div>
-
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              </h3>
+              
               <div>
-                <label htmlFor="city" className="block text-sm font-medium text-gray-700">
-                  Ville
+                <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+                  Adresse
                 </label>
                 <div className="mt-1 relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Building className="h-5 w-5 text-gray-400" />
+                    <Home className="h-5 w-5 text-gray-400" />
                   </div>
                   <input
-                    {...register("city")}
-                    id="city"
-                    name="city"
+                    {...register("address")}
+                    id="address"
+                    name="address"
                     type="text"
                     required
-                    className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    placeholder="Ex: PARIS"
+                    className="appearance-none block w-full pl-10 pr-3 py-3 sm:py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-base sm:text-sm"
+                    placeholder="Ex: 3 RUE DE AGES"
                   />
                 </div>
-                {errors.city && (
-                  <p className="mt-2 text-sm text-red-600">{errors.city.message}</p>
+                {errors.address && (
+                  <p className="mt-2 text-sm text-red-600">{errors.address.message}</p>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+                    Ville
+                  </label>
+                  <div className="mt-1 relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <Building className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      {...register("city")}
+                      id="city"
+                      name="city"
+                      type="text"
+                      required
+                      className="appearance-none block w-full pl-10 pr-3 py-3 sm:py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-base sm:text-sm"
+                      placeholder="Ex: PARIS"
+                    />
+                  </div>
+                  {errors.city && (
+                    <p className="mt-2 text-sm text-red-600">{errors.city.message}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700">
+                    Code postal
+                  </label>
+                  <div className="mt-1 relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <MapPin className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      {...register("postalCode")}
+                      id="postalCode"
+                      name="postalCode"
+                      type="text"
+                      required
+                      className="appearance-none block w-full pl-10 pr-3 py-3 sm:py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-base sm:text-sm"
+                      placeholder="Ex: 78000"
+                    />
+                  </div>
+                  {errors.postalCode && (
+                    <p className="mt-2 text-sm text-red-600">{errors.postalCode.message}</p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Profession et revenus */}
+            <div className="space-y-4 sm:space-y-6">
+              <h3 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
+                Profession et revenus
+              </h3>
+              
+              <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="profession" className="block text-sm font-medium text-gray-700">
+                    Profession
+                  </label>
+                  <div className="mt-1 relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <Briefcase className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      {...register("profession")}
+                      id="profession"
+                      name="profession"
+                      type="text"
+                      required
+                      className="appearance-none block w-full pl-10 pr-3 py-3 sm:py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-base sm:text-sm"
+                      placeholder="Ex: COMPTABLE"
+                    />
+                  </div>
+                  {errors.profession && (
+                    <p className="mt-2 text-sm text-red-600">{errors.profession.message}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label htmlFor="salary" className="block text-sm font-medium text-gray-700">
+                    Salaire mensuel (€)
+                  </label>
+                  <div className="mt-1 relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <DollarSign className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      {...register("salary")}
+                      id="salary"
+                      name="salary"
+                      type="number"
+                      min="0"
+                      step="100"
+                      required
+                      className="appearance-none block w-full pl-10 pr-3 py-3 sm:py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-base sm:text-sm"
+                      placeholder="Ex: 4000"
+                    />
+                  </div>
+                  {errors.salary && (
+                    <p className="mt-2 text-sm text-red-600">{errors.salary.message}</p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Sécurité */}
+            <div className="space-y-4 sm:space-y-6">
+              <h3 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
+                Sécurité
+              </h3>
+              
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                  {t("auth.password")}
+                </label>
+                <div className="mt-1 relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Lock className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    {...register("password")}
+                    id="password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    autoComplete="new-password"
+                    required
+                    className="appearance-none block w-full pl-10 pr-10 py-3 sm:py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-base sm:text-sm"
+                    placeholder={t("auth.passwordPlaceholder") as string}
+                  />
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="text-gray-400 hover:text-gray-600 p-1"
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-5 w-5" />
+                      ) : (
+                        <Eye className="h-5 w-5" />
+                      )}
+                    </button>
+                  </div>
+                </div>
+                {errors.password && (
+                  <p className="mt-2 text-sm text-red-600">{errors.password.message}</p>
                 )}
               </div>
 
               <div>
-                <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700">
-                  Code postal
+                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+                  {t("auth.confirmPassword")}
                 </label>
                 <div className="mt-1 relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <MapPin className="h-5 w-5 text-gray-400" />
+                    <Lock className="h-5 w-5 text-gray-400" />
                   </div>
                   <input
-                    {...register("postalCode")}
-                    id="postalCode"
-                    name="postalCode"
-                    type="text"
+                    {...register("confirmPassword")}
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type={showConfirmPassword ? "text" : "password"}
+                    autoComplete="new-password"
                     required
-                    className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    placeholder="Ex: 78000"
+                    className="appearance-none block w-full pl-10 pr-10 py-3 sm:py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-base sm:text-sm"
+                    placeholder={t("auth.confirmPasswordPlaceholder") as string}
                   />
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      className="text-gray-400 hover:text-gray-600 p-1"
+                    >
+                      {showConfirmPassword ? (
+                        <EyeOff className="h-5 w-5" />
+                      ) : (
+                        <Eye className="h-5 w-5" />
+                      )}
+                    </button>
+                  </div>
                 </div>
-                {errors.postalCode && (
-                  <p className="mt-2 text-sm text-red-600">{errors.postalCode.message}</p>
+                {errors.confirmPassword && (
+                  <p className="mt-2 text-sm text-red-600">{errors.confirmPassword.message}</p>
                 )}
               </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-              <div>
-                <label htmlFor="profession" className="block text-sm font-medium text-gray-700">
-                  Profession
-                </label>
-                <div className="mt-1 relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Briefcase className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    {...register("profession")}
-                    id="profession"
-                    name="profession"
-                    type="text"
-                    required
-                    className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    placeholder="Ex: COMPTABLE"
-                  />
-                </div>
-                {errors.profession && (
-                  <p className="mt-2 text-sm text-red-600">{errors.profession.message}</p>
-                )}
-              </div>
-
-              <div>
-                <label htmlFor="salary" className="block text-sm font-medium text-gray-700">
-                  Salaire mensuel (€)
-                </label>
-                <div className="mt-1 relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <DollarSign className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    {...register("salary")}
-                    id="salary"
-                    name="salary"
-                    type="number"
-                    min="0"
-                    step="100"
-                    required
-                    className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    placeholder="Ex: 4000"
-                  />
-                </div>
-                {errors.salary && (
-                  <p className="mt-2 text-sm text-red-600">{errors.salary.message}</p>
-                )}
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                {t("auth.password")}
-              </label>
-              <div className="mt-1 relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  {...register("password")}
-                  id="password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  autoComplete="new-password"
-                  required
-                  className="appearance-none block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  placeholder={t("auth.passwordPlaceholder") as string}
-                />
-                <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="text-gray-400 hover:text-gray-600"
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-5 w-5" />
-                    ) : (
-                      <Eye className="h-5 w-5" />
-                    )}
-                  </button>
-                </div>
-              </div>
-              {errors.password && (
-                <p className="mt-2 text-sm text-red-600">{errors.password.message}</p>
-              )}
-            </div>
-
-            <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-                {t("auth.confirmPassword")}
-              </label>
-              <div className="mt-1 relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  {...register("confirmPassword")}
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type={showConfirmPassword ? "text" : "password"}
-                  autoComplete="new-password"
-                  required
-                  className="appearance-none block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  placeholder={t("auth.confirmPasswordPlaceholder") as string}
-                />
-                <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="text-gray-400 hover:text-gray-600"
-                  >
-                    {showConfirmPassword ? (
-                      <EyeOff className="h-5 w-5" />
-                    ) : (
-                      <Eye className="h-5 w-5" />
-                    )}
-                  </button>
-                </div>
-              </div>
-              {errors.confirmPassword && (
-                <p className="mt-2 text-sm text-red-600">{errors.confirmPassword.message}</p>
-              )}
-            </div>
-
-            <div className="flex items-center">
+            <div className="flex items-start">
               <input
                 {...register("acceptTerms")}
                 id="acceptTerms"
                 name="acceptTerms"
                 type="checkbox"
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mt-1"
               />
               <label htmlFor="acceptTerms" className="ml-2 block text-sm text-gray-900">
                 {t("auth.acceptTerms")}{" "}
@@ -611,7 +639,7 @@ const RegisterPage: React.FC = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="group relative w-full flex justify-center py-3 sm:py-2 px-4 border border-transparent text-base sm:text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
               >
                 {isLoading ? t("auth.registering") : t("auth.register.button")}
               </button>
@@ -619,8 +647,6 @@ const RegisterPage: React.FC = () => {
           </form>
         </div>
       </div>
-
-      
     </div>
   );
 };

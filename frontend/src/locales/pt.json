@@ -385,15 +385,15 @@
   "auth": {
     "login": {
       "title": "Login",
-      "subtitle": "Acesse sua conta AmCbunq",
+      "noAccount": "Não tem uma conta?",
       "createAccount": "Criar conta",
       "button": "Entrar"
     },
     "register": {
       "title": "Criar conta",
-      "subtitle": "Junte-se ao AmCbunq em poucos passos",
+      "subtitle": "Junte-se ao AmCbunq e descubra uma nova forma de gerenciar suas finanças",
       "alreadyHaveAccount": "Já tem uma conta?",
-      "button": "Criar conta"
+      "button": "Criar minha conta"
     },
     "email": "Endereço de email",
     "emailPlaceholder": "seu@email.com",
@@ -406,35 +406,39 @@
     "lastName": "Sobrenome",
     "lastNamePlaceholder": "Seu sobrenome",
     "phone": "Telefone",
-    "phonePlaceholder": "+33 6 12 34 56 78",
+    "phonePlaceholder": "Seu número de telefone",
     "birthDate": "Data de nascimento",
+    "birthPlace": "Local de nascimento",
+    "nationality": "Nacionalidade",
+    "residenceCountry": "País de residência",
+    "address": "Endereço",
+    "city": "Cidade",
+    "postalCode": "Código postal",
+    "profession": "Profissão",
+    "salary": "Salário mensal",
     "rememberMe": "Lembrar de mim",
     "forgotPassword": "Esqueceu a senha?",
-    "acceptTerms": "Eu aceito os",
-    "termsAndConditions": "termos e condições",
-    "or": "ou",
-    "loginWithGoogle": "Entrar com Google",
-    "loginButton": "Entrar",
-    "registerButton": "Criar conta",
     "loggingIn": "Entrando...",
     "registering": "Criando conta...",
-    "loginSuccess": "Login realizado",
-    "loginError": "Erro no login",
-    "registerSuccess": "Conta criada com sucesso",
-    "registerError": "Erro ao criar conta",
-    "emailSendError": "Erro ao enviar email",
-    "accountCreatedSuccess": "Conta criada! Verifique seu email para ativar sua conta.",
+    "or": "ou",
+    "loginWithGoogle": "Entrar com Google",
+    "acceptTerms": "Eu aceito os",
+    "termsAndConditions": "termos e condições",
+    "accountCreatedSuccess": "Conta criada com sucesso!",
     "verifyEmailMessage": "Verifique seu email para ativar sua conta",
     "accountCreationError": "Erro ao criar conta",
-    "emailAlreadyUsed": "Este email já está em uso",
+    "emailAlreadyUsed": "Este endereço de email já está em uso",
     "passwordTooWeak": "Senha muito fraca",
-    "userNotFoundInDatabase": "Usuário não encontrado na base de dados",
-    "verifyEmailBeforeLogin": "Verifique seu email antes de entrar. Verifique sua caixa de spam ou solicite um novo código.",
-    "verifyEmailBeforeLoginShort": "Verifique seu email antes de entrar.",
-    "welcomeAccountVerified": "Bem-vindo! Sua conta foi verificada com sucesso. Agora você pode acessar todos os recursos.",
+    "emailSendError": "Erro ao enviar email de verificação",
+    "loginSuccess": "Login realizado com sucesso!",
+    "loginError": "Erro no login",
     "invalidCredentials": "Email ou senha incorretos",
-    "tooManyAttempts": "Muitas tentativas. Tente novamente mais tarde.",
-    "accountDisabled": "Esta conta foi desativada"
+    "tooManyAttempts": "Muitas tentativas. Tente novamente mais tarde",
+    "accountDisabled": "Esta conta foi desativada",
+    "userNotFoundInDatabase": "Usuário não encontrado na base de dados",
+    "verifyEmailBeforeLogin": "Verifique seu email antes de entrar",
+    "verifyEmailBeforeLoginShort": "Verifique seu email para continuar",
+    "welcomeAccountVerified": "Bem-vindo! Sua conta está agora verificada"
   },
 
   "dashboard": {
@@ -1741,5 +1745,18 @@
     },
     "securityGuaranteed": "Segurança garantida",
     "securityDescription": "Seus dados são protegidos por medidas de segurança de nível bancário."
+  },
+
+  "validation": {
+    "emailInvalid": "Endereço de email inválido",
+    "passwordMinLength": "A senha deve conter pelo menos {{min}} caracteres",
+    "passwordMismatch": "As senhas não coincidem",
+    "required": "Este campo é obrigatório",
+    "minLength": "Este campo deve conter pelo menos {{min}} caracteres"
+  },
+
+  "placeholders": {
+    "nationality": "Ex: Portuguesa",
+    "residenceCountry": "Ex: Portugal"
   }
 }

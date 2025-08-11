@@ -412,15 +412,15 @@
   "auth": {
     "login": {
       "title": "Iniciar sesión",
-      "subtitle": "Accede a tu cuenta AmCbunq",
+      "noAccount": "¿No tienes una cuenta?",
       "createAccount": "Crear cuenta",
       "button": "Iniciar sesión"
     },
     "register": {
       "title": "Crear cuenta",
-      "subtitle": "Únete a AmCbunq en unos pasos",
+      "subtitle": "Únete a AmCbunq y descubre una nueva forma de gestionar tus finanzas",
       "alreadyHaveAccount": "¿Ya tienes una cuenta?",
-      "button": "Crear cuenta"
+      "button": "Crear mi cuenta"
     },
     "email": "Dirección de email",
     "emailPlaceholder": "tu@email.com",
@@ -433,35 +433,39 @@
     "lastName": "Apellidos",
     "lastNamePlaceholder": "Tus apellidos",
     "phone": "Teléfono",
-    "phonePlaceholder": "+34 612 345 678",
+    "phonePlaceholder": "Tu número de teléfono",
     "birthDate": "Fecha de nacimiento",
+    "birthPlace": "Lugar de nacimiento",
+    "nationality": "Nacionalidad",
+    "residenceCountry": "País de residencia",
+    "address": "Dirección",
+    "city": "Ciudad",
+    "postalCode": "Código postal",
+    "profession": "Profesión",
+    "salary": "Salario mensual",
     "rememberMe": "Recordarme",
     "forgotPassword": "¿Olvidaste tu contraseña?",
-    "acceptTerms": "Acepto los",
-    "termsAndConditions": "términos y condiciones",
-    "or": "o",
-    "loginWithGoogle": "Iniciar sesión con Google",
-    "loginButton": "Iniciar sesión",
-    "registerButton": "Crear cuenta",
     "loggingIn": "Iniciando sesión...",
     "registering": "Creando cuenta...",
-    "loginSuccess": "Sesión iniciada correctamente",
-    "loginError": "Error al iniciar sesión",
-    "registerSuccess": "Cuenta creada correctamente",
-    "registerError": "Error al crear la cuenta",
-    "emailSendError": "Error al enviar el email",
-    "accountCreatedSuccess": "¡Cuenta creada! Por favor verifica tu email para activar tu cuenta.",
+    "or": "o",
+    "loginWithGoogle": "Iniciar sesión con Google",
+    "acceptTerms": "Acepto los",
+    "termsAndConditions": "términos y condiciones",
+    "accountCreatedSuccess": "¡Cuenta creada correctamente!",
     "verifyEmailMessage": "Verifica tu email para activar tu cuenta",
     "accountCreationError": "Error al crear la cuenta",
-    "emailAlreadyUsed": "Este email ya está en uso",
+    "emailAlreadyUsed": "Esta dirección de email ya está en uso",
     "passwordTooWeak": "La contraseña es demasiado débil",
-    "userNotFoundInDatabase": "Usuario no encontrado en la base de datos",
-    "verifyEmailBeforeLogin": "Por favor verifica tu email antes de iniciar sesión. Revisa tu spam o solicita un nuevo código.",
-    "verifyEmailBeforeLoginShort": "Por favor verifica tu email antes de iniciar sesión.",
-    "welcomeAccountVerified": "¡Bienvenido! Tu cuenta ha sido verificada correctamente. Ahora puedes acceder a todas las funcionalidades.",
+    "emailSendError": "Error al enviar el email de verificación",
+    "loginSuccess": "¡Sesión iniciada correctamente!",
+    "loginError": "Error al iniciar sesión",
     "invalidCredentials": "Email o contraseña incorrectos",
-    "tooManyAttempts": "Demasiados intentos. Por favor inténtalo más tarde.",
-    "accountDisabled": "Esta cuenta ha sido desactivada"
+    "tooManyAttempts": "Demasiados intentos. Inténtalo más tarde",
+    "accountDisabled": "Esta cuenta ha sido desactivada",
+    "userNotFoundInDatabase": "Usuario no encontrado en la base de datos",
+    "verifyEmailBeforeLogin": "Por favor verifica tu email antes de iniciar sesión",
+    "verifyEmailBeforeLoginShort": "Verifica tu email para continuar",
+    "welcomeAccountVerified": "¡Bienvenido! Tu cuenta está ahora verificada"
   },
 
   "dashboard": {
@@ -1762,5 +1766,18 @@
     },
     "securityGuaranteed": "Seguridad garantizada",
     "securityDescription": "Tus datos están protegidos por medidas de seguridad de nivel bancario."
+  },
+
+  "validation": {
+    "emailInvalid": "Dirección de email inválida",
+    "passwordMinLength": "La contraseña debe contener al menos {{min}} caracteres",
+    "passwordMismatch": "Las contraseñas no coinciden",
+    "required": "Este campo es obligatorio",
+    "minLength": "Este campo debe contener al menos {{min}} caracteres"
+  },
+
+  "placeholders": {
+    "nationality": "Ej: Española",
+    "residenceCountry": "Ej: España"
   }
 }

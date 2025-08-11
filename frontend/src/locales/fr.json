@@ -412,15 +412,15 @@
   "auth": {
     "login": {
       "title": "Connexion",
-      "subtitle": "Accédez à votre compte AmCbunq",
+      "noAccount": "Vous n'avez pas de compte ?",
       "createAccount": "Créer un compte",
       "button": "Se connecter"
     },
     "register": {
       "title": "Créer un compte",
-      "subtitle": "Rejoignez AmCbunq en quelques étapes",
+      "subtitle": "Rejoignez AmCbunq et découvrez une nouvelle façon de gérer vos finances",
       "alreadyHaveAccount": "Vous avez déjà un compte ?",
-      "button": "Créer un compte"
+      "button": "Créer mon compte"
     },
     "email": "Adresse email",
     "emailPlaceholder": "votre@email.com",
@@ -433,35 +433,39 @@
     "lastName": "Nom",
     "lastNamePlaceholder": "Votre nom",
     "phone": "Téléphone",
-    "phonePlaceholder": "+33 6 12 34 56 78",
+    "phonePlaceholder": "Votre numéro de téléphone",
     "birthDate": "Date de naissance",
+    "birthPlace": "Lieu de naissance",
+    "nationality": "Nationalité",
+    "residenceCountry": "Pays de résidence",
+    "address": "Adresse",
+    "city": "Ville",
+    "postalCode": "Code postal",
+    "profession": "Profession",
+    "salary": "Salaire mensuel",
     "rememberMe": "Se souvenir de moi",
     "forgotPassword": "Mot de passe oublié ?",
-    "acceptTerms": "J'accepte les",
-    "termsAndConditions": "conditions d'utilisation",
+    "loggingIn": "Connexion en cours...",
+    "registering": "Création en cours...",
     "or": "ou",
     "loginWithGoogle": "Se connecter avec Google",
-    "loginButton": "Se connecter",
-    "registerButton": "Créer un compte",
-    "loggingIn": "Connexion...",
-    "registering": "Création du compte...",
-    "loginSuccess": "Connexion réussie",
-    "loginError": "Erreur de connexion",
-    "registerSuccess": "Compte créé avec succès",
-    "registerError": "Erreur lors de la création du compte",
-    "emailSendError": "Erreur lors de l'envoi de l'email",
-    "accountCreatedSuccess": "Compte créé ! Veuillez vérifier votre email pour activer votre compte.",
+    "acceptTerms": "J'accepte les",
+    "termsAndConditions": "conditions d'utilisation",
+    "accountCreatedSuccess": "Compte créé avec succès !",
     "verifyEmailMessage": "Vérifiez votre email pour activer votre compte",
     "accountCreationError": "Erreur lors de la création du compte",
-    "emailAlreadyUsed": "Cet email est déjà utilisé",
+    "emailAlreadyUsed": "Cette adresse email est déjà utilisée",
     "passwordTooWeak": "Le mot de passe est trop faible",
-    "userNotFoundInDatabase": "Utilisateur non trouvé dans la base de données",
-    "verifyEmailBeforeLogin": "Veuillez vérifier votre email avant de vous connecter. Vérifiez vos spams ou demandez un nouveau code.",
-    "verifyEmailBeforeLoginShort": "Veuillez vérifier votre email avant de vous connecter.",
-    "welcomeAccountVerified": "Bienvenue ! Votre compte a été vérifié avec succès. Vous pouvez maintenant accéder à toutes les fonctionnalités.",
+    "emailSendError": "Erreur lors de l'envoi de l'email de vérification",
+    "loginSuccess": "Connexion réussie !",
+    "loginError": "Erreur lors de la connexion",
     "invalidCredentials": "Email ou mot de passe incorrect",
-    "tooManyAttempts": "Trop de tentatives. Veuillez réessayer plus tard.",
-    "accountDisabled": "Ce compte a été désactivé"
+    "tooManyAttempts": "Trop de tentatives. Réessayez plus tard",
+    "accountDisabled": "Ce compte a été désactivé",
+    "userNotFoundInDatabase": "Utilisateur non trouvé dans la base de données",
+    "verifyEmailBeforeLogin": "Veuillez vérifier votre email avant de vous connecter",
+    "verifyEmailBeforeLoginShort": "Vérifiez votre email pour continuer",
+    "welcomeAccountVerified": "Bienvenue ! Votre compte est maintenant vérifié"
   },
 
   "dashboard": {
@@ -1569,7 +1573,8 @@
   },
 
   "placeholders": {
-    "nationality": "Ex: Française"
+    "nationality": "Ex: Français",
+    "residenceCountry": "Ex: France"
   },
 
   "payments": {

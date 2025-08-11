@@ -385,15 +385,15 @@
   "auth": {
     "login": {
       "title": "Inloggen",
-      "subtitle": "Toegang tot uw AmCbunq account",
+      "noAccount": "Hebt u nog geen account?",
       "createAccount": "Account aanmaken",
       "button": "Inloggen"
     },
     "register": {
       "title": "Account aanmaken",
-      "subtitle": "Word lid van AmCbunq in enkele stappen",
+      "subtitle": "Word lid van AmCbunq en ontdek een nieuwe manier om uw financiën te beheren",
       "alreadyHaveAccount": "Hebt u al een account?",
-      "button": "Account aanmaken"
+      "button": "Mijn account aanmaken"
     },
     "email": "E-mailadres",
     "emailPlaceholder": "uw@email.com",
@@ -406,35 +406,39 @@
     "lastName": "Achternaam",
     "lastNamePlaceholder": "Uw achternaam",
     "phone": "Telefoon",
-    "phonePlaceholder": "+32 4 12 34 56 78",
+    "phonePlaceholder": "Uw telefoonnummer",
     "birthDate": "Geboortedatum",
+    "birthPlace": "Geboorteplaats",
+    "nationality": "Nationaliteit",
+    "residenceCountry": "Land van verblijf",
+    "address": "Adres",
+    "city": "Stad",
+    "postalCode": "Postcode",
+    "profession": "Beroep",
+    "salary": "Maandelijkse salaris",
     "rememberMe": "Onthoud mij",
     "forgotPassword": "Wachtwoord vergeten?",
-    "acceptTerms": "Ik accepteer de",
-    "termsAndConditions": "gebruiksvoorwaarden",
-    "or": "of",
-    "loginWithGoogle": "Inloggen met Google",
-    "loginButton": "Inloggen",
-    "registerButton": "Account aanmaken",
     "loggingIn": "Inloggen...",
     "registering": "Account aanmaken...",
-    "loginSuccess": "Succesvol ingelogd",
-    "loginError": "Inlogfout",
-    "registerSuccess": "Account succesvol aangemaakt",
-    "registerError": "Fout bij aanmaken account",
-    "emailSendError": "Fout bij verzenden e-mail",
-    "accountCreatedSuccess": "Account aangemaakt! Controleer uw e-mail om uw account te activeren.",
+    "or": "of",
+    "loginWithGoogle": "Inloggen met Google",
+    "acceptTerms": "Ik accepteer de",
+    "termsAndConditions": "gebruiksvoorwaarden",
+    "accountCreatedSuccess": "Account succesvol aangemaakt!",
     "verifyEmailMessage": "Controleer uw e-mail om uw account te activeren",
     "accountCreationError": "Fout bij aanmaken account",
     "emailAlreadyUsed": "Dit e-mailadres is al in gebruik",
     "passwordTooWeak": "Wachtwoord is te zwak",
-    "userNotFoundInDatabase": "Gebruiker niet gevonden in database",
-    "verifyEmailBeforeLogin": "Controleer uw e-mail voor inloggen. Controleer uw spam of vraag een nieuwe code aan.",
-    "verifyEmailBeforeLoginShort": "Controleer uw e-mail voor inloggen.",
-    "welcomeAccountVerified": "Welkom! Uw account is succesvol geverifieerd. U hebt nu toegang tot alle functies.",
+    "emailSendError": "Fout bij verzenden verificatie-e-mail",
+    "loginSuccess": "Succesvol ingelogd!",
+    "loginError": "Inlogfout",
     "invalidCredentials": "Onjuist e-mailadres of wachtwoord",
-    "tooManyAttempts": "Te veel pogingen. Probeer later opnieuw.",
-    "accountDisabled": "Dit account is gedeactiveerd"
+    "tooManyAttempts": "Te veel pogingen. Probeer later opnieuw",
+    "accountDisabled": "Dit account is gedeactiveerd",
+    "userNotFoundInDatabase": "Gebruiker niet gevonden in database",
+    "verifyEmailBeforeLogin": "Controleer uw e-mail voor inloggen",
+    "verifyEmailBeforeLoginShort": "Controleer uw e-mail om door te gaan",
+    "welcomeAccountVerified": "Welkom! Uw account is nu geverifieerd"
   },
 
   "dashboard": {
@@ -1741,5 +1745,18 @@
     },
     "securityGuaranteed": "Veiligheid gegarandeerd",
     "securityDescription": "Uw gegevens worden beschermd door bankniveau beveiligingsmaatregelen."
+  },
+
+  "validation": {
+    "emailInvalid": "Ongeldig e-mailadres",
+    "passwordMinLength": "Wachtwoord moet minimaal {{min}} tekens bevatten",
+    "passwordMismatch": "Wachtwoorden komen niet overeen",
+    "required": "Dit veld is verplicht",
+    "minLength": "Dit veld moet minimaal {{min}} tekens bevatten"
+  },
+
+  "placeholders": {
+    "nationality": "Bijv: Nederlands",
+    "residenceCountry": "Bijv: Nederland"
   }
 }
