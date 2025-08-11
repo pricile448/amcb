@@ -470,9 +470,15 @@
     "tooManyAttempts": "Demasiados intentos. Inténtalo más tarde",
     "accountDisabled": "Esta cuenta ha sido desactivada",
     "userNotFoundInDatabase": "Usuario no encontrado en la base de datos",
-    "verifyEmailBeforeLogin": "Por favor verifica tu email antes de iniciar sesión",
-    "verifyEmailBeforeLoginShort": "Verifica tu email para continuar",
-    "welcomeAccountVerified": "¡Bienvenido! Tu cuenta está ahora verificada"
+    "verifyEmailBeforeLogin": "Por favor verifique su email antes de iniciar sesión. Revise su spam o solicite un nuevo código.",
+    "verifyEmailBeforeLoginShort": "Por favor verifique su email antes de iniciar sesión.",
+    "welcomeAccountVerified": "¡Bienvenido! Tu cuenta está ahora verificada",
+    "emailVerified": "¡Email verificado!",
+    "actionSuccess": "¡Acción exitosa!",
+    "emailVerifiedMessage": "¡Su email ha sido verificado exitosamente! Ahora puede iniciar sesión con sus credenciales.",
+    "actionSuccessMessage": "Su acción ha sido procesada exitosamente.",
+    "verificationComplete": "¡Verificación completa! Por favor inicie sesión manualmente.",
+    "loginWithCredentials": "Iniciar sesión con mis credenciales"
   },
 
   "dashboard": {

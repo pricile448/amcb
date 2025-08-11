@@ -470,9 +470,14 @@
       "tooManyAttempts": "Too many attempts. Try again later",
       "accountDisabled": "This account has been disabled",
       "userNotFoundInDatabase": "User not found in database",
-      "verifyEmailBeforeLogin": "Please verify your email before logging in",
-      "verifyEmailBeforeLoginShort": "Check your email to continue",
-      "welcomeAccountVerified": "Welcome! Your account is now verified"
+      "verifyEmailBeforeLogin": "Please verify your email before logging in. Check your spam or request a new code.",
+      "verifyEmailBeforeLoginShort": "Please verify your email before logging in.",
+      "emailVerified": "Email verified!",
+      "actionSuccess": "Action successful!",
+      "emailVerifiedMessage": "Your email has been verified successfully! You can now log in with your credentials.",
+      "actionSuccessMessage": "Your action has been processed successfully.",
+      "verificationComplete": "Verification complete! Please log in manually.",
+      "loginWithCredentials": "Log in with my credentials"
     },
   
     "dashboard": {

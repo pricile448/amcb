@@ -188,13 +188,13 @@ const FirebaseActionPage: React.FC = () => {
               </div>
               
               <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-                {mode === 'verifyEmail' ? 'Email vérifié !' : 'Action réussie !'}
+                {mode === 'verifyEmail' ? t('auth.emailVerified') : t('auth.actionSuccess')}
               </h2>
               
               <p className="mt-2 text-sm text-gray-600">
                 {mode === 'verifyEmail' 
-                  ? 'Votre email a été vérifié avec succès ! Vous pouvez maintenant vous connecter avec vos identifiants.'
-                  : 'Votre action a été traitée avec succès.'
+                  ? t('auth.emailVerifiedMessage')
+                  : t('auth.actionSuccessMessage')
                 }
               </p>
               
@@ -204,7 +204,7 @@ const FirebaseActionPage: React.FC = () => {
                     <div className="flex items-center">
                       <CheckCircle className="h-5 w-5 text-green-600 mr-2" />
                       <p className="text-sm text-green-800 font-medium">
-                        Vérification terminée ! Veuillez vous connecter manuellement.
+                        {t('auth.verificationComplete')}
                       </p>
                     </div>
                   </div>
@@ -213,7 +213,7 @@ const FirebaseActionPage: React.FC = () => {
                     to="/connexion"
                     className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
                   >
-                    Se connecter avec mes identifiants
+                    {t('auth.loginWithCredentials')}
                   </Link>
                 </div>
               )}
@@ -224,7 +224,7 @@ const FirebaseActionPage: React.FC = () => {
                     to={getDashboardLink('')}
                     className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                   >
-                    Aller au tableau de bord
+                    {t('nav.dashboard')}
                   </Link>
                 </div>
               )}
@@ -254,7 +254,7 @@ const FirebaseActionPage: React.FC = () => {
             </div>
             
             <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-              Erreur
+              {t('common.error')}
             </h2>
             
             <p className="mt-2 text-sm text-gray-600">
@@ -266,7 +266,7 @@ const FirebaseActionPage: React.FC = () => {
                 to="/connexion"
                 className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
-                Aller à la connexion
+                {t('nav.login')}
               </Link>
               
               <div>
@@ -274,7 +274,7 @@ const FirebaseActionPage: React.FC = () => {
                   to="/ouvrir-compte"
                   className="text-sm text-blue-600 hover:text-blue-500"
                 >
-                  Créer un nouveau compte
+                  {t('nav.openAccount')}
                 </Link>
               </div>
             </div>

@@ -449,9 +449,15 @@
     "tooManyAttempts": "Zu viele Versuche. Versuchen Sie es später erneut",
     "accountDisabled": "Dieses Konto wurde deaktiviert",
     "userNotFoundInDatabase": "Benutzer nicht in der Datenbank gefunden",
-    "verifyEmailBeforeLogin": "Bitte bestätigen Sie Ihre E-Mail, bevor Sie sich anmelden",
-    "verifyEmailBeforeLoginShort": "Überprüfen Sie Ihre E-Mail, um fortzufahren",
-    "welcomeAccountVerified": "Willkommen! Ihr Konto ist jetzt verifiziert"
+    "verifyEmailBeforeLogin": "Bitte bestätigen Sie Ihre E-Mail, bevor Sie sich anmelden. Überprüfen Sie Ihren Spam-Ordner oder fordern Sie einen neuen Code an.",
+    "verifyEmailBeforeLoginShort": "Bitte bestätigen Sie Ihre E-Mail, bevor Sie sich anmelden.",
+    "welcomeAccountVerified": "Willkommen! Ihr Konto ist jetzt verifiziert",
+    "emailVerified": "E-Mail bestätigt!",
+    "actionSuccess": "Aktion erfolgreich!",
+    "emailVerifiedMessage": "Ihre E-Mail wurde erfolgreich bestätigt! Sie können sich jetzt mit Ihren Anmeldedaten anmelden.",
+    "actionSuccessMessage": "Ihre Aktion wurde erfolgreich verarbeitet.",
+    "verificationComplete": "Bestätigung abgeschlossen! Bitte melden Sie sich manuell an.",
+    "loginWithCredentials": "Mit meinen Anmeldedaten anmelden"
   },
 
   "dashboard": {

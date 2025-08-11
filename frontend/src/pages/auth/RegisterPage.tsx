@@ -314,8 +314,9 @@ const RegisterPage: React.FC = () => {
                       {...register("birthDate")}
                       id="birthDate"
                       name="birthDate"
-                      type="date"
+                      type="text"
                       required
+                      placeholder="JJ/MM/AAAA"
                       className="appearance-none block w-full pl-10 pr-3 py-3 sm:py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-base sm:text-sm"
                     />
                   </div>

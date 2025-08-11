@@ -443,9 +443,15 @@
     "tooManyAttempts": "Muitas tentativas. Tente novamente mais tarde",
     "accountDisabled": "Esta conta foi desativada",
     "userNotFoundInDatabase": "Usuário não encontrado na base de dados",
-    "verifyEmailBeforeLogin": "Verifique seu email antes de entrar",
-    "verifyEmailBeforeLoginShort": "Verifique seu email para continuar",
-    "welcomeAccountVerified": "Bem-vindo! Sua conta está agora verificada"
+    "verifyEmailBeforeLogin": "Por favor verifique o seu email antes de fazer login. Verifique o spam ou solicite um novo código.",
+    "verifyEmailBeforeLoginShort": "Por favor verifique o seu email antes de fazer login.",
+    "welcomeAccountVerified": "Bem-vindo! Sua conta está agora verificada",
+    "emailVerified": "Email verificado!",
+    "actionSuccess": "Ação bem-sucedida!",
+    "emailVerifiedMessage": "Seu email foi verificado com sucesso! Agora você pode fazer login com suas credenciais.",
+    "actionSuccessMessage": "Sua ação foi processada com sucesso.",
+    "verificationComplete": "Verificação concluída! Por favor, faça login manualmente.",
+    "loginWithCredentials": "Fazer login com minhas credenciais"
   },
 
   "dashboard": {

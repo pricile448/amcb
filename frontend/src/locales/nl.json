@@ -443,9 +443,15 @@
     "tooManyAttempts": "Te veel pogingen. Probeer later opnieuw",
     "accountDisabled": "Dit account is gedeactiveerd",
     "userNotFoundInDatabase": "Gebruiker niet gevonden in database",
-    "verifyEmailBeforeLogin": "Controleer uw e-mail voor inloggen",
-    "verifyEmailBeforeLoginShort": "Controleer uw e-mail om door te gaan",
-    "welcomeAccountVerified": "Welkom! Uw account is nu geverifieerd"
+    "verifyEmailBeforeLogin": "Verifieer eerst uw e-mail voordat u inlogt. Controleer uw spam of vraag een nieuwe code aan.",
+    "verifyEmailBeforeLoginShort": "Verifieer eerst uw e-mail voordat u inlogt.",
+    "welcomeAccountVerified": "Welkom! Uw account is nu geverifieerd",
+    "emailVerified": "E-mail geverifieerd!",
+    "actionSuccess": "Actie succesvol!",
+    "emailVerifiedMessage": "Uw e-mail is succesvol geverifieerd! U kunt nu inloggen met uw inloggegevens.",
+    "actionSuccessMessage": "Uw actie is succesvol verwerkt.",
+    "verificationComplete": "Verificatie voltooid! Log handmatig in.",
+    "loginWithCredentials": "Inloggen met mijn inloggegevens"
   },
 
   "dashboard": {

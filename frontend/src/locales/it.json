@@ -315,9 +315,14 @@
     "tooManyAttempts": "Troppi tentativi. Riprova più tardi",
     "accountDisabled": "Questo account è stato disabilitato",
     "userNotFoundInDatabase": "Utente non trovato nel database",
-    "verifyEmailBeforeLogin": "Per favore verifica la tua email prima di accedere",
-    "verifyEmailBeforeLoginShort": "Controlla la tua email per continuare",
-    "welcomeAccountVerified": "Benvenuto! Il tuo account è ora verificato"
+    "verifyEmailBeforeLogin": "Si prega di verificare la propria email prima di accedere. Controllare lo spam o richiedere un nuovo codice.",
+    "verifyEmailBeforeLoginShort": "Si prega di verificare la propria email prima di accedere.",
+    "emailVerified": "Email verificata!",
+    "actionSuccess": "Azione riuscita!",
+    "emailVerifiedMessage": "La tua email è stata verificata con successo! Ora puoi accedere con le tue credenziali.",
+    "actionSuccessMessage": "La tua azione è stata elaborata con successo.",
+    "verificationComplete": "Verifica completata! Si prega di accedere manualmente.",
+    "loginWithCredentials": "Accedi con le mie credenziali"
   },
 
   "dashboard": {
