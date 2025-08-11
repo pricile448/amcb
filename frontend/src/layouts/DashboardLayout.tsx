@@ -169,10 +169,10 @@ const DashboardLayout: React.FC = () => {
     try {
       await signOut(auth);
       localStorage.removeItem('user');
-      logger.success('✅ Déconnexion réussie');
+      logger.success('✅ ' + t('auth.logout.success'));
       navigate(`/${lang || 'fr'}/connexion`);
     } catch (error) {
-      logger.error('Erreur lors de la déconnexion:', error);
+      logger.error(t('auth.logout.error'), error);
     }
   };
 
@@ -259,7 +259,7 @@ const DashboardLayout: React.FC = () => {
             {/* Mon Compte Section */}
             <div className="p-3 md:p-4">
               <h3 className="text-xs font-semibold text-blue-200 uppercase tracking-wider mb-2">
-                Mon Compte
+                {t('dashboard.myAccount')}
               </h3>
               <nav className="space-y-0.5">
                 {navigation.map((item) => {
@@ -286,7 +286,7 @@ const DashboardLayout: React.FC = () => {
             {/* Paramètres & Plus Section */}
             <div className="p-3 md:p-4 border-t border-blue-500/30">
               <h3 className="text-xs font-semibold text-blue-200 uppercase tracking-wider mb-2">
-                Paramètres & Plus
+                {t('nav.settingsAndMore')}
               </h3>
               <nav className="space-y-0.5">
                 {settingsNavigation.map((item) => {
@@ -323,7 +323,7 @@ const DashboardLayout: React.FC = () => {
                   {userStatus === 'verified' ? (
                     <>
                       <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                      <span className="text-green-400 text-xs">Vérifié</span>
+                      <span className="text-green-400 text-xs">{t('kyc.verified')}</span>
                     </>
                   ) : userStatus === 'pending' ? (
                     <>
@@ -347,7 +347,7 @@ const DashboardLayout: React.FC = () => {
               className="flex items-center w-full px-2 md:px-3 py-1.5 text-xs md:text-sm font-medium text-blue-100 hover:bg-blue-700/30 hover:text-white rounded-md transition-colors"
             >
               <LogOut className="w-4 md:w-5 h-4 md:h-5 mr-2 md:mr-3" />
-              <span className="text-xs md:text-sm">Déconnexion</span>
+              <span className="text-xs md:text-sm">{t('nav.logout')}</span>
             </button>
           </div>
         </div>
@@ -417,7 +417,7 @@ const DashboardLayout: React.FC = () => {
                   </div>
                   <div className="hidden md:block text-left">
                     <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{userName}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">Client Premium</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">{t('nav.premiumClient')}</p>
                   </div>
                   <ChevronDown className="w-4 h-4 text-gray-400 dark:text-gray-500" />
                 </button>

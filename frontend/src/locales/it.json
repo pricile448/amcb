@@ -68,8 +68,11 @@
     "documents": "I miei Documenti",
     "messages": "Messaggi",
     "verification": "Verifica identità",
-    "transactions": "Transazioni",
-    "profile": {
+          "transactions": "Transazioni",
+      "settingsAndMore": "Impostazioni & Altro",
+      "logout": "Disconnetti",
+      "premiumClient": "Cliente Premium",
+      "profile": {
       "myProfile": "Il mio profilo",
       "security": "Sicurezza",
       "myCards": "Le mie carte",
@@ -272,7 +275,13 @@
       "title": "Crea un account",
       "subtitle": "Unisciti ad AmCbunq e scopri un nuovo modo di gestire le tue finanze",
       "alreadyHaveAccount": "Hai già un account?",
-      "button": "Crea il mio account"
+      "button": "Crea il mio account",
+      "sections": {
+        "personalInfo": "Informazioni personali",
+        "address": "Indirizzo",
+        "professionIncome": "Professione e reddito",
+        "security": "Sicurezza"
+      }
     },
     "email": "Indirizzo email",
     "emailPlaceholder": "tuo@email.com",
@@ -338,6 +347,10 @@
     "processing": {
       "title": "Elaborazione in corso...",
       "message": "Si prega di attendere mentre elaboriamo la tua richiesta."
+    },
+    "logout": {
+      "success": "Disconnessione riuscita",
+      "error": "Errore durante la disconnessione"
     }
   },
 
@@ -362,8 +375,9 @@
     "investments": "Inversiones",
     "balances": "saldos",
     "ribUnavailable": "RIB no disponible",
-    "ribVerificationRequired": "Verifica tu identidad para acceder a tu RIB",
-    "ribRequestPage": "Solicita tu RIB en la página IBAN"
+    "ribVerificationRequired": "Verifica la tua identità per accedere al tuo RIB",
+    "ribRequestPage": "Richiedi il tuo RIB nella pagina IBAN",
+    "myAccount": "Il Mio Account"
   },
 
   "accounts": {
@@ -772,7 +786,8 @@
       "parsingError": "Errore nell'analisi dell'utente:",
       "submissionGenericError": "Si è verificato un errore durante l'invio"
     },
-    "unverified": "Non verificato"
+    "unverified": "Non verificato",
+    "verified": "Verificato"
   },
 
   "kycSuccess": {
@@ -1497,7 +1512,8 @@
         "title": "Email",
         "description": "Risposta entro 24h",
         "address": "support@amcbunq.fr",
-        "action": "Invia email"
+        "action": "Invia email",
+        "subject": "Richiesta di aiuto"
       }
     },
     "categories": {

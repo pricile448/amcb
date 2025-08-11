@@ -68,8 +68,11 @@
     "documents": "Mis Documentos",
     "messages": "Mensajes",
     "verification": "Verificación de identidad",
-    "transactions": "Transacciones",
-    "profile": {
+          "transactions": "Transacciones",
+      "settingsAndMore": "Configuración y Más",
+      "logout": "Cerrar sesión",
+      "premiumClient": "Cliente Premium",
+      "profile": {
       "myProfile": "Mi perfil",
       "security": "Seguridad",
       "myCards": "Mis tarjetas",
@@ -307,7 +310,8 @@
         "title": "Email",
         "description": "Respuesta en 24h",
         "address": "soporte@amcbunq.es",
-        "action": "Enviar email"
+        "action": "Enviar email",
+        "subject": "Solicitud de ayuda"
       }
     },
     "categories": {
@@ -427,7 +431,13 @@
       "title": "Crear cuenta",
       "subtitle": "Únete a AmCbunq y descubre una nueva forma de gestionar tus finanzas",
       "alreadyHaveAccount": "¿Ya tienes una cuenta?",
-      "button": "Crear mi cuenta"
+      "button": "Crear mi cuenta",
+      "sections": {
+        "personalInfo": "Información personal",
+        "address": "Dirección",
+        "professionIncome": "Profesión e ingresos",
+        "security": "Seguridad"
+      }
     },
     "email": "Dirección de email",
     "emailPlaceholder": "tu@email.com",
@@ -494,6 +504,10 @@
     "processing": {
       "title": "Procesando...",
       "message": "Por favor espera mientras procesamos tu solicitud."
+    },
+    "logout": {
+      "success": "Cierre de sesión exitoso",
+      "error": "Error durante el cierre de sesión"
     }
   },
 
@@ -518,9 +532,10 @@
     "investments": "Inversiones",
     "balances": "saldos",
     "ribUnavailable": "RIB no disponible",
-    "ribVerificationRequired": "Verifica tu identidad para acceder a tu RIB",
-    "ribRequestPage": "Solicita tu RIB en la página IBAN"
-  },
+          "ribVerificationRequired": "Verifica tu identidad para acceder a tu RIB",
+      "ribRequestPage": "Solicita tu RIB en la página IBAN",
+      "myAccount": "Mi Cuenta"
+    },
 
   "accounts": {
     "title": "Mis Cuentas",

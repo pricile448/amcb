@@ -27,43 +27,43 @@ const HelpPage: React.FC = () => {
       id: '1',
       question: t('help.faq.accountOpening.question'),
       answer: t('help.faq.accountOpening.answer'),
-      category: 'compte'
+      category: 'account'
     },
     {
       id: '2',
       question: t('help.faq.transfer.question'),
       answer: t('help.faq.transfer.answer'),
-      category: 'virements'
+      category: 'transfers'
     },
     {
       id: '3',
       question: t('help.faq.cardBlocked.question'),
       answer: t('help.faq.cardBlocked.answer'),
-      category: 'cartes'
+      category: 'cards'
     },
     {
       id: '4',
       question: t('help.faq.passwordChange.question'),
       answer: t('help.faq.passwordChange.answer'),
-      category: 'securite'
+      category: 'security'
     },
     {
       id: '5',
       question: t('help.faq.bankingFees.question'),
       answer: t('help.faq.bankingFees.answer'),
-      category: 'tarifs'
+      category: 'fees'
     },
     {
       id: '6',
       question: t('help.faq.twoFactor.question'),
       answer: t('help.faq.twoFactor.answer'),
-      category: 'securite'
+      category: 'security'
     },
     {
       id: '7',
       question: t('help.faq.ibanChange.question'),
       answer: t('help.faq.ibanChange.answer'),
-      category: 'compte'
+      category: 'account'
     },
     {
       id: '8',
@@ -75,11 +75,11 @@ const HelpPage: React.FC = () => {
 
   const categories = [
     { id: 'all', name: t('help.categories.all'), count: faqItems.length },
-    { id: 'compte', name: t('help.categories.account'), count: faqItems.filter(item => item.category === 'compte').length },
-    { id: 'virements', name: t('help.categories.transfers'), count: faqItems.filter(item => item.category === 'virements').length },
-    { id: 'cartes', name: t('help.categories.cards'), count: faqItems.filter(item => item.category === 'cartes').length },
-    { id: 'securite', name: t('help.categories.security'), count: faqItems.filter(item => item.category === 'securite').length },
-    { id: 'tarifs', name: t('help.categories.fees'), count: faqItems.filter(item => item.category === 'tarifs').length },
+    { id: 'account', name: t('help.categories.account'), count: faqItems.filter(item => item.category === 'account').length },
+    { id: 'transfers', name: t('help.categories.transfers'), count: faqItems.filter(item => item.category === 'transfers').length },
+    { id: 'cards', name: t('help.categories.cards'), count: faqItems.filter(item => item.category === 'cards').length },
+    { id: 'security', name: t('help.categories.security'), count: faqItems.filter(item => item.category === 'security').length },
+    { id: 'fees', name: t('help.categories.fees'), count: faqItems.filter(item => item.category === 'fees').length },
     { id: 'documents', name: t('help.categories.documents'), count: faqItems.filter(item => item.category === 'documents').length }
   ];
 
@@ -113,7 +113,8 @@ const HelpPage: React.FC = () => {
   };
 
   const handleEmail = () => {
-    window.open('mailto:support@amcbunq.fr?subject=Demande d\'aide', '_self');
+    const subject = encodeURIComponent(t('help.contact.email.subject'));
+    window.open(`mailto:support@amcbunq.fr?subject=${subject}`, '_self');
   };
 
   const handleContactSupport = () => {

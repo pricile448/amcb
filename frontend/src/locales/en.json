@@ -69,6 +69,9 @@
       "messages": "Messages",
       "verification": "Identity verification",
       "transactions": "Transactions",
+      "settingsAndMore": "Settings & More",
+      "logout": "Logout",
+      "premiumClient": "Premium Client",
       "profile": {
         "myProfile": "My profile",
         "security": "Security",
@@ -307,7 +310,8 @@
           "title": "Email",
           "description": "Response within 24h",
           "address": "support@amcbunq.fr",
-          "action": "Send email"
+          "action": "Send email",
+          "subject": "Help request"
         }
       },
       "categories": {
@@ -427,7 +431,13 @@
         "title": "Create an account",
         "subtitle": "Join AmCbunq and discover a new way to manage your finances",
         "alreadyHaveAccount": "Already have an account?",
-        "button": "Create my account"
+        "button": "Create my account",
+        "sections": {
+          "personalInfo": "Personal Information",
+          "address": "Address",
+          "professionIncome": "Profession and Income",
+          "security": "Security"
+        }
       },
       "email": "Email address",
       "emailPlaceholder": "your@email.com",
@@ -490,11 +500,15 @@
         "emailSent": "Verification email sent!",
         "emailError": "Error sending verification email"
       },
-      "processing": {
+            "processing": {
         "title": "Processing...",
         "message": "Please wait while we process your request."
+      },
+      "logout": {
+        "success": "Logout successful",
+        "error": "Error during logout"
       }
-    },
+  },
   
     "dashboard": {
       "welcome": "Hello",
@@ -518,7 +532,8 @@
       "balances": "balances",
       "ribUnavailable": "RIB unavailable",
       "ribVerificationRequired": "Verify your identity to access your RIB",
-      "ribRequestPage": "Request your RIB on the IBAN page"
+      "ribRequestPage": "Request your RIB on the IBAN page",
+      "myAccount": "My Account"
     },
   
     "accounts": {

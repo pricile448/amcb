@@ -9,10 +9,34 @@ import toast from "react-hot-toast";
 import AuthLink from '../../components/AuthLink';
 
 const VerificationPendingPage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const [isChecking, setIsChecking] = useState(false);
+  
+  // 🔧 AMÉLIORATION: Détection intelligente de la langue
+  const detectLanguage = () => {
+    // 1. Priorité: Langue actuelle de i18n
+    if (i18n.language) return i18n.language;
+    
+    // 2. Priorité: Langue du navigateur
+    const browserLang = navigator.language.split('-')[0];
+    if (browserLang && ['fr', 'en', 'es', 'de', 'it', 'nl', 'pt'].includes(browserLang)) {
+      return browserLang;
+    }
+    
+    // 3. Défaut: Français
+    return 'fr';
+  };
+
+  const currentLang = detectLanguage();
+
+  // 🔧 AMÉLIORATION: Synchroniser la langue avec i18n
+  useEffect(() => {
+    if (currentLang && currentLang !== i18n.language) {
+      i18n.changeLanguage(currentLang);
+    }
+  }, [currentLang, i18n]);
   
   const email = location.state?.email || "votre email";
   const message = location.state?.message || "Vérifiez votre email pour activer votre compte";

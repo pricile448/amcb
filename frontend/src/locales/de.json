@@ -68,7 +68,31 @@
     "documents": "Meine Dokumente",
     "messages": "Nachrichten",
     "verification": "Identitätsprüfung",
-    "transactions": "Transaktionen"
+    "transactions": "Transaktionen",
+    "settingsAndMore": "Einstellungen & Mehr",
+    "logout": "Abmelden",
+    "premiumClient": "Premium-Kunde",
+    "profile": {
+      "myProfile": "Mein Profil",
+      "security": "Sicherheit",
+      "myCards": "Meine Karten",
+      "documents": "Dokumente",
+      "logout": "Abmelden",
+      "verifiedAccount": "Konto verifiziert",
+      "verificationInProgress": "Verifizierung läuft",
+      "unverifiedAccount": "Konto nicht verifiziert",
+      "trustMessage": "Vielen Dank für das Vertrauen in AmCbunq",
+      "verifyIdentityMessage": "Verifizieren Sie Ihre Identität, um alle Funktionen freizuschalten"
+    },
+    "notifications": {
+      "title": "Benachrichtigungen",
+      "markAllAsRead": "Alle als gelesen markieren",
+      "markAllAsReadShort": "Alle gelesen",
+      "noNotifications": "Keine Benachrichtigungen",
+      "noNotificationsMessage": "Sie werden hier über neue Aktivitäten informiert",
+      "viewAllNotifications": "Alle Benachrichtigungen anzeigen",
+      "close": "Schließen"
+    }
   },
 
   "home": {
@@ -286,7 +310,8 @@
         "title": "E-Mail",
         "description": "Antwort innerhalb von 24h",
         "address": "support@amcbunq.fr",
-        "action": "E-Mail senden"
+        "action": "E-Mail senden",
+        "subject": "Hilfeanfrage"
       }
     },
     "categories": {
@@ -406,7 +431,13 @@
       "title": "Konto erstellen",
       "subtitle": "Werden Sie AmCbunq-Kunde und entdecken Sie eine neue Art, Ihre Finanzen zu verwalten",
       "alreadyHaveAccount": "Haben Sie bereits ein Konto?",
-      "button": "Mein Konto erstellen"
+      "button": "Mein Konto erstellen",
+      "sections": {
+        "personalInfo": "Persönliche Informationen",
+        "address": "Adresse",
+        "professionIncome": "Beruf und Einkommen",
+        "security": "Sicherheit"
+      }
     },
     "email": "E-Mail-Adresse",
     "emailPlaceholder": "ihre@email.com",
@@ -473,6 +504,10 @@
     "processing": {
       "title": "Wird verarbeitet...",
       "message": "Bitte warten Sie, während wir Ihre Anfrage bearbeiten."
+    },
+    "logout": {
+      "success": "Abmeldung erfolgreich",
+      "error": "Fehler bei der Abmeldung"
     }
   },
 
@@ -498,7 +533,8 @@
     "balances": "Guthaben",
     "ribUnavailable": "RIB nicht verfügbar",
     "ribVerificationRequired": "Bestätigen Sie Ihre Identität, um auf Ihren RIB zuzugreifen",
-    "ribRequestPage": "Fordern Sie Ihren RIB auf der IBAN-Seite an"
+    "ribRequestPage": "Fordern Sie Ihren RIB auf der IBAN-Seite an",
+    "myAccount": "Mein Konto"
   },
 
   "accounts": {

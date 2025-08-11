@@ -27,7 +27,7 @@ const NotificationDropdown: React.FC<NotificationDropdownProps> = ({
   onMarkAsRead,
   onMarkAllAsRead
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { lang } = useParams<{ lang: string }>();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null);
@@ -167,7 +167,7 @@ const NotificationDropdown: React.FC<NotificationDropdownProps> = ({
                         </p>
                         <div className="flex items-center justify-between">
                           <p className="text-xs text-gray-500 dark:text-gray-400">
-                            {new Date(notification.date).toLocaleString('fr-FR', {
+                            {new Date(notification.date).toLocaleString(i18n.language === 'fr' ? 'fr-FR' : i18n.language === 'en' ? 'en-US' : i18n.language === 'es' ? 'es-ES' : i18n.language === 'de' ? 'de-DE' : i18n.language === 'it' ? 'it-IT' : i18n.language === 'nl' ? 'nl-NL' : i18n.language === 'pt' ? 'pt-PT' : 'fr-FR', {
                               day: '2-digit',
                               month: '2-digit',
                               year: 'numeric',
@@ -224,13 +224,13 @@ const NotificationDropdown: React.FC<NotificationDropdownProps> = ({
             
             <div className="flex items-center justify-between text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-4">
               <span>
-                {new Date(selectedNotification.date).toLocaleString('fr-FR', {
-                  day: '2-digit',
-                  month: '2-digit',
-                  year: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit'
-                })}
+                                        {new Date(selectedNotification.date).toLocaleString(i18n.language === 'fr' ? 'fr-FR' : i18n.language === 'en' ? 'en-US' : i18n.language === 'es' ? 'es-ES' : i18n.language === 'de' ? 'de-DE' : i18n.language === 'it' ? 'it-IT' : i18n.language === 'nl' ? 'nl-NL' : i18n.language === 'pt' ? 'pt-PT' : 'fr-FR', {
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit'
+                        })}
               </span>
             </div>
             

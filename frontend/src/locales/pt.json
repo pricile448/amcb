@@ -68,7 +68,31 @@
     "documents": "Meus Documentos",
     "messages": "Mensagens",
     "verification": "Verificação de identidade",
-    "transactions": "Transações"
+    "transactions": "Transações",
+    "settingsAndMore": "Configurações & Mais",
+    "logout": "Sair",
+    "premiumClient": "Cliente Premium",
+    "profile": {
+      "myProfile": "Meu Perfil",
+      "security": "Segurança",
+      "myCards": "Minhas Cartas",
+      "documents": "Documentos",
+      "logout": "Sair",
+      "verifiedAccount": "Conta verificada",
+      "verificationInProgress": "Verificação em andamento",
+      "unverifiedAccount": "Conta não verificada",
+      "trustMessage": "Obrigado por confiar na AmCbunq",
+      "verifyIdentityMessage": "Verifique sua identidade para desbloquear todas as funcionalidades"
+    },
+    "notifications": {
+      "title": "Notificações",
+      "markAllAsRead": "Marcar tudo como lido",
+      "markAllAsReadShort": "Tudo lido",
+      "noNotifications": "Nenhuma notificação",
+      "noNotificationsMessage": "Você será notificado aqui sobre novas atividades",
+      "viewAllNotifications": "Ver todas as notificações",
+      "close": "Fechar"
+    }
   },
 
   "home": {
@@ -269,6 +293,27 @@
     "search": {
       "placeholder": "Pesquisar na ajuda..."
     },
+    "contact": {
+      "phone": {
+        "title": "Telefone",
+        "description": "Serviço ao cliente 24h/7d",
+        "number": "01 23 45 67 89",
+        "action": "Ligar agora"
+      },
+      "chat": {
+        "title": "Chat online",
+        "description": "Resposta imediata",
+        "availability": "Disponível 24h/7d",
+        "action": "Iniciar chat"
+      },
+      "email": {
+        "title": "Email",
+        "description": "Resposta em 24h",
+        "address": "support@amcbunq.fr",
+        "action": "Enviar email",
+        "subject": "Pedido de ajuda"
+      }
+    },
     "contactMethods": {
       "phone": {
         "title": "Telefone",
@@ -286,7 +331,8 @@
         "title": "Email",
         "description": "Resposta em até 24h",
         "contact": "support@amcbunq.fr",
-        "action": "Enviar email"
+        "action": "Enviar email",
+        "subject": "Pedido de ajuda"
       }
     },
     "categories": {
@@ -301,45 +347,43 @@
     },
     "faq": {
       "title": "Perguntas frequentes",
-      "resultsCount": "pergunta encontrada",
-      "resultsCountPlural": "perguntas encontradas",
+      "results": "pergunta encontrada",
+      "resultsPlural": "perguntas encontradas",
       "noResults": {
         "title": "Nenhuma pergunta encontrada",
         "description": "Tente modificar seus critérios de pesquisa ou contate nosso suporte."
       },
-      "questions": {
-        "q1": {
-          "question": "Como abrir uma conta bancária?",
-          "answer": "Para abrir uma conta, acesse nosso site e clique em \"Abrir uma conta\". Você precisará fornecer seus dados pessoais, documento de identidade e comprovante de residência. O processo geralmente leva 24-48h."
-        },
-        "q2": {
-          "question": "Como fazer uma transferência?",
-          "answer": "Acesse sua área do cliente, vá na seção \"Transferências\" e siga os passos. Você precisará do RIB do beneficiário. Transferências SEPA geralmente são processadas em até 24h."
-        },
-        "q3": {
-          "question": "Meu cartão foi bloqueado, o que fazer?",
-          "answer": "Se seu cartão foi bloqueado, contate imediatamente nosso atendimento ao cliente no 01 23 45 67 89. Podemos desbloqueá-lo ou enviar um novo se necessário."
-        },
-        "q4": {
-          "question": "Como mudar minha senha?",
-          "answer": "Vá em \"Configurações\" > \"Segurança\" > \"Alterar senha\". Você precisará digitar sua senha atual e a nova senha duas vezes."
-        },
-        "q5": {
-          "question": "Quais são as taxas bancárias?",
-          "answer": "Nossos preços variam conforme o tipo de conta. Consulte nossa tabela de preços na seção \"Preços\" ou contate nosso atendimento para mais detalhes."
-        },
-        "q6": {
-          "question": "Como ativar a autenticação em dois fatores?",
-          "answer": "Em \"Configurações\" > \"Segurança\", você pode ativar a autenticação em dois fatores. Você receberá um código por SMS a cada login."
-        },
-        "q7": {
-          "question": "Meu IBAN mudou?",
-          "answer": "Não, seu IBAN permanece o mesmo exceto em caso de mudança de conta. Você pode consultá-lo na seção IBAN de sua área do cliente."
-        },
-        "q8": {
-          "question": "Como baixar meus extratos bancários?",
-          "answer": "Vá em Histórico > selecione o período > clique em Baixar. Você pode escolher o formato PDF ou CSV."
-        }
+      "accountOpening": {
+        "question": "Como abrir uma conta bancária?",
+        "answer": "Para abrir uma conta, acesse nosso site e clique em \"Abrir uma conta\". Você precisará fornecer seus dados pessoais, documento de identidade e comprovante de residência. O processo geralmente leva 24-48h."
+      },
+      "transfer": {
+        "question": "Como fazer uma transferência?",
+        "answer": "Acesse sua área do cliente, vá na seção \"Transferências\" e siga os passos. Você precisará do RIB do beneficiário. Transferências SEPA geralmente são processadas em até 24h."
+      },
+      "cardBlocked": {
+        "question": "Meu cartão foi bloqueado, o que fazer?",
+        "answer": "Se seu cartão foi bloqueado, contate imediatamente nosso atendimento ao cliente no 01 23 45 67 89. Podemos desbloqueá-lo ou enviar um novo se necessário."
+      },
+      "passwordChange": {
+        "question": "Como mudar minha senha?",
+        "answer": "Vá em \"Configurações\" > \"Segurança\" > \"Alterar senha\". Você precisará digitar sua senha atual e a nova senha duas vezes."
+      },
+      "bankingFees": {
+        "question": "Quais são as taxas bancárias?",
+        "answer": "Nossos preços variam conforme o tipo de conta. Consulte nossa tabela de preços na seção \"Preços\" ou contate nosso atendimento para mais detalhes."
+      },
+      "twoFactor": {
+        "question": "Como ativar a autenticação em dois fatores?",
+        "answer": "Em \"Configurações\" > \"Segurança\", você pode ativar a autenticação em dois fatores. Você receberá um código por SMS a cada login."
+      },
+      "ibanChange": {
+        "question": "Meu IBAN mudou?",
+        "answer": "Não, seu IBAN permanece o mesmo exceto em caso de mudança de conta. Você pode consultá-lo na seção IBAN de sua área do cliente."
+      },
+      "downloadStatements": {
+        "question": "Como baixar meus extratos bancários?",
+        "answer": "Vá em Histórico > selecione o período > clique em Baixar. Você pode escolher o formato PDF ou CSV."
       }
     },
     "faq1": {
@@ -382,6 +426,32 @@
       "contactSupport": "Contatar suporte",
       "bookAppointment": "Agendar horário"
     },
+    "stillNeedHelp": {
+      "title": "Não encontrou sua resposta?",
+      "description": "Nossa equipe de suporte está aqui para ajudar. Contate-nos por telefone, chat ou email.",
+      "contactButton": "Contatar suporte",
+      "appointmentButton": "Agendar horário"
+    },
+    "appointment": {
+      "alert": "Funcionalidade de agendamento em breve. Contate-nos por telefone no 01 23 45 67 89."
+    },
+    "resources": {
+      "title": "Recursos úteis",
+      "guide": {
+        "title": "Guia do usuário",
+        "alert": "Guia do usuário - Redirecionando para o guia PDF"
+      },
+      "conditions": {
+        "title": "Termos e condições"
+      },
+      "privacy": {
+        "title": "Política de privacidade"
+      },
+      "fees": {
+        "title": "Tabela de preços",
+        "alert": "Tabela de preços - Redirecionando para a página de preços"
+      }
+    },
     "alerts": {
       "appointmentComingSoon": "Funcionalidade de agendamento em breve. Contate-nos por telefone no 01 23 45 67 89.",
       "userGuideRedirect": "Guia do usuário - Redirecionando para o guia PDF",
@@ -400,7 +470,13 @@
       "title": "Criar conta",
       "subtitle": "Junte-se ao AmCbunq e descubra uma nova forma de gerenciar suas finanças",
       "alreadyHaveAccount": "Já tem uma conta?",
-      "button": "Criar minha conta"
+      "button": "Criar minha conta",
+      "sections": {
+        "personalInfo": "Informações pessoais",
+        "address": "Endereço",
+        "professionIncome": "Profissão e rendimentos",
+        "security": "Segurança"
+      }
     },
     "email": "Endereço de email",
     "emailPlaceholder": "seu@email.com",
@@ -467,6 +543,10 @@
     "processing": {
       "title": "A processar...",
       "message": "Por favor aguarde enquanto processamos o seu pedido."
+    },
+    "logout": {
+      "success": "Logout bem-sucedido",
+      "error": "Erro durante o logout"
     }
   },
 
@@ -492,7 +572,8 @@
     "balances": "saldos",
     "ribUnavailable": "RIB não disponível",
     "ribVerificationRequired": "Verifique sua identidade para acessar seu RIB",
-    "ribRequestPage": "Solicite seu RIB na página IBAN"
+    "ribRequestPage": "Solicite seu RIB na página IBAN",
+    "myAccount": "Minha Conta"
   },
 
   "accounts": {

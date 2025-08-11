@@ -199,7 +199,7 @@ const RegisterPage: React.FC = () => {
             {/* Informations personnelles */}
             <div className="space-y-4 sm:space-y-6">
               <h3 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
-                Informations personnelles
+                {t('auth.register.sections.personalInfo')}
               </h3>
               
               <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2">
@@ -327,7 +327,7 @@ const RegisterPage: React.FC = () => {
 
                 <div>
                   <label htmlFor="birthPlace" className="block text-sm font-medium text-gray-700">
-                    Lieu de naissance
+                    {t('auth.birthPlace')}
                   </label>
                   <div className="mt-1 relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -352,7 +352,7 @@ const RegisterPage: React.FC = () => {
               <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2">
                 <div>
                   <label htmlFor="nationality" className="block text-sm font-medium text-gray-700">
-                    Nationalité
+                    {t('auth.nationality')}
                   </label>
                   <div className="mt-1 relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -375,7 +375,7 @@ const RegisterPage: React.FC = () => {
 
                 <div>
                   <label htmlFor="residenceCountry" className="block text-sm font-medium text-gray-700">
-                    Pays de résidence
+                    {t('auth.residenceCountry')}
                   </label>
                   <div className="mt-1 relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -398,11 +398,11 @@ const RegisterPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Adresse */}
-            <div className="space-y-4 sm:space-y-6">
-              <h3 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
-                Adresse
-              </h3>
+                    {/* Adresse */}
+        <div className="space-y-4 sm:space-y-6">
+          <h3 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
+            {t('auth.register.sections.address')}
+          </h3>
               
               <div>
                 <label htmlFor="address" className="block text-sm font-medium text-gray-700">
@@ -430,7 +430,7 @@ const RegisterPage: React.FC = () => {
               <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2">
                 <div>
                   <label htmlFor="city" className="block text-sm font-medium text-gray-700">
-                    Ville
+                    {t('auth.city')}
                   </label>
                   <div className="mt-1 relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -453,7 +453,7 @@ const RegisterPage: React.FC = () => {
 
                 <div>
                   <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700">
-                    Code postal
+                    {t('auth.postalCode')}
                   </label>
                   <div className="mt-1 relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -476,16 +476,16 @@ const RegisterPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Profession et revenus */}
-            <div className="space-y-4 sm:space-y-6">
-              <h3 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
-                Profession et revenus
-              </h3>
+                    {/* Profession et revenus */}
+        <div className="space-y-4 sm:space-y-6">
+          <h3 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
+            {t('auth.register.sections.professionIncome')}
+          </h3>
               
               <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2">
                 <div>
                   <label htmlFor="profession" className="block text-sm font-medium text-gray-700">
-                    Profession
+                    {t('auth.profession')}
                   </label>
                   <div className="mt-1 relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -508,7 +508,7 @@ const RegisterPage: React.FC = () => {
 
                 <div>
                   <label htmlFor="salary" className="block text-sm font-medium text-gray-700">
-                    Salaire mensuel (€)
+                    {t('auth.salary')}
                   </label>
                   <div className="mt-1 relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -533,11 +533,11 @@ const RegisterPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Sécurité */}
-            <div className="space-y-4 sm:space-y-6">
-              <h3 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
-                Sécurité
-              </h3>
+                    {/* Sécurité */}
+        <div className="space-y-4 sm:space-y-6">
+          <h3 className="text-lg font-medium text-gray-900 border-b border-gray-200 pb-2">
+            {t('auth.register.sections.security')}
+          </h3>
               
               <div>
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">

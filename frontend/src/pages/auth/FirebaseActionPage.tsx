@@ -8,7 +8,7 @@ import { logger } from "../../utils/logger";
 import toast from "react-hot-toast";
 
 const FirebaseActionPage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { lang } = useParams<{ lang: string }>();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -20,8 +20,34 @@ const FirebaseActionPage: React.FC = () => {
   const oobCode = searchParams.get('oobCode');
   const continueUrl = searchParams.get('continueUrl');
 
+  // 🔧 AMÉLIORATION: Détection intelligente de la langue
+  const detectLanguage = () => {
+    // 1. Priorité: Paramètre de route
+    if (lang) return lang;
+    
+    // 2. Priorité: Langue actuelle de i18n
+    if (i18n.language) return i18n.language;
+    
+    // 3. Priorité: Langue du navigateur
+    const browserLang = navigator.language.split('-')[0];
+    if (browserLang && ['fr', 'en', 'es', 'de', 'it', 'nl', 'pt'].includes(browserLang)) {
+      return browserLang;
+    }
+    
+    // 4. Défaut: Français
+    return 'fr';
+  };
+
+  const currentLang = detectLanguage();
+
+  // 🔧 AMÉLIORATION: Synchroniser la langue avec i18n
+  useEffect(() => {
+    if (currentLang && currentLang !== i18n.language) {
+      i18n.changeLanguage(currentLang);
+    }
+  }, [currentLang, i18n]);
+
   const getDashboardLink = (path: string) => {
-    const currentLang = lang || 'fr';
     return `/${currentLang}/dashboard/${path}`;
   };
 

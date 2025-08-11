@@ -49,26 +49,29 @@
     "receive": "Recevoir"
   },
 
-  "nav": {
-    "home": "Accueil",
-    "features": "Fonctionnalités",
-    "pricing": "Tarifs",
-    "help": "Aide & Support",
-    "login": "Se connecter",
-    "openAccount": "Ouvrir un compte",
-    "dashboard": "Mon espace client",
-    "accounts": "Comptes",
-    "iban": "Mon IBAN",
-    "transfers": "Virements",
-    "cards": "Cartes",
-    "billing": "Facturation",
-    "history": "Historique",
-    "budgets": "Budgets",
-    "settings": "Paramètres",
-    "documents": "Mes Documents",
-    "messages": "Messages",
-    "verification": "Vérification d'identité",
-    "transactions": "Transactions",
+      "nav": {
+      "home": "Accueil",
+      "features": "Fonctionnalités",
+      "pricing": "Tarifs",
+      "help": "Aide & Support",
+      "login": "Se connecter",
+      "openAccount": "Ouvrir un compte",
+      "dashboard": "Mon espace client",
+      "accounts": "Comptes",
+      "iban": "Mon IBAN",
+      "transfers": "Virements",
+      "cards": "Cartes",
+      "billing": "Facturation",
+      "history": "Historique",
+      "budgets": "Budgets",
+      "settings": "Paramètres",
+      "documents": "Mes Documents",
+      "messages": "Messages",
+      "verification": "Vérification d'identité",
+      "transactions": "Transactions",
+      "settingsAndMore": "Paramètres & Plus",
+      "logout": "Déconnexion",
+      "premiumClient": "Client Premium",
     "profile": {
       "myProfile": "Mon profil",
       "security": "Sécurité",
@@ -307,7 +310,8 @@
         "title": "Email",
         "description": "Réponse sous 24h",
         "address": "support@amcbunq.fr",
-        "action": "Envoyer un email"
+        "action": "Envoyer un email",
+        "subject": "Demande d'aide"
       }
     },
     "categories": {
@@ -427,7 +431,13 @@
       "title": "Créer un compte",
       "subtitle": "Rejoignez AmCbunq et découvrez une nouvelle façon de gérer vos finances",
       "alreadyHaveAccount": "Vous avez déjà un compte ?",
-      "button": "Créer mon compte"
+      "button": "Créer mon compte",
+      "sections": {
+        "personalInfo": "Informations personnelles",
+        "address": "Adresse",
+        "professionIncome": "Profession et revenus",
+        "security": "Sécurité"
+      }
     },
     "email": "Adresse email",
     "emailPlaceholder": "votre@email.com",
@@ -494,6 +504,10 @@
       "processing": {
         "title": "Traitement en cours...",
         "message": "Veuillez patienter pendant que nous traitons votre demande."
+      },
+      "logout": {
+        "success": "Déconnexion réussie",
+        "error": "Erreur lors de la déconnexion"
       }
   },
 
@@ -519,7 +533,8 @@
     "balances": "les soldes",
     "ribUnavailable": "RIB non disponible",
     "ribVerificationRequired": "Vérifiez votre identité pour accéder à votre RIB",
-    "ribRequestPage": "Demandez votre RIB sur la page IBAN"
+    "ribRequestPage": "Demandez votre RIB sur la page IBAN",
+    "myAccount": "Mon Compte"
   },
 
   "accounts": {
@@ -942,6 +957,7 @@
       "submissionGenericError": "Une erreur est survenue lors de la soumission"
     },
     "unverified": "Non vérifié",
+    "verified": "Vérifié",
     "identity": "Pièce d'identité",
     "address": "Justificatif de domicile",
     "income": "Justificatif de revenus"

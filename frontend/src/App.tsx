@@ -50,9 +50,13 @@ function App() {
         {/* Root redirect to language */}
         <Route path="/" element={<LanguageRedirect />} />
         
-        {/* Firebase Auth Routes - NO LANGUAGE PREFIX */}
+        {/* Firebase Auth Routes - NO LANGUAGE PREFIX (pour compatibilité) */}
         <Route path="/verification-pending" element={<VerificationPendingPage />} />
         <Route path="/auth/action" element={<FirebaseActionPage />} />
+        
+        {/* Firebase Auth Routes AVEC PREFIXE DE LANGUE */}
+        <Route path="/:lang/verification-pending" element={<VerificationPendingPage />} />
+        <Route path="/:lang/auth/action" element={<FirebaseActionPage />} />
         
         {/* Language-prefixed routes */}
         <Route path="/:lang" element={<LanguageWrapper />}>

@@ -68,7 +68,31 @@
     "documents": "Mijn Documenten",
     "messages": "Berichten",
     "verification": "Identiteitsverificatie",
-    "transactions": "Transacties"
+    "transactions": "Transacties",
+    "settingsAndMore": "Instellingen & Meer",
+    "logout": "Uitloggen",
+    "premiumClient": "Premium Klant",
+    "profile": {
+      "myProfile": "Mijn Profiel",
+      "security": "Beveiliging",
+      "myCards": "Mijn Kaarten",
+      "documents": "Documenten",
+      "logout": "Uitloggen",
+      "verifiedAccount": "Account geverifieerd",
+      "verificationInProgress": "Verificatie in behandeling",
+      "unverifiedAccount": "Account niet geverifieerd",
+      "trustMessage": "Bedankt voor het vertrouwen in AmCbunq",
+      "verifyIdentityMessage": "Verifieer uw identiteit om alle functies te ontgrendelen"
+    },
+    "notifications": {
+      "title": "Meldingen",
+      "markAllAsRead": "Alles als gelezen markeren",
+      "markAllAsReadShort": "Alles gelezen",
+      "noNotifications": "Geen meldingen",
+      "noNotificationsMessage": "U wordt hier op de hoogte gehouden van nieuwe activiteiten",
+      "viewAllNotifications": "Alle meldingen bekijken",
+      "close": "Sluiten"
+    }
   },
 
   "home": {
@@ -269,6 +293,27 @@
     "search": {
       "placeholder": "Doorzoek de help..."
     },
+    "contact": {
+      "phone": {
+        "title": "Telefoon",
+        "description": "Klantenservice 24/7",
+        "number": "01 23 45 67 89",
+        "action": "Nu bellen"
+      },
+      "chat": {
+        "title": "Online chat",
+        "description": "Onmiddellijke reactie",
+        "availability": "Beschikbaar 24/7",
+        "action": "Chat starten"
+      },
+      "email": {
+        "title": "E-mail",
+        "description": "Reactie binnen 24u",
+        "address": "support@amcbunq.fr",
+        "action": "E-mail versturen",
+        "subject": "Hulpverzoek"
+      }
+    },
     "contactMethods": {
       "phone": {
         "title": "Telefoon",
@@ -286,7 +331,8 @@
         "title": "E-mail",
         "description": "Antwoord binnen 24u",
         "contact": "support@amcbunq.fr",
-        "action": "E-mail versturen"
+        "action": "E-mail versturen",
+        "subject": "Hulpverzoek"
       }
     },
     "categories": {
@@ -301,45 +347,43 @@
     },
     "faq": {
       "title": "Veelgestelde vragen",
-      "resultsCount": "vraag gevonden",
-      "resultsCountPlural": "vragen gevonden",
+      "results": "vraag gevonden",
+      "resultsPlural": "vragen gevonden",
       "noResults": {
         "title": "Geen vragen gevonden",
         "description": "Probeer uw zoekcriteria aan te passen of contacteer onze ondersteuning."
       },
-      "questions": {
-        "q1": {
-          "question": "Hoe een bankrekening openen?",
-          "answer": "Om een rekening te openen, ga naar onze website en klik op \"Account openen\". U moet uw persoonlijke gegevens, een identiteitsbewijs en een adresbewijs verstrekken. Het proces duurt meestal 24-48u."
-        },
-        "q2": {
-          "question": "Hoe een overschrijving uitvoeren?",
-          "answer": "Log in op uw klantenspace, ga naar de sectie \"Overschrijvingen\" en volg de stappen. U hebt het RIB van de begunstigde nodig. SEPA overschrijvingen worden meestal binnen 24u verwerkt."
-        },
-        "q3": {
-          "question": "Mijn kaart is geblokkeerd, wat nu?",
-          "answer": "Als uw kaart geblokkeerd is, contacteer onmiddellijk onze klantendienst op 01 23 45 67 89. We kunnen deze deblokkeren of een nieuwe sturen indien nodig."
-        },
-        "q4": {
-          "question": "Hoe mijn wachtwoord wijzigen?",
-          "answer": "Ga naar \"Instellingen\" > \"Beveiliging\" > \"Wachtwoord wijzigen\". U moet uw huidige wachtwoord en het nieuwe wachtwoord tweemaal invoeren."
-        },
-        "q5": {
-          "question": "Wat zijn de bankkosten?",
-          "answer": "Onze prijzen variëren volgens het rekeningtype. Bekijk onze prijslijst in de sectie \"Prijzen\" of contacteer onze klantendienst voor meer details."
-        },
-        "q6": {
-          "question": "Hoe twee-factor authenticatie activeren?",
-          "answer": "In \"Instellingen\" > \"Beveiliging\" kunt u twee-factor authenticatie activeren. U ontvangt een code per SMS bij elke login."
-        },
-        "q7": {
-          "question": "Is mijn IBAN veranderd?",
-          "answer": "Nee, uw IBAN blijft hetzelfde tenzij u van rekening verandert. U kunt het bekijken in de IBAN sectie van uw klantenspace."
-        },
-        "q8": {
-          "question": "Hoe mijn bankafschriften downloaden?",
-          "answer": "Ga naar Geschiedenis > selecteer de periode > klik op Downloaden. U kunt kiezen voor PDF of CSV formaat."
-        }
+      "accountOpening": {
+        "question": "Hoe een bankrekening openen?",
+        "answer": "Om een rekening te openen, ga naar onze website en klik op \"Account openen\". U moet uw persoonlijke gegevens, een identiteitsbewijs en een adresbewijs verstrekken. Het proces duurt meestal 24-48u."
+      },
+      "transfer": {
+        "question": "Hoe een overschrijving uitvoeren?",
+        "answer": "Log in op uw klantenspace, ga naar de sectie \"Overschrijvingen\" en volg de stappen. U hebt het RIB van de begunstigde nodig. SEPA overschrijvingen worden meestal binnen 24u verwerkt."
+      },
+      "cardBlocked": {
+        "question": "Mijn kaart is geblokkeerd, wat nu?",
+        "answer": "Als uw kaart geblokkeerd is, contacteer onmiddellijk onze klantendienst op 01 23 45 67 89. We kunnen deze deblokkeren of een nieuwe sturen indien nodig."
+      },
+      "passwordChange": {
+        "question": "Hoe mijn wachtwoord wijzigen?",
+        "answer": "Ga naar \"Instellingen\" > \"Beveiliging\" > \"Wachtwoord wijzigen\". U moet uw huidige wachtwoord en het nieuwe wachtwoord tweemaal invoeren."
+      },
+      "bankingFees": {
+        "question": "Wat zijn de bankkosten?",
+        "answer": "Onze prijzen variëren volgens het rekeningtype. Bekijk onze prijslijst in de sectie \"Prijzen\" of contacteer onze klantendienst voor meer details."
+      },
+      "twoFactor": {
+        "question": "Hoe twee-factor authenticatie activeren?",
+        "answer": "In \"Instellingen\" > \"Beveiliging\" kunt u twee-factor authenticatie activeren. U ontvangt een code per SMS bij elke login."
+      },
+      "ibanChange": {
+        "question": "Is mijn IBAN veranderd?",
+        "answer": "Nee, uw IBAN blijft hetzelfde tenzij u van rekening verandert. U kunt het bekijken in de IBAN sectie van uw klantenspace."
+      },
+      "downloadStatements": {
+        "question": "Hoe mijn bankafschriften downloaden?",
+        "answer": "Ga naar Geschiedenis > selecteer de periode > klik op Downloaden. U kunt kiezen voor PDF of CSV formaat."
       }
     },
     "faq1": {
@@ -382,6 +426,32 @@
       "contactSupport": "Ondersteuning contacteren",
       "bookAppointment": "Afspraak maken"
     },
+    "stillNeedHelp": {
+      "title": "Hebt u uw antwoord niet gevonden?",
+      "description": "Ons ondersteuningsteam staat voor u klaar. Contacteer ons per telefoon, chat of e-mail.",
+      "contactButton": "Ondersteuning contacteren",
+      "appointmentButton": "Afspraak maken"
+    },
+    "appointment": {
+      "alert": "Afspraakfunctie komt binnenkort. Bel ons op 01 23 45 67 89."
+    },
+    "resources": {
+      "title": "Nuttige bronnen",
+      "guide": {
+        "title": "Gebruikershandleiding",
+        "alert": "Gebruikershandleiding - Doorverwijzing naar PDF handleiding"
+      },
+      "conditions": {
+        "title": "Algemene voorwaarden"
+      },
+      "privacy": {
+        "title": "Privacybeleid"
+      },
+      "fees": {
+        "title": "Prijslijst",
+        "alert": "Prijslijst - Doorverwijzing naar prijzenpagina"
+      }
+    },
     "alerts": {
       "appointmentComingSoon": "Afspraakfunctie komt binnenkort. Bel ons op 01 23 45 67 89.",
       "userGuideRedirect": "Gebruikershandleiding - Doorverwijzing naar PDF handleiding",
@@ -400,7 +470,13 @@
       "title": "Account aanmaken",
       "subtitle": "Word lid van AmCbunq en ontdek een nieuwe manier om uw financiën te beheren",
       "alreadyHaveAccount": "Hebt u al een account?",
-      "button": "Mijn account aanmaken"
+      "button": "Mijn account aanmaken",
+      "sections": {
+        "personalInfo": "Persoonlijke informatie",
+        "address": "Adres",
+        "professionIncome": "Beroep en inkomen",
+        "security": "Beveiliging"
+      }
     },
     "email": "E-mailadres",
     "emailPlaceholder": "uw@email.com",
@@ -467,6 +543,10 @@
     "processing": {
       "title": "Verwerken...",
       "message": "Even geduld terwijl we uw verzoek verwerken."
+    },
+    "logout": {
+      "success": "Uitloggen succesvol",
+      "error": "Fout tijdens uitloggen"
     }
   },
 
@@ -492,7 +572,8 @@
     "balances": "saldi",
     "ribUnavailable": "RIB niet beschikbaar",
     "ribVerificationRequired": "Verifieer uw identiteit om toegang te krijgen tot uw RIB",
-    "ribRequestPage": "Vraag uw RIB aan op de IBAN pagina"
+    "ribRequestPage": "Vraag uw RIB aan op de IBAN pagina",
+    "myAccount": "Mijn Account"
   },
 
   "accounts": {
