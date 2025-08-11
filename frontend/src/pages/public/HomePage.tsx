@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import LocalizedLink from "../../components/LocalizedLink";
 import LogoTest from "../../components/LogoTest";
+import DeploymentTest from "../../components/DeploymentTest";
 import {
   Shield,
   CreditCard,
@@ -49,6 +50,9 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="bg-white">
+      {/* Test de déploiement - TRÈS VISIBLE */}
+      <DeploymentTest />
+      
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-blue-600 to-blue-800 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
