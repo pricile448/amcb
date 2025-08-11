@@ -20,8 +20,8 @@ export const sendVerificationEmail = async (
         return preferredLanguage;
       }
       
-      // 2. Priorité: Langue sauvegardée dans localStorage
-      const savedLang = localStorage.getItem('userLanguage');
+      // 2. Priorité: Langue sauvegardée dans localStorage (même clé qu'i18n)
+      const savedLang = localStorage.getItem('i18nextLng');
       if (savedLang && ['fr', 'en', 'es', 'de', 'it', 'nl', 'pt'].includes(savedLang)) {
         return savedLang;
       }
