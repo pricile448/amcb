@@ -1,0 +1,1738 @@
+{
+  "common": {
+    "loading": "Bezig met laden...",
+    "error": "Fout",
+    "success": "Succes",
+    "cancel": "Annuleren",
+    "save": "Opslaan",
+    "edit": "Bewerken",
+    "delete": "Verwijderen",
+    "confirm": "Bevestigen",
+    "back": "Terug",
+    "next": "Volgende",
+    "previous": "Vorige",
+    "submit": "Verzenden",
+    "close": "Sluiten",
+    "search": "Zoeken",
+    "filter": "Filteren",
+    "sort": "Sorteren",
+    "view": "Bekijken",
+    "download": "Downloaden",
+    "upload": "Uploaden",
+    "yes": "Ja",
+    "no": "Nee",
+    "defaultUser": "AmCbunq Klant",
+    "defaultClient": "Klant",
+    "defaultCompany": "AmCbunq",
+    "hide": "Verbergen",
+    "show": "Tonen",
+    "add": "Toevoegen",
+    "learnMore": "Meer informatie",
+    "activate": "Activeren",
+    "manage": "Beheren",
+    "create": "Aanmaken",
+    "read": "Lezen",
+    "update": "Bijwerken",
+    "copy": "Kopiëren",
+    "share": "Delen",
+    "print": "Afdrukken",
+    "export": "Exporteren",
+    "import": "Importeren",
+    "send": "Verzenden",
+    "receive": "Ontvangen"
+  },
+
+  "nav": {
+    "features": "Functies",
+    "pricing": "Prijzen",
+    "help": "Help & Ondersteuning",
+    "login": "Inloggen",
+    "openAccount": "Account openen",
+    "dashboard": "Mijn klantenspace",
+    "accounts": "Rekeningen",
+    "iban": "Mijn IBAN",
+    "transfers": "Overschrijvingen",
+    "cards": "Bankpassen",
+    "billing": "Facturatie",
+    "history": "Geschiedenis",
+    "budgets": "Budgetten",
+    "settings": "Instellingen",
+    "documents": "Mijn Documenten",
+    "messages": "Berichten",
+    "verification": "Identiteitsverificatie",
+    "transactions": "Transacties"
+  },
+
+  "home": {
+    "hero": {
+      "title": "De bank van de toekomst, vandaag",
+      "subtitle": "Beheer uw financiën eenvoudig met AmCbunq. Account openen in 5 minuten, instant overschrijvingen, en bankniveau beveiliging.",
+      "openAccount": "Account openen",
+      "learnMore": "Meer informatie"
+    },
+    "features": {
+      "title": "Waarom AmCbunq kiezen?",
+      "subtitle": "Een moderne en veilige bankervaring"
+    },
+    "security": {
+      "title": "Maximale beveiliging",
+      "description": "Uw gegevens zijn beschermd met militaire encryptie"
+    },
+    "accounts": {
+      "title": "Meerdere rekeningen",
+      "description": "Zichtrekening, spaarrekening, en creditcards op één plek"
+    },
+    "transactions": {
+      "title": "Instant transacties",
+      "description": "Overschrijvingen en betalingen in realtime"
+    },
+    "international": {
+      "title": "Internationaal",
+      "description": "Stuur geld overal ter wereld"
+    },
+    "benefits": {
+      "title": "AmCbunq voordelen",
+      "noFees": "Geen verborgen kosten",
+      "instant": "Instant overschrijvingen",
+      "secure": "Bankbeveiliging",
+      "support": "24/7 ondersteuning",
+      "getStarted": "Nu beginnen"
+    },
+    "mobile": {
+      "title": "Mobiele app",
+      "description": "Beheer uw financiën vanaf uw smartphone"
+    },
+    "speed": {
+      "title": "Snelheid",
+      "description": "Account openen in 5 minuten"
+    },
+    "cta": {
+      "title": "Klaar om lid te worden van AmCbunq?",
+      "description": "Sluit u aan bij duizenden tevreden klanten",
+      "button": "Mijn account openen"
+    }
+  },
+
+  "features": {
+    "hero": {
+      "title": "AmCbunq functies",
+      "subtitle": "Ontdek alles wat ons platform voor u kan doen"
+    },
+    "security": {
+      "title": "Bankniveau beveiliging",
+      "description": "Uw gegevens zijn beschermd met de beste encryptietechnologieën",
+      "benefit1": "AES-256 encryptie",
+      "benefit2": "Twee-factor authenticatie",
+      "benefit3": "24/7 monitoring"
+    },
+    "accounts": {
+      "title": "Rekeningbeheer",
+      "description": "Beheer al uw rekeningen vanuit één interface",
+      "benefit1": "Zicht- en spaarrekeningen",
+      "benefit2": "Virtuele creditcards",
+      "benefit3": "Realtime opvolging"
+    },
+    "transactions": {
+      "title": "Instant transacties",
+      "description": "Doe overschrijvingen en betalingen in realtime",
+      "benefit1": "Instant SEPA overschrijvingen",
+      "benefit2": "Kaartbetalingen",
+      "benefit3": "Gedetailleerde geschiedenis"
+    },
+    "transfers": {
+      "title": "Internationale overschrijvingen",
+      "description": "Stuur geld overal ter wereld",
+      "benefit1": "Competitieve wisselkoersen",
+      "benefit2": "Transparante kosten",
+      "benefit3": "Realtime opvolging"
+    },
+    "international": {
+      "title": "Internationale aanwezigheid",
+      "description": "Actief in meer dan 50 landen",
+      "benefit1": "Meertalige ondersteuning",
+      "benefit2": "Meerdere valuta's",
+      "benefit3": "Lokale conformiteit"
+    },
+    "mobile": {
+      "title": "Mobiele app",
+      "description": "Beheer uw financiën vanaf uw smartphone",
+      "benefit1": "Intuïtieve interface",
+      "benefit2": "Push notificaties",
+      "benefit3": "Biometrie"
+    },
+    "cta": {
+      "title": "Klaar om te beginnen?",
+      "description": "Word lid van AmCbunq en ontdek een nieuwe manier om uw financiën te beheren",
+      "openAccount": "Account openen",
+      "viewPricing": "Prijzen bekijken"
+    }
+  },
+
+  "pricing": {
+    "hero": {
+      "title": "Transparante prijzen",
+      "subtitle": "Eenvoudige en transparante prijzen, zonder verrassingen"
+    },
+    "basic": {
+      "name": "Basis",
+      "price": "0€",
+      "description": "Perfect om te starten",
+      "feature1": "Gratis zichtrekening",
+      "feature2": "Gratis debetkaart",
+      "feature3": "Gratis SEPA overschrijvingen",
+      "feature4": "Mobiele app",
+      "feature5": "E-mail ondersteuning"
+    },
+    "premium": {
+      "name": "Premium",
+      "price": "9,99€",
+      "description": "Voor actieve gebruikers",
+      "feature1": "Alles van Basisplan",
+      "feature2": "Spaarrekening",
+      "feature3": "Creditcard",
+      "feature4": "Internationale overschrijvingen",
+      "feature5": "Prioritaire ondersteuning",
+      "feature6": "Reisverzekering",
+      "feature7": "Gratis opnames"
+    },
+    "business": {
+      "name": "Zakelijk",
+      "price": "29,99€",
+      "description": "Voor bedrijven",
+      "feature1": "Alles van Premiumplan",
+      "feature2": "Meerdere rekeningen",
+      "feature3": "Integratie API",
+      "feature4": "Toegewijde ondersteuning",
+      "feature5": "Geavanceerde rapporten",
+      "feature6": "Teambeheer",
+      "feature7": "KYC conformiteit",
+      "feature8": "Gepersonaliseerde training"
+    },
+    "month": "maand",
+    "popular": "Populair",
+    "choosePlan": "Dit plan kiezen",
+    "faq": {
+      "title": "Veelgestelde vragen",
+      "subtitle": "Alles wat u moet weten over onze prijzen",
+      "q1": "Zijn er verborgen kosten?",
+      "a1": "Nee, al onze prijzen zijn transparant. Geen verborgen kosten.",
+      "q2": "Kan ik van plan veranderen?",
+      "a2": "Ja, u kunt op elk moment van plan veranderen via uw klantenspace.",
+      "q3": "Zijn overschrijvingen echt gratis?",
+      "a3": "Ja, alle SEPA overschrijvingen zijn gratis in al onze plannen.",
+      "q4": "Wat als ik niet tevreden ben?",
+      "a4": "U kunt uw account op elk moment sluiten zonder kosten."
+    },
+    "cta": {
+      "title": "Klaar om te beginnen?",
+      "description": "Kies het plan dat bij u past en open uw account in 5 minuten",
+      "button": "Account openen"
+    }
+  },
+
+  "help": {
+    "title": "Helpcentrum",
+    "subtitle": "Vind snel antwoorden op uw vragen",
+    "searchPlaceholder": "Doorzoek de help...",
+    "faqTitle": "Veelgestelde vragen",
+    "faqSubtitle": "De meest gestelde vragen door onze klanten",
+    "contactTitle": "Hulp nodig?",
+    "contactSubtitle": "Ons team staat voor u klaar",
+    "liveChat": "Live chat",
+    "liveChatDescription": "Krijg direct een antwoord",
+    "startChat": "Chat starten",
+    "email": "E-mail",
+    "emailDescription": "Antwoord binnen 24u",
+    "sendEmail": "E-mail versturen",
+    "phone": "Telefoon",
+    "phoneDescription": "24/7 ondersteuning",
+    "callUs": "Bel ons",
+    "quickLinks": "Snelle links",
+    "quickLinksSubtitle": "Snel toegang tot nuttige bronnen",
+    "gettingStarted": "Aan de slag",
+    "gettingStartedDescription": "Snelstartgids",
+    "accountSecurity": "Accountbeveiliging",
+    "accountSecurityDescription": "Beveilig uw account",
+    "transfers": "Overschrijvingen",
+    "transfersDescription": "Overschrijvingen uitvoeren",
+    "troubleshooting": "Probleemoplossing",
+    "troubleshootingDescription": "Problemen oplossen",
+    "learnMore": "Meer informatie",
+    "search": {
+      "placeholder": "Doorzoek de help..."
+    },
+    "contactMethods": {
+      "phone": {
+        "title": "Telefoon",
+        "description": "Klantendienst 24/7",
+        "contact": "01 23 45 67 89",
+        "action": "Nu bellen"
+      },
+      "chat": {
+        "title": "Online chat",
+        "description": "Direct antwoord",
+        "contact": "24/7 beschikbaar",
+        "action": "Chat starten"
+      },
+      "email": {
+        "title": "E-mail",
+        "description": "Antwoord binnen 24u",
+        "contact": "support@amcbunq.fr",
+        "action": "E-mail versturen"
+      }
+    },
+    "categories": {
+      "title": "Vragen per categorie",
+      "all": "Alle vragen",
+      "account": "Bankrekening",
+      "transfers": "Overschrijvingen",
+      "cards": "Bankpassen",
+      "security": "Beveiliging",
+      "pricing": "Prijzen",
+      "documents": "Documenten"
+    },
+    "faq": {
+      "title": "Veelgestelde vragen",
+      "resultsCount": "vraag gevonden",
+      "resultsCountPlural": "vragen gevonden",
+      "noResults": {
+        "title": "Geen vragen gevonden",
+        "description": "Probeer uw zoekcriteria aan te passen of contacteer onze ondersteuning."
+      },
+      "questions": {
+        "q1": {
+          "question": "Hoe een bankrekening openen?",
+          "answer": "Om een rekening te openen, ga naar onze website en klik op \"Account openen\". U moet uw persoonlijke gegevens, een identiteitsbewijs en een adresbewijs verstrekken. Het proces duurt meestal 24-48u."
+        },
+        "q2": {
+          "question": "Hoe een overschrijving uitvoeren?",
+          "answer": "Log in op uw klantenspace, ga naar de sectie \"Overschrijvingen\" en volg de stappen. U hebt het RIB van de begunstigde nodig. SEPA overschrijvingen worden meestal binnen 24u verwerkt."
+        },
+        "q3": {
+          "question": "Mijn kaart is geblokkeerd, wat nu?",
+          "answer": "Als uw kaart geblokkeerd is, contacteer onmiddellijk onze klantendienst op 01 23 45 67 89. We kunnen deze deblokkeren of een nieuwe sturen indien nodig."
+        },
+        "q4": {
+          "question": "Hoe mijn wachtwoord wijzigen?",
+          "answer": "Ga naar \"Instellingen\" > \"Beveiliging\" > \"Wachtwoord wijzigen\". U moet uw huidige wachtwoord en het nieuwe wachtwoord tweemaal invoeren."
+        },
+        "q5": {
+          "question": "Wat zijn de bankkosten?",
+          "answer": "Onze prijzen variëren volgens het rekeningtype. Bekijk onze prijslijst in de sectie \"Prijzen\" of contacteer onze klantendienst voor meer details."
+        },
+        "q6": {
+          "question": "Hoe twee-factor authenticatie activeren?",
+          "answer": "In \"Instellingen\" > \"Beveiliging\" kunt u twee-factor authenticatie activeren. U ontvangt een code per SMS bij elke login."
+        },
+        "q7": {
+          "question": "Is mijn IBAN veranderd?",
+          "answer": "Nee, uw IBAN blijft hetzelfde tenzij u van rekening verandert. U kunt het bekijken in de IBAN sectie van uw klantenspace."
+        },
+        "q8": {
+          "question": "Hoe mijn bankafschriften downloaden?",
+          "answer": "Ga naar Geschiedenis > selecteer de periode > klik op Downloaden. U kunt kiezen voor PDF of CSV formaat."
+        }
+      }
+    },
+    "resources": {
+      "title": "Nuttige bronnen",
+      "userGuide": "Gebruikershandleiding",
+      "terms": "Algemene voorwaarden",
+      "privacy": "Privacybeleid",
+      "pricingGrid": "Prijslijst"
+    },
+    "importantInfo": {
+      "title": "Belangrijke informatie",
+      "openingHours": "Openingsuren: 24/7",
+      "emailResponseTime": "E-mail antwoordtijd: maximaal 24u",
+      "chatResponseTime": "Chat antwoordtijd: Direct",
+      "emergencyNumber": "Noodnummer: 01 23 45 67 89"
+    },
+    "needHelp": {
+      "title": "Hebt u uw antwoord niet gevonden?",
+      "description": "Ons ondersteuningsteam staat voor u klaar. Contacteer ons per telefoon, chat of e-mail.",
+      "contactSupport": "Ondersteuning contacteren",
+      "bookAppointment": "Afspraak maken"
+    },
+    "alerts": {
+      "appointmentComingSoon": "Afspraakfunctie komt binnenkort. Bel ons op 01 23 45 67 89.",
+      "userGuideRedirect": "Gebruikershandleiding - Doorverwijzing naar PDF handleiding",
+      "pricingRedirect": "Prijslijst - Doorverwijzing naar prijzenpagina"
+    }
+  },
+
+  "auth": {
+    "login": {
+      "title": "Inloggen",
+      "subtitle": "Toegang tot uw AmCbunq account",
+      "createAccount": "Account aanmaken",
+      "button": "Inloggen"
+    },
+    "register": {
+      "title": "Account aanmaken",
+      "subtitle": "Word lid van AmCbunq in enkele stappen",
+      "alreadyHaveAccount": "Hebt u al een account?",
+      "button": "Account aanmaken"
+    },
+    "email": "E-mailadres",
+    "emailPlaceholder": "uw@email.com",
+    "password": "Wachtwoord",
+    "passwordPlaceholder": "Uw wachtwoord",
+    "confirmPassword": "Wachtwoord bevestigen",
+    "confirmPasswordPlaceholder": "Bevestig uw wachtwoord",
+    "firstName": "Voornaam",
+    "firstNamePlaceholder": "Uw voornaam",
+    "lastName": "Achternaam",
+    "lastNamePlaceholder": "Uw achternaam",
+    "phone": "Telefoon",
+    "phonePlaceholder": "+32 4 12 34 56 78",
+    "birthDate": "Geboortedatum",
+    "rememberMe": "Onthoud mij",
+    "forgotPassword": "Wachtwoord vergeten?",
+    "acceptTerms": "Ik accepteer de",
+    "termsAndConditions": "gebruiksvoorwaarden",
+    "or": "of",
+    "loginWithGoogle": "Inloggen met Google",
+    "loginButton": "Inloggen",
+    "registerButton": "Account aanmaken",
+    "loggingIn": "Inloggen...",
+    "registering": "Account aanmaken...",
+    "loginSuccess": "Succesvol ingelogd",
+    "loginError": "Inlogfout",
+    "registerSuccess": "Account succesvol aangemaakt",
+    "registerError": "Fout bij aanmaken account",
+    "emailSendError": "Fout bij verzenden e-mail",
+    "accountCreatedSuccess": "Account aangemaakt! Controleer uw e-mail om uw account te activeren.",
+    "verifyEmailMessage": "Controleer uw e-mail om uw account te activeren",
+    "accountCreationError": "Fout bij aanmaken account",
+    "emailAlreadyUsed": "Dit e-mailadres is al in gebruik",
+    "passwordTooWeak": "Wachtwoord is te zwak",
+    "userNotFoundInDatabase": "Gebruiker niet gevonden in database",
+    "verifyEmailBeforeLogin": "Controleer uw e-mail voor inloggen. Controleer uw spam of vraag een nieuwe code aan.",
+    "verifyEmailBeforeLoginShort": "Controleer uw e-mail voor inloggen.",
+    "welcomeAccountVerified": "Welkom! Uw account is succesvol geverifieerd. U hebt nu toegang tot alle functies.",
+    "invalidCredentials": "Onjuist e-mailadres of wachtwoord",
+    "tooManyAttempts": "Te veel pogingen. Probeer later opnieuw.",
+    "accountDisabled": "Dit account is gedeactiveerd"
+  },
+
+  "dashboard": {
+    "welcome": "Hallo",
+    "overview": "Overzicht van uw financiën",
+    "totalBalance": "Totaal saldo",
+    "totalAccounts": "Rekeningen",
+    "monthlyIncome": "Maandelijkse inkomsten",
+    "monthlyExpenses": "Maandelijkse uitgaven",
+    "fromLastMonth": "vs vorige maand",
+    "currentAccount": "Zichtrekening",
+    "savingsAccount": "Spaarrekening",
+    "creditCard": "Creditcard",
+    "accounts": "Rekeningen",
+    "recentTransactions": "Recente transacties",
+    "viewAll": "Alles bekijken",
+    "quickActions": "Snelle acties",
+    "newTransfer": "Nieuwe overschrijving",
+    "newCard": "Nieuwe kaart",
+    "contacts": "Contacten",
+    "investments": "Investeringen",
+    "balances": "saldi",
+    "ribUnavailable": "RIB niet beschikbaar",
+    "ribVerificationRequired": "Verifieer uw identiteit om toegang te krijgen tot uw RIB",
+    "ribRequestPage": "Vraag uw RIB aan op de IBAN pagina"
+  },
+
+  "accounts": {
+    "title": "Mijn Rekeningen",
+    "subtitle": "Beheer uw rekeningen en kaarten",
+    "totalBalance": "Totaal saldo",
+    "activeAccounts": "Actieve rekeningen",
+    "status": "Status",
+    "ribAmcbunq": "AmCbunq RIB",
+    "ribUnavailable": "RIB niet beschikbaar",
+    "ribVerificationRequired": "Verifieer uw identiteit om toegang te krijgen tot uw RIB",
+    "ribRequestPage": "Vraag uw RIB aan op de IBAN pagina",
+    "accountNumber": "Rekeningnummer",
+    "balance": "Saldo",
+    "lastTransaction": "Laatste transactie",
+    "details": "Details",
+    "transfer": "Overschrijving",
+    "transactionLedger": "Transactieboek",
+    "search": "Zoeken...",
+    "filter": "Filteren",
+    "export": "Exporteren",
+    "loading": "Uw rekeningen worden geladen...",
+    "hideBalances": "Saldi verbergen",
+    "showBalances": "Saldi tonen",
+    "hide": "Verbergen",
+    "show": "Tonen",
+    "accountDetails": "Rekeningdetails",
+    "accountInfo": "Rekeninginformatie",
+    "currentBalance": "Huidig saldo",
+    "openingDate": "Openingsdatum",
+    "recentTransactions": "Recente transacties",
+    "notAvailable": "Niet beschikbaar",
+    "displaying": "Weergave van",
+    "transactions": "transacties",
+    "previous": "Vorige",
+    "next": "Volgende",
+    "verificationRequired": "Identiteitsverificatie vereist",
+    "verificationMessage": "Om een overschrijving uit te voeren, moet u eerst uw identiteit valideren.",
+    "detailsVerificationMessage": "Om rekeningdetails te zien, moet u eerst uw identiteit valideren.",
+    "cancel": "Annuleren",
+    "verifyIdentity": "Mijn identiteit verifiëren",
+    "today": "Vandaag",
+    "yesterday": "Gisteren",
+    "daysAgo": "{count} dagen geleden",
+    "todayAt": "Vandaag om",
+    "yesterdayAt": "Gisteren om"
+  },
+
+  "accountTypes": {
+    "current": "Zichtrekening",
+    "savings": "Spaarrekening",
+    "credit": "Creditcard",
+    "account": "Rekening"
+  },
+
+  "accountStatus": {
+    "active": "Actief",
+    "blocked": "Geblokkeerd",
+    "pending": "In behandeling",
+    "unknown": "Onbekend",
+    "verified": "Geverifieerd",
+    "unverified": "Niet geverifieerd",
+    "pendingVerification": "In behandeling"
+  },
+
+  "transactions": {
+    "title": "Transactiegeschiedenis",
+    "subtitle": "Bekijk al uw recente transacties",
+    "export": "Exporteren",
+    "searchPlaceholder": "Zoek een transactie...",
+    "recentTransactions": "Recente transacties",
+    "loading": "Transacties worden geladen...",
+    "all": "Alle",
+    "income": "Credit",
+    "expense": "Debet",
+    "transfer": "Overschrijvingen",
+    "credit": "Credit",
+    "debit": "Debet",
+    "totalIncome": "Totaal inkomsten",
+    "totalExpenses": "Totaal uitgaven",
+    "netBalance": "Nettosaldo",
+    "noTransactions": "Geen transacties gevonden",
+    "today": "Vandaag",
+    "yesterday": "Gisteren",
+    "reference": "Referentie",
+    "amount": "Bedrag",
+    "date": "Datum",
+    "description": "Omschrijving",
+    "category": "Categorie",
+    "account": "Rekening",
+    "type": "Type",
+    "filter": "Filteren",
+    "search": "Zoeken",
+    "clear": "Wissen",
+    "results": "resultaten",
+    "noResults": "Geen resultaten gevonden voor uw zoekopdracht",
+    "tryDifferentSearch": "Probeer andere zoekwoorden"
+  },
+
+  "transactionCategories": {
+    "salary": "Salaris",
+    "food": "Voeding",
+    "transport": "Vervoer",
+    "shopping": "Aankopen",
+    "bills": "Rekeningen",
+    "entertainment": "Ontspanning",
+    "health": "Gezondheid",
+    "education": "Onderwijs",
+    "other": "Andere",
+    "transfer": "Overschrijving",
+    "deposit": "Storting",
+    "withdrawal": "Opname"
+  },
+
+  "transfers": {
+    "title": "Overschrijvingen",
+    "subtitle": "Beheer uw overschrijvingen en begunstigden",
+    "loading": "Gegevens worden geladen...",
+    "verificationRequired": "Verificatie van uw rekening is vereist om toegang te krijgen tot overschrijvingen.",
+    "newTransfer": "Nieuwe overschrijving",
+    "newShort": "Nieuw",
+    "quickTransfer": "Snelle overschrijving",
+    "search": "Zoek een overschrijving...",
+    "export": "Exporteren",
+    "internal": "Interne overschrijving",
+    "external": "Externe overschrijving",
+    "scheduledLabel": "Geplande overschrijving",
+    "internalDesc": "Tussen uw rekeningen",
+    "externalDesc": "Naar een begunstigde",
+    "scheduledDesc": "Overschrijving plannen",
+    "stats": {
+      "thisMonth": "Deze maand",
+      "totalAmount": "Totaalbedrag",
+      "beneficiaries": "Begunstigden",
+      "scheduled": "Gepland"
+    },
+    "tabs": {
+      "new": "Nieuw",
+      "beneficiaries": "Begunstigden",
+      "scheduled": "Gepland",
+      "history": "Geschiedenis"
+    },
+    "quick": {
+      "title": "Snelle overschrijvingen",
+      "lastTransfer": "Laatste overschrijving",
+      "never": "Nooit"
+    },
+    "beneficiaries": {
+      "title": "Mijn begunstigden",
+      "add": "Begunstigde toevoegen",
+      "addTitle": "Begunstigde toevoegen",
+      "editTitle": "Begunstigde bewerken",
+      "form": {
+        "name": "Naam en voornaam",
+        "namePlaceholder": "Naam en voornaam",
+        "ibanPlaceholder": "BE12 1234 5678 9012",
+        "bic": "BIC code",
+        "bicPlaceholder": "KREDBEBB",
+        "bank": "Bank",
+        "bankPlaceholder": "Banknaam",
+        "favorite": "Markeer als favoriet"
+      }
+    },
+    "scheduled": {
+      "title": "Geplande overschrijvingen",
+      "for": "Gepland voor"
+    },
+    "history": {
+      "title": "Overschrijvingsgeschiedenis"
+    },
+    "status": {
+      "completed": "Voltooid",
+      "pending": "In behandeling",
+      "failed": "Mislukt",
+      "scheduled": "Gepland",
+      "unknown": "Onbekend"
+    },
+    "filter": {
+      "all": "Alle",
+      "completed": "Voltooid",
+      "pending": "In behandeling",
+      "scheduled": "Gepland"
+    },
+    "form": {
+      "title": {
+        "internal": "Interne overschrijving",
+        "external": "Externe overschrijving",
+        "scheduled": "Geplande overschrijving"
+      },
+      "fromAccount": "Debetrekening",
+      "toAccount": "Creditrekening",
+      "beneficiary": "Begunstigde",
+      "selectAccount": "Selecteer een rekening",
+      "selectBeneficiary": "Selecteer een begunstigde",
+      "amount": "Bedrag",
+      "description": "Omschrijving",
+      "descriptionPlaceholder": "Omschrijving van de overschrijving",
+      "scheduleDate": "Uitvoerdatum",
+      "schedule": "Plannen",
+      "submit": "Overschrijving uitvoeren"
+    }
+  },
+
+  "cards": {
+    "title": "Mijn Kaarten",
+    "subtitle": "Beheer uw bankpassen en creditcards",
+    "addCard": "Nieuwe kaart aanvragen",
+    "noCards": "Geen kaarten beschikbaar",
+    "noCardsDescription": "U hebt nog geen bankpassen. Vraag uw eerste kaart aan om te beginnen gebruiken.",
+    "requestFirstCard": "Mijn eerste kaart aanvragen",
+    "requestCard": "Kaart aanvragen",
+    "cardTypes": {
+      "debit": "Betaalkaart",
+      "credit": "Creditcard"
+    },
+    "requestTypes": {
+      "physical": "Fysieke kaart",
+      "virtual": "Virtuele kaart",
+      "physicalDescription": "Geleverd op uw adres binnen 5-7 werkdagen",
+      "virtualDescription": "Beschikbaar binnen 24u voor online betalingen"
+    },
+    "status": {
+      "active": "Actief",
+      "blocked": "Geblokkeerd",
+      "expired": "Vervallen",
+      "unknown": "Onbekend"
+    },
+    "actions": {
+      "use": "Gebruiken",
+      "details": "Details",
+      "settings": "Instellingen",
+      "delete": "Verwijderen",
+      "request": "Kaart aanvragen",
+      "requestNew": "Nieuwe kaart aanvragen",
+      "requestFirst": "Mijn eerste kaart aanvragen",
+      "cancel": "Annuleren"
+    },
+    "info": {
+      "title": "Belangrijke informatie",
+      "virtualAvailable": "De virtuele kaart is beschikbaar binnen 24u",
+      "physicalDelivery": "De fysieke kaart wordt geleverd op uw adres",
+      "pinSms": "U ontvangt een aparte PIN code per SMS",
+      "secured": "Kaarten zijn beveiligd en verzekerd"
+    },
+    "loading": {
+      "status": "Uw status wordt gecontroleerd..."
+    },
+    "verification": {
+      "title": "Identiteitsverificatie vereist",
+      "description": "Om bankpassen aan te vragen en te beheren, moet u eerst uw identiteit valideren."
+    },
+    "types": {
+      "credit": "Creditcard",
+      "debit": "Betaalkaart"
+    },
+    "emptyState": {
+      "title": "Geen kaarten beschikbaar",
+      "description": "U hebt nog geen bankpassen. Vraag uw eerste kaart aan om te beginnen gebruiken."
+    },
+    "cardDetails": {
+      "expires": "Vervalt",
+      "currentBalance": "Huidig saldo",
+      "creditLimit": "Kredietlimiet"
+    },
+    "requestModal": {
+      "title": "Kaart aanvragen",
+      "cardType": "Kaarttype",
+      "physical": {
+        "title": "Fysieke kaart",
+        "description": "Geleverd op uw adres binnen 5-7 werkdagen"
+      },
+      "virtual": {
+        "title": "Virtuele kaart",
+        "description": "Beschikbaar binnen 24u voor online betalingen"
+      },
+      "importantInfo": {
+        "title": "Belangrijke informatie",
+        "info1": "De virtuele kaart is beschikbaar binnen 24u",
+        "info2": "De fysieke kaart wordt geleverd op uw adres",
+        "info3": "U ontvangt een aparte PIN code per SMS",
+        "info4": "Kaarten zijn beveiligd en verzekerd"
+      },
+      "submit": "Kaart aanvragen"
+    },
+    "security": {
+      "title": "Kaartbeveiliging",
+      "protection": {
+        "title": "Kaartbescherming",
+        "feature1": "Direct blokkeren/deblokkeren",
+        "feature2": "Transactiemeldingen",
+        "feature3": "Aanpasbare betalingslimieten",
+        "feature4": "Fraudebescherming"
+      },
+      "tips": {
+        "title": "Veiligheidstips",
+        "tip1": "Deel nooit uw codes",
+        "tip2": "Gebruik beveiligde websites",
+        "tip3": "Controleer uw transacties",
+        "tip4": "Meld verdachte activiteiten"
+      }
+    },
+    "errors": {
+      "requestFailed": "Fout bij kaartaanvraag"
+    }
+  },
+
+  "verification": {
+    "title": "Accountverificatie",
+    "subtitle": "Voltooi uw verificatie voor toegang tot alle diensten",
+    "verificationLevel": "Verificatieniveau",
+    "progress": "Verificatievoortgang",
+    "completed": "voltooid",
+    "documents": "Documenten",
+    "steps": "Stappen",
+    "uploadedDocuments": "Geüploade documenten",
+    "uploadDocument": "Document uploaden",
+    "view": "Bekijken",
+    "reupload": "Opnieuw uploaden",
+    "requiredDocuments": "Vereiste documenten",
+    "verificationSteps": "Verificatiestappen",
+    "identityDocument": "Identiteitsbewijs",
+    "proofOfAddress": "Adresbewijs",
+    "proofOfIncome": "Inkomensbewijs",
+    "bankStatement": "Bankafschrift",
+    "status": {
+      "approved": "Goedgekeurd",
+      "pending": "In behandeling",
+      "rejected": "Afgewezen",
+      "completed": "Voltooid",
+      "inProgress": "In behandeling",
+      "unverified": "Niet geverifieerd"
+    },
+    "stepStatus": {
+      "completed": "Voltooid",
+      "inProgress": "In behandeling",
+      "pending": "In behandeling"
+    },
+    "step1": {
+      "title": "Accountaanmaak",
+      "description": "Uw account is succesvol aangemaakt"
+    },
+    "step2": {
+      "title": "E-mailverificatie",
+      "description": "Uw e-mailadres is bevestigd"
+    },
+    "step3": {
+      "title": "Identiteitsdocumenten",
+      "description": "Uw documenten worden gecontroleerd"
+    },
+    "step4": {
+      "title": "Finale validatie",
+      "description": "Finale validatie door ons team"
+    },
+    "banner": {
+      "unverified": {
+        "title": "Identiteitsverificatie vereist",
+        "message": "Om toegang te krijgen tot alle AmCbunq functies, moet u uw identiteit valideren.",
+        "button": "Nu valideren"
+      },
+      "pending": {
+        "title": "Verificatie in behandeling",
+        "message": "Uw documenten worden gecontroleerd. U ontvangt een melding wanneer dit voltooid is.",
+        "button": "Status bekijken"
+      }
+    }
+  },
+
+  "kyc": {
+    "title": "Identiteitsverificatie",
+    "subtitle": "Upload uw documenten om uw account te valideren",
+    "documentsRequired": "Vereiste documenten",
+    "identityDocument": "Identiteitsbewijs",
+    "proofOfAddress": "Adresbewijs",
+    "proofOfIncome": "Inkomensbewijs",
+    "acceptedFormats": "PDF, JPG, PNG (max 5MB)",
+    "required": "Vereist",
+    "selectFile": "Klik om een bestand te selecteren",
+    "dragDrop": "of sleep en zet hier neer",
+    "removeFile": "Verwijderen",
+    "submitDocuments": "Documenten indienen",
+    "submitting": "Bezig met indienen...",
+    "missingDocuments": "Ontbrekende documenten",
+    "missingDocumentsMessage": "Upload alle vereiste documenten voor indiening",
+    "documentsSubmitted": "Documenten ingediend",
+    "submissionSuccess": "Uw documenten zijn succesvol ingediend. U ontvangt een melding wanneer de verificatie voltooid is.",
+    "submissionError": "Er is een fout opgetreden bij het indienen van de documenten",
+    "fileTooLarge": "Bestand te groot",
+    "fileTooLargeMessage": "Bestand mag niet groter zijn dan 5MB",
+    "importantInfo": "Belangrijke informatie",
+    "secureProcessing": "Uw documenten worden veilig en vertrouwelijk verwerkt",
+    "verificationTime": "Verificatie duurt meestal 24 tot 48 uur",
+    "emailNotification": "U ontvangt een bevestigingsmail wanneer de verificatie voltooid is",
+    "accountLimits": "Sommige functies blijven beperkt tot validatie",
+    "pending": {
+      "title": "Verificatie in behandeling",
+      "subtitle": "Uw dossier wordt beoordeeld door ons team",
+      "message": "Uw documenten zijn ingediend en worden momenteel beoordeeld door ons team.",
+      "timeframe": "Dit proces duurt meestal 24 tot 48 uur. U ontvangt een melding wanneer de verificatie voltooid is.",
+      "documentsSubmitted": "Ingediende documenten"
+    },
+    "navigation": {
+      "backToDashboard": "Terug naar dashboard"
+    },
+    "errors": {
+      "userNotIdentified": "Gebruiker niet geïdentificeerd",
+      "parsingError": "Fout bij verwerken gebruiker:",
+      "submissionGenericError": "Er is een fout opgetreden bij het indienen"
+    },
+    "unverified": "Niet geverifieerd"
+  },
+
+  "billing": {
+    "title": "Facturatie",
+    "subtitle": "RIB en bankberichten",
+    "loading": "Facturatiegegevens worden geladen...",
+    "statusVerification": "Uw status wordt gecontroleerd...",
+    "noData": {
+      "title": "Geen facturatiegegevens",
+      "description": "Facturatie-informatie is nog niet beschikbaar.",
+      "contact": "Contacteer uw adviseur voor uw facturatiegegevens."
+    },
+    "verification": {
+      "title": "Identiteitsverificatie vereist",
+      "description": "Voor toegang tot facturatie-informatie en bankberichten moet u eerst uw identiteit valideren."
+    },
+    "header": {
+      "type": "Type",
+      "ribBilling": "Facturatie RIB",
+      "status": "Status",
+      "active": "Actief",
+      "usage": "Gebruik",
+      "validation": "Validatie"
+    },
+    "ribSection": {
+      "title": "Facturatie RIB",
+      "description": "Voor rekeningvalidatie en bankoperaties",
+      "ibanNumber": "Facturatie IBAN nummer",
+      "bicCode": "BIC/SWIFT code",
+      "accountHolder": "Rekeninghouder",
+      "showDetails": "Details tonen",
+      "hideDetails": "Details verbergen",
+      "copy": "Kopiëren",
+      "copied": "Gekopieerd!",
+      "downloadRib": "RIB downloaden",
+      "share": "Delen",
+      "activeStatus": "Actief facturatie RIB",
+      "sharing": "Facturatie RIB wordt gedeeld..."
+    },
+    "bankMessage": {
+      "title": "Bankbericht",
+      "importantInfo": "Belangrijke informatie"
+    },
+    "ribFile": {
+      "title": "AmCbunq Facturatie RIB",
+      "holder": "Houder:",
+      "bank": "Bank:",
+      "date": "Datum:",
+      "note": "Opmerking: Deze RIB is voor facturatie- en rekeningvalidatiedoeleinden."
+    },
+    "importantInfo": {
+      "title": "Belangrijke informatie",
+      "ribBilling": {
+        "title": "Facturatie RIB",
+        "description": "Deze RIB is specifiek voor facturatie- en rekeningvalidatieoperaties. Het verschilt van uw persoonlijke RIB."
+      },
+      "accountValidation": {
+        "title": "Rekeningvalidatie",
+        "description": "Gebruik deze RIB voor de vereiste validatieoverschrijvingen om alle rekeningfuncties te activeren."
+      },
+      "difference": {
+        "title": "Verschil met Persoonlijke RIB",
+        "description": "Deze RIB verschilt van uw persoonlijke RIB in de sectie \"Mijn IBAN\". Het wordt alleen gebruikt voor facturatieoperaties."
+      },
+      "bankMessages": {
+        "title": "Bankberichten",
+        "description": "Controleer regelmatig bankberichten voor belangrijke vereisten en procedures."
+      }
+    },
+    "usage": {
+      "title": "Gebruik van Facturatie RIB",
+      "accountValidation": {
+        "title": "Rekeningvalidatie",
+        "description": "Doe de vereiste validatieoverschrijving om alle functies te activeren."
+      },
+      "bankingOperations": {
+        "title": "Bankoperaties",
+        "description": "Gebruik deze RIB voor specifieke operaties gevraagd door uw adviseur."
+      },
+      "billing": {
+        "title": "Facturatie",
+        "description": "Deze RIB wordt gebruikt voor facturatie- en rekeningbeheeroperaties."
+      }
+    },
+    "errors": {
+      "noUser": "Geen ingelogde gebruiker",
+      "copyError": "Fout bij kopiëren:",
+      "loadingError": "Fout bij laden facturatiegegevens:"
+    }
+  },
+
+  "iban": {
+    "title": "Mijn IBAN",
+    "subtitle": "Uw unieke bankidentificatie",
+    "loading": "IBAN-gegevens worden geladen...",
+    "noData": "Geen IBAN-gegevens beschikbaar",
+    "errorLoading": "Laadfout",
+    "mainIban": "Hoofd IBAN",
+    "currentBalance": "Huidig saldo",
+    "status": "Status",
+    "accountType": "Rekeningtype",
+    "active": "Actief",
+    "principal": "Hoofd",
+    "bankName": "AmCbunq Bank",
+    "ibanDescription": "Uniek IBAN voor al uw rekeningen",
+    "ibanNumber": "IBAN nummer",
+    "bicCode": "BIC/SWIFT code",
+    "accountHolder": "Rekeninghouder",
+    "showDetails": "Details tonen",
+    "hideDetails": "Details verbergen",
+    "copy": "Kopiëren",
+    "copied": "Gekopieerd!",
+    "downloadRib": "RIB downloaden",
+    "share": "Delen",
+    "sharing": "IBAN wordt gedeeld...",
+    "ribActiveStatus": "RIB beschikbaar en actief",
+    "requestRib": {
+      "title": "RIB niet beschikbaar",
+      "description": "Om overschrijvingen uit te voeren, moet u eerst uw RIB aanvragen.",
+      "button": "Mijn RIB aanvragen",
+      "requesting": "Aanvraag in behandeling...",
+      "successTitle": "Aanvraag geregistreerd",
+      "successMessage": "Uw RIB-aanvraag is geregistreerd. Het zal binnen 24-48u beschikbaar zijn.",
+      "errorTitle": "Fout",
+      "errorMessage": "Kan uw RIB-aanvraag niet verwerken",
+      "errorGeneric": "Er is een fout opgetreden bij de RIB-aanvraag",
+      "errorRequest": "Kan RIB niet aanvragen"
+    },
+    "processing": {
+      "title": "RIB wordt gegenereerd",
+      "description": "Uw RIB-aanvraag is geregistreerd en wordt verwerkt. De RIB zal binnen 24-48u beschikbaar zijn.",
+      "notification": "U ontvangt een melding wanneer uw RIB beschikbaar is."
+    },
+    "unavailable": {
+      "title": "RIB niet beschikbaar",
+      "description": "Uw account moet geverifieerd zijn om een RIB aan te vragen.",
+      "fullDescription": "Uw account moet geverifieerd zijn om een RIB aan te vragen. Valideer eerst uw identiteit via de KYC pagina."
+    },
+    "verification": {
+      "title": "Identiteitsverificatie vereist",
+      "description": "Voor toegang tot uw IBAN-informatie en rekeningbeheer moet u eerst uw identiteit valideren."
+    },
+    "importantInfo": {
+      "title": "Belangrijke informatie",
+      "uniqueIban": {
+        "title": "Uniek IBAN",
+        "description": "Dit IBAN wordt gebruikt voor al uw rekeningen (zicht, spaar, creditcard). Overschrijvingen worden automatisch naar uw hoofdrekening geleid."
+      },
+      "sepaTransfers": {
+        "title": "SEPA overschrijvingen",
+        "description": "Compatibel met alle Europese SEPA overschrijvingen. Verwerkingstijd: 1-2 werkdagen."
+      },
+      "qrCode": {
+        "title": "QR code",
+        "description": "Gebruik de QR code om eenvoudig uw bankgegevens te delen met andere apps."
+      },
+      "security": {
+        "title": "Beveiliging",
+        "description": "Uw IBAN is beveiligd en kan alleen gebruikt worden om fondsen te ontvangen. Geen automatische incasso's mogelijk."
+      }
+    },
+    "usage": {
+      "title": "Hoe uw IBAN te gebruiken",
+      "receiveTransfers": {
+        "title": "Overschrijvingen ontvangen",
+        "description": "Deel uw IBAN om overschrijvingen van elke Europese bank te ontvangen."
+      },
+      "salaryBenefits": {
+        "title": "Salaris en uitkeringen",
+        "description": "Gebruik dit IBAN om uw salaris, toelagen of andere uitkeringen te ontvangen."
+      },
+      "onlinePayments": {
+        "title": "Online betalingen",
+        "description": "Sommige online diensten accepteren IBAN betalingen voor meer veiligheid."
+      }
+    },
+    "ribFile": {
+      "title": "AmCbunq RIB",
+      "holder": "Houder:",
+      "bank": "Bank:",
+      "date": "Datum:"
+    },
+    "errors": {
+      "noUser": "Geen ingelogde gebruiker",
+      "parsingUser": "Fout bij verwerken gebruiker:",
+      "copyError": "Fout bij kopiëren:",
+      "defaultAccountHolder": "AmCbunq Klant"
+    },
+    "actions": {
+      "copy": "Kopiëren",
+      "copied": "Gekopieerd!",
+      "download": "RIB downloaden",
+      "share": "Delen",
+      "showDetails": "Details tonen",
+      "hideDetails": "Details verbergen",
+      "requestRib": "Mijn RIB aanvragen",
+      "requesting": "Aanvraag in behandeling..."
+    },
+    "messages": {
+      "ribNotAvailable": "RIB niet beschikbaar",
+      "ribNotAvailableDesc": "Om overschrijvingen uit te voeren, moet u eerst uw RIB aanvragen.",
+      "ribProcessing": "RIB wordt gegenereerd",
+      "ribProcessingDesc": "Uw RIB-aanvraag is geregistreerd. Het zal binnen 24-48u beschikbaar zijn.",
+      "ribUnavailable": "RIB niet beschikbaar",
+      "ribUnavailableDesc": "Uw account moet geverifieerd zijn om een RIB aan te vragen.",
+      "ribAvailable": "RIB beschikbaar en actief"
+    },
+    "info": {
+      "title": "Belangrijke informatie",
+      "unavailable": {
+        "title": "RIB niet beschikbaar",
+        "description": "Uw account moet geverifieerd zijn om een RIB aan te vragen. Valideer eerst uw identiteit via de KYC pagina."
+      },
+      "processing": {
+        "title": "RIB wordt gegenereerd",
+        "description": "Uw RIB-aanvraag is geregistreerd en wordt verwerkt. De RIB zal binnen 24-48u beschikbaar zijn.",
+        "notification": "U ontvangt een melding wanneer uw RIB beschikbaar is."
+      }
+    }
+  },
+
+  "history": {
+    "title": "Geschiedenis",
+    "subtitle": "Bekijk uw transactiegeschiedenis",
+    "loading": {
+      "status": "Uw status wordt gecontroleerd...",
+      "transactions": "Transacties worden geladen...",
+      "history": "Geschiedenis wordt geladen..."
+    },
+    "verification": {
+      "title": "Identiteitsverificatie vereist",
+      "description": "Om uw transactiegeschiedenis te bekijken, moet u eerst uw identiteit valideren."
+    },
+    "summary": {
+      "income": "Inkomsten",
+      "expenses": "Uitgaven",
+      "netBalance": "Nettosaldo"
+    },
+    "search": {
+      "placeholder": "Zoek een transactie..."
+    },
+    "filters": {
+      "allTypes": "Alle types",
+      "income": "Inkomsten",
+      "expense": "Uitgaven",
+      "transfer": "Overschrijvingen",
+      "periods": {
+        "7Days": "Laatste 7 dagen",
+        "30Days": "Laatste 30 dagen",
+        "90Days": "Laatste 90 dagen",
+        "1Year": "1 jaar"
+      },
+      "export": "Exporteren"
+    },
+    "table": {
+      "headers": {
+        "transaction": "Transactie",
+        "category": "Categorie",
+        "amount": "Bedrag",
+        "date": "Datum",
+        "status": "Status",
+        "reference": "Referentie"
+      }
+    },
+    "status": {
+      "completed": "Voltooid",
+      "pending": "In behandeling",
+      "failed": "Mislukt",
+      "unknown": "Onbekend"
+    },
+    "accounts": {
+      "checking": "Zichtrekening",
+      "savings": "Spaarrekening",
+      "credit": "Creditcard",
+      "default": "Rekening"
+    },
+    "categories": {
+      "other": "Andere",
+      "transferOut": "Uitgaande overschrijving"
+    },
+    "emptyState": {
+      "title": "Geen transacties gevonden",
+      "description": "Probeer uw zoekcriteria aan te passen."
+    },
+    "pagination": {
+      "showing": "Weergave van",
+      "transactions": "transacties",
+      "previous": "Vorige",
+      "next": "Volgende"
+    },
+    "errors": {
+      "noUser": "Geen ingelogde gebruiker",
+      "loadingError": "Fout bij laden gegevens"
+    },
+    "references": {
+      "txnPrefix": "TXN",
+      "outPrefix": "UIT",
+      "defaultPrefix": "REF",
+      "defaultValue": "-"
+    }
+  },
+
+  "budgets": {
+    "title": "Budgetten",
+    "subtitle": "Volg uw uitgaven en respecteer uw budgetten",
+    "loading": {
+      "budgets": "Uw budgetten worden geladen...",
+      "status": "Uw status wordt gecontroleerd..."
+    },
+    "unverified": {
+      "titleUnverified": "Identiteitsverificatie vereist",
+      "titlePending": "Verificatie in behandeling",
+      "descriptionUnverified": "Om budgetten aan te maken en te beheren, moet u eerst uw identiteit valideren.",
+      "descriptionPending": "Uw account wordt geverifieerd. U kunt budgetten aanmaken na validatie.",
+      "secureAccount": "Beveiligde rekening",
+      "customBudgets": "Gepersonaliseerde budgetten"
+    },
+    "summary": {
+      "totalBudget": "Totaal budget",
+      "spent": "Uitgegeven",
+      "remaining": "Resterend",
+      "usage": "Gebruik"
+    },
+    "progress": {
+      "title": "Globale voortgang",
+      "budgetUsage": "Budgetgebruik"
+    },
+    "actions": {
+      "createNew": "Nieuw budget aanmaken",
+      "edit": "Bewerken",
+      "details": "Details"
+    },
+    "status": {
+      "onTrack": "Binnen limieten",
+      "overBudget": "Overschreden",
+      "underBudget": "Onder budget",
+      "unknown": "Onbekend"
+    },
+    "card": {
+      "progression": "Voortgang",
+      "budget": "Budget",
+      "spent": "Uitgegeven",
+      "remaining": "Resterend",
+      "monthly": "Maandelijks",
+      "yearly": "Jaarlijks"
+    },
+    "tips": {
+      "title": "Tips voor budgetbeheer",
+      "planning": {
+        "title": "Planning",
+        "tip1": "Stel realistische doelen",
+        "tip2": "Volg uw uitgaven regelmatig",
+        "tip3": "Pas uw budgetten aan indien nodig",
+        "tip4": "Voorzie onvoorziene uitgaven"
+      },
+      "optimization": {
+        "title": "Optimalisatie",
+        "tip1": "Identificeer uw uitgavenposten",
+        "tip2": "Zoek goedkopere alternatieven",
+        "tip3": "Vermijd impulsaankopen",
+        "tip4": "Spaar overschotten"
+      }
+    },
+    "errors": {
+      "noUser": "Geen ingelogde gebruiker",
+      "loadingError": "Fout bij laden budgetten"
+    }
+  },
+
+  "messages": {
+    "title": "Berichten",
+    "subtitle": "AmCbunq klantenservice",
+    "loading": "Berichten worden geladen...",
+    "welcome": "Hallo! Ik ben uw AmCbunq virtuele assistent. Hoe kan ik u vandaag helpen?",
+    "autoReply": "Bedankt voor uw bericht. Een adviseur zal u zo snel mogelijk antwoorden.",
+    "inputPlaceholder": "Typ uw bericht...",
+    "typing": "Ondersteuning is aan het typen...",
+    "online": "Online",
+    "quickResponse": "Snel antwoord",
+    "onlineStatus": "Online",
+          "supportName": "AmCbunq Ondersteuning",
+      "unavailable": "Berichten niet beschikbaar",
+      "unavailableUnverified": "Om toegang te krijgen tot de chat met onze ondersteuning, moet u eerst uw identiteit valideren.",
+      "temporarilyUnavailable": "Berichten tijdelijk niet beschikbaar",
+      "unavailablePending": "Berichten niet beschikbaar - Verificeer uw identiteit",
+      "unavailableVerifyIdentity": "Berichten niet beschikbaar - Verificeer uw identiteit",
+      "verification": {
+      "unavailableTitle": "Berichten niet beschikbaar",
+      "temporarilyUnavailableTitle": "Berichten tijdelijk niet beschikbaar",
+      "unavailableDescription": "Om te chatten met onze ondersteuning, moet u eerst uw identiteit valideren.",
+      "pendingDescription": "Berichten zijn beschikbaar na voltooide identiteitsverificatie. Uw dossier wordt beoordeeld."
+    },
+    "errors": {
+      "noUser": "Geen ingelogde gebruiker",
+      "loadingError": "Fout bij laden berichten",
+      "sendingError": "Fout bij verzenden bericht",
+      "noMessages": "Geen berichten gevonden, welkomstbericht aangemaakt"
+    }
+  },
+
+  "settings": {
+    "title": "Instellingen",
+    "subtitle": "Beheer uw voorkeuren en accountinstellingen",
+    "loading": "Gebruikersgegevens worden geladen...",
+    "profile": "Profiel",
+    "security": "Beveiliging",
+    "notifications": "Notificaties",
+    "preferences": "Voorkeuren",
+    "profileSettings": "Profielinstellingen",
+    "securitySettings": "Beveiligingsinstellingen",
+    "notificationSettings": "Notificatie-instellingen",
+    "firstName": "Voornaam",
+    "lastName": "Achternaam",
+    "email": "E-mail",
+    "phone": "Telefoon",
+    "dateOfBirth": "Geboortedatum",
+    "placeOfBirth": "Geboorteplaats",
+    "nationality": "Nationaliteit",
+    "residenceCountry": "Woonland",
+    "address": "Adres",
+    "city": "Stad",
+    "postalCode": "Postcode",
+    "profession": "Beroep",
+    "salary": "Salaris",
+    "saveChanges": "Wijzigingen opslaan",
+    "change": "Wijzigen",
+    "enable": "Inschakelen",
+    "view": "Bekijken",
+    "language": "Taal",
+    "currency": "Valuta",
+    "timezone": "Tijdzone",
+    "theme": "Thema",
+    "changePassword": "Wachtwoord wijzigen",
+    "changePasswordDescription": "Wijzig uw wachtwoord om uw account te beveiligen",
+    "twoFactorAuth": "Twee-factor authenticatie",
+    "twoFactorAuthDescription": "Voeg een extra beveiligingslaag toe aan uw account",
+    "loginHistory": "Login geschiedenis",
+    "loginHistoryDescription": "Bekijk uw recente login geschiedenis",
+    "emailNotifications": "E-mail notificaties",
+    "emailNotificationsDescription": "Ontvang belangrijke meldingen per e-mail",
+    "smsNotifications": "SMS notificaties",
+    "smsNotificationsDescription": "Ontvang beveiligingswaarschuwingen per SMS",
+    "pushNotifications": "Push notificaties",
+    "pushNotificationsDescription": "Ontvang meldingen direct op uw apparaat",
+    "marketingEmails": "Marketing e-mails",
+    "marketingEmailsDescription": "Ontvang aanbiedingen en nieuws per e-mail"
+  },
+
+  "transferMessages": {
+    "externalTransferTitle": "Externe overschrijving",
+    "externalTransferMessage": "Externe overschrijvingen ondergaan een veiligheidscontrole voor validatie.",
+    "confirmTransfer": "Overschrijving bevestigen",
+    "internalSuccess": "Uw overschrijving van {amount} is succesvol aangemaakt.",
+    "scheduledSuccess": "Uw overschrijving van {amount} is succesvol gepland.",
+    "externalSuccess": "Uw externe overschrijving van {amount} is ingediend en wacht op controle.",
+    "creationError": "Kan overschrijving niet aanmaken: {error}",
+    "beneficiaryAddSuccess": "Begunstigde \"{name}\" is succesvol toegevoegd.",
+    "beneficiaryUpdateSuccess": "Informatie van \"{name}\" is succesvol bijgewerkt.",
+    "beneficiaryDeleteSuccess": "Begunstigde \"{name}\" is succesvol verwijderd.",
+    "beneficiaryAddError": "Kan begunstigde niet toevoegen: {error}",
+    "beneficiaryUpdateError": "Kan begunstigde niet bijwerken: {error}",
+    "beneficiaryDeleteError": "Kan begunstigde niet verwijderen: {error}"
+  },
+
+  "footer": {
+    "description": "De bank van de toekomst, vandaag. Beheer uw financiën eenvoudig.",
+    "products": "Producten",
+    "support": "Ondersteuning",
+    "legal": "Juridisch",
+    "contact": "Contact",
+    "privacy": "Privacy",
+    "terms": "Voorwaarden",
+    "rights": "Alle rechten voorbehouden"
+  },
+
+  "errors": {
+    "network": "Verbindingsfout",
+    "unauthorized": "Niet geautoriseerd",
+    "forbidden": "Toegang verboden",
+    "notFound": "Pagina niet gevonden",
+    "serverError": "Serverfout",
+    "validation": "Validatiefout",
+    "fileTooLarge": "Bestand te groot",
+    "invalidFileType": "Niet-ondersteund bestandstype",
+    "transferCreationFailed": "Fout bij aanmaken",
+    "beneficiaryAddFailed": "Fout bij toevoegen",
+    "beneficiaryUpdateFailed": "Fout bij bijwerken",
+    "beneficiaryDeleteFailed": "Fout bij verwijderen"
+  },
+
+  "success": {
+    "accountCreated": "Account succesvol aangemaakt",
+    "loginSuccess": "Succesvol ingelogd",
+    "logoutSuccess": "Succesvol uitgelogd",
+    "profileUpdated": "Profiel bijgewerkt",
+    "passwordChanged": "Wachtwoord gewijzigd",
+    "documentUploaded": "Document geüpload",
+    "transferCompleted": "Overschrijving voltooid",
+    "transferCreated": "Overschrijving aangemaakt",
+    "transferScheduled": "Overschrijving gepland",
+    "transferSubmitted": "Overschrijving ingediend",
+    "beneficiaryAdded": "Begunstigde toegevoegd",
+    "beneficiaryUpdated": "Begunstigde bijgewerkt",
+    "beneficiaryDeleted": "Begunstigde verwijderd"
+  },
+
+  "pages": {
+    "home": {
+      "title": "Home - AmCbunq",
+      "metaDescription": "De bank van de toekomst, vandaag. Beheer uw financiën eenvoudig met AmCbunq."
+    },
+    "features": {
+      "title": "Functies - AmCbunq",
+      "metaDescription": "Ontdek alle AmCbunq functies: rekeningen, kaarten, overschrijvingen en meer."
+    },
+    "pricing": {
+      "title": "Prijzen - AmCbunq",
+      "metaDescription": "Transparante en betaalbare prijzen voor al uw bankbehoeften."
+    },
+    "help": {
+      "title": "Help - AmCbunq",
+      "metaDescription": "AmCbunq helpcentrum. Vind snel antwoorden op uw vragen."
+    }
+  },
+
+  "system": {
+    "loading": "Bezig met laden...",
+    "noData": "Geen gegevens beschikbaar",
+    "retry": "Opnieuw proberen",
+    "connectionError": "Verbindingsfout",
+    "sessionExpired": "Sessie verlopen",
+    "unauthorized": "Niet geautoriseerd",
+    "serverError": "Serverfout",
+    "maintenance": "Onderhoud bezig"
+  },
+
+  "status": {
+    "active": "Actief",
+    "inactive": "Inactief",
+    "pending": "In behandeling",
+    "approved": "Goedgekeurd",
+    "rejected": "Afgewezen",
+    "expired": "Vervallen",
+    "suspended": "Geschorst",
+    "completed": "Voltooid",
+    "processing": "In verwerking",
+    "failed": "Mislukt"
+  },
+
+  "actions": {
+    "create": "Aanmaken",
+    "read": "Lezen",
+    "update": "Bijwerken",
+    "delete": "Verwijderen",
+    "copy": "Kopiëren",
+    "share": "Delen",
+    "download": "Downloaden",
+    "upload": "Uploaden",
+    "print": "Afdrukken",
+    "export": "Exporteren",
+    "import": "Importeren",
+    "send": "Verzenden",
+    "receive": "Ontvangen"
+  },
+
+  "notifications": {
+    "newMessage": "Nieuw bericht",
+    "newTransaction": "Nieuwe transactie",
+    "accountUpdated": "Account bijgewerkt",
+    "cardBlocked": "Kaart geblokkeerd",
+    "transferCompleted": "Overschrijving voltooid",
+    "documentRequired": "Document vereist",
+    "verificationComplete": "Verificatie voltooid",
+    "maintenanceScheduled": "Onderhoud gepland"
+  },
+
+  "forms": {
+    "required": "Verplicht veld",
+    "invalid": "Ongeldig formaat",
+    "tooShort": "Te kort",
+    "tooLong": "Te lang",
+    "passwordMismatch": "Wachtwoorden komen niet overeen",
+    "emailInvalid": "Ongeldig e-mailadres",
+    "phoneInvalid": "Ongeldig telefoonnummer",
+    "dateInvalid": "Ongeldige datum",
+    "amountInvalid": "Ongeldig bedrag",
+    "ibanInvalid": "Ongeldig IBAN"
+  },
+
+  "time": {
+    "now": "Nu",
+    "today": "Vandaag",
+    "yesterday": "Gisteren",
+    "tomorrow": "Morgen",
+    "thisWeek": "Deze week",
+    "lastWeek": "Vorige week",
+    "thisMonth": "Deze maand",
+    "lastMonth": "Vorige maand",
+    "thisYear": "Dit jaar",
+    "lastYear": "Vorig jaar"
+  },
+
+  "currency": {
+    "eur": "Euro",
+    "usd": "Amerikaanse dollar",
+    "gbp": "Britse pond",
+    "chf": "Zwitserse frank",
+    "jpy": "Japanse yen"
+  },
+
+  "languages": {
+    "fr": "Frans",
+    "en": "Engels",
+    "es": "Spaans",
+    "pt": "Portugees",
+    "it": "Italiaans",
+    "nl": "Nederlands",
+    "de": "Duits"
+  },
+
+  "validation": {
+    "firstNameMinLength": "Voornaam moet minstens 2 karakters bevatten",
+    "lastNameMinLength": "Achternaam moet minstens 2 karakters bevatten",
+    "emailInvalid": "Ongeldig e-mailadres",
+    "phoneInvalid": "Ongeldig telefoonnummer",
+    "birthPlaceMinLength": "Geboorteplaats moet minstens 2 karakters bevatten",
+    "nationalityMinLength": "Nationaliteit moet minstens 2 karakters bevatten",
+    "residenceCountryMinLength": "Woonland moet minstens 2 karakters bevatten",
+    "addressMinLength": "Adres moet minstens 5 karakters bevatten",
+    "cityMinLength": "Stad moet minstens 2 karakters bevatten",
+    "postalCodeMinLength": "Postcode moet minstens 4 karakters bevatten",
+    "professionMinLength": "Beroep moet minstens 2 karakters bevatten",
+    "salaryRequired": "Salaris is vereist",
+    "passwordMinLength": "Wachtwoord moet minstens 8 karakters bevatten",
+    "acceptTermsRequired": "U moet de voorwaarden accepteren",
+    "passwordMismatch": "Wachtwoorden komen niet overeen",
+    "passwordMinLength6": "Wachtwoord moet minstens 6 karakters bevatten"
+  },
+
+  "placeholders": {
+    "nationality": "Bijv: Belgisch"
+  },
+
+  "payments": {
+    "title": "Betalingen",
+    "quick": "Snel"
+  },
+
+  "offers": {
+    "special": "Speciale Aanbieding",
+    "savingsAccount": "Open een spaarrekening en geniet van 2% rente voor 6 maanden!"
+  },
+
+  "protection": {
+    "premium": "Premium Bescherming",
+    "description": "Bescherm uw transacties met onze geavanceerde fraudeverzekering."
+  },
+
+  "referral": {
+    "welcome": "Welkomstgeschenk!",
+    "description": "Verwijs een vriend en ontvang elk 50€. Toepasselijke voorwaarden.",
+    "refer": "Doorverwijzen"
+  },
+
+  "documents": {
+    "title": "Mijn Documenten",
+    "subtitle": "Toegang tot al uw bankdocumenten veilig",
+    "showDocumentation": "Documentatie tonen",
+    "hideDocumentation": "Documentatie verbergen",
+    "types": {
+      "contract": "Contract",
+      "policy": "Beleid",
+      "terms": "Voorwaarden",
+      "legal": "Juridisch",
+      "document": "Document"
+    },
+    "list": {
+      "accountContract": {
+        "title": "Bankrekening contract",
+        "description": "Algemene voorwaarden van uw AmCbunq rekening",
+        "detailedDescription": "Dit contract definieert de algemene voorwaarden voor het openen en gebruiken van uw AmCbunq bankrekening. Het omvat de rechten en verplichtingen van elke partij, de werking van de rekening, de toepasselijke kosten en de modaliteiten van opzegging.",
+        "usage": "Raadpleeg dit document om uw rechten en verplichtingen als rekeninghouder te begrijpen. Het is belangrijk om het te bewaren omdat het kan worden gevraagd voor administratieve procedures of in geval van geschil.",
+        "importance": "Verplicht juridisch document",
+        "validityPeriod": "Geldig tot 31/12/2024"
+      },
+      "privacyPolicy": {
+        "title": "Privacybeleid",
+        "description": "Hoe we uw persoonlijke gegevens beschermen",
+        "detailedDescription": "Dit beleid beschrijft in detail hoe AmCbunq uw persoonlijke gegevens verzamelt, gebruikt, opslaat en beschermt in overeenstemming met de AVG. Het legt uw rechten uit op het gebied van gegevensbescherming en hoe u deze kunt uitoefenen.",
+        "usage": "Lees dit beleid aandachtig om te begrijpen hoe uw gegevens worden verwerkt. U kunt uw rechten uitoefenen (toegang, rectificatie, verwijdering) door contact op te nemen met onze functionaris voor gegevensbescherming.",
+        "importance": "AVG-conformiteit",
+        "validityPeriod": "Kwartaalupdate"
+      },
+      "termsOfService": {
+        "title": "Gebruiksvoorwaarden",
+        "description": "Regels voor het gebruik van onze bankdiensten",
+        "detailedDescription": "Deze voorwaarden regelen het gebruik van al onze online, mobiele en fysieke bankdiensten. Ze omvatten veiligheidsregels, gebruikslimieten, verantwoordelijkheden en sancties bij niet-naleving.",
+        "usage": "Accepteer deze voorwaarden om onze diensten te gebruiken. Ze kunnen worden gewijzigd met een opzegtermijn van 30 dagen. Bij wijziging wordt u per e-mail en in uw klantenspace op de hoogte gesteld.",
+        "importance": "Toegangsvoorwaarden voor diensten",
+        "validityPeriod": "Huidige versie"
+      },
+      "legalNotice": {
+        "title": "Juridische kennisgeving",
+        "description": "Juridische en regelgevende informatie",
+        "detailedDescription": "Deze kennisgeving bevat de verplichte juridische informatie over AmCbunq: identiteit van de instelling, bankvergunningen, toezicht, depositogaranties en contactgegevens van toezichthouders.",
+        "usage": "Raadpleeg deze kennisgeving om de wettigheid van onze activiteiten te controleren en uw garanties te kennen. Deze informatie is belangrijk voor uw veiligheid en de conformiteit van onze diensten.",
+        "importance": "Juridische verplichting",
+        "validityPeriod": "Jaarlijkse update"
+      },
+      "cardContract": {
+        "title": "Bankkaart contract",
+        "description": "Specifieke voorwaarden voor uw bankkaart",
+        "detailedDescription": "Dit contract beschrijft in detail de voorwaarden voor uitgifte en gebruik van uw bankkaart: limieten, kosten, verzekeringen, verantwoordelijkheden bij verlies of diefstal en procedures voor betwisting.",
+        "usage": "Bewaar dit document bij uw kaart. Het bevat essentiële informatie over uw rechten en verplichtingen, vooral in geval van fraude of betwisting van transacties.",
+        "importance": "Juridische bescherming",
+        "validityPeriod": "Geldig gedurende de geldigheidsduur van de kaart"
+      },
+      "securityPolicy": {
+        "title": "Veiligheidsbeleid",
+        "description": "Veiligheidsmaatregelen om uw rekening te beschermen",
+        "detailedDescription": "Dit beleid beschrijft in detail de veiligheidsmaatregelen die AmCbunq heeft geïmplementeerd om uw rekening en gegevens te beschermen: multi-factor authenticatie, transactiemonitoring, gegevensversleuteling en procedures bij incidenten.",
+        "usage": "Volg deze aanbevelingen om uw rekening te beveiligen. Neem bij vermoeden van compromittering onmiddellijk contact op met onze beveiligingsdienst.",
+        "importance": "Rekeningbeveiliging",
+        "validityPeriod": "Continue update"
+      }
+    },
+    "documentInfo": {
+      "version": "Versie",
+      "lastUpdated": "Laatste update",
+      "size": "Grootte",
+      "validity": "Geldigheid"
+    },
+    "actions": {
+      "view": "Bekijken",
+      "download": "Downloaden",
+      "downloading": "Downloaden..."
+    },
+    "alerts": {
+      "unavailable": {
+        "title": "Document niet beschikbaar",
+        "message": "Dit document is momenteel niet beschikbaar. Probeer het later opnieuw."
+      },
+      "downloadSuccess": {
+        "title": "Download succesvol",
+        "message": "Het document {{title}} is succesvol gedownload."
+      },
+      "downloadError": {
+        "title": "Downloadfout",
+        "message": "Er is een fout opgetreden bij het downloaden van het document."
+      }
+    },
+    "documentation": {
+      "title": "Documentatie van Documenten",
+      "types": {
+        "title": "Documenttypes",
+        "contract": {
+          "description": "Bankcontracten en algemene voorwaarden"
+        },
+        "policy": {
+          "description": "Privacy- en veiligheidsbeleid"
+        },
+        "terms": {
+          "description": "Gebruiksvoorwaarden voor diensten"
+        },
+        "legal": {
+          "description": "Juridische kennisgevingen en regelgevende informatie"
+        }
+      },
+      "format": {
+        "title": "Downloadformaat",
+        "pdf": "Standaard PDF-formaat",
+        "compatible": "Compatibel met alle readers",
+        "signature": "Elektronische handtekening inbegrepen",
+        "retention": "Veilige bewaring"
+      },
+      "importantInfo": {
+        "title": "Belangrijke informatie",
+        "keepCopy": "Bewaar een kopie van uw documenten",
+        "regularUpdates": "Documenten worden regelmatig bijgewerkt",
+        "notifications": "U wordt op de hoogte gesteld van wijzigingen",
+        "contactLegal": "Neem contact op met de juridische dienst indien nodig"
+      }
+    },
+    "info": {
+      "title": "Belangrijke informatie",
+      "legal": {
+        "title": "Juridische documenten",
+        "upToDate": "Alle documenten zijn up-to-date",
+        "secureDownload": "Veilige download gegarandeerd",
+        "retention": "Bewaring conform regelgeving",
+        "notifications": "Automatische meldingen van updates"
+      },
+      "security": {
+        "title": "Veiligheid en conformiteit",
+        "protected": "Documenten beschermd door versleuteling",
+        "access": "Gecontroleerde en getraceerde toegang",
+        "history": "Raadpleegingsgeschiedenis beschikbaar",
+        "signature": "Geverifieerde elektronische handtekening"
+      }
+    },
+    "contact": {
+      "title": "Hulp nodig?",
+      "description": "Ons ondersteuningsteam staat klaar om u te helpen met uw documenten.",
+      "button": "Ondersteuning contacteren"
+    }
+  },
+
+  "kycSuccess": {
+    "title": "Documenten succesvol ingediend!",
+    "verificationInProgress": "Verificatie in behandeling...",
+    "description": "Uw documenten zijn ontvangen en worden gecontroleerd door ons team.",
+    "waitMessage": "⏰ WACHT 24u TOT 48u",
+    "waitDescription": "Ons team onderzoekt uw documenten zorgvuldig om uw veiligheid te waarborgen.",
+    "nextSteps": "Volgende stappen:",
+    "steps": {
+      "received": "Documenten ontvangen en geregistreerd",
+      "verification": "Verificatie door ons team (24-48u)",
+      "notification": "E-mailmelding van het resultaat",
+      "access": "Volledige toegang tot functionaliteiten"
+    },
+    "backToDashboard": "Terug naar dashboard",
+    "viewStatus": "Bekijk de status van mijn verificatie"
+  },
+
+  "verificationState": {
+    "titles": {
+      "unverified": "Identiteitsverificatie vereist",
+      "pending": "Verificatie in behandeling"
+    },
+    "descriptions": {
+      "unverified": "Om toegang te krijgen tot deze functie, moet u eerst uw identiteit valideren.",
+      "pending": "Uw account wordt geverifieerd. U kunt toegang krijgen tot deze functie zodra deze is gevalideerd."
+    },
+    "features": {
+      "secureAccount": "Veilig account",
+      "personalizedFeatures": "Gepersonaliseerde functies"
+    }
+  },
+
+  "modernVerificationState": {
+    "startVerification": "Verificatie starten",
+    "featuresAfterVerification": "Functies beschikbaar na verificatie",
+    "cards": {
+      "title": "Bankkaarten",
+      "description": "Aanvraag voor fysieke en virtuele kaarten"
+    },
+    "transfers": {
+      "title": "Overschrijvingen",
+      "description": "Geldoverboekingen tussen rekeningen"
+    },
+    "fullData": {
+      "title": "Volledige gegevens",
+      "description": "Toegang tot al uw rekeningen en transacties"
+    },
+    "supportChat": {
+      "title": "Ondersteuningschat",
+      "description": "Realtime klantenondersteuning"
+    },
+    "securityGuaranteed": "Veiligheid gegarandeerd",
+    "securityDescription": "Uw gegevens zijn beschermd met bankniveau-encryptie. Identiteitsverificatie is verplicht voor uw veiligheid en die van uw geld.",
+    "needHelp": "Hulp nodig? Neem contact op met onze ondersteuning via {phoneNumber}",
+    "verificationInProgress": "Verificatie in uitvoering",
+    "dossierEnExamen": "Uw dossier wordt beoordeeld",
+    "dossierEnExamenDescription": "Uw identiteitsverificatiedossier wordt momenteel beoordeeld door onze teams. Dit proces duurt meestal 24-48 uur.",
+    "voirStatut": "Status bekijken",
+    "processusEnCours": "Proces in uitvoering",
+    "processusEnCoursDescription": "Onze teams controleren momenteel uw documenten. U ontvangt een melding zodra de verificatie is voltooid.",
+    "verificationRequise": "Verificatie vereist",
+    "verificationRequiseDescription": "Om toegang te krijgen tot alle functies, moet u uw identiteit valideren.",
+    "verificationRejetee": "Verificatie afgewezen",
+    "verificationRejeteeDescription": "Uw dossier is afgewezen. Corrigeer de informatie.",
+          "verificationIdentite": "Identiteitsverificatie"
+    },
+    "kycStatusBanner": {
+      "verificationInProgress": "Verificatie in uitvoering",
+      "verificationInProgressDescription": "Uw documenten worden geverifieerd. Dit kan 24-48u duren.",
+      "verificationRejected": "Verificatie afgewezen",
+      "verificationRejectedDescription": "Uw verificatie is afgewezen. Dien nieuwe documenten in.",
+      "verificationRequired": "Verificatie vereist",
+      "verificationRequiredDescription": "Om toegang te krijgen tot alle functies, voltooi uw identiteitsverificatie.",
+      "viewStatus": "Status bekijken",
+      "startVerification": "Verificatie starten",
+      "submitAgain": "Opnieuw indienen"
+    },
+    "modernAlert": {
+      "understood": "Begrepen"
+    }
+}

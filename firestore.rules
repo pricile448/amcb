@@ -1,0 +1,180 @@
+// firestore.rules
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // 👤 Collection users : Lecture/écriture pour le propriétaire
+    match /users/{userId} {
+      // Règle générale : utilisateur peut lire/écrire ses propres données
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      
+      // ✅ Permettre mise à jour KYC status (unverified → pending)
+      allow update: if request.auth != null 
+        && request.auth.uid == userId
+        && (
+          // Transition KYC autorisée
+          (resource.data.kycStatus == 'unverified' && request.resource.data.kycStatus == 'pending')
+          // Ou mise à jour de champs autorisés
+          || request.resource.data.diff(resource.data).affectedKeys().hasAny([
+            'kycStatus', 'kycStatusDetails', 'verificationStatus', 
+            'notifications', 'lastSignInTime', 'emailVerified', 
+            'isEmailVerified', 'updatedAt'
+          ])
+        );
+      
+      // 👮‍♂️ Admins peuvent tout faire
+      allow read, write: if request.auth != null 
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // 🧾 Collection kycSubmissions
+    match /kycSubmissions/{submissionId} {
+      // ✅ Création : utilisateur peut créer ses propres soumissions
+      allow create: if request.auth != null 
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.keys().hasAll(['id', 'userId', 'documentType', 'cloudinaryUrl', 'cloudinaryPublicId', 'fileName', 'fileSize', 'mimeType', 'submittedAt']);
+      
+      // ✅ Lecture : utilisateur peut lire ses propres soumissions
+      allow read: if request.auth != null 
+        && resource.data.userId == request.auth.uid;
+      
+      // ✅ Mise à jour : utilisateur peut mettre à jour ses propres soumissions
+      allow update: if request.auth != null 
+        && resource.data.userId == request.auth.uid;
+      
+      // ✅ Suppression : utilisateur peut supprimer ses propres soumissions
+      allow delete: if request.auth != null 
+        && resource.data.userId == request.auth.uid;
+      
+      // 👮‍♂️ Admins peuvent tout faire
+      allow read, write: if request.auth != null 
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // 🏦 Collection accounts : Comptes bancaires
+    match /accounts/{accountId} {
+      allow read: if request.auth != null 
+        && resource.data.userId == request.auth.uid;
+      
+      allow create, update: if request.auth != null 
+        && request.resource.data.userId == request.auth.uid;
+      
+      allow read, write: if request.auth != null 
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // 💰 Collection transactions : Transactions bancaires
+    match /transactions/{transactionId} {
+      allow read: if request.auth != null 
+        && resource.data.userId == request.auth.uid;
+      
+      allow create: if request.auth != null 
+        && request.resource.data.userId == request.auth.uid;
+      
+      allow read, write: if request.auth != null 
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // 📄 Collection documents : Documents utilisateur
+    match /documents/{documentId} {
+      allow read: if request.auth != null 
+        && resource.data.userId == request.auth.uid;
+      
+      allow create, update, delete: if request.auth != null 
+        && request.resource.data.userId == request.auth.uid;
+      
+      allow read, write: if request.auth != null 
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // 🔄 Collection transfers : Virements
+    match /transfers/{transferId} {
+      allow read: if request.auth != null 
+        && resource.data.userId == request.auth.uid;
+      
+      allow create: if request.auth != null 
+        && request.resource.data.userId == request.auth.uid;
+      
+      allow read, write: if request.auth != null 
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // 👥 Collection beneficiaries : Bénéficiaires
+    match /beneficiaries/{beneficiaryId} {
+      allow read: if request.auth != null 
+        && resource.data.userId == request.auth.uid;
+      
+      allow create: if request.auth != null 
+        && request.resource.data.userId == request.auth.uid;
+      
+      allow update: if request.auth != null 
+        && resource.data.userId == request.auth.uid
+        && request.resource.data.userId == request.auth.uid;
+      
+      allow delete: if request.auth != null 
+        && resource.data.userId == request.auth.uid;
+      
+      allow read, write: if request.auth != null 
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // 💬 Collection chats : Messages de support
+    match /chats/{chatId} {
+      allow read: if request.auth != null 
+        && (
+          resource.data.userId == request.auth.uid
+          || request.auth.uid in resource.data.participants
+        );
+      
+      allow create: if request.auth != null 
+        && request.resource.data.userId == request.auth.uid;
+      
+      allow read, write: if request.auth != null 
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+      
+      // 💬 Sous-collection messages
+      match /messages/{messageId} {
+        allow read: if request.auth != null 
+          && (
+            get(/databases/$(database)/documents/chats/$(chatId)).data.userId == request.auth.uid
+            || request.auth.uid in get(/databases/$(database)/documents/chats/$(chatId)).data.participants
+          );
+        
+        allow create: if request.auth != null 
+          && (
+            get(/databases/$(database)/documents/chats/$(chatId)).data.userId == request.auth.uid
+            || request.auth.uid in get(/databases/$(database)/documents/chats/$(chatId)).data.participants
+          )
+          && request.resource.data.senderId == request.auth.uid;
+        
+        allow read, write: if request.auth != null 
+          && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+          && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+      }
+    }
+    
+    // 📧 Collection emailVerificationCodes : Codes de vérification email
+    match /emailVerificationCodes/{userId} {
+      allow create, read, update, delete: if request.auth != null 
+        && request.auth.uid == userId;
+      
+      allow read, write: if request.auth != null 
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // 🚫 Tout le reste est refusé par défaut
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vérification de votre compte AmCbunq</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            display: inline-block;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .title {
+            color: #2d3748;
+            font-size: 28px;
+            font-weight: 600;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .greeting {
+            font-size: 18px;
+            color: #4a5568;
+            margin-bottom: 25px;
+        }
+        .message {
+            font-size: 16px;
+            color: #4a5568;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            text-align: center;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        .link-fallback {
+            font-size: 14px;
+            color: #718096;
+            margin-top: 20px;
+            word-break: break-all;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .security-note {
+            background-color: #f7fafc;
+            border-left: 4px solid #4299e1;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .features {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .feature {
+            text-align: center;
+            margin: 10px;
+            flex: 1;
+            min-width: 120px;
+        }
+        .feature-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .feature-text {
+            font-size: 12px;
+            color: #718096;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">AmCbunq</div>
+        </div>
+        
+        <h1 class="title">Vérifiez votre compte</h1>
+        
+        <p class="greeting">Bonjour %DISPLAY_NAME%,</p>
+        
+        <p class="message">
+            Merci de vous être inscrit sur AmCbunq ! Pour accéder à toutes les fonctionnalités de votre compte bancaire en ligne, veuillez confirmer votre adresse email en cliquant sur le bouton ci-dessous.
+        </p>
+        
+        <div style="text-align: center;">
+            <a href="%LINK%" class="button">
+                ✅ Vérifier mon email
+            </a>
+        </div>
+        
+        <div class="security-note">
+            <strong>🔒 Sécurité :</strong> Ce lien de vérification est valable pendant 24 heures. Si vous n'avez pas créé de compte AmCbunq, vous pouvez ignorer cet email en toute sécurité.
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🏦</div>
+                <div class="feature-text">Comptes bancaires</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">💳</div>
+                <div class="feature-text">Cartes sécurisées</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📱</div>
+                <div class="feature-text">Application mobile</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🛡️</div>
+                <div class="feature-text">Protection avancée</div>
+            </div>
+        </div>
+        
+        <p class="message">
+            Si le bouton ne fonctionne pas, copiez et collez ce lien dans votre navigateur :
+        </p>
+        
+        <p class="link-fallback">%LINK%</p>
+        
+        <div class="footer">
+            <p><strong>AmCbunq</strong> - Votre banque en ligne moderne</p>
+            <p>Support client : support@amcbunq.com</p>
+            <p>© 2024 AmCbunq. Tous droits réservés.</p>
+        </div>
+    </div>
+</body>
+</html>

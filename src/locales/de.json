@@ -1,0 +1,1744 @@
+{
+  "common": {
+    "loading": "Laden...",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "confirm": "Bestätigen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "previous": "Zurück",
+    "submit": "Absenden",
+    "close": "Schließen",
+    "search": "Suchen",
+    "filter": "Filtern",
+    "sort": "Sortieren",
+    "view": "Anzeigen",
+    "download": "Herunterladen",
+    "upload": "Hochladen",
+    "yes": "Ja",
+    "no": "Nein",
+    "defaultUser": "AmCbunq Kunde",
+    "defaultClient": "Kunde",
+    "defaultCompany": "AmCbunq",
+    "hide": "Ausblenden",
+    "show": "Anzeigen",
+    "add": "Hinzufügen",
+    "learnMore": "Mehr erfahren",
+    "activate": "Aktivieren",
+    "manage": "Verwalten",
+    "create": "Erstellen",
+    "read": "Lesen",
+    "update": "Aktualisieren",
+    "copy": "Kopieren",
+    "share": "Teilen",
+    "print": "Drucken",
+    "export": "Exportieren",
+    "import": "Importieren",
+    "send": "Senden",
+    "receive": "Empfangen"
+  },
+
+  "nav": {
+    "features": "Funktionen",
+    "pricing": "Preise",
+    "help": "Hilfe & Support",
+    "login": "Anmelden",
+    "openAccount": "Konto eröffnen",
+    "dashboard": "Mein Kundenbereich",
+    "accounts": "Konten",
+    "iban": "Meine IBAN",
+    "transfers": "Überweisungen",
+    "cards": "Karten",
+    "billing": "Abrechnung",
+    "history": "Verlauf",
+    "budgets": "Budgets",
+    "settings": "Einstellungen",
+    "documents": "Meine Dokumente",
+    "messages": "Nachrichten",
+    "verification": "Identitätsprüfung",
+    "transactions": "Transaktionen"
+  },
+
+  "home": {
+    "hero": {
+      "title": "Die Bank der Zukunft, heute",
+      "subtitle": "Verwalten Sie Ihre Finanzen ganz einfach mit AmCbunq. Kontoeröffnung in 5 Minuten, Sofortüberweisungen und Bank-Level-Sicherheit.",
+      "openAccount": "Konto eröffnen",
+      "learnMore": "Mehr erfahren"
+    },
+    "features": {
+      "title": "Warum AmCbunq wählen?",
+      "subtitle": "Ein modernes und sicheres Banking-Erlebnis"
+    },
+    "security": {
+      "title": "Maximale Sicherheit",
+      "description": "Ihre Daten sind durch militärische Verschlüsselung geschützt"
+    },
+    "accounts": {
+      "title": "Mehrere Konten",
+      "description": "Girokonto, Sparkonto und Kreditkarten an einem Ort"
+    },
+    "transactions": {
+      "title": "Sofortige Transaktionen",
+      "description": "Überweisungen und Zahlungen in Echtzeit"
+    },
+    "international": {
+      "title": "International",
+      "description": "Geld weltweit senden"
+    },
+    "benefits": {
+      "title": "AmCbunq Vorteile",
+      "noFees": "Keine versteckten Gebühren",
+      "instant": "Sofortige Überweisungen",
+      "secure": "Bank-Sicherheit",
+      "support": "Support 24/7",
+      "getStarted": "Jetzt starten"
+    },
+    "mobile": {
+      "title": "Mobile App",
+      "description": "Verwalten Sie Ihre Finanzen von Ihrem Smartphone aus"
+    },
+    "speed": {
+      "title": "Geschwindigkeit",
+      "description": "Kontoeröffnung in 5 Minuten"
+    },
+    "cta": {
+      "title": "Bereit, AmCbunq beizutreten?",
+      "description": "Schließen Sie sich Tausenden zufriedenen Kunden an",
+      "button": "Mein Konto eröffnen"
+    }
+  },
+
+  "features": {
+    "hero": {
+      "title": "AmCbunq Funktionen",
+      "subtitle": "Entdecken Sie alles, was unsere Plattform für Sie tun kann"
+    },
+    "security": {
+      "title": "Bank-Level-Sicherheit",
+      "description": "Ihre Daten sind durch die beste Verschlüsselungstechnologie geschützt",
+      "benefit1": "AES-256 Verschlüsselung",
+      "benefit2": "Zwei-Faktor-Authentifizierung",
+      "benefit3": "24/7 Überwachung"
+    },
+    "accounts": {
+      "title": "Kontoverwaltung",
+      "description": "Verwalten Sie alle Ihre Konten über eine einzige Oberfläche",
+      "benefit1": "Giro- und Sparkonten",
+      "benefit2": "Virtuelle Kreditkarten",
+      "benefit3": "Echtzeit-Verfolgung"
+    },
+    "transactions": {
+      "title": "Sofortige Transaktionen",
+      "description": "Führen Sie Überweisungen und Zahlungen in Echtzeit durch",
+      "benefit1": "SEPA-Sofortüberweisungen",
+      "benefit2": "Kartenzahlungen",
+      "benefit3": "Detaillierter Verlauf"
+    },
+    "transfers": {
+      "title": "Internationale Überweisungen",
+      "description": "Senden Sie Geld weltweit",
+      "benefit1": "Wettbewerbsfähige Wechselkurse",
+      "benefit2": "Transparente Gebühren",
+      "benefit3": "Echtzeit-Verfolgung"
+    },
+    "international": {
+      "title": "Internationale Präsenz",
+      "description": "Tätig in über 50 Ländern",
+      "benefit1": "Mehrsprachiger Support",
+      "benefit2": "Mehrere Währungen",
+      "benefit3": "Lokale Compliance"
+    },
+    "mobile": {
+      "title": "Mobile App",
+      "description": "Verwalten Sie Ihre Finanzen von Ihrem Smartphone aus",
+      "benefit1": "Intuitive Oberfläche",
+      "benefit2": "Push-Benachrichtigungen",
+      "benefit3": "Biometrie"
+    },
+    "cta": {
+      "title": "Bereit zu starten?",
+      "description": "Werden Sie AmCbunq-Kunde und entdecken Sie eine neue Art, Ihre Finanzen zu verwalten",
+      "openAccount": "Konto eröffnen",
+      "viewPricing": "Preise anzeigen"
+    }
+  },
+
+  "pricing": {
+    "hero": {
+      "title": "Transparente Preise",
+      "subtitle": "Einfache und transparente Preise, keine Überraschungen"
+    },
+    "basic": {
+      "name": "Basic",
+      "price": "0€",
+      "description": "Perfekt für den Einstieg",
+      "feature1": "Kostenloses Girokonto",
+      "feature2": "Kostenlose Debitkarte",
+      "feature3": "Kostenlose SEPA-Überweisungen",
+      "feature4": "Mobile App",
+      "feature5": "E-Mail-Support"
+    },
+    "premium": {
+      "name": "Premium",
+      "price": "9,99€",
+      "description": "Für aktive Nutzer",
+      "feature1": "Alles aus dem Basic-Plan",
+      "feature2": "Sparkonto",
+      "feature3": "Kreditkarte",
+      "feature4": "Internationale Überweisungen",
+      "feature5": "Priorisierter Support",
+      "feature6": "Reiseversicherung",
+      "feature7": "Kostenlose Abhebungen"
+    },
+    "business": {
+      "name": "Business",
+      "price": "29,99€",
+      "description": "Für Unternehmen",
+      "feature1": "Alles aus dem Premium-Plan",
+      "feature2": "Mehrere Konten",
+      "feature3": "Integrations-API",
+      "feature4": "Dedizierter Support",
+      "feature5": "Erweiterte Berichte",
+      "feature6": "Teamverwaltung",
+      "feature7": "KYC-Compliance",
+      "feature8": "Individuelle Schulung"
+    },
+    "month": "Monat",
+    "popular": "Beliebt",
+    "choosePlan": "Diesen Plan wählen",
+    "faq": {
+      "title": "Häufige Fragen",
+      "subtitle": "Alles, was Sie über unsere Preise wissen müssen",
+      "q1": "Gibt es versteckte Gebühren?",
+      "a1": "Nein, alle unsere Preise sind transparent. Keine versteckten Gebühren.",
+      "q2": "Kann ich den Plan wechseln?",
+      "a2": "Ja, Sie können jederzeit über Ihren Kundenbereich den Plan wechseln.",
+      "q3": "Sind Überweisungen wirklich kostenlos?",
+      "a3": "Ja, alle SEPA-Überweisungen sind in allen unseren Plänen kostenlos.",
+      "q4": "Was passiert, wenn ich nicht zufrieden bin?",
+      "a4": "Sie können Ihr Konto jederzeit ohne Gebühren schließen."
+    },
+    "cta": {
+      "title": "Bereit zu starten?",
+      "description": "Wählen Sie den passenden Plan und eröffnen Sie Ihr Konto in 5 Minuten",
+      "button": "Konto eröffnen"
+    }
+  },
+
+  "help": {
+    "title": "Hilfezentrum",
+    "subtitle": "Finden Sie schnell Antworten auf Ihre Fragen",
+    "searchPlaceholder": "In der Hilfe suchen...",
+    "faqTitle": "Häufige Fragen",
+    "faqSubtitle": "Die am häufigsten gestellten Fragen unserer Kunden",
+    "contactTitle": "Brauchen Sie Hilfe?",
+    "contactSubtitle": "Unser Team ist für Sie da",
+    "liveChat": "Live-Chat",
+    "liveChatDescription": "Erhalten Sie sofort eine Antwort",
+    "startChat": "Chat starten",
+    "email": "E-Mail",
+    "emailDescription": "Antwort innerhalb von 24h",
+    "sendEmail": "E-Mail senden",
+    "phone": "Telefon",
+    "phoneDescription": "Support 24/7",
+    "callUs": "Uns anrufen",
+    "quickLinks": "Schnellzugriff",
+    "quickLinksSubtitle": "Schneller Zugriff auf nützliche Ressourcen",
+    "gettingStarted": "Erste Schritte",
+    "gettingStartedDescription": "Schnellstart-Anleitung",
+    "accountSecurity": "Kontosicherheit",
+    "accountSecurityDescription": "Schützen Sie Ihr Konto",
+    "transfers": "Überweisungen",
+    "transfersDescription": "Überweisungen durchführen",
+    "troubleshooting": "Fehlerbehebung",
+    "troubleshootingDescription": "Probleme lösen",
+    "learnMore": "Mehr erfahren",
+    "search": {
+      "placeholder": "In der Hilfe suchen..."
+    },
+    "contact": {
+      "phone": {
+        "title": "Telefon",
+        "description": "Kundenservice 24/7",
+        "number": "01 23 45 67 89",
+        "action": "Jetzt anrufen"
+      },
+      "chat": {
+        "title": "Online-Chat",
+        "description": "Sofortige Antwort",
+        "availability": "Verfügbar 24/7",
+        "action": "Chat starten"
+      },
+      "email": {
+        "title": "E-Mail",
+        "description": "Antwort innerhalb von 24h",
+        "address": "support@amcbunq.fr",
+        "action": "E-Mail senden"
+      }
+    },
+    "categories": {
+      "title": "Fragen nach Kategorie",
+      "all": "Alle Fragen (8)",
+      "account": "Bankkonto (2)",
+      "transfers": "Überweisungen (1)",
+      "cards": "Bankkarten (1)",
+      "security": "Sicherheit (2)",
+      "fees": "Gebühren (1)",
+      "documents": "Dokumente (1)"
+    },
+    "faq": {
+      "title": "Häufig gestellte Fragen",
+      "results": "Frage gefunden",
+      "resultsPlural": "Fragen gefunden",
+      "noResults": {
+        "title": "Keine Fragen gefunden",
+        "description": "Ändern Sie Ihre Suchkriterien oder kontaktieren Sie unseren Support."
+      },
+      "accountOpening": {
+        "question": "Wie eröffne ich ein Bankkonto?",
+        "answer": "Gehen Sie auf unsere Website und klicken Sie auf \"Konto eröffnen\". Sie müssen persönliche Daten, einen Ausweis und einen Wohnsitznachweis angeben. Der Prozess dauert normalerweise 24-48 Stunden."
+      },
+      "transfer": {
+        "question": "Wie führe ich eine Überweisung durch?",
+        "answer": "Melden Sie sich in Ihrem Kundenbereich an, gehen Sie zum Bereich \"Überweisungen\" und folgen Sie den Schritten. Sie benötigen die IBAN des Empfängers. SEPA-Überweisungen werden normalerweise innerhalb von 24 Stunden bearbeitet."
+      },
+      "cardBlocked": {
+        "question": "Meine Karte wurde gesperrt, was soll ich tun?",
+        "answer": "Wenn Ihre Karte gesperrt ist, kontaktieren Sie sofort unseren Kundenservice unter 01 23 45 67 89. Wir können sie entsperren oder Ihnen eine neue senden."
+      },
+      "passwordChange": {
+        "question": "Wie ändere ich mein Passwort?",
+        "answer": "Gehen Sie zu \"Einstellungen\" > \"Sicherheit\" > \"Passwort ändern\". Sie müssen Ihr aktuelles und neues Passwort eingeben."
+      },
+      "bankingFees": {
+        "question": "Welche Bankgebühren gibt es?",
+        "answer": "Unsere Preise variieren je nach Kontotyp. Sehen Sie sich unsere Preisliste im Bereich \"Preise\" an oder kontaktieren Sie unseren Kundenservice."
+      },
+      "twoFactor": {
+        "question": "Wie aktiviere ich die Zwei-Faktor-Authentifizierung?",
+        "answer": "Unter \"Einstellungen\" > \"Sicherheit\" können Sie die Zwei-Faktor-Authentifizierung aktivieren. Sie erhalten bei jeder Anmeldung einen SMS-Code."
+      },
+      "ibanChange": {
+        "question": "Hat sich meine IBAN geändert?",
+        "answer": "Nein, Ihre IBAN bleibt gleich, außer bei Kontowechsel. Sie finden sie im IBAN-Bereich Ihres Kundenbereichs."
+      },
+      "downloadStatements": {
+        "question": "Wie lade ich meine Kontoauszüge herunter?",
+        "answer": "Gehen Sie zu Verlauf > wählen Sie den Zeitraum > klicken Sie auf Herunterladen. Sie können PDF oder CSV wählen."
+      }
+    },
+    "resources": {
+      "title": "Nützliche Ressourcen",
+      "guide": {
+        "title": "Benutzerhandbuch"
+      },
+      "conditions": {
+        "title": "Allgemeine Geschäftsbedingungen"
+      },
+      "privacy": {
+        "title": "Datenschutzrichtlinie"
+      },
+      "fees": {
+        "title": "Preisliste"
+      }
+    },
+    "importantInfo": {
+      "title": "Wichtige Informationen",
+      "openingHours": "Öffnungszeiten: 24/7",
+      "emailResponse": "E-Mail-Antwortzeit: maximal 24h",
+      "chatResponse": "Chat-Antwortzeit: Sofort",
+      "emergencyNumber": "Notrufnummer: 01 23 45 67 89"
+    },
+    "stillNeedHelp": {
+      "title": "Haben Sie Ihre Antwort nicht gefunden?",
+      "description": "Unser Support-Team hilft Ihnen gerne. Kontaktieren Sie uns per Telefon, Chat oder E-Mail.",
+      "contactButton": "Support kontaktieren",
+      "appointmentButton": "Termin vereinbaren"
+    },
+    "alerts": {
+      "appointmentComingSoon": "Terminbuchungsfunktion in Kürze verfügbar. Rufen Sie uns unter 01 23 45 67 89 an.",
+      "userGuideRedirect": "Benutzerhandbuch - Weiterleitung zum PDF-Handbuch",
+      "pricingRedirect": "Preisliste - Weiterleitung zur Preisseite"
+    }
+  },
+
+  "auth": {
+    "login": {
+      "title": "Anmeldung",
+      "subtitle": "Zugriff auf Ihr AmCbunq-Konto",
+      "createAccount": "Konto erstellen",
+      "button": "Anmelden"
+    },
+    "register": {
+      "title": "Konto erstellen",
+      "subtitle": "Werden Sie in wenigen Schritten AmCbunq-Kunde",
+      "alreadyHaveAccount": "Haben Sie bereits ein Konto?",
+      "button": "Konto erstellen"
+    },
+    "email": "E-Mail-Adresse",
+    "emailPlaceholder": "ihre@email.com",
+    "password": "Passwort",
+    "passwordPlaceholder": "Ihr Passwort",
+    "confirmPassword": "Passwort bestätigen",
+    "confirmPasswordPlaceholder": "Bestätigen Sie Ihr Passwort",
+    "firstName": "Vorname",
+    "firstNamePlaceholder": "Ihr Vorname",
+    "lastName": "Nachname",
+    "lastNamePlaceholder": "Ihr Nachname",
+    "phone": "Telefon",
+    "phonePlaceholder": "+49 123 456789",
+    "birthDate": "Geburtsdatum",
+    "rememberMe": "Angemeldet bleiben",
+    "forgotPassword": "Passwort vergessen?",
+    "acceptTerms": "Ich akzeptiere die",
+    "termsAndConditions": "Nutzungsbedingungen",
+    "or": "oder",
+    "loginWithGoogle": "Mit Google anmelden",
+    "loginButton": "Anmelden",
+    "registerButton": "Konto erstellen",
+    "loggingIn": "Anmeldung...",
+    "registering": "Konto wird erstellt...",
+    "loginSuccess": "Anmeldung erfolgreich",
+    "loginError": "Anmeldefehler",
+    "registerSuccess": "Konto erfolgreich erstellt",
+    "registerError": "Fehler bei der Kontoerstellung",
+    "emailSendError": "Fehler beim Senden der E-Mail",
+    "accountCreatedSuccess": "Konto erstellt! Bitte überprüfen Sie Ihre E-Mail, um Ihr Konto zu aktivieren.",
+    "verifyEmailMessage": "Überprüfen Sie Ihre E-Mail, um Ihr Konto zu aktivieren",
+    "accountCreationError": "Fehler bei der Kontoerstellung",
+    "emailAlreadyUsed": "Diese E-Mail wird bereits verwendet",
+    "passwordTooWeak": "Passwort ist zu schwach",
+    "userNotFoundInDatabase": "Benutzer nicht in der Datenbank gefunden",
+    "verifyEmailBeforeLogin": "Bitte bestätigen Sie Ihre E-Mail, bevor Sie sich anmelden. Überprüfen Sie Ihren Spam-Ordner oder fordern Sie einen neuen Code an.",
+    "verifyEmailBeforeLoginShort": "Bitte bestätigen Sie Ihre E-Mail, bevor Sie sich anmelden.",
+    "welcomeAccountVerified": "Willkommen! Ihr Konto wurde erfolgreich verifiziert. Sie können jetzt auf alle Funktionen zugreifen.",
+    "invalidCredentials": "Falsche E-Mail oder falsches Passwort",
+    "tooManyAttempts": "Zu viele Versuche. Bitte versuchen Sie es später erneut.",
+    "accountDisabled": "Dieses Konto wurde deaktiviert"
+  },
+
+  "dashboard": {
+    "welcome": "Hallo",
+    "overview": "Übersicht über Ihre Finanzen",
+    "totalBalance": "Gesamtguthaben",
+    "totalAccounts": "Konten",
+    "monthlyIncome": "Monatliches Einkommen",
+    "monthlyExpenses": "Monatliche Ausgaben",
+    "fromLastMonth": "vs. letzten Monat",
+    "currentAccount": "Girokonto",
+    "savingsAccount": "Sparkonto",
+    "creditCard": "Kreditkarte",
+    "accounts": "Konten",
+    "recentTransactions": "Letzte Transaktionen",
+    "viewAll": "Alle anzeigen",
+    "quickActions": "Schnellaktionen",
+    "newTransfer": "Neue Überweisung",
+    "newCard": "Neue Karte",
+    "contacts": "Kontakte",
+    "investments": "Investitionen",
+    "balances": "Guthaben",
+    "ribUnavailable": "RIB nicht verfügbar",
+    "ribVerificationRequired": "Bestätigen Sie Ihre Identität, um auf Ihren RIB zuzugreifen",
+    "ribRequestPage": "Fordern Sie Ihren RIB auf der IBAN-Seite an"
+  },
+
+  "accounts": {
+    "title": "Meine Konten",
+    "subtitle": "Verwalten Sie Ihre Konten und Karten",
+    "totalBalance": "Gesamtguthaben",
+    "activeAccounts": "Aktive Konten",
+    "status": "Status",
+    "ribAmcbunq": "AmCbunq RIB",
+    "ribUnavailable": "RIB nicht verfügbar",
+    "ribVerificationRequired": "Bestätigen Sie Ihre Identität, um auf Ihren RIB zuzugreifen",
+    "ribRequestPage": "Fordern Sie Ihren RIB auf der IBAN-Seite an",
+    "accountNumber": "Kontonummer",
+    "balance": "Guthaben",
+    "lastTransaction": "Letzte Transaktion",
+    "details": "Details",
+    "transfer": "Überweisung",
+    "transactionLedger": "Transaktionsbuch",
+    "search": "Suchen...",
+    "filter": "Filtern",
+    "export": "Exportieren",
+    "loading": "Ihre Konten werden geladen...",
+    "hideBalances": "Guthaben ausblenden",
+    "showBalances": "Guthaben anzeigen",
+    "hide": "Ausblenden",
+    "show": "Anzeigen",
+    "accountDetails": "Kontodetails",
+    "accountInfo": "Kontoinformationen",
+    "currentBalance": "Aktuelles Guthaben",
+    "openingDate": "Eröffnungsdatum",
+    "recentTransactions": "Letzte Transaktionen",
+    "notAvailable": "Nicht verfügbar",
+    "displaying": "Anzeige von",
+    "transactions": "Transaktionen",
+    "previous": "Zurück",
+    "next": "Weiter",
+    "verificationRequired": "Identitätsprüfung erforderlich",
+    "verificationMessage": "Um eine Überweisung durchzuführen, müssen Sie zuerst Ihre Identität bestätigen.",
+    "detailsVerificationMessage": "Um die Kontodetails zu sehen, müssen Sie zuerst Ihre Identität bestätigen.",
+    "cancel": "Abbrechen",
+    "verifyIdentity": "Identität bestätigen",
+    "today": "Heute",
+    "yesterday": "Gestern",
+    "daysAgo": "Vor {count} Tagen",
+    "todayAt": "Heute um",
+    "yesterdayAt": "Gestern um"
+  },
+
+  "accountTypes": {
+    "current": "Girokonto",
+    "savings": "Sparkonto",
+    "credit": "Kreditkarte",
+    "account": "Konto"
+  },
+
+  "accountStatus": {
+    "active": "Aktiv",
+    "blocked": "Gesperrt",
+    "pending": "Ausstehend",
+    "unknown": "Unbekannt",
+    "verified": "Verifiziert",
+    "unverified": "Nicht verifiziert",
+    "pendingVerification": "In Bearbeitung"
+  },
+
+  "transactions": {
+    "title": "Transaktionsverlauf",
+    "subtitle": "Alle Ihre letzten Transaktionen",
+    "export": "Exportieren",
+    "searchPlaceholder": "Transaktion suchen...",
+    "recentTransactions": "Letzte Transaktionen",
+    "loading": "Transaktionen werden geladen...",
+    "all": "Alle",
+    "income": "Einnahmen",
+    "expense": "Ausgaben",
+    "transfer": "Überweisungen",
+    "credit": "Gutschrift",
+    "debit": "Lastschrift",
+    "totalIncome": "Gesamteinnahmen",
+    "totalExpenses": "Gesamtausgaben",
+    "netBalance": "Nettoguthaben",
+    "noTransactions": "Keine Transaktionen gefunden",
+    "today": "Heute",
+    "yesterday": "Gestern",
+    "reference": "Referenz",
+    "amount": "Betrag",
+    "date": "Datum",
+    "description": "Beschreibung",
+    "category": "Kategorie",
+    "account": "Konto",
+    "type": "Typ",
+    "filter": "Filtern",
+    "search": "Suchen",
+    "clear": "Löschen",
+    "results": "Ergebnisse",
+    "noResults": "Keine Ergebnisse für Ihre Suche gefunden",
+    "tryDifferentSearch": "Versuchen Sie andere Suchbegriffe"
+  },
+
+  "transactionCategories": {
+    "salary": "Gehalt",
+    "food": "Lebensmittel",
+    "transport": "Transport",
+    "shopping": "Einkäufe",
+    "bills": "Rechnungen",
+    "entertainment": "Unterhaltung",
+    "health": "Gesundheit",
+    "education": "Bildung",
+    "other": "Andere",
+    "transfer": "Überweisung",
+    "deposit": "Einzahlung",
+    "withdrawal": "Auszahlung"
+  },
+
+  "transfers": {
+    "title": "Überweisungen",
+    "subtitle": "Verwalten Sie Ihre Überweisungen und Empfänger",
+    "loading": "Daten werden geladen...",
+    "verificationRequired": "Zur Nutzung von Überweisungen müssen Sie Ihr Konto verifizieren.",
+    "newTransfer": "Neue Überweisung",
+    "newShort": "Neu",
+    "quickTransfer": "Schnellüberweisung",
+    "search": "Überweisung suchen...",
+    "export": "Exportieren",
+    "internal": "Interne Überweisung",
+    "external": "Externe Überweisung",
+    "scheduledLabel": "Geplante Überweisung",
+    "internalDesc": "Zwischen Ihren Konten",
+    "externalDesc": "An einen Empfänger",
+    "scheduledDesc": "Überweisung planen",
+    "stats": {
+      "thisMonth": "Diesen Monat",
+      "totalAmount": "Gesamtbetrag",
+      "beneficiaries": "Empfänger",
+      "scheduled": "Geplant"
+    },
+    "tabs": {
+      "new": "Neu",
+      "beneficiaries": "Empfänger",
+      "scheduled": "Geplant",
+      "history": "Verlauf"
+    },
+    "quick": {
+      "title": "Schnellüberweisungen",
+      "lastTransfer": "Letzte Überweisung",
+      "never": "Nie"
+    },
+    "beneficiaries": {
+      "title": "Meine Empfänger",
+      "add": "Empfänger hinzufügen",
+      "addTitle": "Empfänger hinzufügen",
+      "editTitle": "Empfänger bearbeiten",
+      "form": {
+        "name": "Name und Vorname",
+        "namePlaceholder": "Name und Vorname",
+        "ibanPlaceholder": "DE12 3456 7890 1234 5678 90",
+        "bic": "BIC-Code",
+        "bicPlaceholder": "DEUTDEFFXXX",
+        "bank": "Bank",
+        "bankPlaceholder": "Bankname",
+        "favorite": "Als Favorit markieren"
+      }
+    },
+    "scheduled": {
+      "title": "Geplante Überweisungen",
+      "for": "Geplant für den"
+    },
+    "history": {
+      "title": "Überweisungsverlauf"
+    },
+    "status": {
+      "completed": "Abgeschlossen",
+      "pending": "Ausstehend",
+      "failed": "Fehlgeschlagen",
+      "scheduled": "Geplant",
+      "unknown": "Unbekannt"
+    },
+    "filter": {
+      "all": "Alle",
+      "completed": "Abgeschlossen",
+      "pending": "Ausstehend",
+      "scheduled": "Geplant"
+    },
+    "form": {
+      "title": {
+        "internal": "Interne Überweisung",
+        "external": "Externe Überweisung",
+        "scheduled": "Geplante Überweisung"
+      },
+      "fromAccount": "Belastungskonto",
+      "toAccount": "Gutschriftkonto",
+      "beneficiary": "Empfänger",
+      "selectAccount": "Konto auswählen",
+      "selectBeneficiary": "Empfänger auswählen",
+      "amount": "Betrag",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "Überweisungsbeschreibung",
+      "scheduleDate": "Ausführungsdatum",
+      "schedule": "Planen",
+      "submit": "Überweisung durchführen"
+    }
+  },
+
+  "cards": {
+    "title": "Meine Karten",
+    "subtitle": "Verwalten Sie Ihre Bank- und Kreditkarten",
+    "addCard": "Neue Karte beantragen",
+    "noCards": "Keine Karten verfügbar",
+    "noCardsDescription": "Sie haben noch keine Bankkarten. Beantragen Sie Ihre erste Karte, um sie zu nutzen.",
+    "requestFirstCard": "Meine erste Karte beantragen",
+    "requestCard": "Karte beantragen",
+    "cardTypes": {
+      "debit": "Debitkarte",
+      "credit": "Kreditkarte"
+    },
+    "requestTypes": {
+      "physical": "Physische Karte",
+      "virtual": "Virtuelle Karte",
+      "physicalDescription": "Lieferung an Ihre Adresse in 5-7 Werktagen",
+      "virtualDescription": "Innerhalb von 24h für Online-Zahlungen verfügbar"
+    },
+    "status": {
+      "active": "Aktiv",
+      "blocked": "Gesperrt",
+      "expired": "Abgelaufen",
+      "unknown": "Unbekannt"
+    },
+    "actions": {
+      "use": "Nutzen",
+      "details": "Details",
+      "settings": "Einstellungen",
+      "delete": "Löschen",
+      "request": "Karte beantragen",
+      "requestNew": "Neue Karte beantragen",
+      "requestFirst": "Meine erste Karte beantragen",
+      "cancel": "Abbrechen"
+    },
+    "info": {
+      "title": "Wichtige Informationen",
+      "virtualAvailable": "Die virtuelle Karte ist innerhalb von 24h verfügbar",
+      "physicalDelivery": "Die physische Karte wird an Ihre Adresse geliefert",
+      "pinSms": "Sie erhalten einen separaten PIN per SMS",
+      "secured": "Karten sind gesichert und versichert"
+    },
+    "loading": {
+      "status": "Ihr Status wird überprüft..."
+    },
+    "verification": {
+      "title": "Identitätsprüfung erforderlich",
+      "description": "Um Karten zu beantragen und zu verwalten, müssen Sie zuerst Ihre Identität bestätigen."
+    },
+    "types": {
+      "credit": "Kreditkarte",
+      "debit": "Debitkarte"
+    },
+    "emptyState": {
+      "title": "Keine Karten verfügbar",
+      "description": "Sie haben noch keine Bankkarten. Beantragen Sie Ihre erste Karte, um sie zu nutzen."
+    },
+    "cardDetails": {
+      "expires": "Läuft ab",
+      "currentBalance": "Aktuelles Guthaben",
+      "creditLimit": "Kreditlimit"
+    },
+    "requestModal": {
+      "title": "Karte beantragen",
+      "cardType": "Kartentyp",
+      "physical": {
+        "title": "Physische Karte",
+        "description": "Lieferung an Ihre Adresse in 5-7 Werktagen"
+      },
+      "virtual": {
+        "title": "Virtuelle Karte",
+        "description": "Innerhalb von 24h für Online-Zahlungen verfügbar"
+      },
+      "importantInfo": {
+        "title": "Wichtige Informationen",
+        "info1": "Virtuelle Karte innerhalb von 24h verfügbar",
+        "info2": "Physische Karte wird an Ihre Adresse geliefert",
+        "info3": "Sie erhalten einen separaten PIN per SMS",
+        "info4": "Karten sind gesichert und versichert"
+      },
+      "submit": "Karte beantragen"
+    },
+    "security": {
+      "title": "Kartensicherheit",
+      "protection": {
+        "title": "Kartenschutz",
+        "feature1": "Sofortige Sperrung/Entsperrung",
+        "feature2": "Transaktionsbenachrichtigungen",
+        "feature3": "Konfigurierbare Zahlungslimits",
+        "feature4": "Betrugsschutz"
+      },
+      "tips": {
+        "title": "Sicherheitstipps",
+        "tip1": "Geben Sie Ihre Codes nie weiter",
+        "tip2": "Nutzen Sie sichere Websites",
+        "tip3": "Überwachen Sie Ihre Transaktionen",
+        "tip4": "Melden Sie verdächtige Aktivitäten"
+      }
+    },
+    "errors": {
+      "requestFailed": "Fehler beim Kartenantrag"
+    }
+  },
+
+  "verification": {
+    "title": "Kontoverifizierung",
+    "subtitle": "Schließen Sie Ihre Verifizierung ab, um alle Services nutzen zu können",
+    "verificationLevel": "Verifizierungsstufe",
+    "progress": "Verifizierungsfortschritt",
+    "completed": "abgeschlossen",
+    "documents": "Dokumente",
+    "steps": "Schritte",
+    "uploadedDocuments": "Hochgeladene Dokumente",
+    "uploadDocument": "Dokument hochladen",
+    "view": "Anzeigen",
+    "reupload": "Neu hochladen",
+    "requiredDocuments": "Erforderliche Dokumente",
+    "verificationSteps": "Verifizierungsschritte",
+    "identityDocument": "Ausweisdokument",
+    "proofOfAddress": "Wohnsitznachweis",
+    "proofOfIncome": "Einkommensnachweis",
+    "bankStatement": "Kontoauszug",
+    "status": {
+      "approved": "Genehmigt",
+      "pending": "Ausstehend",
+      "rejected": "Abgelehnt",
+      "completed": "Abgeschlossen",
+      "inProgress": "In Bearbeitung",
+      "unverified": "Nicht verifiziert"
+    },
+    "stepStatus": {
+      "completed": "Abgeschlossen",
+      "inProgress": "In Bearbeitung",
+      "pending": "Ausstehend"
+    },
+    "step1": {
+      "title": "Kontoerstellung",
+      "description": "Ihr Konto wurde erfolgreich erstellt"
+    },
+    "step2": {
+      "title": "E-Mail-Verifizierung",
+      "description": "Ihre E-Mail-Adresse wurde bestätigt"
+    },
+    "step3": {
+      "title": "Ausweisdokumente",
+      "description": "Ihre Dokumente werden überprüft"
+    },
+    "step4": {
+      "title": "Finale Validierung",
+      "description": "Finale Prüfung durch unser Team"
+    },
+    "banner": {
+      "unverified": {
+        "title": "Identitätsprüfung erforderlich",
+        "message": "Um alle AmCbunq-Funktionen nutzen zu können, müssen Sie Ihre Identität bestätigen.",
+        "button": "Jetzt bestätigen"
+      },
+      "pending": {
+        "title": "Verifizierung läuft",
+        "message": "Ihre Dokumente werden geprüft. Sie erhalten eine Benachrichtigung, sobald dies abgeschlossen ist.",
+        "button": "Status anzeigen"
+      }
+    }
+  },
+
+  "kyc": {
+    "title": "Identitätsprüfung",
+    "subtitle": "Laden Sie Ihre Dokumente hoch, um Ihr Konto zu validieren",
+    "documentsRequired": "Erforderliche Dokumente",
+    "identityDocument": "Ausweisdokument",
+    "proofOfAddress": "Wohnsitznachweis",
+    "proofOfIncome": "Einkommensnachweis",
+    "acceptedFormats": "PDF, JPG, PNG (max 5MB)",
+    "required": "Erforderlich",
+    "selectFile": "Klicken Sie, um eine Datei auszuwählen",
+    "dragDrop": "oder ziehen Sie sie hierher",
+    "removeFile": "Entfernen",
+    "submitDocuments": "Dokumente einreichen",
+    "submitting": "Wird übermittelt...",
+    "missingDocuments": "Fehlende Dokumente",
+    "missingDocumentsMessage": "Bitte laden Sie alle erforderlichen Dokumente hoch, bevor Sie sie einreichen",
+    "documentsSubmitted": "Dokumente eingereicht",
+    "submissionSuccess": "Ihre Dokumente wurden erfolgreich eingereicht. Sie erhalten eine Benachrichtigung, sobald die Prüfung abgeschlossen ist.",
+    "submissionError": "Beim Einreichen der Dokumente ist ein Fehler aufgetreten",
+    "fileTooLarge": "Datei zu groß",
+    "fileTooLargeMessage": "Die Datei darf nicht größer als 5MB sein",
+    "importantInfo": "Wichtige Informationen",
+    "secureProcessing": "Ihre Dokumente werden sicher und vertraulich verarbeitet",
+    "verificationTime": "Die Prüfung dauert normalerweise 24 bis 48 Stunden",
+    "emailNotification": "Sie erhalten eine Bestätigungs-E-Mail nach Abschluss der Prüfung",
+    "accountLimits": "Bestimmte Funktionen bleiben bis zur Validierung eingeschränkt",
+    "pending": {
+      "title": "Verifizierung läuft",
+      "subtitle": "Ihr Antrag wird von unserem Team geprüft",
+      "message": "Ihre Dokumente wurden eingereicht und werden derzeit von unserem Team geprüft.",
+      "timeframe": "Dieser Prozess dauert normalerweise 24 bis 48 Stunden. Sie erhalten eine Benachrichtigung, sobald die Prüfung abgeschlossen ist.",
+      "documentsSubmitted": "Eingereichte Dokumente"
+    },
+    "navigation": {
+      "backToDashboard": "Zurück zum Dashboard"
+    },
+    "errors": {
+      "userNotIdentified": "Benutzer nicht identifiziert",
+      "parsingError": "Fehler beim Parsen des Benutzers:",
+      "submissionGenericError": "Beim Einreichen ist ein Fehler aufgetreten"
+    },
+    "unverified": "Nicht verifiziert"
+  },
+
+  "billing": {
+    "title": "Abrechnung",
+    "subtitle": "RIB und Banknachrichten",
+    "loading": "Abrechnungsdaten werden geladen...",
+    "statusVerification": "Ihr Status wird überprüft...",
+    "noData": {
+      "title": "Keine Abrechnungsdaten",
+      "description": "Abrechnungsinformationen sind noch nicht verfügbar.",
+      "contact": "Kontaktieren Sie Ihren Berater für Ihre Abrechnungsdaten."
+    },
+    "verification": {
+      "title": "Identitätsprüfung erforderlich",
+      "description": "Für den Zugriff auf Abrechnungsinformationen und Banknachrichten müssen Sie zuerst Ihre Identität bestätigen."
+    },
+    "header": {
+      "type": "Typ",
+      "ribBilling": "RIB Abrechnung",
+      "status": "Status",
+      "active": "Aktiv",
+      "usage": "Verwendung",
+      "validation": "Validierung"
+    },
+    "ribSection": {
+      "title": "Abrechnungs-IBAN",
+      "description": "Für Kontoüberprüfung und Bankgeschäfte",
+      "ibanNumber": "Abrechnungs-IBAN",
+      "bicCode": "BIC/SWIFT-Code",
+      "accountHolder": "Kontoinhaber",
+      "showDetails": "Details anzeigen",
+      "hideDetails": "Details ausblenden",
+      "copy": "Kopieren",
+      "copied": "Kopiert!",
+      "downloadRib": "RIB herunterladen",
+      "share": "Teilen",
+      "activeStatus": "Aktive Abrechnungs-IBAN",
+      "sharing": "Abrechnungs-IBAN wird geteilt..."
+    },
+    "bankMessage": {
+      "title": "Banknachricht",
+      "importantInfo": "Wichtige Informationen"
+    },
+    "ribFile": {
+      "title": "AmCbunq Abrechnungs-IBAN",
+      "holder": "Inhaber:",
+      "bank": "Bank:",
+      "date": "Datum:",
+      "note": "Hinweis: Dieser RIB dient Abrechnungs- und Kontoüberprüfungszwecken."
+    },
+    "importantInfo": {
+      "title": "Wichtige Informationen",
+      "ribBilling": {
+        "title": "Abrechnungs-IBAN",
+        "description": "Dieser RIB dient speziell Abrechnungs- und Kontoüberprüfungszwecken. Er unterscheidet sich von Ihrem persönlichen RIB."
+      },
+      "accountValidation": {
+        "title": "Kontoüberprüfung",
+        "description": "Nutzen Sie diesen RIB für erforderliche Überprüfungsüberweisungen zur Aktivierung aller Kontofunktionen."
+      },
+      "difference": {
+        "title": "Unterschied zum persönlichen RIB",
+        "description": "Dieser RIB unterscheidet sich von Ihrem persönlichen RIB im Bereich \"Meine IBAN\". Er dient nur Abrechnungszwecken."
+      },
+      "bankMessages": {
+        "title": "Banknachrichten",
+        "description": "Prüfen Sie regelmäßig Banknachrichten für wichtige Anforderungen und Verfahren."
+      }
+    },
+    "usage": {
+      "title": "Verwendung des Abrechnungs-IBAN",
+      "accountValidation": {
+        "title": "Kontoüberprüfung",
+        "description": "Führen Sie erforderliche Überprüfungsüberweisungen durch."
+      },
+      "bankingOperations": {
+        "title": "Bankgeschäfte",
+        "description": "Nutzen Sie diesen RIB für spezielle von Ihrem Berater angeforderte Operationen."
+      },
+      "billing": {
+        "title": "Abrechnung",
+        "description": "Dieser RIB dient Abrechnungs- und Kontoverwaltungszwecken."
+      }
+    },
+    "errors": {
+      "noUser": "Kein angemeldeter Benutzer",
+      "copyError": "Fehler beim Kopieren:",
+      "loadingError": "Fehler beim Laden der Abrechnungsdaten:"
+    }
+  },
+
+  "iban": {
+    "title": "Meine IBAN",
+    "subtitle": "Ihre eindeutige Bankkennung",
+    "loading": "IBAN-Daten werden geladen...",
+    "noData": "Keine IBAN-Daten verfügbar",
+    "errorLoading": "Ladefehler",
+    "mainIban": "Haupt-IBAN",
+    "currentBalance": "Aktuelles Guthaben",
+    "status": "Status",
+    "accountType": "Kontotyp",
+    "active": "Aktiv",
+    "principal": "Hauptkonto",
+    "bankName": "AmCbunq Bank",
+    "ibanDescription": "Eindeutige IBAN für alle Ihre Konten",
+    "ibanNumber": "IBAN-Nummer",
+    "bicCode": "BIC/SWIFT-Code",
+    "accountHolder": "Kontoinhaber",
+    "showDetails": "Details anzeigen",
+    "hideDetails": "Details ausblenden",
+    "copy": "Kopieren",
+    "copied": "Kopiert!",
+    "downloadRib": "RIB herunterladen",
+    "share": "Teilen",
+    "sharing": "IBAN wird geteilt...",
+    "ribActiveStatus": "RIB verfügbar und aktiv",
+    "requestRib": {
+      "title": "RIB nicht verfügbar",
+      "description": "Für Überweisungen müssen Sie zuerst Ihren RIB anfordern.",
+      "button": "Meinen RIB anfordern",
+      "requesting": "Anfrage wird bearbeitet...",
+      "successTitle": "Anfrage registriert",
+      "successMessage": "Ihre RIB-Anfrage wurde registriert. Er wird innerhalb von 24-48h verfügbar sein.",
+      "errorTitle": "Fehler",
+      "errorMessage": "Ihre RIB-Anfrage konnte nicht bearbeitet werden",
+      "errorGeneric": "Fehler bei der RIB-Anfrage",
+      "errorRequest": "RIB konnte nicht angefordert werden"
+    },
+    "processing": {
+      "title": "RIB wird generiert",
+      "description": "Ihre RIB-Anfrage wurde registriert und wird bearbeitet. Der RIB wird innerhalb von 24-48h verfügbar sein.",
+      "notification": "Sie erhalten eine Benachrichtigung, sobald Ihr RIB verfügbar ist."
+    },
+    "unavailable": {
+      "title": "RIB nicht verfügbar",
+      "description": "Ihr Konto muss verifiziert sein, um einen RIB anzufordern.",
+      "fullDescription": "Ihr Konto muss verifiziert sein, um einen RIB anzufordern. Bitte bestätigen Sie zuerst Ihre Identität über die KYC-Seite."
+    },
+    "verification": {
+      "title": "Identitätsprüfung erforderlich",
+      "description": "Für den Zugriff auf Ihre IBAN und Kontoverwaltung müssen Sie zuerst Ihre Identität bestätigen."
+    },
+    "importantInfo": {
+      "title": "Wichtige Informationen",
+      "uniqueIban": {
+        "title": "Eindeutige IBAN",
+        "description": "Diese IBAN gilt für alle Ihre Konten (Giro, Sparkonto, Kreditkarte). Überweisungen werden automatisch Ihrem Hauptkonto zugeordnet."
+      },
+      "sepaTransfers": {
+        "title": "SEPA-Überweisungen",
+        "description": "Kompatibel mit allen europäischen SEPA-Überweisungen. Bearbeitungszeit: 1-2 Werktage."
+      },
+      "qrCode": {
+        "title": "QR-Code",
+        "description": "Nutzen Sie den QR-Code zum einfachen Teilen Ihrer Bankdaten mit anderen Apps."
+      },
+      "security": {
+        "title": "Sicherheit",
+        "description": "Ihre IBAN ist sicher und kann nur zum Empfang von Geldern genutzt werden. Automatische Abbuchungen sind nicht möglich."
+      }
+    },
+    "usage": {
+      "title": "So nutzen Sie Ihre IBAN",
+      "receiveTransfers": {
+        "title": "Überweisungen empfangen",
+        "description": "Teilen Sie Ihre IBAN, um Überweisungen von jeder europäischen Bank zu empfangen."
+      },
+      "salaryBenefits": {
+        "title": "Gehalt und Leistungen",
+        "description": "Nutzen Sie diese IBAN für Gehalt, Zuschüsse oder andere Leistungen."
+      },
+      "onlinePayments": {
+        "title": "Online-Zahlungen",
+        "description": "Einige Dienste akzeptieren IBAN-Zahlungen für mehr Sicherheit."
+      }
+    },
+    "ribFile": {
+      "title": "AmCbunq RIB",
+      "holder": "Inhaber:",
+      "bank": "Bank:",
+      "date": "Datum:"
+    },
+    "errors": {
+      "noUser": "Kein angemeldeter Benutzer",
+      "parsingUser": "Fehler beim Parsen des Benutzers:",
+      "copyError": "Fehler beim Kopieren:",
+      "defaultAccountHolder": "AmCbunq Kunde"
+    },
+    "actions": {
+      "copy": "Kopieren",
+      "copied": "Kopiert!",
+      "download": "RIB herunterladen",
+      "share": "Teilen",
+      "showDetails": "Details anzeigen",
+      "hideDetails": "Details ausblenden",
+      "requestRib": "Meinen RIB anfordern",
+      "requesting": "Anfrage wird bearbeitet..."
+    },
+    "messages": {
+      "ribNotAvailable": "RIB nicht verfügbar",
+      "ribNotAvailableDesc": "Für Überweisungen müssen Sie zuerst Ihren RIB anfordern.",
+      "ribProcessing": "RIB wird generiert",
+      "ribProcessingDesc": "Ihre RIB-Anfrage wurde registriert. Er wird innerhalb von 24-48h verfügbar sein.",
+      "ribUnavailable": "RIB nicht verfügbar",
+      "ribUnavailableDesc": "Ihr Konto muss verifiziert sein, um einen RIB anzufordern.",
+      "ribAvailable": "RIB verfügbar und aktiv"
+    },
+    "info": {
+      "title": "Wichtige Informationen",
+      "unavailable": {
+        "title": "RIB nicht verfügbar",
+        "description": "Ihr Konto muss verifiziert sein, um einen RIB anzufordern. Bitte bestätigen Sie zuerst Ihre Identität über die KYC-Seite."
+      },
+      "processing": {
+        "title": "RIB wird generiert",
+        "description": "Ihre RIB-Anfrage wurde registriert und wird bearbeitet. Der RIB wird innerhalb von 24-48h verfügbar sein.",
+        "notification": "Sie erhalten eine Benachrichtigung, sobald Ihr RIB verfügbar ist."
+      }
+    }
+  },
+
+  "history": {
+    "title": "Verlauf",
+    "subtitle": "Ihre Transaktionshistorie",
+    "loading": {
+      "status": "Ihr Status wird überprüft...",
+      "transactions": "Transaktionen werden geladen...",
+      "history": "Verlauf wird geladen..."
+    },
+    "verification": {
+      "title": "Identitätsprüfung erforderlich",
+      "description": "Für den Zugriff auf Ihre Transaktionshistorie müssen Sie zuerst Ihre Identität bestätigen."
+    },
+    "summary": {
+      "income": "Einnahmen",
+      "expenses": "Ausgaben",
+      "netBalance": "Nettoguthaben"
+    },
+    "search": {
+      "placeholder": "Transaktion suchen..."
+    },
+    "filters": {
+      "allTypes": "Alle Typen",
+      "income": "Einnahmen",
+      "expense": "Ausgaben",
+      "transfer": "Überweisungen",
+      "periods": {
+        "7Days": "Letzte 7 Tage",
+        "30Days": "Letzte 30 Tage",
+        "90Days": "Letzte 90 Tage",
+        "1Year": "1 Jahr"
+      },
+      "export": "Exportieren"
+    },
+    "table": {
+      "headers": {
+        "transaction": "Transaktion",
+        "category": "Kategorie",
+        "amount": "Betrag",
+        "date": "Datum",
+        "status": "Status",
+        "reference": "Referenz"
+      }
+    },
+    "status": {
+      "completed": "Abgeschlossen",
+      "pending": "Ausstehend",
+      "failed": "Fehlgeschlagen",
+      "unknown": "Unbekannt"
+    },
+    "accounts": {
+      "checking": "Girokonto",
+      "savings": "Sparkonto",
+      "credit": "Kreditkarte",
+      "default": "Konto"
+    },
+    "categories": {
+      "other": "Andere",
+      "transferOut": "Ausgehende Überweisung"
+    },
+    "emptyState": {
+      "title": "Keine Transaktionen gefunden",
+      "description": "Ändern Sie Ihre Suchkriterien."
+    },
+    "pagination": {
+      "showing": "Anzeige von",
+      "transactions": "Transaktionen",
+      "previous": "Zurück",
+      "next": "Weiter"
+    },
+    "errors": {
+      "noUser": "Kein angemeldeter Benutzer",
+      "loadingError": "Fehler beim Laden der Daten"
+    },
+    "references": {
+      "txnPrefix": "TXN",
+      "outPrefix": "OUT",
+      "defaultPrefix": "REF",
+      "defaultValue": "-"
+    }
+  },
+
+  "budgets": {
+    "title": "Budgets",
+    "subtitle": "Verfolgen Sie Ihre Ausgaben und halten Sie sich an Ihre Budgets",
+    "loading": {
+      "budgets": "Ihre Budgets werden geladen...",
+      "status": "Ihr Status wird überprüft..."
+    },
+    "unverified": {
+      "titleUnverified": "Identitätsprüfung erforderlich",
+      "titlePending": "Verifizierung läuft",
+      "descriptionUnverified": "Für die Budgeterstellung müssen Sie zuerst Ihre Identität bestätigen.",
+      "descriptionPending": "Ihr Konto wird verifiziert. Sie können Budgets nach der Validierung erstellen.",
+      "secureAccount": "Sicheres Konto",
+      "customBudgets": "Individuelle Budgets"
+    },
+    "summary": {
+      "totalBudget": "Gesamtbudget",
+      "spent": "Ausgegeben",
+      "remaining": "Verbleibend",
+      "usage": "Nutzung"
+    },
+    "progress": {
+      "title": "Gesamtfortschritt",
+      "budgetUsage": "Budgetnutzung"
+    },
+    "actions": {
+      "createNew": "Neues Budget erstellen",
+      "edit": "Bearbeiten",
+      "details": "Details"
+    },
+    "status": {
+      "onTrack": "Im Rahmen",
+      "overBudget": "Über Budget",
+      "underBudget": "Unter Budget",
+      "unknown": "Unbekannt"
+    },
+    "card": {
+      "progression": "Fortschritt",
+      "budget": "Budget",
+      "spent": "Ausgegeben",
+      "remaining": "Verbleibend",
+      "monthly": "Monatlich",
+      "yearly": "Jährlich"
+    },
+    "tips": {
+      "title": "Tipps zur Budgetverwaltung",
+      "planning": {
+        "title": "Planung",
+        "tip1": "Setzen Sie realistische Ziele",
+        "tip2": "Verfolgen Sie regelmäßig Ihre Ausgaben",
+        "tip3": "Passen Sie Budgets bei Bedarf an",
+        "tip4": "Planen Sie Unvorhergesehenes ein"
+      },
+      "optimization": {
+        "title": "Optimierung",
+        "tip1": "Identifizieren Sie Ihre Ausgabenposten",
+        "tip2": "Suchen Sie nach günstigeren Alternativen",
+        "tip3": "Vermeiden Sie impulsive Käufe",
+        "tip4": "Sparen Sie Überschüsse"
+      }
+    },
+    "errors": {
+      "noUser": "Kein angemeldeter Benutzer",
+      "loadingError": "Fehler beim Laden der Budgets"
+    }
+  },
+
+  "messages": {
+    "title": "Nachrichten",
+    "subtitle": "AmCbunq Kundenservice",
+    "loading": "Nachrichten werden geladen...",
+    "welcome": "Hallo! Ich bin Ihr AmCbunq-Assistent. Wie kann ich Ihnen heute helfen?",
+    "autoReply": "Vielen Dank für Ihre Nachricht. Ein Berater wird Ihnen schnellstmöglich antworten.",
+    "inputPlaceholder": "Geben Sie Ihre Nachricht ein...",
+    "typing": "Support schreibt...",
+    "online": "Online",
+    "quickResponse": "Schnelle Antwort",
+    "onlineStatus": "Online",
+          "supportName": "AmCbunq Support",
+      "unavailable": "Nachrichten nicht verfügbar",
+      "unavailableUnverified": "Um auf den Chat mit unserem Support zuzugreifen, müssen Sie zuerst Ihre Identität bestätigen.",
+      "temporarilyUnavailable": "Nachrichten vorübergehend nicht verfügbar",
+      "unavailablePending": "Nachrichten nicht verfügbar - Verifizieren Sie Ihre Identität",
+      "unavailableVerifyIdentity": "Nachrichten nicht verfügbar - Verifizieren Sie Ihre Identität",
+      "verification": {
+      "unavailableTitle": "Nachrichten nicht verfügbar",
+      "temporarilyUnavailableTitle": "Nachrichten vorübergehend nicht verfügbar",
+      "unavailableDescription": "Für den Chat mit unserem Support müssen Sie zuerst Ihre Identität bestätigen.",
+      "pendingDescription": "Die Nachrichtenfunktion wird nach Abschluss Ihrer Identitätsprüfung verfügbar sein. Ihr Antrag wird geprüft."
+    },
+    "errors": {
+      "noUser": "Kein angemeldeter Benutzer",
+      "loadingError": "Fehler beim Laden der Nachrichten",
+      "sendingError": "Fehler beim Senden der Nachricht",
+      "noMessages": "Keine Nachrichten gefunden, Begrüßungsnachricht wird erstellt"
+    }
+  },
+
+  "settings": {
+    "title": "Einstellungen",
+    "subtitle": "Verwalten Sie Ihre Kontoeinstellungen",
+    "loading": "Benutzerdaten werden geladen...",
+    "profile": "Profil",
+    "security": "Sicherheit",
+    "notifications": "Benachrichtigungen",
+    "preferences": "Präferenzen",
+    "profileSettings": "Profileinstellungen",
+    "securitySettings": "Sicherheitseinstellungen",
+    "notificationSettings": "Benachrichtigungseinstellungen",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "dateOfBirth": "Geburtsdatum",
+    "placeOfBirth": "Geburtsort",
+    "nationality": "Nationalität",
+    "residenceCountry": "Wohnsitzland",
+    "address": "Adresse",
+    "city": "Stadt",
+    "postalCode": "Postleitzahl",
+    "profession": "Beruf",
+    "salary": "Gehalt",
+    "saveChanges": "Änderungen speichern",
+    "change": "Ändern",
+    "enable": "Aktivieren",
+    "view": "Anzeigen",
+    "language": "Sprache",
+    "currency": "Währung",
+    "timezone": "Zeitzone",
+    "theme": "Design",
+    "changePassword": "Passwort ändern",
+    "changePasswordDescription": "Ändern Sie Ihr Passwort für mehr Sicherheit",
+    "twoFactorAuth": "Zwei-Faktor-Authentifizierung",
+    "twoFactorAuthDescription": "Fügen Sie eine zusätzliche Sicherheitsebene hinzu",
+    "loginHistory": "Anmeldeverlauf",
+    "loginHistoryDescription": "Ihre letzten Anmeldungen",
+    "emailNotifications": "E-Mail-Benachrichtigungen",
+    "emailNotificationsDescription": "Wichtige Benachrichtigungen per E-Mail",
+    "smsNotifications": "SMS-Benachrichtigungen",
+    "smsNotificationsDescription": "Sicherheitswarnungen per SMS",
+    "pushNotifications": "Push-Benachrichtigungen",
+    "pushNotificationsDescription": "Benachrichtigungen direkt auf Ihr Gerät",
+    "marketingEmails": "Marketing-E-Mails",
+    "marketingEmailsDescription": "Angebote und Neuigkeiten per E-Mail"
+  },
+
+  "transferMessages": {
+    "externalTransferTitle": "Externe Überweisung",
+    "externalTransferMessage": "Externe Überweisungen unterliegen einer Sicherheitsprüfung vor Bestätigung.",
+    "confirmTransfer": "Überweisung bestätigen",
+    "internalSuccess": "Ihre Überweisung von {amount} wurde erfolgreich erstellt.",
+    "scheduledSuccess": "Ihre Überweisung von {amount} wurde erfolgreich geplant.",
+    "externalSuccess": "Ihre externe Überweisung von {amount} wurde eingereicht und wird geprüft.",
+    "creationError": "Überweisung konnte nicht erstellt werden: {error}",
+    "beneficiaryAddSuccess": "Empfänger \"{name}\" wurde erfolgreich hinzugefügt.",
+    "beneficiaryUpdateSuccess": "Informationen von \"{name}\" wurden erfolgreich aktualisiert.",
+    "beneficiaryDeleteSuccess": "Empfänger \"{name}\" wurde erfolgreich gelöscht.",
+    "beneficiaryAddError": "Empfänger konnte nicht hinzugefügt werden: {error}",
+    "beneficiaryUpdateError": "Empfänger konnte nicht aktualisiert werden: {error}",
+    "beneficiaryDeleteError": "Empfänger konnte nicht gelöscht werden: {error}"
+  },
+
+  "footer": {
+    "description": "Die Bank der Zukunft, heute. Verwalten Sie Ihre Finanzen ganz einfach.",
+    "products": "Produkte",
+    "support": "Support",
+    "legal": "Rechtliches",
+    "contact": "Kontakt",
+    "privacy": "Datenschutz",
+    "terms": "Bedingungen",
+    "rights": "Alle Rechte vorbehalten"
+  },
+
+  "errors": {
+    "network": "Verbindungsfehler",
+    "unauthorized": "Nicht autorisiert",
+    "forbidden": "Zugriff verboten",
+    "notFound": "Seite nicht gefunden",
+    "serverError": "Serverfehler",
+    "validation": "Validierungsfehler",
+    "fileTooLarge": "Datei zu groß",
+    "invalidFileType": "Nicht unterstützter Dateityp",
+    "transferCreationFailed": "Fehler bei der Erstellung",
+    "beneficiaryAddFailed": "Fehler beim Hinzufügen",
+    "beneficiaryUpdateFailed": "Fehler bei der Aktualisierung",
+    "beneficiaryDeleteFailed": "Fehler beim Löschen"
+  },
+
+  "success": {
+    "accountCreated": "Konto erfolgreich erstellt",
+    "loginSuccess": "Anmeldung erfolgreich",
+    "logoutSuccess": "Abmeldung erfolgreich",
+    "profileUpdated": "Profil aktualisiert",
+    "passwordChanged": "Passwort geändert",
+    "documentUploaded": "Dokument hochgeladen",
+    "transferCompleted": "Überweisung durchgeführt",
+    "transferCreated": "Überweisung erstellt",
+    "transferScheduled": "Überweisung geplant",
+    "transferSubmitted": "Überweisung eingereicht",
+    "beneficiaryAdded": "Empfänger hinzugefügt",
+    "beneficiaryUpdated": "Empfänger aktualisiert",
+    "beneficiaryDeleted": "Empfänger gelöscht"
+  },
+
+  "pages": {
+    "home": {
+      "title": "Startseite - AmCbunq",
+      "metaDescription": "Die Bank der Zukunft, heute. Verwalten Sie Ihre Finanzen ganz einfach mit AmCbunq."
+    },
+    "features": {
+      "title": "Funktionen - AmCbunq",
+      "metaDescription": "Entdecken Sie alle AmCbunq-Funktionen: Konten, Karten, Überweisungen und mehr."
+    },
+    "pricing": {
+      "title": "Preise - AmCbunq",
+      "metaDescription": "Transparente und erschwingliche Preise für alle Bankbedürfnisse."
+    },
+    "help": {
+      "title": "Hilfe - AmCbunq",
+      "metaDescription": "AmCbunq Hilfezentrum. Finden Sie schnell Antworten auf Ihre Fragen."
+    }
+  },
+
+  "system": {
+    "loading": "Wird geladen...",
+    "noData": "Keine Daten verfügbar",
+    "retry": "Erneut versuchen",
+    "connectionError": "Verbindungsfehler",
+    "sessionExpired": "Sitzung abgelaufen",
+    "unauthorized": "Nicht autorisiert",
+    "serverError": "Serverfehler",
+    "maintenance": "Wartungsarbeiten"
+  },
+
+  "status": {
+    "active": "Aktiv",
+    "inactive": "Inaktiv",
+    "pending": "Ausstehend",
+    "approved": "Genehmigt",
+    "rejected": "Abgelehnt",
+    "expired": "Abgelaufen",
+    "suspended": "Gesperrt",
+    "completed": "Abgeschlossen",
+    "processing": "In Bearbeitung",
+    "failed": "Fehlgeschlagen"
+  },
+
+  "actions": {
+    "create": "Erstellen",
+    "read": "Lesen",
+    "update": "Aktualisieren",
+    "delete": "Löschen",
+    "copy": "Kopieren",
+    "share": "Teilen",
+    "download": "Herunterladen",
+    "upload": "Hochladen",
+    "print": "Drucken",
+    "export": "Exportieren",
+    "import": "Importieren",
+    "send": "Senden",
+    "receive": "Empfangen"
+  },
+
+  "notifications": {
+    "newMessage": "Neue Nachricht",
+    "newTransaction": "Neue Transaktion",
+    "accountUpdated": "Konto aktualisiert",
+    "cardBlocked": "Karte gesperrt",
+    "transferCompleted": "Überweisung abgeschlossen",
+    "documentRequired": "Dokument erforderlich",
+    "verificationComplete": "Verifizierung abgeschlossen",
+    "maintenanceScheduled": "Wartung geplant"
+  },
+
+  "forms": {
+    "required": "Pflichtfeld",
+    "invalid": "Ungültiges Format",
+    "tooShort": "Zu kurz",
+    "tooLong": "Zu lang",
+    "passwordMismatch": "Passwörter stimmen nicht überein",
+    "emailInvalid": "Ungültige E-Mail",
+    "phoneInvalid": "Ungültige Telefonnummer",
+    "dateInvalid": "Ungültiges Datum",
+    "amountInvalid": "Ungültiger Betrag",
+    "ibanInvalid": "Ungültige IBAN"
+  },
+
+  "time": {
+    "now": "Jetzt",
+    "today": "Heute",
+    "yesterday": "Gestern",
+    "tomorrow": "Morgen",
+    "thisWeek": "Diese Woche",
+    "lastWeek": "Letzte Woche",
+    "thisMonth": "Dieser Monat",
+    "lastMonth": "Letzter Monat",
+    "thisYear": "Dieses Jahr",
+    "lastYear": "Letztes Jahr"
+  },
+
+  "currency": {
+    "eur": "Euro",
+    "usd": "US-Dollar",
+    "gbp": "Britisches Pfund",
+    "chf": "Schweizer Franken",
+    "jpy": "Japanischer Yen"
+  },
+
+  "languages": {
+    "fr": "Französisch",
+    "en": "Englisch",
+    "es": "Spanisch",
+    "pt": "Portugiesisch",
+    "it": "Italienisch",
+    "nl": "Niederländisch",
+    "de": "Deutsch"
+  },
+
+  "validation": {
+    "firstNameMinLength": "Vorname muss mindestens 2 Zeichen enthalten",
+    "lastNameMinLength": "Nachname muss mindestens 2 Zeichen enthalten",
+    "emailInvalid": "Ungültige E-Mail",
+    "phoneInvalid": "Ungültige Telefonnummer",
+    "birthPlaceMinLength": "Geburtsort muss mindestens 2 Zeichen enthalten",
+    "nationalityMinLength": "Nationalität muss mindestens 2 Zeichen enthalten",
+    "residenceCountryMinLength": "Wohnsitzland muss mindestens 2 Zeichen enthalten",
+    "addressMinLength": "Adresse muss mindestens 5 Zeichen enthalten",
+    "cityMinLength": "Stadt muss mindestens 2 Zeichen enthalten",
+    "postalCodeMinLength": "Postleitzahl muss mindestens 4 Zeichen enthalten",
+    "professionMinLength": "Beruf muss mindestens 2 Zeichen enthalten",
+    "salaryRequired": "Gehalt ist erforderlich",
+    "passwordMinLength": "Passwort muss mindestens 8 Zeichen enthalten",
+    "acceptTermsRequired": "Sie müssen die Bedingungen akzeptieren",
+    "passwordMismatch": "Passwörter stimmen nicht überein",
+    "passwordMinLength6": "Passwort muss mindestens 6 Zeichen enthalten"
+  },
+
+  "placeholders": {
+    "nationality": "Z.B.: Deutsch"
+  },
+
+  "payments": {
+    "title": "Zahlungen",
+    "quick": "Schnell"
+  },
+
+  "offers": {
+    "special": "Sonderangebot",
+    "savingsAccount": "Eröffnen Sie ein Sparkonto und erhalten Sie 2% Zinsen für 6 Monate!"
+  },
+
+  "protection": {
+    "premium": "Premium-Schutz",
+    "description": "Schützen Sie Ihre Transaktionen mit unserer erweiterten Betrugsversicherung."
+  },
+
+  "referral": {
+    "welcome": "Willkommensgeschenk!",
+    "description": "Empfehlen Sie einen Freund und erhalten Sie jeweils 50€. Gilt unter bestimmten Bedingungen.",
+    "refer": "Empfehlen"
+  },
+
+  "documents": {
+    "title": "Meine Dokumente",
+    "subtitle": "Greifen Sie sicher auf alle Ihre Bankdokumente zu",
+    "showDocumentation": "Dokumentation anzeigen",
+    "hideDocumentation": "Dokumentation ausblenden",
+    "types": {
+      "contract": "Vertrag",
+      "policy": "Richtlinie",
+      "terms": "Bedingungen",
+      "legal": "Rechtlich",
+      "document": "Dokument"
+    },
+    "list": {
+      "accountContract": {
+        "title": "Bankkontovertrag",
+        "description": "Allgemeine Geschäftsbedingungen Ihres AmCbunq-Kontos",
+        "detailedDescription": "Dieser Vertrag definiert die allgemeinen Bedingungen für die Eröffnung und Nutzung Ihres AmCbunq-Bankkontos. Er umfasst die Rechte und Pflichten jeder Partei, die Kontoführungsbedingungen, anfallende Gebühren und Kündigungsverfahren.",
+        "usage": "Konsultieren Sie dieses Dokument, um Ihre Rechte und Pflichten als Kontoinhaber zu verstehen. Es ist wichtig, es aufzubewahren, da es für Verwaltungsverfahren oder bei Streitigkeiten erforderlich sein kann.",
+        "importance": "Pflichtdokument",
+        "validityPeriod": "Gültig bis 31.12.2024"
+      },
+      "privacyPolicy": {
+        "title": "Datenschutzrichtlinie",
+        "description": "Wie wir Ihre persönlichen Daten schützen",
+        "detailedDescription": "Diese Richtlinie beschreibt, wie AmCbunq Ihre persönlichen Daten gemäß der DSGVO sammelt, verwendet, speichert und schützt. Sie erklärt Ihre Datenschutzrechte und wie Sie diese ausüben können.",
+        "usage": "Lesen Sie diese Richtlinie sorgfältig, um zu verstehen, wie Ihre Daten verarbeitet werden. Sie können Ihre Rechte (Zugang, Berichtigung, Löschung) ausüben, indem Sie unseren Datenschutzbeauftragten kontaktieren.",
+        "importance": "DSGVO-Konformität",
+        "validityPeriod": "Vierteljährliche Updates"
+      },
+      "termsOfService": {
+        "title": "Nutzungsbedingungen",
+        "description": "Regeln für die Nutzung unserer Bankdienstleistungen",
+        "detailedDescription": "Diese Bedingungen regeln die Nutzung aller unserer Online-, Mobil- und physischen Bankdienstleistungen. Sie umfassen Sicherheitsregeln, Nutzungslimits, Verantwortlichkeiten und Sanktionen bei Nichteinhaltung.",
+        "usage": "Akzeptieren Sie diese Bedingungen, um unsere Dienstleistungen zu nutzen. Sie können mit 30 Tagen Vorankündigung geändert werden. Bei Änderungen werden Sie per E-Mail und in Ihrem Kundenbereich benachrichtigt.",
+        "importance": "Dienstleistungszugangsbedingungen",
+        "validityPeriod": "Aktuelle Version"
+      },
+      "legalNotice": {
+        "title": "Rechtlicher Hinweis",
+        "description": "Rechtliche und regulatorische Informationen",
+        "detailedDescription": "Dieser Hinweis enthält die gesetzlich vorgeschriebenen Informationen über AmCbunq: Identität des Instituts, Banklizenzen, Aufsicht, Einlagensicherung und Kontaktdaten der Aufsichtsbehörden.",
+        "usage": "Konsultieren Sie diesen Hinweis, um die Rechtmäßigkeit unserer Aktivitäten zu überprüfen und Ihre Garantien zu kennen. Diese Informationen sind wichtig für Ihre Sicherheit und die Konformität unserer Dienstleistungen.",
+        "importance": "Gesetzliche Verpflichtung",
+        "validityPeriod": "Jährliche Updates"
+      },
+      "cardContract": {
+        "title": "Bankkartenvertrag",
+        "description": "Spezifische Bedingungen für Ihre Bankkarte",
+        "detailedDescription": "Dieser Vertrag beschreibt die Bedingungen für die Ausstellung und Nutzung Ihrer Bankkarte: Limits, Gebühren, Versicherung, Verantwortlichkeiten bei Verlust oder Diebstahl und Streitverfahren.",
+        "usage": "Bewahren Sie dieses Dokument mit Ihrer Karte auf. Es enthält wesentliche Informationen über Ihre Rechte und Pflichten, insbesondere bei Betrug oder Transaktionsstreitigkeiten.",
+        "importance": "Rechtlicher Schutz",
+        "validityPeriod": "Gültig für die Dauer der Karte"
+      },
+      "securityPolicy": {
+        "title": "Sicherheitsrichtlinie",
+        "description": "Sicherheitsmaßnahmen zum Schutz Ihres Kontos",
+        "detailedDescription": "Diese Richtlinie beschreibt die von AmCbunq implementierten Sicherheitsmaßnahmen zum Schutz Ihres Kontos und Ihrer Daten: Multi-Faktor-Authentifizierung, Transaktionsüberwachung, Datenverschlüsselung und Incident-Verfahren.",
+        "usage": "Befolgen Sie diese Empfehlungen, um Ihr Konto zu sichern. Bei Verdacht auf Kompromittierung kontaktieren Sie sofort unseren Sicherheitsdienst.",
+        "importance": "Kontosicherheit",
+        "validityPeriod": "Kontinuierliche Updates"
+      }
+    },
+    "documentInfo": {
+      "version": "Version",
+      "lastUpdated": "Zuletzt aktualisiert",
+      "size": "Größe",
+      "validity": "Gültigkeit"
+    },
+    "actions": {
+      "view": "Anzeigen",
+      "download": "Herunterladen",
+      "downloading": "Wird heruntergeladen..."
+    },
+    "alerts": {
+      "unavailable": {
+        "title": "Dokument nicht verfügbar",
+        "message": "Dieses Dokument ist derzeit nicht verfügbar. Bitte versuchen Sie es später erneut."
+      },
+      "downloadSuccess": {
+        "title": "Download erfolgreich",
+        "message": "Das Dokument {{title}} wurde erfolgreich heruntergeladen."
+      },
+      "downloadError": {
+        "title": "Download-Fehler",
+        "message": "Beim Herunterladen des Dokuments ist ein Fehler aufgetreten."
+      }
+    },
+    "documentation": {
+      "title": "Dokumentation der Dokumente",
+      "types": {
+        "title": "Dokumenttypen",
+        "contract": {
+          "description": "Bankverträge und allgemeine Bedingungen"
+        },
+        "policy": {
+          "description": "Datenschutz- und Sicherheitsrichtlinien"
+        },
+        "terms": {
+          "description": "Nutzungsbedingungen der Dienstleistungen"
+        },
+        "legal": {
+          "description": "Rechtliche Hinweise und regulatorische Informationen"
+        }
+      },
+      "format": {
+        "title": "Download-Format",
+        "pdf": "Standard-PDF-Format",
+        "compatible": "Kompatibel mit allen Lesern",
+        "signature": "Elektronische Signatur enthalten",
+        "retention": "Sichere Aufbewahrung"
+      },
+      "importantInfo": {
+        "title": "Wichtige Informationen",
+        "keepCopy": "Bewahren Sie eine Kopie Ihrer Dokumente auf",
+        "regularUpdates": "Dokumente werden regelmäßig aktualisiert",
+        "notifications": "Sie werden über Änderungen benachrichtigt",
+        "contactLegal": "Kontaktieren Sie den Rechtsdienst bei Bedarf"
+      }
+    },
+    "info": {
+      "title": "Wichtige Informationen",
+      "legal": {
+        "title": "Rechtliche Dokumente",
+        "upToDate": "Alle Dokumente sind aktuell",
+        "secureDownload": "Sicherer Download garantiert",
+        "retention": "Regulatorisch konforme Aufbewahrung",
+        "notifications": "Automatische Update-Benachrichtigungen"
+      },
+      "security": {
+        "title": "Sicherheit und Konformität",
+        "protected": "Dokumente durch Verschlüsselung geschützt",
+        "access": "Kontrollierter und nachverfolgbarer Zugang",
+        "history": "Konsultationsverlauf verfügbar",
+        "signature": "Verifizierte elektronische Signatur"
+      }
+    },
+    "contact": {
+      "title": "Brauchen Sie Hilfe?",
+      "description": "Unser Support-Team steht Ihnen gerne bei Ihren Dokumenten zur Verfügung.",
+      "button": "Support kontaktieren"
+    }
+  },
+
+  "kycSuccess": {
+    "title": "Dokumente erfolgreich eingereicht!",
+    "verificationInProgress": "Überprüfung läuft...",
+    "description": "Ihre Dokumente wurden erhalten und werden von unserem Team überprüft.",
+    "waitMessage": "⏰ BITTE WARTEN SIE 24h BIS 48h",
+    "waitDescription": "Unser Team prüft Ihre Dokumente sorgfältig, um Ihre Sicherheit zu gewährleisten.",
+    "nextSteps": "Nächste Schritte:",
+    "steps": {
+      "received": "Dokumente erhalten und registriert",
+      "verification": "Überprüfung durch unser Team (24-48h)",
+      "notification": "E-Mail-Benachrichtigung über das Ergebnis",
+      "access": "Vollzugang zu allen Funktionen"
+    },
+    "backToDashboard": "Zurück zum Dashboard",
+    "viewStatus": "Meinen Überprüfungsstatus anzeigen"
+  },
+
+  "verificationState": {
+    "titles": {
+      "unverified": "Identitätsüberprüfung erforderlich",
+      "pending": "Überprüfung läuft"
+    },
+    "descriptions": {
+      "unverified": "Um auf diese Funktion zuzugreifen, müssen Sie zuerst Ihre Identität bestätigen.",
+      "pending": "Ihr Konto wird überprüft. Sie können auf diese Funktion zugreifen, sobald es bestätigt wurde."
+    },
+    "features": {
+      "secureAccount": "Sicheres Konto",
+      "personalizedFeatures": "Personalisierte Funktionen"
+    }
+  },
+
+  "modernVerificationState": {
+    "startVerification": "Verifizierung starten",
+    "featuresAfterVerification": "Funktionen nach der Verifizierung verfügbar",
+    "cards": {
+      "title": "Bankkarten",
+      "description": "Anfrage für physische und virtuelle Karten"
+    },
+    "transfers": {
+      "title": "Überweisungen",
+      "description": "Geldüberweisungen zwischen Konten"
+    },
+    "fullData": {
+      "title": "Vollständige Daten",
+      "description": "Zugriff auf alle Ihre Konten und Transaktionen"
+    },
+    "supportChat": {
+      "title": "Support-Chat",
+      "description": "Echtzeit-Kundenbetreuung"
+    },
+    "securityGuaranteed": "Sicherheit garantiert",
+    "securityDescription": "Ihre Daten sind durch Bankenstandard-Verschlüsselung geschützt. Die Identitätsprüfung ist für Ihre Sicherheit und die Ihrer Gelder obligatorisch.",
+    "needHelp": "Benötigen Sie Hilfe? Kontaktieren Sie unseren Support unter {phoneNumber}",
+    "verificationInProgress": "Verifizierung läuft",
+    "dossierEnExamen": "Ihre Akte wird geprüft",
+    "dossierEnExamenDescription": "Ihre Identitätsverifizierungsakte wird derzeit von unseren Teams geprüft. Dieser Prozess dauert normalerweise 24-48 Stunden.",
+    "voirStatut": "Status anzeigen",
+    "processusEnCours": "Prozess läuft",
+    "processusEnCoursDescription": "Unsere Teams überprüfen derzeit Ihre Dokumente. Sie erhalten eine Benachrichtigung, sobald die Verifizierung abgeschlossen ist.",
+    "verificationRequise": "Verifizierung erforderlich",
+    "verificationRequiseDescription": "Um auf alle Funktionen zuzugreifen, müssen Sie Ihre Identität bestätigen.",
+    "verificationRejetee": "Verifizierung abgelehnt",
+    "verificationRejeteeDescription": "Ihre Akte wurde abgelehnt. Bitte korrigieren Sie die Informationen.",
+          "verificationIdentite": "Identitätsverifizierung"
+    },
+    "kycStatusBanner": {
+      "verificationInProgress": "Verifizierung läuft",
+      "verificationInProgressDescription": "Ihre Dokumente werden überprüft. Dies kann 24-48h dauern.",
+      "verificationRejected": "Verifizierung abgelehnt",
+      "verificationRejectedDescription": "Ihre Verifizierung wurde abgelehnt. Bitte reichen Sie neue Dokumente ein.",
+      "verificationRequired": "Verifizierung erforderlich",
+      "verificationRequiredDescription": "Um auf alle Funktionen zuzugreifen, vervollständigen Sie bitte Ihre Identitätsverifizierung.",
+      "viewStatus": "Status anzeigen",
+      "startVerification": "Verifizierung starten",
+      "submitAgain": "Erneut einreichen"
+    },
+    "modernAlert": {
+      "understood": "Verstanden"
+    }
+}
