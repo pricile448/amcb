@@ -205,9 +205,7 @@ const DashboardPage: React.FC = () => {
             }
             
             // 🔧 DEBUG: Log des données de transaction
-            console.log('🔍 Transaction brute:', trans);
-            console.log('🔍 Montant:', amount, 'Type détecté:', transactionType);
-            console.log('🔍 Date parsée:', parsedDate);
+            
             
             return {
               id: trans.id || `trans_${Date.now()}`,

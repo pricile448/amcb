@@ -118,7 +118,7 @@ const AccountsPage: React.FC = () => {
         const firebaseTransactions = await FirebaseDataService.getUserTransactions(userId);
         
         // 🔍 LOG SIMPLE: Vérifier que les transactions se chargent
-        console.log('📊 Transactions chargées:', firebaseTransactions.length);
+
         logger.debug('Transactions Firebase récupérées:', firebaseTransactions);
         
         const mappedTransactions: Transaction[] = firebaseTransactions.map(trans => {
