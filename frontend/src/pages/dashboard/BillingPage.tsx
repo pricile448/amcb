@@ -22,6 +22,7 @@ const BillingPage: React.FC = () => {
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(true);
   const [billingData, setBillingData] = useState<BillingData | null>(null);
+  const [billingVisible, setBillingVisible] = useState<boolean>(true);
 
   // Charger les données de facturation depuis Firestore
   useEffect(() => {
@@ -42,7 +43,34 @@ const BillingPage: React.FC = () => {
         const userData = await FirebaseDataService.getUserData(userId);
         logger.debug('Données utilisateur reçues:', userData);
         
-        if (userData && userData.billingIban) {
+        // 🔒 NOUVELLE LOGIQUE: Gestion automatique de billingVisible selon le statut KYC
+        let isBillingVisible = userData?.billingVisible;
+        
+        // Si l'utilisateur est vérifié (KYC), billingVisible doit être false
+        if (userStatus === 'verified' && isBillingVisible !== false) {
+          logger.warn('Utilisateur vérifié détecté - billingVisible sera automatiquement mis à false');
+          isBillingVisible = false;
+          
+          // Mettre à jour Firestore automatiquement (seul un admin peut le changer à true)
+          try {
+            const { updateDoc, doc } = await import('firebase/firestore');
+            const { db } = await import('../../config/firebase');
+            const userDocRef = doc(db, 'users', userId);
+            await updateDoc(userDocRef, { billingVisible: false });
+            logger.info('Champ billingVisible automatiquement mis à false pour utilisateur vérifié');
+          } catch (updateError) {
+            logger.error('Erreur lors de la mise à jour automatique de billingVisible:', updateError);
+          }
+        }
+        
+        // Si billingVisible n'est pas défini, utiliser la valeur par défaut selon le statut
+        if (isBillingVisible === undefined) {
+          isBillingVisible = userStatus !== 'verified'; // true si non vérifié, false si vérifié
+        }
+        
+        setBillingVisible(isBillingVisible);
+        
+        if (userData && userData.billingIban && isBillingVisible) {
           const billingInfo: BillingData = {
             billingIban: userData.billingIban,
             billingBic: userData.billingBic || 'SMOEFRP1',
@@ -55,7 +83,11 @@ const BillingPage: React.FC = () => {
           setBillingData(billingInfo);
           logger.success('Données de facturation chargées avec succès:', billingInfo);
         } else {
-          logger.warn('Aucune donnée de facturation trouvée');
+          if (userStatus === 'verified') {
+            logger.info('Utilisateur vérifié - facturation masquée automatiquement');
+          } else {
+            logger.warn('Aucune donnée de facturation trouvée ou facturation masquée');
+          }
           setBillingData(null);
         }
       } catch (error) {
@@ -67,7 +99,7 @@ const BillingPage: React.FC = () => {
     };
 
     loadBillingData();
-  }, []);
+  }, [userStatus]); // Ajouter userStatus comme dépendance
 
   const handleCopyIban = async () => {
     if (!billingData) return;
@@ -136,6 +168,26 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
         <div className="flex items-center space-x-2 text-gray-500">
           <Loader2 className="w-6 h-6 animate-spin" />
           <span>Chargement des données de facturation...</span>
+        </div>
+      </div>
+    );
+  }
+
+  // Vérifier si la facturation est masquée
+  if (!billingVisible) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-center">
+          <div className="p-4 bg-gray-100 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+            <AlertCircle className="w-8 h-8 text-gray-600" />
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('billing.billingHidden.title')}</h3>
+          <p className="text-gray-500 mb-4">
+            {t('billing.billingHidden.description')}
+          </p>
+          <p className="text-sm text-gray-400">
+            {t('billing.billingHidden.contact')}
+          </p>
         </div>
       </div>
     );

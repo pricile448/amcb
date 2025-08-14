@@ -1,0 +1,35 @@
+{
+  "transactions": {
+    "date": "Datum",
+    "description": "Beschrijving",
+    "account": "Rekening",
+    "category": "Categorie",
+    "reference": "Referentie",
+    "amount": "Bedrag",
+    "fields": {
+      "date": "Datum",
+      "description": "Beschrijving",
+      "account": "Rekening",
+      "category": "Categorie",
+      "reference": "Referentie",
+      "amount": "Bedrag"
+    },
+    "labels": {
+      "language": "Taal",
+      "selectLanguage": "Selecteer taal"
+    },
+    "actions": {
+      "add": "Transactie toevoegen",
+      "edit": "Bewerken",
+      "delete": "Verwijderen",
+      "save": "Opslaan",
+      "cancel": "Annuleren"
+    },
+    "messages": {
+      "noTransactions": "Geen transacties gevonden",
+      "transactionAdded": "Transactie succesvol toegevoegd",
+      "transactionUpdated": "Transactie succesvol bijgewerkt",
+      "transactionDeleted": "Transactie succesvol verwijderd"
+    }
+  }
+}

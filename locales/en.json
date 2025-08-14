@@ -1,0 +1,35 @@
+{
+  "transactions": {
+    "date": "Date",
+    "description": "Description",
+    "account": "Account",
+    "category": "Category",
+    "reference": "Reference",
+    "amount": "Amount",
+    "fields": {
+      "date": "Date",
+      "description": "Description",
+      "account": "Account",
+      "category": "Category",
+      "reference": "Reference",
+      "amount": "Amount"
+    },
+    "labels": {
+      "language": "Language",
+      "selectLanguage": "Select language"
+    },
+    "actions": {
+      "add": "Add transaction",
+      "edit": "Edit",
+      "delete": "Delete",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "messages": {
+      "noTransactions": "No transactions found",
+      "transactionAdded": "Transaction added successfully",
+      "transactionUpdated": "Transaction updated successfully",
+      "transactionDeleted": "Transaction deleted successfully"
+    }
+  }
+}

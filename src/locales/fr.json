@@ -577,7 +577,11 @@
       "other": "Autre",
       "transfer": "Virement",
       "deposit": "Dépôt",
-      "withdrawal": "Retrait"
+      "withdrawal": "Retrait",
+      "amcbunqService": "Service AmCBunq",
+      "outgoingTransfer": "Virement sortant",
+      "incomingTransfer": "Virement entrant",
+      "noRecent": "Aucune transaction récente"
     },
   
     "transfers": {

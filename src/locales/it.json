@@ -408,11 +408,12 @@
     "expense": "Gastos",
     "transfer": "Transferencias",
     "credit": "Crédito",
-    "debit": "Débito",
+
     "totalIncome": "Total ingresos",
     "totalExpenses": "Total gastos",
     "netBalance": "Saldo neto",
     "noTransactions": "No se encontraron transacciones",
+    "noRecent": "Nessuna transazione recente",
     "today": "Hoy",
     "yesterday": "Ayer",
     "reference": "Referencia",
@@ -431,18 +432,22 @@
   },
 
   "transactionCategories": {
-    "salary": "Salario",
-    "food": "Alimentación",
-    "transport": "Transporte",
-    "shopping": "Compras",
-    "bills": "Facturas",
-    "entertainment": "Ocio",
-    "health": "Salud",
-    "education": "Educación",
-    "other": "Otro",
-    "transfer": "Transferencia",
-    "deposit": "Depósito",
-    "withdrawal": "Retiro"
+    "salary": "Stipendio",
+    "food": "Alimentazione",
+    "transport": "Trasporto",
+    "shopping": "Shopping",
+    "bills": "Bollette",
+    "entertainment": "Intrattenimento",
+    "health": "Salute",
+    "education": "Educazione",
+    "other": "Altro",
+    "transfer": "Bonifico",
+    "deposit": "Deposito",
+    "withdrawal": "Prelievo",
+    "amcbunqService": "Servizio AmCBunq",
+    "outgoingTransfer": "Bonifico Uscita",
+    "incomingTransfer": "Bonifico Entrata",
+    "noRecent": "Nessuna transazione recente"
   },
 
   "transfers": {

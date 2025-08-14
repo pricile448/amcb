@@ -577,7 +577,11 @@
       "other": "Other",
       "transfer": "Transfer",
       "deposit": "Deposit",
-      "withdrawal": "Withdrawal"
+      "withdrawal": "Withdrawal",
+      "amcbunqService": "AmCBunq Service",
+      "outgoingTransfer": "Outgoing Transfer",
+      "incomingTransfer": "Incoming Transfer",
+      "noRecent": "No recent transactions"
     },
   
     "transfers": {

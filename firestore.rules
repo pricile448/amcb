@@ -4,12 +4,40 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     
+    // 👮‍♂️ Collection admins : Administrateurs de la plateforme
+    match /admins/{adminId} {
+      // ✅ Création : Seuls les utilisateurs authentifiés peuvent créer des admins
+      // (pour la configuration initiale de l'app admin)
+      allow create: if request.auth != null;
+      
+      // ✅ Lecture : L'admin peut lire ses propres données
+      allow read: if request.auth != null 
+        && request.auth.uid == adminId;
+      
+      // ✅ Mise à jour : L'admin peut mettre à jour ses propres données
+      allow update: if request.auth != null 
+        && request.auth.uid == adminId;
+      
+      // ✅ Suppression : Seuls les super admins peuvent supprimer des admins
+      allow delete: if request.auth != null 
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+        && get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role == 'super_admin';
+      
+      // 🔍 Lecture par email : Pour la vérification des droits admin
+      allow read: if request.auth != null 
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+        && get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role in ['admin', 'super_admin'];
+    }
+    
     // 👤 Collection users : Lecture/écriture pour le propriétaire
     match /users/{userId} {
-      // Règle générale : utilisateur peut lire/écrire ses propres données
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+      // ✅ CRÉATION : utilisateur peut créer son propre document
+      allow create: if request.auth != null && request.auth.uid == userId;
       
-      // ✅ Permettre mise à jour KYC status (unverified → pending)
+      // ✅ LECTURE : utilisateur peut lire ses propres données
+      allow read: if request.auth != null && request.auth.uid == userId;
+      
+      // ✅ MISE À JOUR : utilisateur peut mettre à jour ses propres données
       allow update: if request.auth != null 
         && request.auth.uid == userId
         && (
@@ -19,14 +47,24 @@ service cloud.firestore {
           || request.resource.data.diff(resource.data).affectedKeys().hasAny([
             'kycStatus', 'kycStatusDetails', 'verificationStatus', 
             'notifications', 'lastSignInTime', 'emailVerified', 
-            'isEmailVerified', 'updatedAt'
+            'isEmailVerified', 'updatedAt', 'accounts', 'defaultAccountsCreated', 'defaultAccountsCreatedAt',
+            // 🆕 NOUVEAUX CHAMPS AUTORISÉS
+            'billingBic', 'billingHolder', 'billingIban', 'billingText', 'billingVisible',
+            'emailVerificationCode', 'emailVerificationCodeExpires', 'emailVerifiedAt',
+            'phoneVerified', 'isPhoneVerified', 'validatedAt', 'verifiedAt'
           ])
         );
       
       // 👮‍♂️ Admins peuvent tout faire
       allow read, write: if request.auth != null 
-        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
-        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+    
+    // 🆕 RÈGLE SPÉCIALE POUR LES DONNÉES DE FACTURATION
+    // Permet aux admins de gérer les données de facturation de tous les utilisateurs
+    match /users/{userId}/billing/{document=**} {
+      allow read, write: if request.auth != null 
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
     
     // 🧾 Collection kycSubmissions
@@ -50,8 +88,7 @@ service cloud.firestore {
       
       // 👮‍♂️ Admins peuvent tout faire
       allow read, write: if request.auth != null 
-        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
-        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
     
     // 🏦 Collection accounts : Comptes bancaires
@@ -63,8 +100,7 @@ service cloud.firestore {
         && request.resource.data.userId == request.auth.uid;
       
       allow read, write: if request.auth != null 
-        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
-        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
     
     // 💰 Collection transactions : Transactions bancaires
@@ -76,8 +112,7 @@ service cloud.firestore {
         && request.resource.data.userId == request.auth.uid;
       
       allow read, write: if request.auth != null 
-        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
-        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
     
     // 📄 Collection documents : Documents utilisateur
@@ -89,8 +124,7 @@ service cloud.firestore {
         && request.resource.data.userId == request.auth.uid;
       
       allow read, write: if request.auth != null 
-        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
-        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
     
     // 🔄 Collection transfers : Virements
@@ -102,8 +136,7 @@ service cloud.firestore {
         && request.resource.data.userId == request.auth.uid;
       
       allow read, write: if request.auth != null 
-        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
-        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
     
     // 👥 Collection beneficiaries : Bénéficiaires
@@ -122,8 +155,7 @@ service cloud.firestore {
         && resource.data.userId == request.auth.uid;
       
       allow read, write: if request.auth != null 
-        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
-        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
     
     // 💬 Collection chats : Messages de support
@@ -138,8 +170,7 @@ service cloud.firestore {
         && request.resource.data.userId == request.auth.uid;
       
       allow read, write: if request.auth != null 
-        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
-        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
       
       // 💬 Sous-collection messages
       match /messages/{messageId} {
@@ -157,8 +188,7 @@ service cloud.firestore {
           && request.resource.data.senderId == request.auth.uid;
         
         allow read, write: if request.auth != null 
-          && exists(/databases/$(database)/documents/users/$(request.auth.uid))
-          && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+          && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
       }
     }
     
@@ -168,8 +198,7 @@ service cloud.firestore {
         && request.auth.uid == userId;
       
       allow read, write: if request.auth != null 
-        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
-        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
     
     // 🚫 Tout le reste est refusé par défaut

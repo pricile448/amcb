@@ -54,7 +54,7 @@ const TransactionsPage: React.FC = () => {
            // Déterminer le type de transaction
            let transactionType = tx.type;
            if (!transactionType) {
-             if (tx.category === 'Virement sortant' || tx.description?.includes('Überweisung')) {
+             if (tx.category === t('transactionCategories.outgoingTransfer') || tx.description?.includes('Überweisung')) {
                transactionType = 'debit';
              } else if (tx.amount > 0) {
                transactionType = 'credit';
@@ -83,6 +83,13 @@ const TransactionsPage: React.FC = () => {
            }
            if (tx.description.includes('credit-1')) {
              correctedDescription = tx.description.replace('credit-1', 'Carte de Crédit');
+           }
+           
+           // 🔧 TRADUIRE les descriptions allemandes
+           if (correctedDescription === 'Depotfinanzierung') {
+             correctedDescription = t('transactionCategories.amcbunqService');
+           } else if (correctedDescription === 'Überweisung') {
+             correctedDescription = t('transactionCategories.outgoingTransfer');
            }
            
            return {

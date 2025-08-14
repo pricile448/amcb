@@ -279,6 +279,25 @@ export class FirebaseDataService {
           return userData.accounts;
         }
         
+        // 🔧 NOUVEAU: Vérifier si l'utilisateur est vérifié et créer les comptes par défaut
+        if (userData && userData.kycStatus === 'verified') {
+          logger.info('🔄 Utilisateur vérifié sans comptes - Création automatique des comptes par défaut');
+          
+          try {
+            const { AccountService } = await import('./accountService');
+            const defaultAccounts = await AccountService.ensureDefaultAccounts(userId, userData.kycStatus);
+            
+            if (defaultAccounts.length > 0) {
+              logger.success('✅ Comptes par défaut créés automatiquement');
+              // Recharger les données utilisateur pour inclure les nouveaux comptes
+              const updatedUserData = await this.getUserData(userId);
+              return updatedUserData?.accounts || [];
+            }
+          } catch (accountError) {
+            logger.error('❌ Erreur lors de la création automatique des comptes:', accountError);
+          }
+        }
+        
         logger.debug('FirebaseDataService.getUserAccounts - Aucun compte trouvé');
         return [];
       }
@@ -344,6 +363,55 @@ export class FirebaseDataService {
       return data.transactions || [];
     } catch (error) {
       logger.error('Erreur FirebaseDataService.getUserTransactions:', error);
+      return [];
+    }
+  }
+
+  // Récupérer les transactions récentes de l'utilisateur (limitées en nombre)
+  static async getUserRecentTransactions(userId: string, limit: number = 5): Promise<FirebaseTransaction[]> {
+    try {
+      // FORCER l'utilisation de Firestore en production
+      const isProduction = import.meta.env.PROD || window.location.hostname !== 'localhost' || window.location.hostname.includes('vercel') || window.location.hostname.includes('render');
+      
+      if (isProduction) {
+        logger.debug('FirebaseDataService.getUserRecentTransactions - Production: Utilisation directe Firestore');
+        
+        // Récupérer les données utilisateur depuis Firestore
+        const userData = await this.getUserData(userId);
+        logger.debug('FirebaseDataService.getUserRecentTransactions - UserData:', userData);
+        
+        if (userData && userData.transactions && Array.isArray(userData.transactions)) {
+          // Trier par date et limiter le nombre
+          const sortedTransactions = userData.transactions
+            .sort((a: any, b: any) => {
+              const dateA = a.date ? new Date(a.date).getTime() : 0;
+              const dateB = b.date ? new Date(b.date).getTime() : 0;
+              return dateB - dateA; // Plus récent en premier
+            })
+            .slice(0, limit);
+          
+          logger.debug('FirebaseDataService.getUserRecentTransactions - Transactions récentes trouvées:', sortedTransactions);
+          return sortedTransactions;
+        }
+        
+        logger.debug('FirebaseDataService.getUserRecentTransactions - Aucune transaction trouvée');
+        return [];
+      }
+      
+      // En développement, utiliser l'API locale
+      const response = await fetch(`${API_CONFIG.BASE_URL}/api/transactions/${userId}?limit=${limit}`, {
+        method: 'GET',
+        headers: this.getAuthHeaders()
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur lors de la récupération des transactions récentes');
+      }
+
+      const data = await response.json();
+      return data.transactions || [];
+    } catch (error) {
+      logger.error('Erreur FirebaseDataService.getUserRecentTransactions:', error);
       return [];
     }
   }

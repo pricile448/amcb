@@ -1,0 +1,38 @@
+{
+  "transactions": {
+    "date": "Data",
+    "description": "Descrizione",
+    "account": "Conto",
+    "category": "Categoria",
+    "reference": "Riferimento",
+    "amount": "Importo",
+    "fields": {
+      "date": "Data",
+      "description": "Descrizione",
+      "account": "Conto",
+      "category": "Categoria",
+      "reference": "Riferimento",
+      "amount": "Importo"
+    },
+    "labels": {
+      "language": "Lingua",
+      "selectLanguage": "Seleziona lingua"
+    },
+    "actions": {
+      "add": "Aggiungi transazione",
+      "edit": "Modifica",
+      "delete": "Elimina",
+      "save": "Salva",
+      "cancel": "Annulla"
+    },
+    "messages": {
+      "noTransactions": "Nessuna transazione trovata",
+      "transactionAdded": "Transazione aggiunta con successo",
+      "transactionUpdated": "Transazione aggiornata con successo",
+      "transactionDeleted": "Transazione eliminata con successo"
+    },
+    "creatingDefaultAccounts": "Creazione account in corso...",
+    "defaultAccountsMessage": "I tuoi account predefiniti sono in fase di creazione. Appariranno qui tra qualche istante.",
+    "transactionLedger": "Libro mastro delle transazioni"
+  }
+}

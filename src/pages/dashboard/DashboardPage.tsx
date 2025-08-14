@@ -44,6 +44,94 @@ const DashboardPage: React.FC = () => {
   const [recentTransactions, setRecentTransactions] = useState<Transaction[]>([]);
   const [showBalances, setShowBalances] = useState(true);
   const [dataLoaded, setDataLoaded] = useState(false);
+  
+  // Fonction pour traduire les catégories de transactions
+  const translateTransactionCategory = (category: string): string => {
+    if (!category) return t('transactionCategories.other');
+    
+    // Mapper les catégories vers les clés de traduction
+    const categoryMap: { [key: string]: string } = {
+      'Stipendio': t('transactionCategories.salary'),
+      'Salary': t('transactionCategories.salary'),
+      'Salaire': t('transactionCategories.salary'),
+      'Gehalt': t('transactionCategories.salary'),
+      'Salario': t('transactionCategories.salary'),
+      'Salário': t('transactionCategories.salary'),
+      'Alimentazione': t('transactionCategories.food'),
+      'Food': t('transactionCategories.food'),
+      'Alimentation': t('transactionCategories.food'),
+      'Lebensmittel': t('transactionCategories.food'),
+      'Alimentación': t('transactionCategories.food'),
+      'Trasporto': t('transactionCategories.transport'),
+      'Transport': t('transactionCategories.transport'),
+      'Shopping': t('transactionCategories.shopping'),
+      'Compras': t('transactionCategories.shopping'),
+      'Einkäufe': t('transactionCategories.shopping'),
+      'Bollette': t('transactionCategories.bills'),
+      'Bills': t('transactionCategories.bills'),
+      'Factures': t('transactionCategories.bills'),
+      'Rechnungen': t('transactionCategories.bills'),
+      'Facturas': t('transactionCategories.bills'),
+      'Intrattenimento': t('transactionCategories.entertainment'),
+      'Entertainment': t('transactionCategories.entertainment'),
+      'Divertissement': t('transactionCategories.entertainment'),
+      'Unterhaltung': t('transactionCategories.entertainment'),
+      'Ocio': t('transactionCategories.entertainment'),
+      'Salute': t('transactionCategories.health'),
+      'Health': t('transactionCategories.health'),
+      'Santé': t('transactionCategories.health'),
+      'Gesundheit': t('transactionCategories.health'),
+      'Salud': t('transactionCategories.health'),
+      'Educazione': t('transactionCategories.education'),
+      'Education': t('transactionCategories.education'),
+      'Éducation': t('transactionCategories.education'),
+      'Bildung': t('transactionCategories.education'),
+      'Educación': t('transactionCategories.education'),
+      'Altro': t('transactionCategories.other'),
+      'Other': t('transactionCategories.other'),
+      'Autre': t('transactionCategories.other'),
+      'Andere': t('transactionCategories.other'),
+      'Otro': t('transactionCategories.other'),
+      'Bonifico': t('transactionCategories.transfer'),
+      'Transfer': t('transactionCategories.transfer'),
+      'Transfert': t('transactionCategories.transfer'),
+      'Transferencia': t('transactionCategories.transfer'),
+      'Transferência': t('transactionCategories.transfer'),
+      'Deposito': t('transactionCategories.deposit'),
+      'Deposit': t('transactionCategories.deposit'),
+      'Dépôt': t('transactionCategories.deposit'),
+      'Einzahlung': t('transactionCategories.deposit'),
+      'Depósito': t('transactionCategories.deposit'),
+      'Prelievo': t('transactionCategories.withdrawal'),
+      'Withdrawal': t('transactionCategories.withdrawal'),
+      'Retrait': t('transactionCategories.withdrawal'),
+      'Auszahlung': t('transactionCategories.withdrawal'),
+      'Retirada': t('transactionCategories.withdrawal'),
+      'Servizio AmCBunq': t('transactionCategories.amcbunqService'),
+      'AmCBunq Service': t('transactionCategories.amcbunqService'),
+      'Service AmCBunq': t('transactionCategories.amcbunqService'),
+      'Depotfinanzierung': t('transactionCategories.amcbunqService'),
+      'Überweisung': t('transactionCategories.outgoingTransfer'),
+      'Servicio AmCBunq': t('transactionCategories.amcbunqService'),
+      'Serviço AmCBunq': t('transactionCategories.amcbunqService'),
+      'Bonifico Uscita': t('transactionCategories.outgoingTransfer'),
+      'Outgoing Transfer': t('transactionCategories.outgoingTransfer'),
+      'Transfert Sortant': t('transactionCategories.outgoingTransfer'),
+      'Virement sortant': t('transactionCategories.outgoingTransfer'),
+      'Virement Sortant': t('transactionCategories.outgoingTransfer'),
+      'Ausgehende Überweisung': t('transactionCategories.outgoingTransfer'),
+      'Transferencia Saliente': t('transactionCategories.outgoingTransfer'),
+      'Transferência Saída': t('transactionCategories.outgoingTransfer'),
+      'Bonifico Entrata': t('transactionCategories.incomingTransfer'),
+      'Incoming Transfer': t('transactionCategories.incomingTransfer'),
+      'Transfert Entrant': t('transactionCategories.incomingTransfer'),
+      'Eingehende Überweisung': t('transactionCategories.incomingTransfer'),
+      'Transferencia Entrante': t('transactionCategories.incomingTransfer'),
+      'Transferência Entrada': t('transactionCategories.incomingTransfer')
+    };
+    
+    return categoryMap[category] || category || t('transactionCategories.other');
+  };
 
   // Charger les données Firebase au montage du composant UNE SEULE FOIS
   useEffect(() => {
@@ -83,7 +171,7 @@ const DashboardPage: React.FC = () => {
             lastTransaction: {
               date: new Date(),
               amount: 0,
-              description: t('transactions.noRecent') || 'Aucune transaction récente'
+              description: t('transactions.noRecent')
             }
           };
         });
@@ -428,7 +516,7 @@ const DashboardPage: React.FC = () => {
                 {getTransactionIcon(transaction.type)}
                 <div className="flex-1 min-w-0">
                   <p className="font-medium text-gray-900 text-sm md:text-base truncate max-w-[200px] sm:max-w-[300px] lg:max-w-none">{transaction.description}</p>
-                  <p className="text-xs md:text-sm text-gray-500 truncate">{transaction.category} • {formatDateDisplay(transaction.date)}</p>
+                  <p className="text-xs md:text-sm text-gray-500 truncate">{translateTransactionCategory(transaction.category)} • {formatDateDisplay(transaction.date)}</p>
                 </div>
               </div>
                              <span className={`font-semibold text-sm md:text-base ${
@@ -501,4 +589,4 @@ const DashboardPage: React.FC = () => {
   );
 };
 
-export default DashboardPage; 
+export default DashboardPage;

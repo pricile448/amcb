@@ -1,0 +1,36 @@
+{
+  "transactions": {
+    "date": "Fecha",
+    "description": "Descripción",
+    "account": "Cuenta",
+    "category": "Categoría",
+    "reference": "Referencia",
+    "amount": "Importe",
+    "transactionLedger": "Libro mayor de transacciones",
+    "fields": {
+      "date": "Fecha",
+      "description": "Descripción",
+      "account": "Cuenta",
+      "category": "Categoría",
+      "reference": "Referencia",
+      "amount": "Importe"
+    },
+    "labels": {
+      "language": "Idioma",
+      "selectLanguage": "Seleccionar idioma"
+    },
+    "actions": {
+      "add": "Agregar transacción",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "save": "Guardar",
+      "cancel": "Cancelar"
+    },
+    "messages": {
+      "noTransactions": "No se encontraron transacciones",
+      "transactionAdded": "Transacción agregada exitosamente",
+      "transactionUpdated": "Transacción actualizada exitosamente",
+      "transactionDeleted": "Transacción eliminada exitosamente"
+    }
+  }
+}

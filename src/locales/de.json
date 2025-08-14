@@ -527,6 +527,7 @@
     "totalExpenses": "Gesamtausgaben",
     "netBalance": "Nettoguthaben",
     "noTransactions": "Keine Transaktionen gefunden",
+    "noRecent": "Keine kürzlichen Transaktionen",
     "today": "Heute",
     "yesterday": "Gestern",
     "reference": "Referenz",
@@ -556,7 +557,11 @@
     "other": "Andere",
     "transfer": "Überweisung",
     "deposit": "Einzahlung",
-    "withdrawal": "Auszahlung"
+    "withdrawal": "Auszahlung",
+    "amcbunqService": "AmCBunq Service",
+    "outgoingTransfer": "Ausgehende Überweisung",
+    "incomingTransfer": "Eingehende Überweisung",
+    "noRecent": "Keine kürzlichen Transaktionen"
   },
 
   "transfers": {

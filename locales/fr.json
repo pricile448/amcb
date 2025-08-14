@@ -1,0 +1,35 @@
+{
+  "transactions": {
+    "date": "Date",
+    "description": "Description",
+    "account": "Compte",
+    "category": "Catégorie",
+    "reference": "Référence",
+    "amount": "Montant",
+    "fields": {
+      "date": "Date",
+      "description": "Description",
+      "account": "Compte",
+      "category": "Catégorie",
+      "reference": "Référence",
+      "amount": "Montant"
+    },
+    "labels": {
+      "language": "Langue",
+      "selectLanguage": "Sélectionner la langue"
+    },
+    "actions": {
+      "add": "Ajouter une transaction",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "save": "Enregistrer",
+      "cancel": "Annuler"
+    },
+    "messages": {
+      "noTransactions": "Aucune transaction trouvée",
+      "transactionAdded": "Transaction ajoutée avec succès",
+      "transactionUpdated": "Transaction mise à jour avec succès",
+      "transactionDeleted": "Transaction supprimée avec succès"
+    }
+  }
+}

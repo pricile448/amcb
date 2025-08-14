@@ -511,7 +511,6 @@
     "searchPlaceholder": "Zoek een transactie...",
     "recentTransactions": "Recente transacties",
     "loading": "Transacties worden geladen...",
-    "all": "Alle",
     "income": "Credit",
     "expense": "Debet",
     "transfer": "Overschrijvingen",
@@ -521,6 +520,7 @@
     "totalExpenses": "Totaal uitgaven",
     "netBalance": "Nettosaldo",
     "noTransactions": "Geen transacties gevonden",
+    "noRecent": "Geen recente transacties",
     "today": "Vandaag",
     "yesterday": "Gisteren",
     "reference": "Referentie",
@@ -550,7 +550,11 @@
     "other": "Andere",
     "transfer": "Overschrijving",
     "deposit": "Storting",
-    "withdrawal": "Opname"
+    "withdrawal": "Opname",
+    "amcbunqService": "AmCBunq Service",
+    "outgoingTransfer": "Uitgaande Overschrijving",
+    "incomingTransfer": "Inkomende Overschrijving",
+    "noRecent": "Geen recente transacties"
   },
 
   "transfers": {

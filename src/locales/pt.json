@@ -521,6 +521,7 @@
     "totalExpenses": "Total de despesas",
     "netBalance": "Saldo líquido",
     "noTransactions": "Nenhuma transação encontrada",
+    "noRecent": "Nenhuma transação recente",
     "today": "Hoje",
     "yesterday": "Ontem",
     "reference": "Referência",
@@ -550,7 +551,11 @@
     "other": "Outro",
     "transfer": "Transferência",
     "deposit": "Depósito",
-    "withdrawal": "Saque"
+    "withdrawal": "Saque",
+    "amcbunqService": "Serviço AmCBunq",
+    "outgoingTransfer": "Transferência Saída",
+    "incomingTransfer": "Transferência Entrada",
+    "noRecent": "Nenhuma transação recente"
   },
 
   "transfers": {

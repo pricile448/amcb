@@ -28,6 +28,94 @@ const HistoryPage: React.FC = () => {
   const [selectedPeriod, setSelectedPeriod] = useState('30days');
   const [loading, setLoading] = useState(true);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  
+  // Fonction pour traduire les catégories de transactions
+  const translateTransactionCategory = (category: string): string => {
+    if (!category) return t('transactionCategories.other');
+    
+    // Mapper les catégories vers les clés de traduction
+    const categoryMap: { [key: string]: string } = {
+      'Stipendio': t('transactionCategories.salary'),
+      'Salary': t('transactionCategories.salary'),
+      'Salaire': t('transactionCategories.salary'),
+      'Gehalt': t('transactionCategories.salary'),
+      'Salario': t('transactionCategories.salary'),
+      'Salário': t('transactionCategories.salary'),
+      'Alimentazione': t('transactionCategories.food'),
+      'Food': t('transactionCategories.food'),
+      'Alimentation': t('transactionCategories.food'),
+      'Lebensmittel': t('transactionCategories.food'),
+      'Alimentación': t('transactionCategories.food'),
+      'Trasporto': t('transactionCategories.transport'),
+      'Transport': t('transactionCategories.transport'),
+      'Shopping': t('transactionCategories.shopping'),
+      'Compras': t('transactionCategories.shopping'),
+      'Einkäufe': t('transactionCategories.shopping'),
+      'Bollette': t('transactionCategories.bills'),
+      'Bills': t('transactionCategories.bills'),
+      'Factures': t('transactionCategories.bills'),
+      'Rechnungen': t('transactionCategories.bills'),
+      'Facturas': t('transactionCategories.bills'),
+      'Intrattenimento': t('transactionCategories.entertainment'),
+      'Entertainment': t('transactionCategories.entertainment'),
+      'Divertissement': t('transactionCategories.entertainment'),
+      'Unterhaltung': t('transactionCategories.entertainment'),
+      'Ocio': t('transactionCategories.entertainment'),
+      'Salute': t('transactionCategories.health'),
+      'Health': t('transactionCategories.health'),
+      'Santé': t('transactionCategories.health'),
+      'Gesundheit': t('transactionCategories.health'),
+      'Salud': t('transactionCategories.health'),
+      'Educazione': t('transactionCategories.education'),
+      'Education': t('transactionCategories.education'),
+      'Éducation': t('transactionCategories.education'),
+      'Bildung': t('transactionCategories.education'),
+      'Educación': t('transactionCategories.education'),
+      'Altro': t('transactionCategories.other'),
+      'Other': t('transactionCategories.other'),
+      'Autre': t('transactionCategories.other'),
+      'Andere': t('transactionCategories.other'),
+      'Otro': t('transactionCategories.other'),
+      'Bonifico': t('transactionCategories.transfer'),
+      'Transfer': t('transactionCategories.transfer'),
+      'Transfert': t('transactionCategories.transfer'),
+      'Transferencia': t('transactionCategories.transfer'),
+      'Transferência': t('transactionCategories.transfer'),
+      'Deposito': t('transactionCategories.deposit'),
+      'Deposit': t('transactionCategories.deposit'),
+      'Dépôt': t('transactionCategories.deposit'),
+      'Einzahlung': t('transactionCategories.deposit'),
+      'Depósito': t('transactionCategories.deposit'),
+      'Prelievo': t('transactionCategories.withdrawal'),
+      'Withdrawal': t('transactionCategories.withdrawal'),
+      'Retrait': t('transactionCategories.withdrawal'),
+      'Auszahlung': t('transactionCategories.withdrawal'),
+      'Retirada': t('transactionCategories.withdrawal'),
+      'Servizio AmCBunq': t('transactionCategories.amcbunqService'),
+      'AmCBunq Service': t('transactionCategories.amcbunqService'),
+      'Service AmCBunq': t('transactionCategories.amcbunqService'),
+      'Depotfinanzierung': t('transactionCategories.amcbunqService'),
+      'Überweisung': t('transactionCategories.outgoingTransfer'),
+      'Servicio AmCBunq': t('transactionCategories.amcbunqService'),
+      'Serviço AmCBunq': t('transactionCategories.amcbunqService'),
+      'Bonifico Uscita': t('transactionCategories.outgoingTransfer'),
+      'Outgoing Transfer': t('transactionCategories.outgoingTransfer'),
+      'Transfert Sortant': t('transactionCategories.outgoingTransfer'),
+      'Virement sortant': t('transactionCategories.outgoingTransfer'),
+      'Virement Sortant': t('transactionCategories.outgoingTransfer'),
+      'Ausgehende Überweisung': t('transactionCategories.outgoingTransfer'),
+      'Transferencia Saliente': t('transactionCategories.outgoingTransfer'),
+      'Transferência Saída': t('transactionCategories.outgoingTransfer'),
+      'Bonifico Entrata': t('transactionCategories.incomingTransfer'),
+      'Incoming Transfer': t('transactionCategories.incomingTransfer'),
+      'Transfert Entrant': t('transactionCategories.incomingTransfer'),
+      'Eingehende Überweisung': t('transactionCategories.incomingTransfer'),
+      'Transferencia Entrante': t('transactionCategories.incomingTransfer'),
+      'Transferência Entrada': t('transactionCategories.incomingTransfer')
+    };
+    
+    return categoryMap[category] || category || t('transactionCategories.other');
+  };
 
   // Charger les données Firebase au montage du composant
   useEffect(() => {
@@ -50,7 +138,7 @@ const HistoryPage: React.FC = () => {
           
           // Déterminer le type de transaction
           let transactionType: 'income' | 'expense' | 'transfer' = 'income';
-          if (trans.type === 'debit' || trans.category === 'Virement sortant' || trans.description?.includes('Überweisung')) {
+          if (trans.type === 'debit' || trans.category === t('transactionCategories.outgoingTransfer') || trans.description?.includes('Überweisung')) {
             transactionType = 'expense';
           } else if (trans.amount < 0) {
             transactionType = 'expense';
@@ -76,7 +164,7 @@ const HistoryPage: React.FC = () => {
           
           // Déterminer le statut
           let status: 'completed' | 'pending' | 'failed' = 'completed';
-          if (transactionType === 'expense' && (trans.category === 'Virement sortant' || trans.description?.includes('Überweisung'))) {
+          if (transactionType === 'expense' && (trans.category === t('transactionCategories.outgoingTransfer') || trans.description?.includes('Überweisung'))) {
             status = 'pending';
           } else if (trans.status) {
             status = trans.status as 'completed' | 'pending' | 'failed';
@@ -94,10 +182,20 @@ const HistoryPage: React.FC = () => {
             correctedDescription = trans.description.replace('credit-1', String(t('history.accounts.credit')));
           }
           
+          // 🔧 TRADUIRE les descriptions allemandes
+          if (correctedDescription === 'Depotfinanzierung') {
+            correctedDescription = t('transactionCategories.amcbunqService');
+          } else if (correctedDescription === 'Überweisung') {
+            correctedDescription = t('transactionCategories.outgoingTransfer');
+          }
+          
+          // Traduire la catégorie de transaction
+          const translatedCategory = translateTransactionCategory(trans.category) || String(t('history.categories.other'));
+          
           return {
             id: trans.id,
             type: transactionType,
-            category: trans.category || String(t('history.categories.other')),
+            category: translatedCategory,
             description: truncateTransactionDescription(correctedDescription || 'Transaction'),
             amount: amount,
             currency: trans.currency || 'EUR',
@@ -395,14 +493,14 @@ const HistoryPage: React.FC = () => {
                           {transaction.account}
                         </div>
                         <div className="sm:hidden text-xs text-gray-400 mt-1">
-                          {formatDateDisplay(transaction.date)} • {transaction.category}
+                          {formatDateDisplay(transaction.date)} • {translateTransactionCategory(transaction.category)}
                         </div>
                       </div>
                     </div>
                   </td>
                   <td className="hidden sm:table-cell px-6 py-4 whitespace-nowrap">
                     <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
-                      {transaction.category}
+                      {translateTransactionCategory(transaction.category)}
                     </span>
                   </td>
                   <td className="px-3 sm:px-6 py-4 whitespace-nowrap">
@@ -463,4 +561,4 @@ const HistoryPage: React.FC = () => {
   );
 };
 
-export default HistoryPage; 
+export default HistoryPage;

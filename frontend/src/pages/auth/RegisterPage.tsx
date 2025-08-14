@@ -8,9 +8,9 @@ import { Eye, EyeOff, Mail, Lock, User, Phone, Calendar, MapPin, Building, Brief
 import toast from "react-hot-toast";
 import { AuthService } from "../../services/api";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc, serverTimestamp } from "firebase/firestore";
-import { auth, db } from "../../config/firebase";
+import { auth } from "../../config/firebase";
 import { sendVerificationEmail } from "../../services/emailService";
+import { UserSetupService } from "../../services/userSetupService";
 import Logo from "../../components/Logo";
 import AuthLink from "../../components/AuthLink";
 
@@ -77,10 +77,10 @@ const RegisterPage: React.FC = () => {
       const userId = userCredential.user.uid;
       logger.success('✅ Utilisateur créé dans Firebase Auth:', userId);
 
-      // 2. Sauvegarder les données utilisateur dans Firestore
-      logger.debug('🔄 Sauvegarde des données dans Firestore...');
+      // 2. Créer le setup complet de l'utilisateur avec tous les sous-documents
+      logger.debug('🔄 Création du setup complet utilisateur dans Firestore...');
       
-      await setDoc(doc(db, 'users', userId), {
+      await UserSetupService.createCompleteUserSetup(userId, {
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,
@@ -93,15 +93,10 @@ const RegisterPage: React.FC = () => {
         city: data.city,
         postalCode: data.postalCode,
         profession: data.profession,
-        salary: data.salary,
-        createdAt: serverTimestamp(),
-        emailVerified: false,
-        kycStatus: 'unverified',
-        verificationStatus: 'unverified',
-        status: 'pending'
+        salary: data.salary
       });
 
-      logger.success('✅ Données utilisateur sauvegardées dans Firestore');
+      logger.success('✅ Setup utilisateur complet créé dans Firestore');
 
       // 3. Envoyer l'email de vérification personnalisé
       logger.debug('🔄 Envoi de l\'email de vérification personnalisé...');

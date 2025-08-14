@@ -99,7 +99,7 @@ const AccountsPage: React.FC = () => {
             lastTransaction: {
               date: new Date(),
               amount: 0,
-              description: 'Aucune transaction récente'
+              description: t('transactions.noRecent')
             }
           };
         });
@@ -594,12 +594,12 @@ const AccountsPage: React.FC = () => {
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-2 sm:px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.date')}</th>
-                <th className="px-2 sm:px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.description')}</th>
-                <th className="hidden sm:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.account')}</th>
-                <th className="hidden lg:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.category')}</th>
-                <th className="hidden xl:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.reference')}</th>
-                <th className="px-2 sm:px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.amount')}</th>
+                <th className="px-2 sm:px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.fields.date')}</th>
+                <th className="px-2 sm:px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.fields.description')}</th>
+                <th className="hidden sm:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.fields.account')}</th>
+                <th className="hidden lg:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.fields.category')}</th>
+                <th className="hidden xl:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.fields.reference')}</th>
+                <th className="px-2 sm:px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.fields.amount')}</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -815,4 +815,4 @@ const AccountsPage: React.FC = () => {
   );
 };
 
-export default AccountsPage; 
+export default AccountsPage;
