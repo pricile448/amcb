@@ -5,7 +5,64 @@
     "continue": "Continuer",
     "dismiss": "Fermer"
   },
-
+  "kyc": {
+    "title": "Vérification d'identité",
+    "subtitle": "Téléchargez vos documents pour valider votre compte",
+    "documentsRequired": "Documents requis",
+    "identityDocument": "Pièce d'identité",
+    "proofOfAddress": "Justificatif de domicile",
+    "proofOfIncome": "Justificatif de revenus",
+    "bankStatement": "Relevé bancaire",
+    "file": "Fichier",
+    "acceptedFormats": "PDF, JPG, PNG (max 5MB)",
+    "required": "Requis",
+    "selectFile": "Cliquez pour sélectionner un fichier",
+    "dragDrop": "ou glissez-déposez ici",
+    "removeFile": "Supprimer",
+    "submitDocuments": "Soumettre les documents",
+    "submitting": "Envoi en cours...",
+    "missingDocuments": "Documents manquants",
+    "missingDocumentsMessage": "Veuillez télécharger tous les documents requis avant de soumettre",
+    "documentsSubmitted": "Documents soumis",
+    "submissionSuccess": "Vos documents ont été soumis avec succès. Vous recevrez une notification une fois la vérification terminée.",
+    "submissionError": "Une erreur est survenue lors de la soumission des documents",
+    "fileTooLarge": "Fichier trop volumineux",
+    "fileTooLargeMessage": "Le fichier ne peut pas dépasser 5MB",
+    "importantInfo": "Informations importantes",
+    "secureProcessing": "Vos documents sont traités de manière sécurisée et confidentielle",
+    "verificationTime": "La vérification prend généralement 24 à 48 heures",
+    "emailNotification": "Vous recevrez un email de confirmation une fois la vérification terminée",
+    "accountLimits": "Certaines fonctionnalités restent limitées en attendant la validation",
+    "pending": {
+      "title": "Vérification en cours",
+      "subtitle": "Votre dossier est en cours d'examen par nos équipes",
+      "message": "Vos documents ont été soumis et sont actuellement en cours d'examen par nos équipes.",
+      "timeframe": "Ce processus prend généralement 24 à 48 heures. Vous recevrez une notification dès que la vérification sera terminée.",
+      "documentsSubmitted": "Documents soumis"
+    },
+    "navigation": {
+      "backToDashboard": "Retour au tableau de bord"
+    },
+    "errors": {
+      "userNotIdentified": "Utilisateur non identifié",
+      "parsingError": "Erreur parsing user:",
+      "submissionGenericError": "Une erreur est survenue lors de la soumission"
+    },
+    "unverified": "Non vérifié",
+    "verified": "Vérifié",
+    "identity": "Pièce d'identité",
+    "address": "Justificatif de domicile",
+    "income": "Justificatif de revenus",
+    "noActiveAccounts": "Aucun compte actif",
+    "noTransactionsAvailable": "Aucune transaction disponible",
+    "noDataAvailable": "Aucune donnée disponible",
+    "kycRequired": "Vérification KYC requise",
+    "kycPending": "Vérification KYC en cours",
+    "kycVerified": "Vérification KYC validée",
+    "verified": "Vérifié",
+    "pending": "En attente",
+    "unverified": "Non vérifié"
+  },
   "common": {
     "loading": "Chargement...",
     "error": "Erreur",
@@ -48,30 +105,29 @@
     "send": "Envoyer",
     "receive": "Recevoir"
   },
-
-      "nav": {
-      "home": "Accueil",
-      "features": "Fonctionnalités",
-      "pricing": "Tarifs",
-      "help": "Aide & Support",
-      "login": "Se connecter",
-      "openAccount": "Ouvrir un compte",
-      "dashboard": "Mon espace client",
-      "accounts": "Comptes",
-      "iban": "Mon IBAN",
-      "transfers": "Virements",
-      "cards": "Cartes",
-      "billing": "Facturation",
-      "history": "Historique",
-      "budgets": "Budgets",
-      "settings": "Paramètres",
-      "documents": "Mes Documents",
-      "messages": "Messages",
-      "verification": "Vérification d'identité",
-      "transactions": "Transactions",
-      "settingsAndMore": "Paramètres & Plus",
-      "logout": "Déconnexion",
-      "premiumClient": "Client Premium",
+  "nav": {
+    "home": "Accueil",
+    "features": "Fonctionnalités",
+    "pricing": "Tarifs",
+    "help": "Aide & Support",
+    "login": "Se connecter",
+    "openAccount": "Ouvrir un compte",
+    "dashboard": "Mon espace client",
+    "accounts": "Comptes",
+    "iban": "Mon IBAN",
+    "transfers": "Virements",
+    "cards": "Cartes",
+    "billing": "Facturation",
+    "history": "Historique",
+    "budgets": "Budgets",
+    "settings": "Paramètres",
+    "documents": "Mes Documents",
+    "messages": "Messages",
+    "verification": "Vérification d'identité",
+    "transactions": "Transactions",
+    "settingsAndMore": "Paramètres & Plus",
+    "logout": "Déconnexion",
+    "premiumClient": "Client Premium",
     "profile": {
       "myProfile": "Mon profil",
       "security": "Sécurité",
@@ -94,7 +150,6 @@
       "close": "Fermer"
     }
   },
-
   "home": {
     "hero": {
       "title": "La banque du futur, aujourd'hui",
@@ -144,7 +199,6 @@
       "button": "Ouvrir mon compte"
     }
   },
-
   "features": {
     "hero": {
       "title": "Fonctionnalités AmCbunq",
@@ -199,7 +253,6 @@
       "viewPricing": "Voir les tarifs"
     }
   },
-
   "pricing": {
     "hero": {
       "title": "Tarifs transparents",
@@ -261,7 +314,6 @@
       "button": "Ouvrir un compte"
     }
   },
-
   "help": {
     "title": "Centre d'aide",
     "subtitle": "Trouvez rapidement les réponses à vos questions",
@@ -419,7 +471,6 @@
       "pricingRedirect": "Grille tarifaire - Redirection vers la page des tarifs"
     }
   },
-
   "auth": {
     "login": {
       "title": "Connexion",
@@ -489,28 +540,27 @@
     "actionSuccessMessage": "Votre action a été traitée avec succès.",
     "verificationComplete": "Vérification terminée ! Veuillez vous connecter manuellement.",
     "loginWithCredentials": "Se connecter avec mes identifiants",
-          "verificationPending": {
-        "title": "Vérifiez votre email",
-        "subtitle": "Vérifiez votre email pour activer votre compte",
-        "emailLabel": "Email :",
-        "automaticVerification": "Vérification automatique en cours...",
-        "resendEmail": "Renvoyer l'email",
-        "refresh": "Actualiser",
-        "returnToLogin": "Retour à la connexion",
-        "sending": "Envoi en cours...",
-        "emailSent": "Email de vérification renvoyé !",
-        "emailError": "Erreur lors du renvoi de l'email"
-      },
-      "processing": {
-        "title": "Traitement en cours...",
-        "message": "Veuillez patienter pendant que nous traitons votre demande."
-      },
-      "logout": {
-        "success": "Déconnexion réussie",
-        "error": "Erreur lors de la déconnexion"
-      }
+    "verificationPending": {
+      "title": "Vérifiez votre email",
+      "subtitle": "Vérifiez votre email pour activer votre compte",
+      "emailLabel": "Email :",
+      "automaticVerification": "Vérification automatique en cours...",
+      "resendEmail": "Renvoyer l'email",
+      "refresh": "Actualiser",
+      "returnToLogin": "Retour à la connexion",
+      "sending": "Envoi en cours...",
+      "emailSent": "Email de vérification renvoyé !",
+      "emailError": "Erreur lors du renvoi de l'email"
+    },
+    "processing": {
+      "title": "Traitement en cours...",
+      "message": "Veuillez patienter pendant que nous traitons votre demande."
+    },
+    "logout": {
+      "success": "Déconnexion réussie",
+      "error": "Erreur lors de la déconnexion"
+    }
   },
-
   "dashboard": {
     "welcome": "Bonjour",
     "overview": "Vue d'ensemble de vos finances",
@@ -536,7 +586,6 @@
     "ribRequestPage": "Demandez votre RIB sur la page IBAN",
     "myAccount": "Mon Compte"
   },
-
   "accounts": {
     "title": "Mes Comptes",
     "subtitle": "Gérez vos comptes et cartes",
@@ -576,20 +625,20 @@
     "detailsVerificationMessage": "Pour voir les détails du compte, vous devez d'abord valider votre identité.",
     "cancel": "Annuler",
     "verifyIdentity": "Vérifier mon identité",
+    "creatingDefaultAccounts": "Création des comptes en cours...",
+    "defaultAccountsMessage": "Vos comptes par défaut sont en cours de création. Ils apparaîtront ici dans quelques instants.",
     "today": "Aujourd'hui",
     "yesterday": "Hier",
     "daysAgo": "Il y a {count} jours",
     "todayAt": "Aujourd'hui à",
     "yesterdayAt": "Hier à"
   },
-
   "accountTypes": {
     "current": "Compte courant",
     "savings": "Compte épargne",
     "credit": "Carte de crédit",
     "account": "Compte"
   },
-
   "accountStatus": {
     "active": "Actif",
     "blocked": "Bloqué",
@@ -599,7 +648,6 @@
     "unverified": "Non vérifié",
     "pendingVerification": "En cours"
   },
-
   "transactions": {
     "title": "Historique des transactions",
     "subtitle": "Consultez toutes vos transactions récentes",
@@ -631,9 +679,17 @@
     "clear": "Effacer",
     "results": "résultats",
     "noResults": "Aucun résultat trouvé pour votre recherche",
-    "tryDifferentSearch": "Essayez avec des mots-clés différents"
+    "tryDifferentSearch": "Essayez avec des mots-clés différents",
+    "fields": {
+      "date": "Date",
+      "description": "Description",
+      "account": "Compte",
+      "category": "Catégorie",
+      "reference": "Référence",
+      "amount": "Montant"
+    },
+    "noRecent": "Aucune transaction récente"
   },
-
   "transactionCategories": {
     "salary": "Salaire",
     "food": "Alimentation",
@@ -646,9 +702,12 @@
     "other": "Autre",
     "transfer": "Virement",
     "deposit": "Dépôt",
-    "withdrawal": "Retrait"
+    "withdrawal": "Retrait",
+    "amcbunqService": "Service AmCBunq",
+    "outgoingTransfer": "Virement sortant",
+    "incomingTransfer": "Virement entrant",
+    "noRecent": "Aucune transaction récente"
   },
-
   "transfers": {
     "title": "Virements",
     "subtitle": "Gérez vos virements et bénéficiaires",
@@ -737,7 +796,6 @@
       "submit": "Effectuer le virement"
     }
   },
-
   "cards": {
     "title": "Mes Cartes",
     "subtitle": "Gérez vos cartes bancaires et cartes de crédit",
@@ -840,7 +898,6 @@
       "requestFailed": "Erreur lors de la demande de carte"
     }
   },
-
   "verification": {
     "title": "Vérification du compte",
     "subtitle": "Complétez votre vérification pour accéder à tous les services",
@@ -912,57 +969,6 @@
       }
     }
   },
-
-  "kyc": {
-    "title": "Vérification d'identité",
-    "subtitle": "Téléchargez vos documents pour valider votre compte",
-    "documentsRequired": "Documents requis",
-    "identityDocument": "Pièce d'identité",
-    "proofOfAddress": "Justificatif de domicile",
-    "proofOfIncome": "Justificatif de revenus",
-    "bankStatement": "Relevé bancaire",
-    "file": "Fichier",
-    "acceptedFormats": "PDF, JPG, PNG (max 5MB)",
-    "required": "Requis",
-    "selectFile": "Cliquez pour sélectionner un fichier",
-    "dragDrop": "ou glissez-déposez ici",
-    "removeFile": "Supprimer",
-    "submitDocuments": "Soumettre les documents",
-    "submitting": "Envoi en cours...",
-    "missingDocuments": "Documents manquants",
-    "missingDocumentsMessage": "Veuillez télécharger tous les documents requis avant de soumettre",
-    "documentsSubmitted": "Documents soumis",
-    "submissionSuccess": "Vos documents ont été soumis avec succès. Vous recevrez une notification une fois la vérification terminée.",
-    "submissionError": "Une erreur est survenue lors de la soumission des documents",
-    "fileTooLarge": "Fichier trop volumineux",
-    "fileTooLargeMessage": "Le fichier ne peut pas dépasser 5MB",
-    "importantInfo": "Informations importantes",
-    "secureProcessing": "Vos documents sont traités de manière sécurisée et confidentielle",
-    "verificationTime": "La vérification prend généralement 24 à 48 heures",
-    "emailNotification": "Vous recevrez un email de confirmation une fois la vérification terminée",
-    "accountLimits": "Certaines fonctionnalités restent limitées en attendant la validation",
-    "pending": {
-      "title": "Vérification en cours",
-      "subtitle": "Votre dossier est en cours d'examen par nos équipes",
-      "message": "Vos documents ont été soumis et sont actuellement en cours d'examen par nos équipes.",
-      "timeframe": "Ce processus prend généralement 24 à 48 heures. Vous recevrez une notification dès que la vérification sera terminée.",
-      "documentsSubmitted": "Documents soumis"
-    },
-    "navigation": {
-      "backToDashboard": "Retour au tableau de bord"
-    },
-    "errors": {
-      "userNotIdentified": "Utilisateur non identifié",
-      "parsingError": "Erreur parsing user:",
-      "submissionGenericError": "Une erreur est survenue lors de la soumission"
-    },
-    "unverified": "Non vérifié",
-    "verified": "Vérifié",
-    "identity": "Pièce d'identité",
-    "address": "Justificatif de domicile",
-    "income": "Justificatif de revenus"
-  },
-
   "kycSuccess": {
     "title": "Documents soumis avec succès !",
     "verificationInProgress": "Vérification en cours",
@@ -977,7 +983,6 @@
       "access": "Accès complet à votre compte"
     }
   },
-
   "billing": {
     "title": "Facturation",
     "subtitle": "RIB et messages de la banque",
@@ -987,6 +992,11 @@
       "title": "Aucune donnée de facturation",
       "description": "Les informations de facturation ne sont pas encore disponibles.",
       "contact": "Contactez votre conseiller pour obtenir vos coordonnées de facturation."
+    },
+    "billingHidden": {
+      "title": "Aucune facturation disponible",
+      "description": "La facturation n'est pas disponible pour votre compte.",
+      "contact": "Contactez votre conseiller pour plus d'informations."
     },
     "verification": {
       "title": "Vérification d'identité requise",
@@ -1066,7 +1076,6 @@
       "loadingError": "Erreur lors du chargement des données de facturation:"
     }
   },
-
   "iban": {
     "title": "Mon IBAN",
     "subtitle": "Votre identifiant bancaire unique",
@@ -1196,7 +1205,6 @@
       }
     }
   },
-
   "history": {
     "title": "Historique",
     "subtitle": "Consultez l'historique de vos transactions",
@@ -1277,7 +1285,6 @@
       "defaultValue": "-"
     }
   },
-
   "budgets": {
     "title": "Budgets",
     "subtitle": "Suivez vos dépenses et respectez vos budgets",
@@ -1344,7 +1351,6 @@
       "loadingError": "Erreur lors du chargement des budgets"
     }
   },
-
   "messages": {
     "title": "Messages",
     "subtitle": "Service client AmCbunq",
@@ -1375,7 +1381,6 @@
       "noMessages": "Aucun message trouvé, création d'un message de bienvenue"
     }
   },
-
   "settings": {
     "title": "Paramètres",
     "subtitle": "Gérez vos préférences et paramètres de compte",
@@ -1423,7 +1428,6 @@
     "marketingEmails": "Emails marketing",
     "marketingEmailsDescription": "Recevez des offres et actualités par email"
   },
-
   "transferMessages": {
     "externalTransferTitle": "Virement externe",
     "externalTransferMessage": "Les virements externes sont soumis à un examen de sécurité avant leur validation.",
@@ -1439,7 +1443,6 @@
     "beneficiaryUpdateError": "Impossible de mettre à jour le bénéficiaire : {error}",
     "beneficiaryDeleteError": "Impossible de supprimer le bénéficiaire : {error}"
   },
-
   "footer": {
     "description": "La banque du futur, aujourd'hui. Gérez vos finances en toute simplicité.",
     "quickLinks": "Liens rapides",
@@ -1452,7 +1455,6 @@
     "terms": "Conditions",
     "rights": "Tous droits réservés"
   },
-
   "errors": {
     "network": "Erreur de connexion",
     "unauthorized": "Non autorisé",
@@ -1467,7 +1469,6 @@
     "beneficiaryUpdateFailed": "Erreur lors de la mise à jour",
     "beneficiaryDeleteFailed": "Erreur lors de la suppression"
   },
-
   "success": {
     "accountCreated": "Compte créé avec succès",
     "loginSuccess": "Connexion réussie",
@@ -1483,7 +1484,6 @@
     "beneficiaryUpdated": "Bénéficiaire mis à jour",
     "beneficiaryDeleted": "Bénéficiaire supprimé"
   },
-
   "pages": {
     "home": {
       "title": "Accueil - AmCbunq",
@@ -1502,7 +1502,6 @@
       "metaDescription": "Centre d'aide AmCbunq. Trouvez rapidement les réponses à vos questions."
     }
   },
-
   "system": {
     "loading": "Chargement en cours...",
     "noData": "Aucune donnée disponible",
@@ -1513,7 +1512,6 @@
     "serverError": "Erreur serveur",
     "maintenance": "Maintenance en cours"
   },
-
   "status": {
     "active": "Actif",
     "inactive": "Inactif",
@@ -1526,7 +1524,6 @@
     "processing": "En traitement",
     "failed": "Échoué"
   },
-
   "actions": {
     "create": "Créer",
     "read": "Lire",
@@ -1542,7 +1539,6 @@
     "send": "Envoyer",
     "receive": "Recevoir"
   },
-
   "notifications": {
     "newMessage": "Nouveau message",
     "newTransaction": "Nouvelle transaction",
@@ -1553,7 +1549,6 @@
     "verificationComplete": "Vérification terminée",
     "maintenanceScheduled": "Maintenance programmée"
   },
-
   "forms": {
     "required": "Champ obligatoire",
     "invalid": "Format invalide",
@@ -1566,7 +1561,6 @@
     "amountInvalid": "Montant invalide",
     "ibanInvalid": "IBAN invalide"
   },
-
   "time": {
     "now": "Maintenant",
     "today": "Aujourd'hui",
@@ -1579,7 +1573,6 @@
     "thisYear": "Cette année",
     "lastYear": "Année dernière"
   },
-
   "currency": {
     "eur": "Euro",
     "usd": "Dollar américain",
@@ -1587,7 +1580,6 @@
     "chf": "Franc suisse",
     "jpy": "Yen japonais"
   },
-
   "languages": {
     "fr": "Français",
     "en": "English",
@@ -1597,7 +1589,6 @@
     "nl": "Nederlands",
     "de": "Deutsch"
   },
-
   "validation": {
     "firstNameMinLength": "Le prénom doit contenir au moins 2 caractères",
     "lastNameMinLength": "Le nom doit contenir au moins 2 caractères",
@@ -1616,33 +1607,27 @@
     "passwordMismatch": "Les mots de passe ne correspondent pas",
     "passwordMinLength6": "Le mot de passe doit contenir au moins 6 caractères"
   },
-
   "placeholders": {
     "nationality": "Ex: Français",
     "residenceCountry": "Ex: France"
   },
-
   "payments": {
     "title": "Paiements",
     "quick": "Rapides"
   },
-
   "offers": {
     "special": "Offre Spéciale",
     "savingsAccount": "Ouvrez un compte épargne et bénéficiez de 2% d'intérêts pendant 6 mois !"
   },
-
   "protection": {
     "premium": "Protection Premium",
     "description": "Protégez vos transactions avec notre assurance fraudes avancée."
   },
-
   "referral": {
     "welcome": "Cadeau de bienvenue !",
     "description": "Parrainez un ami et recevez 50€ chacun. Conditions applicables.",
     "refer": "Parrainer"
   },
-
   "documents": {
     "title": "Mes Documents",
     "subtitle": "Accédez à tous vos documents bancaires en toute sécurité",
@@ -1785,6 +1770,7 @@
       "button": "Contacter le support"
     }
   },
+
   "verificationState": {
     "titles": {
       "unverified": "Vérification d'identité requise",
@@ -1799,7 +1785,6 @@
       "personalizedFeatures": "Fonctionnalités personnalisées"
     }
   },
-
   "modernVerificationState": {
     "verificationInProgress": "Vérification en cours",
     "dossierEnExamen": "Dossier en examen",

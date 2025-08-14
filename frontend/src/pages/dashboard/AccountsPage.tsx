@@ -5,6 +5,7 @@ import { CreditCard, Eye, EyeOff, TrendingUp, TrendingDown, ArrowRight, Download
 import { FirebaseDataService, FirebaseAccount, FirebaseTransaction } from '../../services/firebaseData';
 import { parseFirestoreDate, formatAmount, truncateTransactionDescription, formatUserNameForDisplay } from '../../utils/dateUtils';
 import { useKycSync } from '../../hooks/useNotifications';
+import { KycProtectedContent } from '../../components/KycProtectedContent';
 import { logger } from '../../utils/logger';
 
 // Utiliser FirebaseAccount au lieu de l'interface locale
@@ -22,7 +23,7 @@ interface Transaction {
 }
 
 const AccountsPage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { lang } = useParams<{ lang: string }>();
   const navigate = useNavigate();
   const { userStatus, isUnverified, syncKycStatus } = useKycSync();
@@ -105,7 +106,7 @@ const AccountsPage: React.FC = () => {
             lastTransaction: {
               date: new Date(),
               amount: 0,
-              description: 'Aucune transaction récente'
+              description: t('transactions.noRecent')
             }
           };
         });
@@ -115,14 +116,19 @@ const AccountsPage: React.FC = () => {
         // Charger les transactions
         logger.debug('Chargement des transactions pour userId:', userId);
         const firebaseTransactions = await FirebaseDataService.getUserTransactions(userId);
+        
+        // 🔍 LOG SIMPLE: Vérifier que les transactions se chargent
+        console.log('📊 Transactions chargées:', firebaseTransactions.length);
         logger.debug('Transactions Firebase récupérées:', firebaseTransactions);
         
         const mappedTransactions: Transaction[] = firebaseTransactions.map(trans => {
+          
           const parsedDate = parseFirestoreDate(trans.date);
           
           // Déterminer le type de transaction
           let transactionType: 'income' | 'expense' | 'transfer' = 'income';
-          if (trans.type === 'debit' || trans.category === 'Virement sortant' || trans.description?.includes('Überweisung')) {
+          if (trans.type === 'debit' || trans.category === t('transactionCategories.outgoingTransfer') || 
+              trans.description?.includes('Überweisung') || trans.description?.includes(t('transactionCategories.outgoingTransfer'))) {
             transactionType = 'expense';
           } else if (trans.amount < 0) {
             transactionType = 'expense';
@@ -139,26 +145,59 @@ const AccountsPage: React.FC = () => {
           // Déterminer le nom du compte
           let accountName = trans.accountId;
           if (accountName === 'checking-1') {
-            accountName = 'Compte Courant';
+            accountName = t('accountTypes.current');
           } else if (accountName === 'savings-1') {
-            accountName = 'Compte Épargne';
+            accountName = t('accountTypes.savings');
           } else if (accountName === 'credit-1') {
-            accountName = 'Carte de Crédit';
+            accountName = t('accountTypes.credit');
           }
           
-          // Corriger la description pour remplacer les IDs de compte par des noms lisibles
+          // 🔧 LAISSER les descriptions utilisateur dans leur langue d'origine
+          // Pas de traduction forcée - l'utilisateur voit ses propres libellés
           let correctedDescription = trans.description;
           if (trans.description && trans.description.includes('savings-1')) {
-            correctedDescription = trans.description.replace(/savings-1/g, 'Compte Épargne');
+            correctedDescription = trans.description.replace(/savings-1/g, t('accountTypes.savings'));
           }
           if (trans.description && trans.description.includes('checking-1')) {
-            correctedDescription = trans.description.replace(/checking-1/g, 'Compte Courant');
+            correctedDescription = trans.description.replace(/checking-1/g, t('accountTypes.current'));
           }
           if (trans.description && trans.description.includes('credit-1')) {
-            correctedDescription = trans.description.replace(/credit-1/g, 'Carte de Crédit');
+            correctedDescription = trans.description.replace(/credit-1/g, t('accountTypes.credit'));
           }
           
           logger.debug(`Accounts Transaction ${trans.id}: amount=${amount}, type=${transactionType}, date=${parsedDate}, category=${trans.category}`);
+          
+          // 🔧 TRADUIRE les catégories de transactions
+          let translatedCategory = trans.category || t('transactionCategories.other');
+          
+          // Mapper les catégories vers les clés de traduction
+          const categoryMap: { [key: string]: string } = {
+            'Retirada': t('transactionCategories.withdrawal'),
+            'Servizio AmCBunq': t('transactionCategories.amcbunqService'),
+            'AmCBunq Service': t('transactionCategories.amcbunqService'),
+            'Service AmCBunq': t('transactionCategories.amcbunqService'),
+            'Depotfinanzierung': t('transactionCategories.amcbunqService'),
+            'Überweisung': t('transactionCategories.outgoingTransfer'),
+            'Servicio AmCBunq': t('transactionCategories.amcbunqService'),
+            'Serviço AmCBunq': t('transactionCategories.amcbunqService'),
+            'Bonifico Uscita': t('transactionCategories.outgoingTransfer'),
+            'Outgoing Transfer': t('transactionCategories.outgoingTransfer'),
+            'Transfert Sortant': t('transactionCategories.outgoingTransfer'),
+            'Virement sortant': t('transactionCategories.outgoingTransfer'),
+            'Virement Sortant': t('transactionCategories.outgoingTransfer'),
+            'Ausgehende Überweisung': t('transactionCategories.outgoingTransfer'),
+            'Transferencia Saliente': t('transactionCategories.outgoingTransfer'),
+            'Transferência Saída': t('transactionCategories.outgoingTransfer'),
+            'Bonifico Entrata': t('transactionCategories.incomingTransfer'),
+            'Incoming Transfer': t('transactionCategories.incomingTransfer'),
+            'Transfert Entrant': t('transactionCategories.incomingTransfer'),
+            'Eingehende Überweisung': t('transactionCategories.incomingTransfer'),
+            'Transferencia Entrante': t('transactionCategories.incomingTransfer'),
+            'Transferência Entrada': t('transactionCategories.incomingTransfer')
+          };
+          
+          // Utiliser la traduction si disponible, sinon garder la catégorie originale
+          translatedCategory = categoryMap[trans.category] || trans.category || t('transactionCategories.other');
           
           return {
             id: trans.id,
@@ -166,7 +205,7 @@ const AccountsPage: React.FC = () => {
             description: truncateTransactionDescription(correctedDescription || 'Transaction'),
             amount: amount,
             type: transactionType,
-            category: trans.category || 'Autre',
+            category: translatedCategory,
             account: accountName || 'Compte',
             reference: trans.reference || trans.id
           };
@@ -272,7 +311,7 @@ const AccountsPage: React.FC = () => {
 
   const formatDateDisplay = (date: Date) => {
     if (!date || isNaN(date.getTime())) {
-      return t('common.error') || 'Error';
+      return String(t('common.error'));
     }
     
     const now = new Date();
@@ -280,9 +319,9 @@ const AccountsPage: React.FC = () => {
     const isYesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000).toDateString() === date.toDateString();
     
     if (isToday) {
-      return `${t('accounts.todayAt') || 'Today at'} ${date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
+      return `${String(t('accounts.todayAt'))} ${date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
     } else if (isYesterday) {
-      return `${t('accounts.yesterdayAt') || 'Yesterday at'} ${date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
+      return `${String(t('accounts.yesterdayAt'))} ${date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
     } else {
       return date.toLocaleDateString('fr-FR', { 
         day: '2-digit', 
@@ -300,11 +339,11 @@ const AccountsPage: React.FC = () => {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     if (diffDays === 1) {
-      return t('accounts.today') || 'Today';
+      return String(t('accounts.today'));
     } else if (diffDays === 2) {
-      return t('accounts.yesterday') || 'Yesterday';
+      return String(t('accounts.yesterday'));
     } else if (diffDays <= 7) {
-      return t('accounts.daysAgo', { count: diffDays - 1 }) || `${diffDays - 1} days ago`;
+      return String(t('accounts.daysAgo', { count: diffDays - 1 }));
     } else {
       return date.toLocaleDateString('fr-FR', {
         day: '2-digit',
@@ -359,8 +398,8 @@ const AccountsPage: React.FC = () => {
     setShowTransactionDetails(true);
   };
 
-  // Utiliser les vraies données Firestore pour tous les utilisateurs
-  const displayAccounts = accounts;
+  // 🔧 NOUVEAU: Gérer l'affichage des comptes selon le statut KYC
+  const displayAccounts = userStatus === 'verified' ? accounts : [];
   const displayTransactions = transactions;
   const totalBalance = accounts.reduce((sum, account) => sum + account.balance, 0);
 
@@ -378,7 +417,7 @@ const AccountsPage: React.FC = () => {
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      {/* Header avec RIB commun */}
+      {/* En-tête de la page */}
       <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-white">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 space-y-3 sm:space-y-0">
           <div>
@@ -477,6 +516,26 @@ const AccountsPage: React.FC = () => {
       {/* Comptes */}
       <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6">
         <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">{t('accounts.title')}</h2>
+        
+        {/* 🔧 NOUVEAU: Message informatif pour les utilisateurs vérifiés */}
+        {userStatus === 'verified' && displayAccounts.length === 0 && (
+          <div className="text-center py-8">
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+              <div className="text-blue-600 mb-3">
+                <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-blue-900 mb-2">
+                {t('accounts.creatingDefaultAccounts')}
+              </h3>
+              <p className="text-blue-700 text-sm">
+                {t('accounts.defaultAccountsMessage')}
+              </p>
+            </div>
+          </div>
+        )}
+        
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
           {displayAccounts.map((account) => (
             <div key={account.id} className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4 sm:p-6 hover:shadow-lg transition-all duration-300">
@@ -573,15 +632,17 @@ const AccountsPage: React.FC = () => {
       </div>
 
       {/* Grand livre des transactions */}
-      <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6">
+      <KycProtectedContent 
+        titleKey="accounts.transactionLedger"
+        fallbackMessage={String(t('kyc.noTransactionsAvailable'))}
+      >
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 space-y-3 sm:space-y-0">
-          <h2 className="text-lg sm:text-xl font-bold text-gray-900">{t('accounts.transactionLedger')}</h2>
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
-                placeholder={t('accounts.search') || 'Search accounts...'}
+                placeholder={String(t('accounts.search'))}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
               />
             </div>
@@ -600,12 +661,12 @@ const AccountsPage: React.FC = () => {
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-2 sm:px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.date')}</th>
-                <th className="px-2 sm:px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.description')}</th>
-                <th className="hidden sm:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.account')}</th>
-                <th className="hidden lg:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.category')}</th>
-                <th className="hidden xl:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.reference')}</th>
-                <th className="px-2 sm:px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.amount')}</th>
+                <th className="px-2 sm:px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.fields.date')}</th>
+                <th className="px-2 sm:px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.fields.description')}</th>
+                <th className="hidden sm:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.fields.account')}</th>
+                <th className="hidden lg:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.fields.category')}</th>
+                <th className="hidden xl:table-cell px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.fields.reference')}</th>
+                <th className="px-2 sm:px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{t('transactions.fields.amount')}</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -655,7 +716,7 @@ const AccountsPage: React.FC = () => {
             <button className="px-2 sm:px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 text-xs sm:text-sm">{t('accounts.next')}</button>
           </div>
         </div>
-      </div>
+      </KycProtectedContent>
 
       {/* Modal de détails du compte */}
       {showTransactionDetails && selectedAccount && (
@@ -821,4 +882,4 @@ const AccountsPage: React.FC = () => {
   );
 };
 
-export default AccountsPage; 
+export default AccountsPage;
