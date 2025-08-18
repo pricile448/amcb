@@ -83,6 +83,13 @@ const TransfersPage: React.FC = () => {
   const { user } = useAuth();
   const { kycStatus, isUnverified } = useKycSync();
   
+  // Synchroniser la langue avec i18n
+  useEffect(() => {
+    if (lang && lang !== i18n.language) {
+      i18n.changeLanguage(lang);
+    }
+  }, [lang, i18n]);
+  
   // États
   const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState<FilterOptions>({
@@ -127,24 +134,38 @@ const TransfersPage: React.FC = () => {
   });
   const [accounts, setAccounts] = useState<any[]>([]);
 
+  // Fonction pour obtenir la locale basée sur la langue actuelle
+  const getCurrentLocale = (): string => {
+    const langMap: { [key: string]: string } = {
+      'pt': 'pt-PT',
+      'en': 'en-US',
+      'es': 'es-ES',
+      'de': 'de-DE',
+      'it': 'it-IT',
+      'nl': 'nl-NL',
+      'fr': 'fr-FR'
+    };
+    return langMap[i18n.language] || 'fr-FR';
+  };
+
   // Fonction pour obtenir le nom traduit d'un compte
   const getAccountName = (accountIdOrNameOrAccount: string | { id: string; name: string; balance: number; currency: string } | { name: string }): string => {
     // Si c'est un objet account
     if (typeof accountIdOrNameOrAccount === 'object' && accountIdOrNameOrAccount.name) {
-      return t(`transactions.accounts.${accountIdOrNameOrAccount.name}`);
+      return t(`historyPage.accounts.${accountIdOrNameOrAccount.name}`);
     }
     
     // Si c'est une chaîne (ID ou nom)
     if (typeof accountIdOrNameOrAccount === 'string') {
       // Vérifier si c'est un nom de compte connu
       if (['checking', 'savings', 'credit'].includes(accountIdOrNameOrAccount)) {
-        return t(`transactions.accounts.${accountIdOrNameOrAccount}`);
+        return t(`historyPage.accounts.${accountIdOrNameOrAccount}`);
       }
       
       // Sinon, chercher par ID dans les comptes
       const account = accounts.find(acc => acc.id === accountIdOrNameOrAccount);
       if (account) {
-        return t(`transactions.accounts.${account.name}`);
+        return t(`historyPage.accounts.${account.name}`);
       }
       
       // Si c'est déjà un nom traduit ou un nom de bénéficiaire, le retourner tel quel
@@ -205,10 +226,15 @@ const TransfersPage: React.FC = () => {
                     if (transaction.category === 'Virement interne') {
                       // Si le compte source est 'checking', destination = 'savings', sinon 'checking'
                       const sourceAccount = transaction.accountId;
-                      if (sourceAccount === 'checking') {
+                      
+                      // Vérifier si c'est un compte courant (checking) ou épargne (savings)
+                      if (sourceAccount === 'checking' || sourceAccount === 'current' || sourceAccount === 'Compte Courant') {
                         return getAccountName('savings');
-                      } else {
+                      } else if (sourceAccount === 'savings' || sourceAccount === 'Compte Épargne') {
                         return getAccountName('checking');
+                      } else {
+                        // Fallback: si on ne reconnaît pas le compte source, utiliser 'savings' comme destination
+                        return getAccountName('savings');
                       }
                     }
                     // Pour les virements externes, utiliser le nom du bénéficiaire
@@ -502,7 +528,7 @@ const TransfersPage: React.FC = () => {
           scheduledDate: transferType === 'scheduled' && formData.scheduledDate ? new Date(formData.scheduledDate) : null,
           transferType: transferType,
           adminStatus: transferType === 'external' ? 'pending_review' : null,
-          adminNotes: transferType === 'external' ? 'En attente d\'évaluation par l\'administrateur' : null
+          adminNotes: transferType === 'external' ? t('transfers.externalDialog.pendingDescription') : null
         };
         
         const updatedTransactions = [...transactions, cleanDataForFirestore(newTransfer)];
@@ -792,7 +818,7 @@ const TransfersPage: React.FC = () => {
       },
       {
         label: t("common.date"),
-        value: formatDate(transfer.date, 'long'),
+                                                 value: formatDate(transfer.date, 'long', getCurrentLocale()),
         mobile: true
       },
       {
@@ -1106,7 +1132,7 @@ const TransfersPage: React.FC = () => {
                     <p className="text-xs text-gray-500 dark:text-gray-500">{beneficiary.bankName}</p>
                     {beneficiary.lastUsed && (
                       <p className="text-xs text-gray-500 dark:text-gray-500 mt-2">
-                        {t("transfers.beneficiaries.lastUsed")}: {formatDate(beneficiary.lastUsed, 'short')}
+                        {t("transfers.beneficiaries.lastUsed")}: {formatDate(beneficiary.lastUsed, 'short', getCurrentLocale())}
                       </p>
                     )}
                   </div>
@@ -1145,7 +1171,7 @@ const TransfersPage: React.FC = () => {
                             {transfer.fromAccount} → {transfer.toAccount}
                           </p>
                           <p className="text-xs text-gray-500 dark:text-gray-500">
-                            {t("transfers.scheduled.for")}: {transfer.scheduledDate && formatDate(transfer.scheduledDate, 'long')}
+                            {t("transfers.scheduled.for")}: {transfer.scheduledDate && formatDate(transfer.scheduledDate, 'long', getCurrentLocale())}
                           </p>
                         </div>
                       </div>
@@ -1234,11 +1260,11 @@ const TransfersPage: React.FC = () => {
                             {transfer.status === 'processing' && <Loader2 className="w-3 h-3 mr-1 animate-spin" />}
                             {transfer.status === 'failed' && <AlertCircle className="w-3 h-3 mr-1" />}
                             {transfer.status === 'cancelled' && <X className="w-3 h-3 mr-1" />}
-                            {transfer.status === 'completed' ? 'Terminé' : 
-                             transfer.status === 'pending' ? 'En attente' : 
-                             transfer.status === 'processing' ? 'En cours' :
-                             transfer.status === 'failed' ? 'Échoué' : 
-                             transfer.status === 'cancelled' ? 'Annulé' : 'Inconnu'}
+                            {transfer.status === 'completed' ? t('transfers.status.completed') : 
+                             transfer.status === 'pending' ? t('transfers.status.pending') : 
+                             transfer.status === 'processing' ? t('transfers.status.processing') :
+                             transfer.status === 'failed' ? t('transfers.status.failed') : 
+                             transfer.status === 'cancelled' ? t('transfers.status.cancelled') : t('transfers.status.unknown')}
                           </span>
                         </div>
                         <span className={`text-lg font-bold ${transfer.type === 'external' ? 'text-red-600' : 'text-blue-600'}`}>
@@ -1259,7 +1285,7 @@ const TransfersPage: React.FC = () => {
                       {/* Date et bouton détails */}
                       <div className="flex justify-between items-center">
                         <div className="text-xs text-gray-500 dark:text-gray-400">
-                          {formatDate(transfer.date, 'short')}
+                          {formatDate(transfer.date, 'short', getCurrentLocale())}
                         </div>
                         <button
                           onClick={() => handleTransferClick(transfer)}
@@ -1302,7 +1328,7 @@ const TransfersPage: React.FC = () => {
                             onClick={() => handleTransferClick(transfer)}
                           >
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                              {formatDate(transfer.date, 'short')}
+                              {formatDate(transfer.date, 'short', getCurrentLocale())}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="flex items-center">
@@ -1334,11 +1360,11 @@ const TransfersPage: React.FC = () => {
                                 {transfer.status === 'processing' && <Loader2 className="w-3 h-3 mr-1 animate-spin" />}
                                 {transfer.status === 'failed' && <AlertCircle className="w-3 h-3 mr-1" />}
                                 {transfer.status === 'cancelled' && <X className="w-3 h-3 mr-1" />}
-                                {transfer.status === 'completed' ? 'Terminé' : 
-                                 transfer.status === 'pending' ? 'En attente' : 
-                                 transfer.status === 'processing' ? 'En cours' :
-                                 transfer.status === 'failed' ? 'Échoué' : 
-                                 transfer.status === 'cancelled' ? 'Annulé' : 'Inconnu'}
+                                {transfer.status === 'completed' ? t('transfers.status.completed') : 
+                                 transfer.status === 'pending' ? t('transfers.status.pending') : 
+                                 transfer.status === 'processing' ? t('transfers.status.processing') :
+                                 transfer.status === 'failed' ? t('transfers.status.failed') : 
+                                 transfer.status === 'cancelled' ? t('transfers.status.cancelled') : t('transfers.status.unknown')}
                               </span>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-medium text-gray-900 dark:text-white">

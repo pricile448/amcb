@@ -97,22 +97,37 @@ service cloud.firestore {
         && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
     
-    // 💬 Collection chats
+    // 💬 Collection chats - RÈGLES SIMPLIFIÉES POUR LE CHAT
     match /chats/{chatId} {
+      // ✅ LECTURE : utilisateur peut lire ses propres chats
       allow read: if request.auth != null 
         && (resource.data.userId == request.auth.uid || request.auth.uid in resource.data.participants);
+      
+      // ✅ CRÉATION : utilisateur peut créer ses propres chats
       allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      
+      // ✅ MISE À JOUR : utilisateur peut mettre à jour ses propres chats
+      allow update: if request.auth != null 
+        && (resource.data.userId == request.auth.uid || request.auth.uid in resource.data.participants);
+      
+      // 👮‍♂️ Admins peuvent tout faire
       allow read, write: if request.auth != null 
         && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
       
+      // 📨 Sous-collection messages - RÈGLES SIMPLIFIÉES
       match /messages/{messageId} {
-        allow read: if request.auth != null 
-          && (get(/databases/$(database)/documents/chats/$(chatId)).data.userId == request.auth.uid
-              || request.auth.uid in get(/databases/$(database)/documents/chats/$(chatId)).data.participants);
+        // ✅ LECTURE : utilisateur authentifié peut lire tous les messages
+        allow read: if request.auth != null;
+        
+        // ✅ CRÉATION : utilisateur peut créer des messages avec son propre senderId OU comme support
         allow create: if request.auth != null 
-          && (get(/databases/$(database)/documents/chats/$(chatId)).data.userId == request.auth.uid
-              || request.auth.uid in get(/databases/$(database)/documents/chats/$(chatId)).data.participants)
-          && request.resource.data.senderId == request.auth.uid;
+          && (request.resource.data.senderId == request.auth.uid || request.resource.data.senderId == 'support');
+        
+        // ✅ MISE À JOUR : utilisateur peut mettre à jour ses propres messages
+        allow update: if request.auth != null 
+          && resource.data.senderId == request.auth.uid;
+        
+        // 👮‍♂️ Admins peuvent tout faire
         allow read, write: if request.auth != null 
           && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
       }

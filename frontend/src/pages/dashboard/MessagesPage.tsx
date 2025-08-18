@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Send, Paperclip, Smile, Clock, Check, CheckCheck, Loader2 } from 'lucide-react';
-import { FirebaseDataService, FirebaseMessage } from '../../services/firebaseData';
-import { parseFirestoreDate, formatDate } from '../../utils/dateUtils';
+import ChatService, { Message as ChatMessage } from '../../services/chatService';
+import { formatDate } from '../../utils/formatters';
 import ModernVerificationState from '../../components/ModernVerificationState';
 import { useKycSync } from '../../hooks/useNotifications';
+import { useAuth } from '../../hooks/useAuth';
 import { logger } from '../../utils/logger';
 
 interface Message {
@@ -16,26 +17,39 @@ interface Message {
 }
 
 const MessagesPage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { userStatus, isUnverified, syncKycStatus } = useKycSync();
+  const { user } = useAuth();
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
   const [newMessage, setNewMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [chatId, setChatId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatService = ChatService.getInstance();
+
+  // Fonction utilitaire pour convertir les Timestamps Firestore
+  const convertTimestamp = (timestamp: any): Date => {
+    if (timestamp?.toDate) {
+      return timestamp.toDate();
+    }
+    if (timestamp instanceof Date) {
+      return timestamp;
+    }
+    return new Date(timestamp);
+  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // Charger les messages depuis Firestore
+  // Charger les messages depuis la collection chats
   useEffect(() => {
     const loadMessages = async () => {
       try {
         setLoading(true);
-        const userId = FirebaseDataService.getCurrentUserId();
         
-        if (!userId) {
+        if (!user?.uid) {
           logger.error('Aucun utilisateur connecté');
           setLoading(false);
           return;
@@ -44,13 +58,19 @@ const MessagesPage: React.FC = () => {
         // Synchroniser le statut KYC avant de charger les messages
         await syncKycStatus();
 
-        logger.debug('Chargement des messages pour userId:', userId);
-        const firebaseMessages = await FirebaseDataService.getUserMessages(userId);
+        logger.debug('Chargement des messages pour userId:', user.uid);
         
-        logger.debug('Messages reçus:', firebaseMessages);
+        // Obtenir ou créer un chat pour l'utilisateur
+        const currentChatId = await chatService.getOrCreateUserChat(user.uid);
+        setChatId(currentChatId);
         
-        // Si aucun message dans Firestore, créer un message de bienvenue par défaut
-        if (firebaseMessages.length === 0) {
+        // Récupérer les messages du chat
+        const chatMessages = await chatService.getChatMessages(currentChatId);
+        
+        logger.debug('Messages reçus:', chatMessages.length);
+        
+        // Si aucun message, créer un message de bienvenue par défaut
+        if (chatMessages.length === 0) {
           logger.warn('Aucun message trouvé, création d\'un message de bienvenue');
           const welcomeMessage: Message = {
             id: 'welcome',
@@ -62,14 +82,13 @@ const MessagesPage: React.FC = () => {
           setMessages([welcomeMessage]);
         } else {
           logger.success('Messages chargés avec succès');
-          // Mapper les messages Firebase vers le format local
-          const mappedMessages: Message[] = firebaseMessages.map(msg => {
-            // Conversion sécurisée de la date avec l'utilitaire
-            const timestamp = parseFirestoreDate(msg.timestamp);
+          // Mapper les messages du chat vers le format local
+          const mappedMessages: Message[] = chatMessages.map(msg => {
+            // Conversion de la date Firestore
+            const timestamp = convertTimestamp(msg.timestamp);
 
             // Déterminer le sender : si senderId est l'utilisateur connecté, c'est 'user', sinon 'support'
-            const currentUserId = FirebaseDataService.getCurrentUserId();
-            const isFromUser = msg.senderId === currentUserId;
+            const isFromUser = msg.senderId === user.uid;
             const sender: 'user' | 'support' = isFromUser ? 'user' : 'support';
 
             logger.debug(`Message ${msg.id}: senderId=${msg.senderId}, isFromUser=${isFromUser}, finalSender=${sender}, timestamp=${timestamp}`);
@@ -101,74 +120,86 @@ const MessagesPage: React.FC = () => {
       }
     };
 
-    loadMessages();
-  }, [syncKycStatus]);
+    if (user?.uid) {
+      loadMessages();
+    }
+  }, [user?.uid, syncKycStatus, chatService]);
 
-  // Synchroniser le statut KYC au chargement
+  // Écouter les messages en temps réel
   useEffect(() => {
-    syncKycStatus();
-  }, [syncKycStatus]);
+    if (!chatId || !user?.uid) return;
+
+    logger.debug('Démarrage de l\'écoute en temps réel pour chatId:', chatId);
+    
+    const unsubscribe = chatService.loadChatMessages(chatId, (chatMessages) => {
+      const mappedMessages: Message[] = chatMessages.map(msg => {
+        const timestamp = convertTimestamp(msg.timestamp);
+        const isFromUser = msg.senderId === user.uid;
+        const sender: 'user' | 'support' = isFromUser ? 'user' : 'support';
+
+        return {
+          id: msg.id,
+          text: msg.text,
+          sender: sender,
+          timestamp: timestamp,
+          status: msg.status
+        };
+      });
+      
+      setMessages(mappedMessages);
+    });
+
+    return () => {
+      logger.debug('Arrêt de l\'écoute en temps réel pour chatId:', chatId);
+      unsubscribe();
+    };
+  }, [chatId, user?.uid, chatService]);
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
   const handleSendMessage = async () => {
-    if (newMessage.trim()) {
-      const userId = FirebaseDataService.getCurrentUserId();
-      if (!userId) {
-        logger.error('Aucun utilisateur connecté');
-        return;
-      }
-
+    if (newMessage.trim() && chatId && user?.uid) {
       const messageText = newMessage.trim();
       setNewMessage('');
       setIsTyping(true);
 
       try {
         // Envoyer le message utilisateur
-        const userMessage = await FirebaseDataService.sendMessage(userId, messageText, 'user');
+        const userMessage = await chatService.sendMessage(chatId, user.uid, messageText);
         
-        if (userMessage) {
-          // Déterminer le sender basé sur senderId
-          const currentUserId = FirebaseDataService.getCurrentUserId();
-          const isFromUser = userMessage.senderId === currentUserId;
-          const sender: 'user' | 'support' = isFromUser ? 'user' : 'support';
-          
-          const localUserMessage: Message = {
-            id: userMessage.id,
-            text: userMessage.text,
-            sender: sender,
-            timestamp: parseFirestoreDate(userMessage.timestamp),
-            status: userMessage.status
-          };
-          
-          setMessages(prev => [...prev, localUserMessage]);
-        }
+        logger.success('Message utilisateur envoyé:', userMessage);
+        
+        // Marquer tous les messages comme lus
+        await chatService.markAllMessagesAsRead(chatId, user.uid);
 
-        // Simuler une réponse du support
-        setTimeout(async () => {
-          const supportResponse = await FirebaseDataService.sendMessage(userId, t('messages.autoReply'), 'support');
-          
-          if (supportResponse) {
-            // Déterminer le sender basé sur senderId
-            const currentUserId = FirebaseDataService.getCurrentUserId();
-            const isFromUser = supportResponse.senderId === currentUserId;
-            const sender: 'user' | 'support' = isFromUser ? 'user' : 'support';
-            
-            const localSupportMessage: Message = {
-              id: supportResponse.id,
-              text: supportResponse.text,
-              sender: sender,
-              timestamp: parseFirestoreDate(supportResponse.timestamp),
-              status: supportResponse.status
-            };
-            
-            setMessages(prev => [...prev, localSupportMessage]);
-          }
-          
+        // Simuler une réponse du support seulement pour le premier message
+        if (messages.length === 0) {
+          setTimeout(async () => {
+            try {
+              // Envoyer la réponse du support via Firestore
+              const supportMessage = await chatService.sendMessage(chatId, 'support', t('messages.autoReply'));
+              logger.success('Réponse du support envoyée:', supportMessage);
+            } catch (error) {
+              logger.error('Erreur lors de l\'envoi de la réponse du support:', error);
+              // En cas d'erreur, créer un message local comme fallback
+              const supportMessage: Message = {
+                id: `support-${Date.now()}`,
+                text: t('messages.autoReply'),
+                sender: 'support',
+                timestamp: new Date(),
+                status: 'sent'
+              };
+              setMessages(prev => [...prev, supportMessage]);
+              logger.success('Réponse du support simulée localement (fallback)');
+            } finally {
+              setIsTyping(false);
+            }
+          }, 2000);
+        } else {
           setIsTyping(false);
-        }, 2000);
+        }
       } catch (error) {
         logger.error('Erreur lors de l\'envoi du message:', error);
         setIsTyping(false);
@@ -183,8 +214,22 @@ const MessagesPage: React.FC = () => {
     }
   };
 
+  // Fonction pour obtenir la locale basée sur la langue actuelle
+  const getCurrentLocale = (): string => {
+    const langMap: { [key: string]: string } = {
+      'pt': 'pt-PT',
+      'en': 'en-US',
+      'es': 'es-ES',
+      'de': 'de-DE',
+      'it': 'it-IT',
+      'nl': 'nl-NL',
+      'fr': 'fr-FR'
+    };
+    return langMap[i18n.language] || 'fr-FR';
+  };
+
   const formatTime = (date: Date) => {
-    return formatDate(date, 'time');
+    return formatDate(date, 'time', getCurrentLocale());
   };
 
   const getStatusIcon = (status: string) => {
