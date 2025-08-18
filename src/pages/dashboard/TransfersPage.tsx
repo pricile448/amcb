@@ -127,7 +127,7 @@ const TransfersPage: React.FC = () => {
 
           // Déterminer le type de virement basé sur la catégorie
           let transferType: 'internal' | 'external' | 'scheduled' = 'external';
-          if (trans.category === 'Virement interne') {
+          if (trans.category === t('transactionCategories.internalTransfer')) {
             transferType = 'internal';
           } else if (trans.status === 'scheduled') {
             transferType = 'scheduled';
@@ -520,7 +520,7 @@ const TransfersPage: React.FC = () => {
           status: 'pending',
           date: new Date(createdTransfer.date),
           beneficiaryName: formData.beneficiaryName,
-          category: 'Virement sortant'
+                      category: t('transactionCategories.outgoingTransfer')
         };
 
         setTransfers(prev => [addedTransfer, ...prev]);

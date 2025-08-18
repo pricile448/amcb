@@ -20,7 +20,9 @@ import {
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import { logger } from '../utils/logger';
 
-// Types pour la messagerie
+console.log('🚀 ChatService: Fichier chargé !');
+
+// Types pour la messagerie (conformes aux recommandations Gemini)
 export interface Chat {
   id: string;
   userId: string;
@@ -57,12 +59,15 @@ class ChatService {
   private unsubscribeMessages: (() => void) | null = null;
 
   private constructor() {
+    console.log('🔧 ChatService: Constructeur appelé !');
     // Initialiser l'écoute de l'état d'authentification
     this.initializeAuthListener();
   }
 
   static getInstance(): ChatService {
+    console.log('🔧 ChatService: getInstance appelé !');
     if (!ChatService.instance) {
+      console.log('🔧 ChatService: Création d\'une nouvelle instance !');
       ChatService.instance = new ChatService();
     }
     return ChatService.instance;
@@ -70,13 +75,16 @@ class ChatService {
 
   // Initialiser l'écoute de l'état d'authentification
   private initializeAuthListener(): void {
+    console.log('🔧 ChatService: Initialisation de l\'écoute d\'authentification...');
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       this.currentUser = user;
       if (user) {
-        logger.debug('Utilisateur connecté:', user.uid);
+        console.log('✅ ChatService: Utilisateur connecté:', user.uid);
+        logger.debug('✅ Utilisateur connecté:', user.uid);
       } else {
-        logger.debug('Aucun utilisateur connecté');
+        console.log('❌ ChatService: Aucun utilisateur connecté');
+        logger.debug('❌ Aucun utilisateur connecté');
         // Nettoyer les écouteurs si l'utilisateur se déconnecte
         this.cleanupListeners();
       }
@@ -95,35 +103,37 @@ class ChatService {
     }
   }
 
-  // Obtenir ou créer un chat pour un utilisateur
+  // Obtenir ou créer un chat pour un utilisateur (conforme aux recommandations Gemini)
   async getOrCreateUserChat(userId: string): Promise<string> {
     try {
-      logger.debug('Recherche d\'un chat existant pour userId:', userId);
+      console.log('🔧 ChatService: getOrCreateUserChat appelé avec userId:', userId);
+      logger.debug('🔍 Recherche d\'un chat existant pour userId:', userId);
       
       if (!this.currentUser) {
+        console.log('❌ ChatService: Utilisateur non authentifié dans getOrCreateUserChat');
         throw new Error('Utilisateur non authentifié');
       }
 
-      // Chercher un chat existant où l'utilisateur est participant
+      // Rechercher un chat existant où l'utilisateur est participant
       const chatsQuery = query(
         collection(db, 'chats'),
-        or(
-          where('userId', '==', userId),
-          where('participants', 'array-contains', userId)
-        ),
-        limit(1)
+        where('participants', 'array-contains', userId)
       );
       
+      console.log('🔍 ChatService: Requête pour participants:', userId);
       const chatsSnapshot = await getDocs(chatsQuery);
+      console.log('📊 ChatService: Résultat requête participants:', chatsSnapshot.size, 'chats trouvés');
       
       if (!chatsSnapshot.empty) {
-        const chatId = chatsSnapshot.docs[0].id;
-        logger.debug('Chat existant trouvé:', chatId);
-        return chatId;
+        const existingChat = chatsSnapshot.docs[0];
+        console.log('✅ ChatService: Chat existant trouvé:', existingChat.id);
+        logger.success('✅ Chat existant trouvé:', existingChat.id);
+        return existingChat.id;
       }
       
-      // Créer un nouveau chat si aucun n'existe
-      logger.debug('Création d\'un nouveau chat pour userId:', userId);
+      // Créer un nouveau chat si aucun n'existe (conforme aux recommandations Gemini)
+      console.log('🆕 ChatService: Création d\'un nouveau chat pour userId:', userId);
+      logger.debug('🆕 Création d\'un nouveau chat pour userId:', userId);
       const newChatData = {
         userId: userId,
         participants: [userId, 'support'],
@@ -133,24 +143,27 @@ class ChatService {
       };
       
       const chatRef = await addDoc(collection(db, 'chats'), newChatData);
-      logger.success('Nouveau chat créé:', chatRef.id);
+      console.log('✅ ChatService: Nouveau chat créé:', chatRef.id);
+      logger.success('✅ Nouveau chat créé:', chatRef.id);
       
       return chatRef.id;
     } catch (error) {
-      logger.error('Erreur lors de la récupération/création du chat:', error);
+      console.error('❌ ChatService: Erreur lors de la récupération/création du chat:', error);
+      logger.error('❌ Erreur lors de la récupération/création du chat:', error);
       throw error;
     }
   }
 
-  // Charger les chats de l'utilisateur avec écoute en temps réel
+  // Charger les chats de l'utilisateur avec écoute en temps réel (conforme aux recommandations Gemini)
   loadUserChats(callback: (chats: Chat[]) => void): () => void {
     if (!this.currentUser) {
-      logger.error('Utilisateur non authentifié pour charger les chats');
+      logger.error('❌ Utilisateur non authentifié pour charger les chats');
       return () => {};
     }
 
-    logger.debug('Chargement des chats pour userId:', this.currentUser.uid);
+    logger.debug('📡 Chargement des chats pour userId:', this.currentUser.uid);
 
+    // Requête conforme aux recommandations Gemini
     const chatsQuery = query(
       collection(db, 'chats'),
       or(
@@ -165,10 +178,10 @@ class ChatService {
       snapshot.forEach((doc) => {
         userChats.push({ id: doc.id, ...doc.data() } as Chat);
       });
-      logger.debug('Chats mis à jour:', userChats.length);
+      logger.debug('📡 Chats mis à jour en temps réel:', userChats.length);
       callback(userChats);
     }, (error) => {
-      logger.error('Erreur lors du chargement des chats:', error);
+      logger.error('❌ Erreur lors du chargement des chats:', error);
     });
 
     return () => {
@@ -182,7 +195,7 @@ class ChatService {
   // Récupérer tous les chats d'un utilisateur (version synchrone)
   async getUserChats(userId: string): Promise<Chat[]> {
     try {
-      logger.debug('Récupération des chats pour userId:', userId);
+      logger.debug('📋 Récupération des chats pour userId:', userId);
       
       if (!this.currentUser) {
         throw new Error('Utilisateur non authentifié');
@@ -204,23 +217,24 @@ class ChatService {
         ...doc.data()
       })) as Chat[];
       
-      logger.debug('Chats récupérés:', chats.length);
+      logger.debug('📋 Chats récupérés:', chats.length);
       return chats;
     } catch (error) {
-      logger.error('Erreur lors de la récupération des chats:', error);
+      logger.error('❌ Erreur lors de la récupération des chats:', error);
       throw error;
     }
   }
 
-  // Charger les messages d'un chat avec écoute en temps réel
+  // Charger les messages d'un chat avec écoute en temps réel (conforme aux recommandations Gemini)
   loadChatMessages(chatId: string, callback: (messages: Message[]) => void): () => void {
     if (!this.currentUser) {
-      logger.error('Utilisateur non authentifié pour charger les messages');
+      logger.error('❌ Utilisateur non authentifié pour charger les messages');
       return () => {};
     }
 
-    logger.debug('Chargement des messages pour chatId:', chatId);
+    logger.debug('💬 Chargement des messages pour chatId:', chatId);
 
+    // Requête conforme aux recommandations Gemini pour les messages
     const messagesQuery = query(
       collection(db, 'chats', chatId, 'messages'),
       orderBy('timestamp', 'asc')
@@ -229,12 +243,30 @@ class ChatService {
     this.unsubscribeMessages = onSnapshot(messagesQuery, (snapshot: QuerySnapshot<DocumentData>) => {
       const messages: Message[] = [];
       snapshot.forEach((doc) => {
-        messages.push({ id: doc.id, ...doc.data() } as Message);
+        const data = doc.data();
+        messages.push({
+          id: doc.id,
+          senderId: data.senderId,
+          text: data.text,
+          timestamp: data.timestamp,
+          status: data.status || 'sent',
+          type: data.type || 'text',
+          metadata: data.metadata
+        } as Message);
       });
-      logger.debug('Messages mis à jour:', messages.length);
-      callback(messages);
+      logger.debug('💬 Messages mis à jour en temps réel:', messages.length);
+      
+      if (messages.length > 0) {
+        callback(messages);
+      } else {
+        // Fallback: essayer de lire depuis la collection racine 'chats'
+        logger.debug('🔄 Aucun message dans la sous-collection, tentative de lecture depuis la collection racine...');
+        this.loadMessagesFromRootCollection(chatId, callback);
+      }
     }, (error) => {
-      logger.error('Erreur lors du chargement des messages:', error);
+      logger.error('❌ Erreur lors du chargement des messages:', error);
+      // En cas d'erreur, essayer le fallback
+      this.loadMessagesFromRootCollection(chatId, callback);
     });
 
     return () => {
@@ -245,46 +277,79 @@ class ChatService {
     };
   }
 
-  // Récupérer les messages d'un chat (version synchrone)
-  async getChatMessages(chatId: string): Promise<Message[]> {
+  // Méthode de fallback pour lire les messages depuis la collection racine
+  private async loadMessagesFromRootCollection(chatId: string, callback: (messages: Message[]) => void): Promise<void> {
     try {
-      logger.debug('Récupération des messages pour chatId:', chatId);
+      logger.debug('🔄 Tentative de lecture des messages depuis la collection racine chats...');
       
-      if (!this.currentUser) {
-        throw new Error('Utilisateur non authentifié');
-      }
-
-      const messagesQuery = query(
-        collection(db, 'chats', chatId, 'messages'),
-        orderBy('timestamp', 'asc')
+      // Requête simple pour voir tous les documents de l'utilisateur
+      const simpleQuery = query(
+        collection(db, 'chats'),
+        where('userId', '==', this.currentUser?.uid)
       );
+
+      try {
+        console.log('🔍 ChatService: Requête simple pour userId:', this.currentUser?.uid);
+        logger.debug('🔍 Requête simple pour userId:', this.currentUser?.uid);
+        
+        const snapshot = await getDocs(simpleQuery);
+        console.log('📊 ChatService: Résultat requête simple:', snapshot.size, 'documents');
+        logger.debug('📊 Résultat requête simple:', snapshot.size, 'documents');
+        
+        const messages: Message[] = [];
+        
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          console.log('📄 ChatService: Document simple:', doc.id, data);
+          logger.debug('📄 Document simple:', doc.id, data);
+          
+          // Vérifier si c'est un message (a un champ 'text')
+          if (data.text && typeof data.text === 'string') {
+            messages.push({
+              id: doc.id,
+              senderId: data.senderId || data.userId || 'unknown',
+              text: data.text,
+              timestamp: data.timestamp || data.createdAt || Timestamp.now(),
+              status: data.status || 'sent',
+              type: data.type || 'text',
+              metadata: data.metadata
+            } as Message);
+          }
+        });
+
+        if (messages.length > 0) {
+          console.log('✅ ChatService: Messages trouvés avec la requête simple:', messages.length);
+          logger.success('✅ Messages trouvés avec la requête simple:', messages.length);
+          callback(messages);
+          return;
+        }
+      } catch (queryError) {
+        console.error('❌ ChatService: Requête simple échouée:', queryError);
+        logger.debug('⚠️ Requête simple échouée:', queryError);
+      }
       
-      const messagesSnapshot = await getDocs(messagesQuery);
-      
-      const messages: Message[] = messagesSnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })) as Message[];
-      
-      logger.debug('Messages récupérés:', messages.length);
-      return messages;
+      console.log('⚠️ ChatService: Aucun message trouvé avec la requête simple');
+      logger.warn('⚠️ Aucun message trouvé avec la requête simple');
+      callback([]);
     } catch (error) {
-      logger.error('Erreur lors de la récupération des messages:', error);
-      throw error;
+      console.error('❌ ChatService: Erreur lors du fallback de lecture des messages:', error);
+      logger.error('❌ Erreur lors du fallback de lecture des messages:', error);
+      callback([]);
     }
   }
 
-  // Envoyer un message
-  async sendMessage(chatId: string, senderId: string, text: string): Promise<Message> {
+  // Envoyer un message (conforme aux recommandations Gemini)
+  async sendMessage(chatId: string, text: string, senderId: string = 'user'): Promise<Message> {
     try {
-      logger.debug('Envoi d\'un message dans chatId:', chatId, 'par senderId:', senderId);
+      logger.debug('📤 Envoi d\'un message:', { chatId, text, senderId });
       
       if (!this.currentUser) {
         throw new Error('Utilisateur non authentifié');
       }
       
-      logger.debug('Utilisateur authentifié:', this.currentUser.uid);
+      logger.debug('✅ Utilisateur authentifié:', this.currentUser.uid);
       
+      // Structure du message conforme aux recommandations Gemini
       const messageData = {
         senderId: senderId,
         text: text,
@@ -293,6 +358,7 @@ class ChatService {
         type: 'text' as const
       };
       
+      // Ajouter le message à la sous-collection (conforme aux recommandations Gemini)
       const messageRef = await addDoc(collection(db, 'chats', chatId, 'messages'), messageData);
       
       // Mettre à jour le chat avec le dernier message
@@ -307,10 +373,10 @@ class ChatService {
         timestamp: Timestamp.now() // Utiliser le timestamp actuel pour l'affichage immédiat
       };
       
-      logger.success('Message envoyé avec succès:', newMessage);
+      logger.success('✅ Message envoyé avec succès:', newMessage);
       return newMessage;
     } catch (error) {
-      logger.error('Erreur lors de l\'envoi du message:', error);
+      logger.error('❌ Erreur lors de l\'envoi du message:', error);
       throw error;
     }
   }
@@ -323,7 +389,7 @@ class ChatService {
   // Marquer un message comme lu
   async markMessageAsRead(chatId: string, messageId: string): Promise<void> {
     try {
-      logger.debug('Marquage du message comme lu:', messageId);
+      logger.debug('👁️ Marquage du message comme lu:', messageId);
       
       if (!this.currentUser) {
         throw new Error('Utilisateur non authentifié');
@@ -333,9 +399,9 @@ class ChatService {
         status: 'read'
       });
       
-      logger.success('Message marqué comme lu');
+      logger.success('✅ Message marqué comme lu');
     } catch (error) {
-      logger.error('Erreur lors du marquage du message comme lu:', error);
+      logger.error('❌ Erreur lors du marquage du message comme lu:', error);
       throw error;
     }
   }
@@ -343,7 +409,7 @@ class ChatService {
   // Marquer tous les messages d'un chat comme lus
   async markAllMessagesAsRead(chatId: string, userId: string): Promise<void> {
     try {
-      logger.debug('Marquage de tous les messages comme lus pour userId:', userId);
+      logger.debug('👁️ Marquage de tous les messages comme lus pour userId:', userId);
       
       if (!this.currentUser) {
         throw new Error('Utilisateur non authentifié');
@@ -364,7 +430,7 @@ class ChatService {
       });
       
       if (unreadMessages.length === 0) {
-        logger.debug('Aucun message non lu à marquer');
+        logger.debug('ℹ️ Aucun message non lu à marquer');
         return;
       }
       
@@ -373,78 +439,168 @@ class ChatService {
       );
       
       await Promise.all(updatePromises);
-      logger.success(`${unreadMessages.length} messages marqués comme lus`);
+      logger.success(`✅ ${unreadMessages.length} messages marqués comme lus`);
     } catch (error) {
-      logger.error('Erreur lors du marquage des messages comme lus:', error);
+      logger.error('❌ Erreur lors du marquage des messages comme lus:', error);
       // Ne pas throw l'erreur pour éviter de bloquer l'envoi de messages
-      logger.warn('Continuing without marking messages as read');
+      logger.warn('⚠️ Continuing without marking messages as read');
     }
   }
 
   // Récupérer un chat complet avec ses messages
   async getChatWithMessages(chatId: string): Promise<ChatWithMessages | null> {
     try {
-      logger.debug('Récupération du chat complet avec messages:', chatId);
+      logger.debug('📋 Récupération du chat avec messages:', chatId);
       
       if (!this.currentUser) {
         throw new Error('Utilisateur non authentifié');
       }
 
+      // Récupérer le chat
       const chatDoc = await getDoc(doc(db, 'chats', chatId));
       
       if (!chatDoc.exists()) {
-        logger.warn('Chat non trouvé:', chatId);
+        logger.warn('⚠️ Chat non trouvé:', chatId);
         return null;
       }
       
-      const chat = {
-        id: chatDoc.id,
-        ...chatDoc.data()
-      } as Chat;
+      const chatData = chatDoc.data() as Chat;
       
-      const messages = await this.getChatMessages(chatId);
+      // Récupérer les messages (conforme aux recommandations Gemini)
+      const messagesQuery = query(
+        collection(db, 'chats', chatId, 'messages'),
+        orderBy('timestamp', 'asc')
+      );
+      
+      const messagesSnapshot = await getDocs(messagesQuery);
+      
+      let messages: Message[] = messagesSnapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          senderId: data.senderId,
+          text: data.text,
+          timestamp: data.timestamp,
+          status: data.status || 'sent',
+          type: data.type || 'text',
+          metadata: data.metadata
+        } as Message;
+      });
+
+      // Si aucun message dans la sous-collection, essayer le fallback
+      if (messages.length === 0) {
+        logger.debug('🔄 Aucun message dans la sous-collection, tentative de lecture depuis la collection racine...');
+        messages = await this.getMessagesFromRootCollection(chatId);
+      }
       
       const chatWithMessages: ChatWithMessages = {
-        ...chat,
+        ...chatData,
+        id: chatDoc.id,
         messages
       };
       
-      logger.debug('Chat complet récupéré avec', messages.length, 'messages');
+      logger.debug('📋 Chat avec messages récupéré:', chatWithMessages.messages.length);
       return chatWithMessages;
     } catch (error) {
-      logger.error('Erreur lors de la récupération du chat complet:', error);
+      logger.error('❌ Erreur lors de la récupération du chat avec messages:', error);
       throw error;
     }
   }
 
-  // Supprimer un message (pour les administrateurs)
+  // Méthode de fallback pour récupérer les messages depuis la collection racine (version synchrone)
+  private async getMessagesFromRootCollection(chatId: string): Promise<Message[]> {
+    try {
+      logger.debug('🔄 Tentative de lecture des messages depuis la collection racine chats...');
+      
+      // Essayer différentes structures de données possibles
+      const possibleQueries = [
+        // Structure 1: messages avec chatId
+        query(collection(db, 'chats'), where('chatId', '==', chatId)),
+        // Structure 2: messages avec userId et type de message
+        query(collection(db, 'chats'), where('userId', '==', this.currentUser?.uid), where('type', '==', 'message')),
+        // Structure 3: tous les documents qui ont un champ 'text'
+        query(collection(db, 'chats'), where('text', '!=', null))
+      ];
+
+      for (const queryRef of possibleQueries) {
+        try {
+          const snapshot = await getDocs(queryRef);
+          const messages: Message[] = [];
+          
+          snapshot.forEach((doc) => {
+            const data = doc.data();
+            // Vérifier si c'est un message (a un champ 'text')
+            if (data.text && typeof data.text === 'string') {
+              messages.push({
+                id: doc.id,
+                senderId: data.senderId || data.userId || 'unknown',
+                text: data.text,
+                timestamp: data.timestamp || data.createdAt || Timestamp.now(),
+                status: data.status || 'sent',
+                type: data.type || 'text',
+                metadata: data.metadata
+              } as Message);
+            }
+          });
+
+          if (messages.length > 0) {
+            logger.success(`✅ ${messages.length} messages trouvés dans la collection racine avec la structure:`, queryRef);
+            return messages;
+          }
+        } catch (queryError) {
+          logger.debug('⚠️ Requête fallback échouée:', queryError);
+        }
+      }
+      
+      logger.warn('⚠️ Aucun message trouvé dans aucune structure de données');
+      return [];
+    } catch (error) {
+      logger.error('❌ Erreur lors du fallback de lecture des messages:', error);
+      return [];
+    }
+  }
+
+  // Supprimer un message
   async deleteMessage(chatId: string, messageId: string): Promise<void> {
     try {
-      logger.debug('Suppression du message:', messageId);
+      logger.debug('🗑️ Suppression du message:', messageId);
       
       if (!this.currentUser) {
         throw new Error('Utilisateur non authentifié');
       }
 
-      // Note: Cette opération nécessite des règles Firestore appropriées
-      // pour les administrateurs
+      // Vérifier que l'utilisateur est le propriétaire du message
+      const messageDoc = await getDoc(doc(db, 'chats', chatId, 'messages', messageId));
+      
+      if (!messageDoc.exists()) {
+        throw new Error('Message non trouvé');
+      }
+      
+      const messageData = messageDoc.data();
+      if (messageData.senderId !== this.currentUser.uid && messageData.senderId !== 'support') {
+        throw new Error('Permission refusée pour supprimer ce message');
+      }
+      
+      // Marquer le message comme supprimé au lieu de le supprimer physiquement
       await updateDoc(doc(db, 'chats', chatId, 'messages', messageId), {
-        text: '[Message supprimé]',
-        deleted: true,
-        deletedAt: serverTimestamp()
+        deletedAt: serverTimestamp(),
+        text: '[Message supprimé]'
       });
       
-      logger.success('Message supprimé');
+      logger.success('✅ Message supprimé avec succès');
     } catch (error) {
-      logger.error('Erreur lors de la suppression du message:', error);
+      logger.error('❌ Erreur lors de la suppression du message:', error);
       throw error;
     }
   }
 
-  // Nettoyer les ressources lors de la déconnexion
-  cleanup(): void {
+  // Nettoyer les ressources
+  destroy(): void {
     this.cleanupListeners();
+    this.currentUser = null;
   }
 }
 
-export default ChatService;
+// Export de l'instance singleton
+export const chatService = ChatService.getInstance();
+

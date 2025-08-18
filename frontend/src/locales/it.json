@@ -730,6 +730,9 @@
     "amcbunqService": "Servizio AmCBunq",
     "outgoingTransfer": "Bonifico in uscita",
     "incomingTransfer": "Bonifico in entrata",
+    "internalTransfer": "Bonifico interno",
+    "externalTransfer": "Bonifico esterno",
+    "recurringTransfer": "Bonifico ricorrente",
     "noRecent": "Nessuna transazione recente"
   },
   "transfers": {
@@ -1661,7 +1664,10 @@
     "pushNotifications": "Notifiche push",
     "pushNotificationsDescription": "Ricevi notifiche direttamente sul tuo dispositivo",
     "marketingEmails": "Email di marketing",
-    "marketingEmailsDescription": "Ricevi offerte e novità via email"
+    "marketingEmailsDescription": "Ricevi offerte e novità via email",
+    "saving": "Salvataggio...",
+    "profileUpdatedSuccess": "Profilo aggiornato con successo",
+    "profileUpdateError": "Errore durante l'aggiornamento del profilo"
   },
   "transferMessages": {
     "externalTransferTitle": "Bonifico esterno",

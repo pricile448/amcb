@@ -761,6 +761,9 @@
     "amcbunqService": "AmCBunq Service",
     "outgoingTransfer": "Uitgaande Overschrijving",
     "incomingTransfer": "Inkomende Overschrijving",
+    "internalTransfer": "Interne Overschrijving",
+    "externalTransfer": "Externe Overschrijving",
+    "recurringTransfer": "Terugkerende Overschrijving",
     "noRecent": "Geen recente transacties"
   },
   "transfers": {
@@ -1692,7 +1695,10 @@
     "pushNotifications": "Push notificaties",
     "pushNotificationsDescription": "Ontvang meldingen direct op uw apparaat",
     "marketingEmails": "Marketing e-mails",
-    "marketingEmailsDescription": "Ontvang aanbiedingen en nieuws per e-mail"
+    "marketingEmailsDescription": "Ontvang aanbiedingen en nieuws per e-mail",
+    "saving": "Opslaan...",
+    "profileUpdatedSuccess": "Profiel succesvol bijgewerkt",
+    "profileUpdateError": "Fout bij het bijwerken van het profiel"
   },
   "transferMessages": {
     "externalTransferTitle": "Externe overschrijving",

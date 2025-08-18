@@ -99,16 +99,28 @@ service cloud.firestore {
     
     // 💬 Collection chats - RÈGLES SIMPLIFIÉES POUR LE CHAT
     match /chats/{chatId} {
-      // ✅ LECTURE : utilisateur peut lire ses propres chats
-      allow read: if request.auth != null 
-        && (resource.data.userId == request.auth.uid || request.auth.uid in resource.data.participants);
+      // ✅ LECTURE : utilisateur authentifié peut lire tous les documents de chats
+      allow read: if request.auth != null;
       
-      // ✅ CRÉATION : utilisateur peut créer ses propres chats
-      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      // ✅ CRÉATION : utilisateur peut créer ses propres chats ET messages
+      allow create: if request.auth != null 
+        && (
+          // Cas 1: Document de chat principal
+          request.resource.data.userId == request.auth.uid
+          ||
+          // Cas 2: Message avec senderId correct
+          (request.resource.data.type == 'message' && (request.resource.data.senderId == request.auth.uid || request.resource.data.senderId == 'support'))
+        );
       
-      // ✅ MISE À JOUR : utilisateur peut mettre à jour ses propres chats
+      // ✅ MISE À JOUR : utilisateur peut mettre à jour ses propres chats ET messages
       allow update: if request.auth != null 
-        && (resource.data.userId == request.auth.uid || request.auth.uid in resource.data.participants);
+        && (
+          // Cas 1: Document de chat principal
+          (resource.data.userId == request.auth.uid || request.auth.uid in resource.data.participants)
+          ||
+          // Cas 2: Message avec senderId correct
+          (resource.data.type == 'message' && resource.data.senderId == request.auth.uid)
+        );
       
       // 👮‍♂️ Admins peuvent tout faire
       allow read, write: if request.auth != null 

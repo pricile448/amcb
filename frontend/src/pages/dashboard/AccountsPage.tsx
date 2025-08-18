@@ -189,6 +189,8 @@ const AccountsPage: React.FC = () => {
             'Transfert Sortant': t('transactionCategories.outgoingTransfer'),
             'Virement sortant': t('transactionCategories.outgoingTransfer'),
             'Virement Sortant': t('transactionCategories.outgoingTransfer'),
+            'Virement interne': t('transactionCategories.internalTransfer'),
+            'Virement Interne': t('transactionCategories.internalTransfer'),
             'Ausgehende Überweisung': t('transactionCategories.outgoingTransfer'),
             'Transferencia Saliente': t('transactionCategories.outgoingTransfer'),
             'Transferência Saída': t('transactionCategories.outgoingTransfer'),
@@ -307,7 +309,14 @@ const AccountsPage: React.FC = () => {
   };
 
   const formatCurrency = (amount: number, currency: string) => {
-    return new Intl.NumberFormat('fr-FR', {
+    const numberLocale = i18n.language === 'en' ? 'en-US' : 
+                        i18n.language === 'es' ? 'es-ES' :
+                        i18n.language === 'pt' ? 'pt-PT' :
+                        i18n.language === 'it' ? 'it-IT' :
+                        i18n.language === 'de' ? 'de-DE' :
+                        i18n.language === 'nl' ? 'nl-NL' : 'fr-FR';
+                        
+    return new Intl.NumberFormat(numberLocale, {
       style: 'currency',
       currency: currency
     }).format(amount);
@@ -322,12 +331,19 @@ const AccountsPage: React.FC = () => {
     const isToday = date.toDateString() === now.toDateString();
     const isYesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000).toDateString() === date.toDateString();
     
+    const dateLocale = i18n.language === 'en' ? 'en-US' : 
+                      i18n.language === 'es' ? 'es-ES' :
+                      i18n.language === 'pt' ? 'pt-PT' :
+                      i18n.language === 'it' ? 'it-IT' :
+                      i18n.language === 'de' ? 'de-DE' :
+                      i18n.language === 'nl' ? 'nl-NL' : 'fr-FR';
+    
     if (isToday) {
-      return `${String(t('accounts.todayAt'))} ${date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
+      return `${String(t('accounts.todayAt'))} ${date.toLocaleTimeString(dateLocale, { hour: '2-digit', minute: '2-digit' })}`;
     } else if (isYesterday) {
-      return `${String(t('accounts.yesterdayAt'))} ${date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
+      return `${String(t('accounts.yesterdayAt'))} ${date.toLocaleTimeString(dateLocale, { hour: '2-digit', minute: '2-digit' })}`;
     } else {
-      return date.toLocaleDateString('fr-FR', { 
+      return date.toLocaleDateString(dateLocale, { 
         day: '2-digit', 
         month: '2-digit', 
         year: 'numeric',
@@ -349,7 +365,14 @@ const AccountsPage: React.FC = () => {
     } else if (diffDays <= 7) {
       return String(t('accounts.daysAgo', { count: diffDays - 1 }));
     } else {
-      return date.toLocaleDateString('fr-FR', {
+      const dateLocale = i18n.language === 'en' ? 'en-US' : 
+                        i18n.language === 'es' ? 'es-ES' :
+                        i18n.language === 'pt' ? 'pt-PT' :
+                        i18n.language === 'it' ? 'it-IT' :
+                        i18n.language === 'de' ? 'de-DE' :
+                        i18n.language === 'nl' ? 'nl-NL' : 'fr-FR';
+                        
+      return date.toLocaleDateString(dateLocale, {
         day: '2-digit',
         month: '2-digit',
         year: 'numeric'
@@ -358,7 +381,14 @@ const AccountsPage: React.FC = () => {
   };
 
   const formatDate = (date: Date) => {
-    return date.toLocaleDateString('fr-FR', {
+    const dateLocale = i18n.language === 'en' ? 'en-US' : 
+                      i18n.language === 'es' ? 'es-ES' :
+                      i18n.language === 'pt' ? 'pt-PT' :
+                      i18n.language === 'it' ? 'it-IT' :
+                      i18n.language === 'de' ? 'de-DE' :
+                      i18n.language === 'nl' ? 'nl-NL' : 'fr-FR';
+                      
+    return date.toLocaleDateString(dateLocale, {
       day: '2-digit',
       month: 'long',
       year: 'numeric'

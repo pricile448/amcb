@@ -217,13 +217,13 @@ const TransfersPage: React.FC = () => {
                   date: transaction.date?.toDate() || new Date(),
                   description: transaction.description || '',
                   amount: Math.abs(transaction.amount) || 0,
-                  type: transaction.category === 'Virement interne' ? 'internal' : 'external',
+                  type: transaction.category === t('transactionCategories.internalTransfer') ? 'internal' : 'external',
                   status: transaction.status || 'completed',
                   fromAccount: getAccountName(transaction.accountId) || transaction.accountId || '',
                   fromAccountId: transaction.accountId,
                   toAccount: (() => {
                     // Pour les virements internes, utiliser un compte de destination logique
-                    if (transaction.category === 'Virement interne') {
+                    if (transaction.category === t('transactionCategories.internalTransfer')) {
                       // Si le compte source est 'checking', destination = 'savings', sinon 'checking'
                       const sourceAccount = transaction.accountId;
                       
@@ -515,7 +515,7 @@ const TransfersPage: React.FC = () => {
           accountId: formData.fromAccount,
           amount: transferAmount,
           description: formData.description,
-          category: transferType === 'internal' ? 'Virement interne' : 'Virement sortant',
+                            category: transferType === 'internal' ? t('transactionCategories.internalTransfer') : t('transactionCategories.outgoingTransfer'),
           currency: 'EUR',
           date: new Date(),
           status: transferType === 'internal' ? 'completed' : 'pending',

@@ -7,12 +7,34 @@ import { useTheme } from "../../contexts/ThemeContext";
 import ThemeSelector from "../../components/ThemeSelector";
 import LanguageSelector from "../../components/LanguageSelector";
 import { logger } from "../../utils/logger";
+import { toast } from "react-hot-toast";
+
+  // Interface pour typer les données utilisateur
+  interface UserData {
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    phone?: string;
+    birthDate?: any;
+    birthPlace?: string;
+    nationality?: string;
+    residenceCountry?: string;
+    address?: string;
+    city?: string;
+    postalCode?: string;
+    profession?: string;
+    salary?: number;
+    [key: string]: any; // Pour permettre d'autres propriétés
+  }
+
+  // Type pour les données utilisateur avec any pour éviter les erreurs TypeScript
+  type UserDataAny = any;
 
 const SettingsPage: React.FC = () => {
   const { t } = useTranslation();
   const [selectedTab, setSelectedTab] = useState("profile");
   const [loading, setLoading] = useState(true);
-  const [userData, setUserData] = useState<any>(null);
+  const [userData, setUserData] = useState<UserDataAny>(null);
   const [notifications, setNotifications] = useState({
     emailNotifications: true,
     smsNotifications: false,
@@ -22,6 +44,25 @@ const SettingsPage: React.FC = () => {
     transactionAlerts: true,
     balanceAlerts: true,
     maintenanceAlerts: true
+  });
+  const [manualBirthDate, setManualBirthDate] = useState('');
+  const [manualBirthPlace, setManualBirthPlace] = useState('');
+  const [isUpdatingBirthInfo, setIsUpdatingBirthInfo] = useState(false);
+  const [isRefreshingData, setIsRefreshingData] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    phone: '',
+    birthDate: '',
+    birthPlace: '',
+    nationality: '',
+    residenceCountry: '',
+    address: '',
+    city: '',
+    postalCode: '',
+    profession: '',
+    salary: ''
   });
   const { theme, setTheme } = useTheme();
 
@@ -44,6 +85,20 @@ const SettingsPage: React.FC = () => {
           logger.success('Données utilisateur complètes chargées:', completeUserData);
           logger.debug('Tous les champs disponibles dans completeUserData:', Object.keys(completeUserData));
           logger.debug('Valeurs des champs dans completeUserData:', completeUserData);
+          
+          // Vérifier spécifiquement les champs de naissance
+          logger.debug('🔍 Vérification des champs de naissance:');
+          logger.debug('dob:', completeUserData.dob);
+          logger.debug('pob:', completeUserData.pob);
+          logger.debug('birthDate:', completeUserData.birthDate);
+          logger.debug('birthPlace:', completeUserData.birthPlace);
+          
+          // Vérifier si les champs de naissance sont manquants et les ajouter si nécessaire
+          if (!(completeUserData as UserData)?.birthDate || !(completeUserData as UserData)?.birthPlace) {
+            logger.warn('Champs de naissance manquants, tentative de récupération...');
+            await updateUserWithBirthInfo(userId, completeUserData);
+          }
+          
           setUserData(completeUserData);
         } else {
           logger.warn('Aucune donnée utilisateur complète trouvée, utilisation des données localStorage');
@@ -85,6 +140,204 @@ const SettingsPage: React.FC = () => {
   }, []);
 
 
+
+  // Fonction pour sauvegarder les modifications du profil
+  const handleSaveProfile = async () => {
+    try {
+      logger.debug('🔄 Début de la sauvegarde du profil...');
+      setIsSaving(true);
+      const userId = FirebaseDataService.getCurrentUserId();
+      
+      if (!userId) {
+        logger.error('Aucun utilisateur connecté');
+        return;
+      }
+
+      logger.debug('🔄 Sauvegarde des modifications du profil...');
+      logger.debug('🔄 État isSaving:', isSaving);
+      logger.debug('🔄 État loading:', loading);
+      
+      const updates: any = {};
+      
+      // Ajouter les champs modifiés
+      if (formData.firstName && formData.firstName !== getUserFirstName()) {
+        updates.firstName = formData.firstName;
+      }
+      if (formData.lastName && formData.lastName !== getUserLastName()) {
+        updates.lastName = formData.lastName;
+      }
+      if (formData.phone && formData.phone !== getUserPhone()) {
+        updates.phone = formData.phone;
+      }
+      if (formData.birthDate && formData.birthDate !== getUserDateOfBirth()) {
+        updates.birthDate = new Date(formData.birthDate);
+      }
+      if (formData.birthPlace && formData.birthPlace !== getUserPlaceOfBirth()) {
+        updates.birthPlace = formData.birthPlace;
+      }
+      if (formData.nationality && formData.nationality !== getUserNationality()) {
+        updates.nationality = formData.nationality;
+      }
+      if (formData.residenceCountry && formData.residenceCountry !== getUserResidenceCountry()) {
+        updates.residenceCountry = formData.residenceCountry;
+      }
+      if (formData.address && formData.address !== getUserAddress()) {
+        updates.address = formData.address;
+      }
+      if (formData.city && formData.city !== getUserCity()) {
+        updates.city = formData.city;
+      }
+      if (formData.postalCode && formData.postalCode !== getUserPostalCode()) {
+        updates.postalCode = formData.postalCode;
+      }
+      if (formData.profession && formData.profession !== getUserProfession()) {
+        updates.profession = formData.profession;
+      }
+      if (formData.salary && formData.salary !== getUserSalary()) {
+        updates.salary = parseInt(formData.salary);
+      }
+
+      if (Object.keys(updates).length > 0) {
+        // Mettre à jour dans Firestore
+        const { doc, updateDoc } = await import('firebase/firestore');
+        const { db } = await import('../../config/firebase');
+        
+        const userDocRef = doc(db, 'users', userId);
+        await updateDoc(userDocRef, updates);
+        
+        logger.success('✅ Modifications du profil sauvegardées:', updates);
+        
+        // Mettre à jour les données locales
+        if (userData) {
+          Object.assign(userData, updates);
+          setUserData({ ...userData });
+        }
+        
+        // Afficher un message de succès
+        toast.success(t("settings.profileUpdatedSuccess"));
+      } else {
+        logger.info('Aucune modification à sauvegarder');
+      }
+      
+    } catch (error) {
+      logger.error('❌ Erreur lors de la sauvegarde du profil:', error);
+      toast.error(t("settings.profileUpdateError"));
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  // Fonction pour mettre à jour l'utilisateur avec les informations de naissance manquantes
+  const updateUserWithBirthInfo = async (userId: string, userData: UserDataAny): Promise<void> => {
+    try {
+      setIsUpdatingBirthInfo(true);
+      logger.debug('🔄 Tentative de mise à jour des informations de naissance pour userId:', userId);
+      
+      let birthInfo = null;
+      
+      // Priorité 1: Utiliser les valeurs saisies manuellement
+      if (manualBirthDate || manualBirthPlace) {
+        birthInfo = {
+          birthDate: manualBirthDate,
+          birthPlace: manualBirthPlace
+        };
+        logger.success('Utilisation des valeurs saisies manuellement:', birthInfo);
+      }
+      
+      // Priorité 2: Essayer de récupérer depuis localStorage
+      if (!birthInfo) {
+        const userStr = localStorage.getItem('user');
+        if (userStr) {
+          try {
+            const localUser = JSON.parse(userStr);
+            logger.debug('Données localStorage disponibles:', localUser);
+            
+            // Chercher les informations de naissance dans localStorage
+            if (localUser.birthDate || localUser.birthPlace) {
+              birthInfo = {
+                birthDate: localUser.birthDate,
+                birthPlace: localUser.birthPlace
+              };
+              logger.success('Informations de naissance trouvées dans localStorage:', birthInfo);
+            }
+          } catch (error) {
+            logger.error('Erreur parsing localStorage:', error);
+          }
+        }
+      }
+      
+      // Priorité 3: Essayer de récupérer depuis d'autres sources
+      if (!birthInfo) {
+        // Essayer de récupérer depuis les données utilisateur existantes
+        const possibleBirthDateFields = ['birthDate', 'dateOfBirth', 'birthdate', 'date_de_naissance'];
+        const possibleBirthPlaceFields = ['birthPlace', 'placeOfBirth', 'birthplace', 'lieu_de_naissance'];
+        
+        for (const field of possibleBirthDateFields) {
+          if (userData[field]) {
+            birthInfo = birthInfo || {};
+            (birthInfo as any).birthDate = userData[field];
+            logger.success(`Date de naissance trouvée dans le champ '${field}':`, userData[field]);
+            break;
+          }
+        }
+        
+        for (const field of possibleBirthPlaceFields) {
+          if (userData[field]) {
+            birthInfo = birthInfo || {};
+            (birthInfo as any).birthPlace = userData[field];
+            logger.success(`Lieu de naissance trouvé dans le champ '${field}':`, userData[field]);
+            break;
+          }
+        }
+      }
+      
+      // Si on a trouvé des informations, mettre à jour la base de données
+      if (birthInfo) {
+        const updates: any = {};
+        
+        if (birthInfo.birthDate && !(userData && userData.hasOwnProperty('birthDate') && userData.birthDate)) {
+          // Convertir la date en format Date si c'est une string
+          if (typeof birthInfo.birthDate === 'string') {
+            updates.birthDate = new Date(birthInfo.birthDate);
+          } else {
+            updates.birthDate = birthInfo.birthDate;
+          }
+          logger.debug('Mise à jour birthDate avec:', updates.birthDate);
+        }
+        
+        if (birthInfo.birthPlace && !(userData && userData.hasOwnProperty('birthPlace') && userData.birthPlace)) {
+          updates.birthPlace = birthInfo.birthPlace;
+          logger.debug('Mise à jour birthPlace avec:', updates.birthPlace);
+        }
+        
+        if (Object.keys(updates).length > 0) {
+          // Mettre à jour dans Firestore
+          const { doc, updateDoc } = await import('firebase/firestore');
+          const { db } = await import('../../config/firebase');
+          
+          const userDocRef = doc(db, 'users', userId);
+          await updateDoc(userDocRef, updates);
+          
+          logger.success('✅ Informations de naissance mises à jour dans Firestore:', updates);
+          
+          // Mettre à jour le cache et les données locales
+          Object.assign(userData, updates);
+          setUserData({ ...userData });
+          
+          // Réinitialiser les champs manuels
+          setManualBirthDate('');
+          setManualBirthPlace('');
+        }
+      } else {
+        logger.warn('Aucune information de naissance trouvée pour la mise à jour');
+      }
+      
+    } catch (error) {
+      logger.error('❌ Erreur lors de la mise à jour des informations de naissance:', error);
+    } finally {
+      setIsUpdatingBirthInfo(false);
+    }
+  };
 
   // Fonction pour récupérer le nom de l'utilisateur connecté
   const getUserName = (): string => {
@@ -172,35 +425,85 @@ const SettingsPage: React.FC = () => {
 
   // Fonction pour récupérer la date de naissance de l'utilisateur connecté
   const getUserDateOfBirth = (): string => {
-    logger.debug('getUserDateOfBirth - userData:', userData);
+    logger.debug('🔍 getUserDateOfBirth - userData:', userData);
     
     if (userData) {
-      // Essayer différents noms de champs possibles (dob est le nom correct utilisé dans la DB)
-      const possibleFields = ['dob', 'birthDate', 'dateOfBirth', 'birthdate', 'date_de_naissance'];
+      // Essayer différents noms de champs possibles (birthDate est le nom correct utilisé dans la DB)
+      // Ordre de priorité : birthDate en premier car c'est le champ principal utilisé
+      const possibleFields = ['birthDate', 'dob', 'dateOfBirth', 'birthdate', 'date_de_naissance'];
       
       for (const field of possibleFields) {
         if (userData[field]) {
-          logger.success(`Date de naissance trouvée dans le champ '${field}':`, userData[field]);
+          logger.success(`📅 Date de naissance trouvée dans le champ '${field}':`, userData[field]);
+          logger.debug(`🔍 Type de la valeur pour ${field}:`, typeof userData[field]);
+          logger.debug(`🔍 Valeur complète pour ${field}:`, userData[field]);
+          logger.debug(`🔍 JSON.stringify pour ${field}:`, JSON.stringify(userData[field]));
+          
+          // Log spécial pour le champ dob
+          if (field === 'dob') {
+            logger.debug(`🎯 CHAMP DOB DÉTECTÉ - Valeur:`, userData[field]);
+            logger.debug(`🎯 CHAMP DOB - Type:`, typeof userData[field]);
+            logger.debug(`🎯 CHAMP DOB - JSON:`, JSON.stringify(userData[field]));
+          }
+          
+          let finalDate = null;
           
           // Si c'est un timestamp Firebase
           if (userData[field]._seconds) {
             const date = new Date(userData[field]._seconds * 1000);
-            logger.debug('Timestamp converti en date:', date);
-            return date.toISOString().split('T')[0];
+            logger.debug('⏰ Timestamp converti en date:', date);
+            logger.debug('⏰ Date.toISOString():', date.toISOString());
+            finalDate = date.toISOString().split('T')[0];
           }
           // Si c'est déjà une date
-          if (userData[field] instanceof Date) {
-            return userData[field].toISOString().split('T')[0];
+          else if (userData[field] instanceof Date) {
+            logger.debug('📅 Objet Date détecté:', userData[field]);
+            logger.debug('📅 Date.toISOString():', userData[field].toISOString());
+            finalDate = userData[field].toISOString().split('T')[0];
+          }
+          // Si c'est un objet Date Firestore avec toDate()
+          else if (userData[field].toDate && typeof userData[field].toDate === 'function') {
+            const date = userData[field].toDate();
+            logger.debug('🔥 Date Firestore convertie:', date);
+            logger.debug('🔥 Date.toISOString():', date.toISOString());
+            finalDate = date.toISOString().split('T')[0];
           }
           // Si c'est une string
-          if (typeof userData[field] === 'string') {
-            return userData[field];
+          else if (typeof userData[field] === 'string') {
+            logger.debug('📝 String détectée:', userData[field]);
+            // Essayer de parser la string en date si elle est dans un format valide
+            const parsedDate = new Date(userData[field]);
+            if (!isNaN(parsedDate.getTime())) {
+              logger.debug('✅ String parsée en date valide:', parsedDate);
+              logger.debug('✅ Date.toISOString():', parsedDate.toISOString());
+              finalDate = parsedDate.toISOString().split('T')[0];
+            } else {
+              logger.debug('❌ String non parsable en date, utilisation directe');
+              finalDate = userData[field];
+            }
+          }
+          // Si c'est un objet avec des propriétés de date
+          else if (typeof userData[field] === 'object' && userData[field] !== null) {
+            logger.debug('📦 Objet détecté, propriétés:', Object.keys(userData[field]));
+            // Essayer de créer une date à partir des propriétés
+            if (userData[field].year && userData[field].month && userData[field].day) {
+              const date = new Date(userData[field].year, userData[field].month - 1, userData[field].day);
+              logger.debug('📅 Date créée à partir des propriétés:', date);
+              logger.debug('📅 Date.toISOString():', date.toISOString());
+              finalDate = date.toISOString().split('T')[0];
+            }
+          }
+          
+          if (finalDate) {
+            logger.success(`✅ Date finale retournée pour ${field}:`, finalDate);
+            return finalDate;
           }
         }
       }
       
-      logger.warn('Aucun champ de date de naissance trouvé dans userData');
-      logger.debug('Champs disponibles dans userData:', Object.keys(userData));
+      logger.warn('⚠️ Aucun champ de date de naissance trouvé dans userData');
+      logger.debug('🔍 Champs disponibles dans userData:', Object.keys(userData));
+      logger.debug('🔍 Valeurs des champs dans userData:', userData);
     }
     
     // Fallback vers localStorage
@@ -208,20 +511,21 @@ const SettingsPage: React.FC = () => {
     if (userStr) {
       try {
         const user = JSON.parse(userStr);
-        logger.debug('getUserDateOfBirth - Fallback localStorage user:', user);
+        logger.debug('💾 getUserDateOfBirth - Fallback localStorage user:', user);
         
         const possibleFields = ['dob', 'birthDate', 'dateOfBirth', 'birthdate', 'date_de_naissance'];
         for (const field of possibleFields) {
           if (user[field]) {
-            logger.success(`Date de naissance trouvée dans localStorage champ '${field}':`, user[field]);
+            logger.success(`💾 Date de naissance trouvée dans localStorage champ '${field}':`, user[field]);
             return user[field];
           }
         }
       } catch (error) {
-        logger.error('Erreur parsing user localStorage dans getUserDateOfBirth:', error);
+        logger.error('❌ Erreur parsing user localStorage dans getUserDateOfBirth:', error);
       }
     }
     
+    logger.debug('❌ Aucune date de naissance trouvée, retour d\'une chaîne vide');
     return '';
   };
 
@@ -230,8 +534,8 @@ const SettingsPage: React.FC = () => {
     logger.debug('getUserPlaceOfBirth - userData:', userData);
     
     if (userData) {
-      // Essayer différents noms de champs possibles (pob est le nom correct utilisé dans la DB)
-      const possibleFields = ['pob', 'birthPlace', 'placeOfBirth', 'birthplace', 'lieu_de_naissance'];
+      // Essayer différents noms de champs possibles (birthPlace est le nom correct utilisé dans la DB)
+      const possibleFields = ['birthPlace', 'pob', 'placeOfBirth', 'birthplace', 'lieu_de_naissance'];
       
       for (const field of possibleFields) {
         if (userData[field]) {
@@ -242,6 +546,7 @@ const SettingsPage: React.FC = () => {
       
       logger.warn('Aucun champ de lieu de naissance trouvé dans userData');
       logger.debug('Champs disponibles dans userData:', Object.keys(userData));
+      logger.debug('Valeurs des champs dans userData:', userData);
     }
     
     // Fallback vers localStorage
@@ -398,7 +703,8 @@ const SettingsPage: React.FC = () => {
                       </label>
                       <input
                         type="text"
-                        defaultValue={getUserFirstName()}
+                        value={formData.firstName || getUserFirstName()}
+                        onChange={(e) => setFormData(prev => ({ ...prev, firstName: e.target.value }))}
                         className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                       />
                     </div>
@@ -420,8 +726,9 @@ const SettingsPage: React.FC = () => {
                        </label>
                        <input
                          type="email"
-                         defaultValue={getUserEmail()}
-                         className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+                         value={getUserEmail()}
+                         readOnly
+                         className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed"
                        />
                      </div>
                     
@@ -442,9 +749,20 @@ const SettingsPage: React.FC = () => {
                        </label>
                        <input
                          type="date"
-                         defaultValue={getUserDateOfBirth()}
+                         value={formData.birthDate || getUserDateOfBirth() || manualBirthDate || ''}
+                         onChange={(e) => {
+                           setManualBirthDate(e.target.value);
+                           setFormData(prev => ({ ...prev, birthDate: e.target.value }));
+                         }}
+                         placeholder="Sélectionnez votre date de naissance"
                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                        />
+                       {!getUserDateOfBirth() && !manualBirthDate && (
+                         <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                           Veuillez sélectionner votre date de naissance
+                         </p>
+                       )}
+
                      </div>
 
                                          <div>
@@ -453,10 +771,63 @@ const SettingsPage: React.FC = () => {
                        </label>
                        <input
                          type="text"
-                         defaultValue={getUserPlaceOfBirth()}
+                         value={formData.birthPlace || getUserPlaceOfBirth() || manualBirthPlace}
+                         onChange={(e) => {
+                           setManualBirthPlace(e.target.value);
+                           setFormData(prev => ({ ...prev, birthPlace: e.target.value }));
+                         }}
+                         placeholder="Ex: Paris, France"
                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                        />
                      </div>
+
+                     {/* Bouton pour mettre à jour les informations de naissance manquantes */}
+                     {(!getUserDateOfBirth() || !getUserPlaceOfBirth()) && (
+                       <div className="md:col-span-2">
+                         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                           <div className="flex items-center">
+                             <div className="flex-shrink-0">
+                               <svg className="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                 <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                               </svg>
+                             </div>
+                             <div className="ml-3">
+                               <h3 className="text-sm font-medium text-yellow-800">
+                                 Informations de naissance manquantes
+                               </h3>
+                               <div className="mt-2 text-sm text-yellow-700">
+                                 <p>
+                                   Vos informations de naissance ne sont pas complètes. 
+                                   Veuillez les saisir ci-dessus et cliquer sur "Mettre à jour".
+                                 </p>
+                               </div>
+                               <div className="mt-4">
+                                 <button
+                                   type="button"
+                                   disabled={isUpdatingBirthInfo}
+                                                                       onClick={async () => {
+                                      const userId = FirebaseDataService.getCurrentUserId();
+                                      if (userId && userData) {
+                                        await updateUserWithBirthInfo(userId, userData);
+                                      }
+                                    }}
+                                   className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-yellow-800 bg-yellow-100 hover:bg-yellow-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                                 >
+                                   {isUpdatingBirthInfo ? (
+                                     <>
+                                       <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-yellow-600 mr-2"></div>
+                                       Mise à jour...
+                                     </>
+                                   ) : (
+                                     'Mettre à jour les informations'
+                                   )}
+                                 </button>
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+                       </div>
+                     )}
 
                                          <div>
                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -540,10 +911,11 @@ const SettingsPage: React.FC = () => {
                 <div className="flex justify-end">
                   <button 
                     className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                    disabled={loading}
+                    disabled={isSaving}
+                    onClick={handleSaveProfile}
                   >
                     <Save className="w-4 h-4" />
-                    <span>{t("settings.saveChanges")}</span>
+                    <span>{isSaving ? t("settings.saving") : t("settings.saveChanges")}</span>
                   </button>
                 </div>
               </div>
@@ -741,9 +1113,13 @@ const SettingsPage: React.FC = () => {
                 </div>
 
                 <div className="flex justify-end">
-                  <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2">
+                  <button 
+                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={isSaving}
+                    onClick={handleSaveProfile}
+                  >
                     <Save className="w-4 h-4" />
-                    <span>{t("settings.saveChanges")}</span>
+                    <span>{isSaving ? t("settings.saving") : t("settings.saveChanges")}</span>
                   </button>
                 </div>
               </div>

@@ -116,7 +116,7 @@ const AccountsPage: React.FC = () => {
           
           // Déterminer le type de transaction
           let transactionType: 'income' | 'expense' | 'transfer' = 'income';
-          if (trans.type === 'debit' || trans.category === 'Virement sortant' || trans.description?.includes('Überweisung')) {
+          if (trans.type === 'debit' || trans.category === t('transactionCategories.outgoingTransfer') || trans.description?.includes('Überweisung')) {
             transactionType = 'expense';
           } else if (trans.amount < 0) {
             transactionType = 'expense';

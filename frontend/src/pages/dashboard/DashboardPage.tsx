@@ -39,7 +39,7 @@ interface Transaction {
 }
 
 const DashboardPage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { lang } = useParams<{ lang: string }>();
   const { userStatus, syncKycStatus, hasInitialized } = useKycSync();
   const [loading, setLoading] = useState(true);
@@ -126,6 +126,8 @@ const DashboardPage: React.FC = () => {
        'Transfert Sortant': t('transactionCategories.outgoingTransfer'),
        'Virement sortant': t('transactionCategories.outgoingTransfer'),
        'Virement Sortant': t('transactionCategories.outgoingTransfer'),
+       'Virement interne': t('transactionCategories.internalTransfer'),
+       'Virement Interne': t('transactionCategories.internalTransfer'),
        'Ausgehende Überweisung': t('transactionCategories.outgoingTransfer'),
        'Transferencia Saliente': t('transactionCategories.outgoingTransfer'),
        'Transferência Saída': t('transactionCategories.outgoingTransfer'),
@@ -270,23 +272,44 @@ const DashboardPage: React.FC = () => {
   const savingsAccount = accounts.find(a => a.type === 'savings');
 
   const formatCurrency = (amount: number, currency: string) => {
+    const numberLocale = i18n.language === 'en' ? 'en-US' : 
+                        i18n.language === 'es' ? 'es-ES' :
+                        i18n.language === 'pt' ? 'pt-PT' :
+                        i18n.language === 'it' ? 'it-IT' :
+                        i18n.language === 'de' ? 'de-DE' :
+                        i18n.language === 'nl' ? 'nl-NL' : 'fr-FR';
+                        
     // Pour les comptes non vérifiés ou en attente, afficher 00.00
     if (userStatus === 'unverified' || userStatus === 'pending') {
-      return new Intl.NumberFormat('fr-FR', {
+      return new Intl.NumberFormat(numberLocale, {
         style: 'currency',
         currency: currency
       }).format(0);
     }
     
     // 🔧 NOUVEAU: Pour les comptes vérifiés, afficher le solde réel (même s'il est 0)
-    return new Intl.NumberFormat('fr-FR', {
+    return new Intl.NumberFormat(numberLocale, {
       style: 'currency',
       currency: currency
     }).format(amount);
   };
 
   const formatDateDisplay = (date: Date) => {
-    return formatDate(date, 'datetime');
+    return formatDate(date, 'datetime', i18n.language);
+  };
+
+  const formatTransactionAmount = (amount: number, currency: string = 'EUR') => {
+    const numberLocale = i18n.language === 'en' ? 'en-US' : 
+                        i18n.language === 'es' ? 'es-ES' :
+                        i18n.language === 'pt' ? 'pt-PT' :
+                        i18n.language === 'it' ? 'it-IT' :
+                        i18n.language === 'de' ? 'de-DE' :
+                        i18n.language === 'nl' ? 'nl-NL' : 'fr-FR';
+                        
+    return new Intl.NumberFormat(numberLocale, {
+      style: 'currency',
+      currency: currency
+    }).format(Math.abs(amount));
   };
 
   const getTransactionIcon = (type: string) => {
@@ -608,7 +631,7 @@ const DashboardPage: React.FC = () => {
                   <p className="text-xs md:text-sm text-gray-500 truncate">
                     {translateTransactionCategory(transaction.category)} • {
                       transaction.date && !isNaN(transaction.date.getTime()) 
-                        ? formatDate(transaction.date, 'short')
+                        ? formatDateDisplay(transaction.date)
                         : 'Date invalide'
                     }
                   </p>
@@ -617,7 +640,7 @@ const DashboardPage: React.FC = () => {
               <span className={`font-semibold text-sm md:text-base ${
                 transaction.amount >= 0 ? 'text-green-600' : 'text-red-600'
               }`}>
-                {transaction.amount >= 0 ? '+' : '-'}{formatCurrency(Math.abs(transaction.amount), 'EUR')}
+                {transaction.amount >= 0 ? '+' : '-'}{formatTransactionAmount(transaction.amount, 'EUR')}
               </span>
             </div>
           ))}
@@ -627,7 +650,7 @@ const DashboardPage: React.FC = () => {
         {totalPages > 1 && (
           <div className="mt-4 flex items-center justify-between">
             <div className="text-sm text-gray-500">
-              Affichage de {startIndex + 1} à {Math.min(endIndex, recentTransactions.length)} sur {recentTransactions.length} transactions
+              {t('history.pagination.showing')} {startIndex + 1} {t('history.pagination.to')} {Math.min(endIndex, recentTransactions.length)} {t('history.pagination.of')} {recentTransactions.length} {t('history.pagination.transactions')}
             </div>
             <div className="flex items-center space-x-2">
               <button
@@ -635,17 +658,17 @@ const DashboardPage: React.FC = () => {
                 disabled={currentPage === 1}
                 className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Précédent
+                {t('history.pagination.previous')}
               </button>
               <span className="text-sm text-gray-700">
-                Page {currentPage} sur {totalPages}
+                {t('history.pagination.page')} {currentPage} {t('history.pagination.of')} {totalPages}
               </span>
               <button
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
                 className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Suivant
+                {t('history.pagination.next')}
               </button>
             </div>
           </div>

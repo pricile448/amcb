@@ -15,13 +15,13 @@ interface Transaction {
   amount: number;
   currency: string;
   date: Date;
-  status: 'completed' | 'pending' | 'failed';
+  status: 'completed' | 'pending' | 'processing' | 'failed';
   account: string;
   reference: string;
 }
 
 const HistoryPage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { userStatus, isUnverified, isLoading: kycLoading } = useKycSync();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('all');
@@ -104,9 +104,12 @@ const HistoryPage: React.FC = () => {
       'Serviço AmCBunq': t('transactionCategories.amcbunqService'),
       'Bonifico Uscita': t('transactionCategories.outgoingTransfer'),
       'Outgoing Transfer': t('transactionCategories.outgoingTransfer'),
+      'Outgoing transfer': t('transactionCategories.outgoingTransfer'),
       'Transfert Sortant': t('transactionCategories.outgoingTransfer'),
       'Virement sortant': t('transactionCategories.outgoingTransfer'),
       'Virement Sortant': t('transactionCategories.outgoingTransfer'),
+      'Virement interne': t('transactionCategories.internalTransfer'),
+      'Virement Interne': t('transactionCategories.internalTransfer'),
       'Ausgehende Überweisung': t('transactionCategories.outgoingTransfer'),
       'Transferencia Saliente': t('transactionCategories.outgoingTransfer'),
       'Transferência Saída': t('transactionCategories.outgoingTransfer'),
@@ -159,31 +162,31 @@ const HistoryPage: React.FC = () => {
           // Déterminer le nom du compte
           let accountName = trans.accountId;
           if (accountName === 'checking-1') {
-            accountName = String(t('historyPage.accounts.checking'));
+            accountName = String(t('history.accounts.checking'));
           } else if (accountName === 'savings-1') {
-            accountName = String(t('historyPage.accounts.savings'));
+            accountName = String(t('history.accounts.savings'));
           }
           
           logger.debug(`History Transaction ${trans.id}: amount=${amount}, type=${transactionType}, date=${parsedDate}, category=${trans.category}`);
           
           // Déterminer le statut
-          let status: 'completed' | 'pending' | 'failed' = 'completed';
+          let status: 'completed' | 'pending' | 'processing' | 'failed' = 'completed';
           if (transactionType === 'expense' && (trans.category === t('transactionCategories.outgoingTransfer') || trans.description?.includes('Überweisung'))) {
-            status = 'pending';
+            status = 'processing';
           } else if (trans.status) {
-            status = trans.status as 'completed' | 'pending' | 'failed';
+            status = trans.status as 'completed' | 'pending' | 'processing' | 'failed';
           }
           
           // Corriger les descriptions pour utiliser les noms d'affichage des comptes
           let correctedDescription = trans.description;
           if (trans.description.includes('savings-1')) {
-            correctedDescription = trans.description.replace('savings-1', String(t('historyPage.accounts.savings')));
+            correctedDescription = trans.description.replace('savings-1', String(t('history.accounts.savings')));
           }
           if (trans.description.includes('checking-1')) {
-            correctedDescription = trans.description.replace('checking-1', String(t('historyPage.accounts.checking')));
+            correctedDescription = trans.description.replace('checking-1', String(t('history.accounts.checking')));
           }
           if (trans.description.includes('credit-1')) {
-            correctedDescription = trans.description.replace('credit-1', String(t('historyPage.accounts.credit')));
+            correctedDescription = trans.description.replace('credit-1', String(t('history.accounts.credit')));
           }
           
           // 🔧 TRADUIRE les descriptions allemandes
@@ -194,7 +197,7 @@ const HistoryPage: React.FC = () => {
           }
           
           // Traduire la catégorie de transaction
-          const translatedCategory = translateTransactionCategory(trans.category) || String(t('historyPage.categories.other'));
+          const translatedCategory = translateTransactionCategory(trans.category) || String(t('history.categories.other'));
           
           return {
             id: trans.id,
@@ -205,7 +208,7 @@ const HistoryPage: React.FC = () => {
             currency: trans.currency || 'EUR',
             date: parsedDate,
             status: status,
-            account: accountName || String(t('historyPage.accounts.default')),
+            account: accountName || String(t('history.accounts.default')),
             reference: trans.reference || trans.id
           };
         });
@@ -256,11 +259,11 @@ const HistoryPage: React.FC = () => {
     .reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
   const formatDateDisplay = (date: Date) => {
-    return formatDate(date, 'short');
+    return formatDate(date, 'short', i18n.language);
   };
 
   const formatTimeDisplay = (date: Date) => {
-    return formatDate(date, 'time');
+    return formatDate(date, 'time', i18n.language);
   };
 
   const getStatusColor = (status: string) => {
@@ -279,13 +282,15 @@ const HistoryPage: React.FC = () => {
   const getStatusText = (status: string) => {
     switch (status) {
       case 'completed':
-                  return String(t('historyPage.status.completed'));
-        case 'pending':
-          return String(t('historyPage.status.pending'));
-        case 'failed':
-          return String(t('historyPage.status.failed'));
-        default:
-          return String(t('historyPage.status.unknown'));
+        return String(t('transfers.status.completed'));
+      case 'pending':
+        return String(t('transfers.status.pending'));
+      case 'processing':
+        return String(t('transfers.status.processing'));
+      case 'failed':
+        return String(t('transfers.status.failed'));
+      default:
+        return String(t('transfers.status.processing'));
     }
   };
 
@@ -355,8 +360,8 @@ const HistoryPage: React.FC = () => {
     <div className="max-w-6xl mx-auto space-y-4 sm:space-y-6">
       {/* Header */}
       <div className="mb-4 sm:mb-8">
-        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">{t('historyPage.title')}</h1>
-        <p className="text-gray-600 text-sm sm:text-base">{t('historyPage.subtitle')}</p>
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">{t('history.title')}</h1>
+        <p className="text-gray-600 text-sm sm:text-base">{t('history.subtitle')}</p>
       </div>
 
       {/* Summary Cards */}
@@ -525,7 +530,13 @@ const HistoryPage: React.FC = () => {
                       transaction.amount >= 0 ? 'text-green-600' : 'text-red-600'
                     }`}>
                       {transaction.amount >= 0 ? '+' : '-'}
-                      {Math.abs(transaction.amount).toLocaleString('fr-FR', {
+                      {Math.abs(transaction.amount).toLocaleString(
+                        i18n.language === 'en' ? 'en-US' : 
+                        i18n.language === 'es' ? 'es-ES' :
+                        i18n.language === 'pt' ? 'pt-PT' :
+                        i18n.language === 'it' ? 'it-IT' :
+                        i18n.language === 'de' ? 'de-DE' :
+                        i18n.language === 'nl' ? 'nl-NL' : 'fr-FR', {
                         style: 'currency',
                         currency: transaction.currency
                       })}
@@ -555,9 +566,9 @@ const HistoryPage: React.FC = () => {
         {filteredTransactions.length === 0 && (
           <div className="text-center py-8 sm:py-12">
             <Calendar className="mx-auto h-8 w-8 sm:h-12 sm:w-12 text-gray-400" />
-            <h3 className="mt-2 text-sm font-medium text-gray-900">{t('historyPage.emptyState.title')}</h3>
+            <h3 className="mt-2 text-sm font-medium text-gray-900">{t('history.emptyState.title')}</h3>
             <p className="mt-1 text-xs sm:text-sm text-gray-500">
-              {t('historyPage.emptyState.description')}
+              {t('history.emptyState.description')}
             </p>
           </div>
         )}
@@ -566,7 +577,7 @@ const HistoryPage: React.FC = () => {
       {/* Pagination */}
       {filteredTransactions.length > 0 && (
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs sm:text-sm text-gray-500 space-y-2 sm:space-y-0">
-                      <span>{t('historyPage.pagination.showing')} {startIndex + 1} à {Math.min(endIndex, filteredTransactions.length)} sur {filteredTransactions.length} {t('historyPage.pagination.transactions')}</span>
+                      <span>{t('history.pagination.showing')} {startIndex + 1} {t('history.pagination.to')} {Math.min(endIndex, filteredTransactions.length)} {t('history.pagination.of')} {filteredTransactions.length} {t('history.pagination.transactions')}</span>
           {totalPages > 1 && (
             <div className="flex items-center justify-center sm:justify-end space-x-2">
               <button 
@@ -574,7 +585,7 @@ const HistoryPage: React.FC = () => {
                 disabled={currentPage === 1}
                 className="px-2 sm:px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 text-xs sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {t('historyPage.pagination.previous')}
+                {t('history.pagination.previous')}
               </button>
               <span className="px-2 sm:px-3 py-1 bg-blue-600 text-white rounded text-xs sm:text-sm">
                 {currentPage} / {totalPages}
@@ -584,7 +595,7 @@ const HistoryPage: React.FC = () => {
                 disabled={currentPage === totalPages}
                 className="px-2 sm:px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 text-xs sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {t('historyPage.pagination.next')}
+                {t('history.pagination.next')}
               </button>
             </div>
           )}

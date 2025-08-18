@@ -64,29 +64,92 @@ export function parseFirestoreDate(dateValue: any): Date {
 /**
  * Formate une date pour l'affichage dans l'interface
  */
-export function formatDate(date: Date, format: 'short' | 'long' | 'time' | 'datetime' = 'short'): string {
+export function formatDate(date: Date, format: 'short' | 'long' | 'time' | 'datetime' = 'short', locale: string = 'fr-FR'): string {
   if (!date || isNaN(date.getTime())) {
-    return 'Date invalide';
+    return locale === 'en' ? 'Invalid date' : 'Date invalide';
   }
 
   const now = new Date();
   const isToday = date.toDateString() === now.toDateString();
   const isYesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000).toDateString() === date.toDateString();
 
+  // Déterminer la locale pour le formatage
+  const dateLocale = locale === 'en' ? 'en-US' : 
+                    locale === 'es' ? 'es-ES' :
+                    locale === 'pt' ? 'pt-PT' :
+                    locale === 'it' ? 'it-IT' :
+                    locale === 'de' ? 'de-DE' :
+                    locale === 'nl' ? 'nl-NL' : 'fr-FR';
+  
+  // Textes localisés
+  const texts = {
+    fr: {
+      today: 'Aujourd\'hui',
+      yesterday: 'Hier',
+      todayAt: 'Aujourd\'hui à',
+      yesterdayAt: 'Hier à',
+      invalidDate: 'Date invalide'
+    },
+    en: {
+      today: 'Today',
+      yesterday: 'Yesterday',
+      todayAt: 'Today at',
+      yesterdayAt: 'Yesterday at',
+      invalidDate: 'Invalid date'
+    },
+    es: {
+      today: 'Hoy',
+      yesterday: 'Ayer',
+      todayAt: 'Hoy a las',
+      yesterdayAt: 'Ayer a las',
+      invalidDate: 'Fecha inválida'
+    },
+    pt: {
+      today: 'Hoje',
+      yesterday: 'Ontem',
+      todayAt: 'Hoje às',
+      yesterdayAt: 'Ontem às',
+      invalidDate: 'Data inválida'
+    },
+    it: {
+      today: 'Oggi',
+      yesterday: 'Ieri',
+      todayAt: 'Oggi alle',
+      yesterdayAt: 'Ieri alle',
+      invalidDate: 'Data non valida'
+    },
+    de: {
+      today: 'Heute',
+      yesterday: 'Gestern',
+      todayAt: 'Heute um',
+      yesterdayAt: 'Gestern um',
+      invalidDate: 'Ungültiges Datum'
+    },
+    nl: {
+      today: 'Vandaag',
+      yesterday: 'Gisteren',
+      todayAt: 'Vandaag om',
+      yesterdayAt: 'Gisteren om',
+      invalidDate: 'Ongeldige datum'
+    }
+  };
+  
+  const currentTexts = texts[locale as keyof typeof texts] || texts.fr;
+
   switch (format) {
     case 'time':
-      return date.toLocaleTimeString('fr-FR', { 
+      return date.toLocaleTimeString(dateLocale, { 
         hour: '2-digit', 
         minute: '2-digit' 
       });
     
     case 'datetime':
       if (isToday) {
-        return `Aujourd'hui à ${date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
+        return `${currentTexts.todayAt} ${date.toLocaleTimeString(dateLocale, { hour: '2-digit', minute: '2-digit' })}`;
       } else if (isYesterday) {
-        return `Hier à ${date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
+        return `${currentTexts.yesterdayAt} ${date.toLocaleTimeString(dateLocale, { hour: '2-digit', minute: '2-digit' })}`;
       } else {
-        return date.toLocaleDateString('fr-FR', { 
+        return date.toLocaleDateString(dateLocale, { 
           day: '2-digit', 
           month: '2-digit', 
           year: 'numeric',
@@ -96,7 +159,7 @@ export function formatDate(date: Date, format: 'short' | 'long' | 'time' | 'date
       }
     
     case 'long':
-      return date.toLocaleDateString('fr-FR', { 
+      return date.toLocaleDateString(dateLocale, { 
         weekday: 'long', 
         year: 'numeric', 
         month: 'long', 
@@ -106,11 +169,11 @@ export function formatDate(date: Date, format: 'short' | 'long' | 'time' | 'date
     case 'short':
     default:
       if (isToday) {
-        return `Aujourd'hui`;
+        return currentTexts.today;
       } else if (isYesterday) {
-        return `Hier`;
+        return currentTexts.yesterday;
       } else {
-        return date.toLocaleDateString('fr-FR', { 
+        return date.toLocaleDateString(dateLocale, { 
           day: '2-digit', 
           month: '2-digit', 
           year: 'numeric' 
@@ -122,8 +185,15 @@ export function formatDate(date: Date, format: 'short' | 'long' | 'time' | 'date
 /**
  * Formate un montant avec la devise
  */
-export function formatAmount(amount: number, currency: string = 'EUR'): string {
-  return new Intl.NumberFormat('fr-FR', {
+export function formatAmount(amount: number, currency: string = 'EUR', locale: string = 'fr-FR'): string {
+  const numberLocale = locale === 'en' ? 'en-US' : 
+                      locale === 'es' ? 'es-ES' :
+                      locale === 'pt' ? 'pt-PT' :
+                      locale === 'it' ? 'it-IT' :
+                      locale === 'de' ? 'de-DE' :
+                      locale === 'nl' ? 'nl-NL' : 'fr-FR';
+                      
+  return new Intl.NumberFormat(numberLocale, {
     style: 'currency',
     currency: currency
   }).format(amount);
@@ -132,8 +202,15 @@ export function formatAmount(amount: number, currency: string = 'EUR'): string {
 /**
  * Formate un montant sans devise (juste le nombre)
  */
-export function formatNumber(number: number): string {
-  return new Intl.NumberFormat('fr-FR').format(number);
+export function formatNumber(number: number, locale: string = 'fr-FR'): string {
+  const numberLocale = locale === 'en' ? 'en-US' : 
+                      locale === 'es' ? 'es-ES' :
+                      locale === 'pt' ? 'pt-PT' :
+                      locale === 'it' ? 'it-IT' :
+                      locale === 'de' ? 'de-DE' :
+                      locale === 'nl' ? 'nl-NL' : 'fr-FR';
+                      
+  return new Intl.NumberFormat(numberLocale).format(number);
 } 
 
 /**

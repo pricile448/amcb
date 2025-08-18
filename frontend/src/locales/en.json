@@ -732,6 +732,9 @@
     "amcbunqService": "AmCBunq Service",
     "outgoingTransfer": "Outgoing Transfer",
     "incomingTransfer": "Incoming Transfer",
+    "internalTransfer": "Internal transfer",
+    "externalTransfer": "External transfer",
+    "recurringTransfer": "Recurring transfer",
     "noRecent": "No recent transactions"
   },
   "transfers": {
@@ -890,6 +893,69 @@
       "processingDescription": "Transfer approved and being processed",
       "completedDescription": "Transfer executed successfully",
       "understood": "Understood"
+    }
+  },
+  "history": {
+    "title": "Transaction History",
+    "subtitle": "View all your recent transactions",
+    "accounts": {
+      "checking": "Current Account",
+      "savings": "Savings Account",
+      "credit": "Credit Card",
+      "default": "Account"
+    },
+    "categories": {
+      "other": "Other",
+      "transferOut": "Outgoing transfer"
+    },
+    "status": {
+      "completed": "Completed",
+      "pending": "Pending",
+      "processing": "Processing",
+      "failed": "Failed",
+      "unknown": "Unknown"
+    },
+    "summary": {
+      "income": "Income",
+      "expenses": "Expenses",
+      "netBalance": "Net Balance"
+    },
+    "search": {
+      "placeholder": "Search transactions..."
+    },
+    "filters": {
+      "allTypes": "All Types",
+      "income": "Income",
+      "expense": "Expense",
+      "export": "Export",
+      "periods": {
+        "7Days": "Last 7 days",
+        "30Days": "Last 30 days",
+        "90Days": "Last 90 days",
+        "1Year": "Last year"
+      }
+    },
+    "table": {
+      "headers": {
+        "transaction": "Transaction",
+        "category": "Category",
+        "amount": "Amount",
+        "date": "Date",
+        "status": "Status",
+        "reference": "Reference"
+      }
+    },
+    "emptyState": {
+      "title": "No transactions found",
+      "description": "Try changing your search criteria."
+    },
+    "pagination": {
+      "showing": "Showing",
+      "transactions": "transactions",
+      "previous": "Previous",
+      "next": "Next",
+      "of": "of",
+      "to": "to"
     }
   },
   "cards": {
@@ -1698,7 +1764,10 @@
     "pushNotifications": "Push notifications",
     "pushNotificationsDescription": "Receive notifications directly on your device",
     "marketingEmails": "Marketing emails",
-    "marketingEmailsDescription": "Receive offers and news by email"
+    "marketingEmailsDescription": "Receive offers and news by email",
+    "saving": "Saving...",
+    "profileUpdatedSuccess": "Profile updated successfully",
+    "profileUpdateError": "Error updating profile"
   },
   "transferMessages": {
     "externalTransferTitle": "External transfer",

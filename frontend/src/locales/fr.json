@@ -743,6 +743,9 @@
     "amcbunqService": "Service AmCBunq",
     "outgoingTransfer": "Virement sortant",
     "incomingTransfer": "Virement entrant",
+    "internalTransfer": "Virement interne",
+    "externalTransfer": "Virement externe",
+    "recurringTransfer": "Virement récurrent",
     "noRecent": "Aucune transaction récente"
   },
   "transfers": {
@@ -901,6 +904,69 @@
       "processingDescription": "Virement approuvé et en cours de traitement",
       "completedDescription": "Virement exécuté avec succès",
       "understood": "Compris"
+    }
+  },
+  "history": {
+    "title": "Historique des transactions",
+    "subtitle": "Consultez toutes vos transactions récentes",
+    "accounts": {
+      "checking": "Compte Courant",
+      "savings": "Compte Épargne",
+      "credit": "Carte de Crédit",
+      "default": "Compte"
+    },
+    "categories": {
+      "other": "Autre",
+      "transferOut": "Virement sortant"
+    },
+    "status": {
+      "completed": "Terminé",
+      "pending": "En attente",
+      "processing": "En cours",
+      "failed": "Échoué",
+      "unknown": "Inconnu"
+    },
+    "summary": {
+      "income": "Revenus",
+      "expenses": "Dépenses",
+      "netBalance": "Solde net"
+    },
+    "search": {
+      "placeholder": "Rechercher des transactions..."
+    },
+    "filters": {
+      "allTypes": "Tous les types",
+      "income": "Revenus",
+      "expense": "Dépenses",
+      "export": "Exporter",
+      "periods": {
+        "7Days": "7 derniers jours",
+        "30Days": "30 derniers jours",
+        "90Days": "90 derniers jours",
+        "1Year": "Dernière année"
+      }
+    },
+    "table": {
+      "headers": {
+        "transaction": "Transaction",
+        "category": "Catégorie",
+        "amount": "Montant",
+        "date": "Date",
+        "status": "Statut",
+        "reference": "Référence"
+      }
+    },
+    "emptyState": {
+      "title": "Aucune transaction trouvée",
+      "description": "Essayez de modifier vos critères de recherche."
+    },
+    "pagination": {
+      "showing": "Affichage de",
+      "transactions": "transactions",
+      "previous": "Précédent",
+      "next": "Suivant",
+      "of": "sur",
+      "to": "à"
     }
   },
   "cards": {
@@ -1731,7 +1797,10 @@
     "pushNotifications": "Notifications push",
     "pushNotificationsDescription": "Recevez des notifications directement sur votre appareil",
     "marketingEmails": "Emails marketing",
-    "marketingEmailsDescription": "Recevez des offres et actualités par email"
+    "marketingEmailsDescription": "Recevez des offres et actualités par email",
+    "saving": "Sauvegarde...",
+    "profileUpdatedSuccess": "Profil mis à jour avec succès",
+    "profileUpdateError": "Erreur lors de la mise à jour du profil"
   },
   "transferMessages": {
     "externalTransferTitle": "Virement externe",

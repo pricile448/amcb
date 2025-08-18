@@ -730,6 +730,9 @@
     "amcbunqService": "Servicio AmCBunq",
     "outgoingTransfer": "Transferencia saliente",
     "incomingTransfer": "Transferencia entrante",
+    "internalTransfer": "Transferencia interna",
+    "externalTransfer": "Transferencia externa",
+    "recurringTransfer": "Transferencia recurrente",
     "noRecent": "No hay transacciones recientes"
   },
   "transfers": {
@@ -1661,7 +1664,10 @@
     "pushNotifications": "Notificaciones push",
     "pushNotificationsDescription": "Reciba notificaciones directamente en su dispositivo",
     "marketingEmails": "Emails de marketing",
-    "marketingEmailsDescription": "Reciba ofertas y novedades por email"
+    "marketingEmailsDescription": "Reciba ofertas y novedades por email",
+    "saving": "Guardando...",
+    "profileUpdatedSuccess": "Perfil actualizado correctamente",
+    "profileUpdateError": "Error al actualizar el perfil"
   },
   "transferMessages": {
     "externalTransferTitle": "Transferencia externa",

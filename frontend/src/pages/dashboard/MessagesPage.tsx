@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Send, Paperclip, Smile, Clock, Check, CheckCheck, Loader2 } from 'lucide-react';
-import ChatService, { Message as ChatMessage } from '../../services/chatService';
+import { chatService, Message as ChatMessage } from '../../services/chatService';
 import { formatDate } from '../../utils/formatters';
 import ModernVerificationState from '../../components/ModernVerificationState';
 import { useKycSync } from '../../hooks/useNotifications';
@@ -17,6 +17,7 @@ interface Message {
 }
 
 const MessagesPage: React.FC = () => {
+  console.log('🔧 MessagesPage: Composant chargé');
   const { t, i18n } = useTranslation();
   const { userStatus, isUnverified, syncKycStatus } = useKycSync();
   const { user } = useAuth();
@@ -26,7 +27,9 @@ const MessagesPage: React.FC = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [chatId, setChatId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const chatService = ChatService.getInstance();
+  // chatService est déjà importé
+
+  console.log('🔧 MessagesPage: État initial - user:', user?.uid, 'loading:', loading);
 
   // Fonction utilitaire pour convertir les Timestamps Firestore
   const convertTimestamp = (timestamp: any): Date => {
@@ -65,7 +68,8 @@ const MessagesPage: React.FC = () => {
         setChatId(currentChatId);
         
         // Récupérer les messages du chat
-        const chatMessages = await chatService.getChatMessages(currentChatId);
+        const chatWithMessages = await chatService.getChatWithMessages(currentChatId);
+        const chatMessages = chatWithMessages?.messages || [];
         
         logger.debug('Messages reçus:', chatMessages.length);
         
@@ -74,7 +78,7 @@ const MessagesPage: React.FC = () => {
           logger.warn('Aucun message trouvé, création d\'un message de bienvenue');
           const welcomeMessage: Message = {
             id: 'welcome',
-            text: t('messages.welcome'),
+            text: t('messages.welcome') || 'Bienvenue !',
             sender: 'support',
             timestamp: new Date(),
             status: 'read'
@@ -167,7 +171,7 @@ const MessagesPage: React.FC = () => {
 
       try {
         // Envoyer le message utilisateur
-        const userMessage = await chatService.sendMessage(chatId, user.uid, messageText);
+        const userMessage = await chatService.sendMessage(chatId, messageText, user.uid);
         
         logger.success('Message utilisateur envoyé:', userMessage);
         
@@ -179,14 +183,14 @@ const MessagesPage: React.FC = () => {
           setTimeout(async () => {
             try {
               // Envoyer la réponse du support via Firestore
-              const supportMessage = await chatService.sendMessage(chatId, 'support', t('messages.autoReply'));
+              const supportMessage = await chatService.sendMessage(chatId, t('messages.autoReply') || 'Merci pour votre message. Notre équipe vous répondra dans les plus brefs délais.', 'support');
               logger.success('Réponse du support envoyée:', supportMessage);
             } catch (error) {
               logger.error('Erreur lors de l\'envoi de la réponse du support:', error);
               // En cas d'erreur, créer un message local comme fallback
               const supportMessage: Message = {
                 id: `support-${Date.now()}`,
-                text: t('messages.autoReply'),
+                text: t('messages.autoReply') || 'Merci pour votre message. Notre équipe vous répondra dans les plus brefs délais.',
                 sender: 'support',
                 timestamp: new Date(),
                 status: 'sent'

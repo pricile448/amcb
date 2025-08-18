@@ -54,7 +54,7 @@ const TransactionsPage: React.FC = () => {
            // Déterminer le type de transaction
            let transactionType = tx.type;
            if (!transactionType) {
-             if (tx.category === 'Virement sortant' || tx.description?.includes('Überweisung')) {
+             if (tx.category === t('transactionCategories.outgoingTransfer') || tx.description?.includes('Überweisung')) {
                transactionType = 'debit';
              } else if (tx.amount > 0) {
                transactionType = 'credit';
