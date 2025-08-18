@@ -745,10 +745,10 @@ const TransfersPage: React.FC = () => {
         </div>
         
         {/* Métriques */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-6">
-          <div className="bg-blue-500 rounded-lg p-4">
-            <p className="text-blue-100 text-sm">{t("transfers.stats.thisMonth")}</p>
-            <p className="text-white text-2xl font-bold">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 mt-6">
+          <div className="bg-blue-500 rounded-lg p-3 md:p-4">
+            <p className="text-blue-100 text-xs md:text-sm">{t("transfers.stats.thisMonth")}</p>
+            <p className="text-white text-lg md:text-2xl font-bold">
               {transfers.filter(t => {
                 const now = new Date();
                 const transferDate = new Date(t.date);
@@ -757,30 +757,30 @@ const TransfersPage: React.FC = () => {
               }).length}
             </p>
           </div>
-          <div className="bg-blue-500 rounded-lg p-4">
-            <p className="text-blue-100 text-sm">{t("transfers.stats.totalAmount")}</p>
-            <p className="text-white text-2xl font-bold">
+          <div className="bg-blue-500 rounded-lg p-3 md:p-4">
+            <p className="text-blue-100 text-xs md:text-sm">{t("transfers.stats.totalAmount")}</p>
+            <p className="text-white text-lg md:text-2xl font-bold">
               {formatCurrency(
                 transfers.reduce((sum, t) => sum + t.amount, 0),
                 'EUR'
               )}
             </p>
           </div>
-          <div className="bg-blue-500 rounded-lg p-4">
-            <p className="text-blue-100 text-sm">{t("transfers.status.pending")}</p>
-            <p className="text-white text-2xl font-bold">
+          <div className="bg-blue-500 rounded-lg p-3 md:p-4">
+            <p className="text-blue-100 text-xs md:text-sm">{t("transfers.status.pending")}</p>
+            <p className="text-white text-lg md:text-2xl font-bold">
               {transfers.filter(t => t.status === 'pending').length}
             </p>
           </div>
-                    <div className="bg-blue-500 rounded-lg p-4">
-            <p className="text-blue-100 text-sm">{t("transfers.status.processing")}</p>
-            <p className="text-white text-2xl font-bold">
+          <div className="bg-blue-500 rounded-lg p-3 md:p-4">
+            <p className="text-blue-100 text-xs md:text-sm">{t("transfers.status.processing")}</p>
+            <p className="text-white text-lg md:text-2xl font-bold">
               {transfers.filter(t => t.status === 'processing').length}
             </p>
           </div>
-          <div className="bg-blue-500 rounded-lg p-4">
-            <p className="text-blue-100 text-sm">{t("transfers.stats.beneficiaries")}</p>
-            <p className="text-white text-2xl font-bold">{beneficiaries.length}</p>
+          <div className="bg-blue-500 rounded-lg p-3 md:p-4">
+            <p className="text-blue-100 text-xs md:text-sm">{t("transfers.stats.beneficiaries")}</p>
+            <p className="text-white text-lg md:text-2xl font-bold">{beneficiaries.length}</p>
           </div>
         </div>
       </div>
@@ -788,9 +788,9 @@ const TransfersPage: React.FC = () => {
       {/* Section blanche avec onglets et cartes */}
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
         {/* Onglets */}
-        <div className="flex space-x-8 border-b border-gray-200 dark:border-gray-700 mb-6">
+        <div className="flex flex-wrap md:flex-nowrap space-x-2 md:space-x-8 border-b border-gray-200 dark:border-gray-700 mb-6 overflow-x-auto">
           <button
-            className={`pb-2 px-1 border-b-2 font-medium text-sm transition-colors ${
+            className={`pb-2 px-2 md:px-1 border-b-2 font-medium text-xs md:text-sm transition-colors whitespace-nowrap ${
               activeTab === 'new'
                 ? 'border-blue-600 text-blue-600'
                 : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
@@ -800,7 +800,7 @@ const TransfersPage: React.FC = () => {
             + {t("transfers.newShort")}
           </button>
           <button
-            className={`pb-2 px-1 border-b-2 font-medium text-sm transition-colors ${
+            className={`pb-2 px-2 md:px-1 border-b-2 font-medium text-xs md:text-sm transition-colors whitespace-nowrap ${
               activeTab === 'beneficiaries'
                 ? 'border-blue-600 text-blue-600'
                 : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
@@ -810,7 +810,7 @@ const TransfersPage: React.FC = () => {
             {t("transfers.tabs.beneficiaries")}
           </button>
           <button
-            className={`pb-2 px-1 border-b-2 font-medium text-sm transition-colors ${
+            className={`pb-2 px-2 md:px-1 border-b-2 font-medium text-xs md:text-sm transition-colors whitespace-nowrap ${
               activeTab === 'scheduled'
                 ? 'border-blue-600 text-blue-600'
                 : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
@@ -823,51 +823,51 @@ const TransfersPage: React.FC = () => {
 
         {/* Contenu des onglets */}
         {activeTab === 'new' && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {/* Carte Virement interne */}
             <div 
-              className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 border-2 border-blue-200 dark:border-blue-800 hover:shadow-md transition-shadow cursor-pointer"
+              className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4 md:p-6 border-2 border-blue-200 dark:border-blue-800 hover:shadow-md transition-shadow cursor-pointer"
               onClick={() => handleNewTransfer('internal')}
             >
-              <div className="flex flex-col items-center text-center space-y-4">
-                <div className="bg-blue-600 p-4 rounded-full">
-                  <ArrowLeftRight className="w-8 h-8 text-white" />
+              <div className="flex flex-col items-center text-center space-y-3 md:space-y-4">
+                <div className="bg-blue-600 p-3 md:p-4 rounded-full">
+                  <ArrowLeftRight className="w-6 h-6 md:w-8 md:h-8 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t("transfers.internalTransfer")}</h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">{t("transfers.internalDesc")}</p>
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 dark:text-white">{t("transfers.internalTransfer")}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-xs md:text-sm mt-1">{t("transfers.internalDesc")}</p>
                 </div>
               </div>
             </div>
 
             {/* Carte Virement externe */}
             <div 
-              className="bg-green-50 dark:bg-green-900/20 rounded-xl p-6 border-2 border-green-200 dark:border-green-800 hover:shadow-md transition-shadow cursor-pointer"
+              className="bg-green-50 dark:bg-green-900/20 rounded-xl p-4 md:p-6 border-2 border-green-200 dark:border-green-800 hover:shadow-md transition-shadow cursor-pointer"
               onClick={() => handleNewTransfer('external')}
             >
-              <div className="flex flex-col items-center text-center space-y-4">
-                <div className="bg-green-600 p-4 rounded-full">
-                  <Send className="w-8 h-8 text-white" />
+              <div className="flex flex-col items-center text-center space-y-3 md:space-y-4">
+                <div className="bg-green-600 p-3 md:p-4 rounded-full">
+                  <Send className="w-6 h-6 md:w-8 md:h-8 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t("transfers.externalTransfer")}</h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">{t("transfers.externalDesc")}</p>
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 dark:text-white">{t("transfers.externalTransfer")}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-xs md:text-sm mt-1">{t("transfers.externalDesc")}</p>
                 </div>
               </div>
             </div>
 
             {/* Carte Virement programmé */}
             <div 
-              className="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-6 border-2 border-purple-200 dark:border-purple-800 hover:shadow-md transition-shadow cursor-pointer"
-              onClick={() => handleNewTransfer('scheduled')}
+              className="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-4 md:p-6 border-2 border-purple-200 dark:border-purple-800 hover:shadow-md transition-shadow cursor-pointer sm:col-span-2 lg:col-span-1"
+              onClick={() => setShowScheduledTransferModal(true)}
             >
-              <div className="flex flex-col items-center text-center space-y-4">
-                <div className="bg-purple-600 p-4 rounded-full">
-                  <ClockIcon className="w-8 h-8 text-white" />
+              <div className="flex flex-col items-center text-center space-y-3 md:space-y-4">
+                <div className="bg-purple-600 p-3 md:p-4 rounded-full">
+                  <ClockIcon className="w-6 h-6 md:w-8 md:h-8 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t("transfers.scheduledLabel")}</h3>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">{t("transfers.scheduledDesc")}</p>
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 dark:text-white">{t("transfers.scheduledLabel")}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-xs md:text-sm mt-1">{t("transfers.scheduledDesc")}</p>
                 </div>
               </div>
             </div>
@@ -887,32 +887,30 @@ const TransfersPage: React.FC = () => {
                 <p className="text-gray-400 dark:text-gray-500 text-sm">{t("transfers.beneficiaries.addFirstBeneficiary")}</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {beneficiaries
-                  .sort((a, b) => a.name.localeCompare(b.name))
-                  .map((beneficiary) => (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {beneficiaries.map((beneficiary) => (
                   <div key={beneficiary.id} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
                     <div className="flex justify-between items-start mb-3">
                       <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded-lg">
-                        <User className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                        <User className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                       </div>
                       <div className="flex space-x-2">
                         <button 
-                          className="text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
+                          className="text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 p-1"
                           onClick={() => handleEditBeneficiary(beneficiary)}
                         >
                           <Edit className="w-4 h-4" />
                         </button>
                         <button 
-                          className="text-gray-400 hover:text-red-600 dark:hover:text-red-400"
+                          className="text-gray-400 hover:text-red-600 dark:hover:text-red-400 p-1"
                           onClick={() => handleDeleteBeneficiary(beneficiary.id)}
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
                     </div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white mb-1">{beneficiary.name}</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{beneficiary.iban}</p>
+                    <h4 className="font-semibold text-gray-900 dark:text-white mb-1 text-sm md:text-base">{beneficiary.name}</h4>
+                    <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-2 break-all">{beneficiary.iban}</p>
                     <p className="text-xs text-gray-500 dark:text-gray-500">{beneficiary.bankName}</p>
                     {beneficiary.lastUsed && (
                       <p className="text-xs text-gray-500 dark:text-gray-500 mt-2">
@@ -981,15 +979,15 @@ const TransfersPage: React.FC = () => {
       {activeTab === 'new' && (
         <>
           {/* Limites de transfert */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 md:p-6">
             <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t("transfers.transferLimits")}</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
               {transferLimits.map((limit) => (
-                <div key={limit.type} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                  <p className="text-sm text-gray-600 dark:text-gray-400">{limit.description}</p>
-                  <p className="text-xl font-bold text-gray-900 dark:text-white mt-1">
+                <div key={limit.type} className="border border-gray-200 dark:border-gray-700 rounded-lg p-3 md:p-4">
+                  <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400">{limit.description}</p>
+                  <p className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mt-1">
                     {limit.type === 'processing' ? (
-                      <>0-2 <span className="text-sm font-normal">{t("transfers.businessDays")}</span></>
+                      <>0-2 <span className="text-xs md:text-sm font-normal">{t("transfers.businessDays")}</span></>
                     ) : (
                       formatCurrency(limit.amount, limit.currency)
                     )}
@@ -1322,22 +1320,22 @@ const TransfersPage: React.FC = () => {
         </div>
       )}
 
-      {/* Modal Nouveau Virement */}
+      {/* Modal Nouveau Transfert */}
       {showNewTransferModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[60] p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-2 sm:p-4">
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+            <div className="p-4 md:p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                 {transferType === 'internal' ? t("transfers.internalTransfer") : t("transfers.externalTransfer")}
               </h3>
               <button 
-                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 p-1"
                 onClick={closeAllModals}
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <div className="p-6 space-y-4">
+            <div className="p-4 md:p-6 space-y-4">
               {/* Compte source */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -1461,15 +1459,15 @@ const TransfersPage: React.FC = () => {
                 />
               </div>
             </div>
-            <div className="p-6 border-t border-gray-200 dark:border-gray-700 flex justify-end space-x-3">
+            <div className="p-4 md:p-6 border-t border-gray-200 dark:border-gray-700 flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3">
               <button 
-                className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                className="w-full sm:w-auto px-4 py-3 sm:py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                 onClick={closeAllModals}
               >
                 {t("common.cancel")}
               </button>
               <button 
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full sm:w-auto px-4 py-3 sm:py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={handleSubmitTransfer}
                 disabled={!formData.fromAccount || !formData.toAccount || !formData.amount || !formData.description}
               >
@@ -1482,14 +1480,14 @@ const TransfersPage: React.FC = () => {
 
       {/* Modal Bénéficiaire */}
       {showBeneficiaryModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-lg w-full">
-            <div className="p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-2 sm:p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-4 md:p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                 {selectedBeneficiary ? t("transfers.beneficiaries.editTitle") : t("transfers.beneficiaries.addTitle")}
               </h3>
               <button 
-                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 p-1"
                 onClick={() => {
                   setShowBeneficiaryModal(false);
                   resetForms();
@@ -1499,7 +1497,7 @@ const TransfersPage: React.FC = () => {
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <div className="p-6 space-y-4">
+            <div className="p-4 md:p-6 space-y-4">
               {/* Nom du bénéficiaire */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -1698,9 +1696,9 @@ const TransfersPage: React.FC = () => {
                 />
               </div>
             </div>
-            <div className="p-6 border-t border-gray-200 dark:border-gray-700 flex justify-end space-x-3">
+            <div className="p-6 border-t border-gray-200 dark:border-gray-700 flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3">
               <button 
-                className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                className="w-full sm:w-auto px-4 py-3 sm:py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                 onClick={() => {
                   setShowScheduledTransferModal(false);
                   resetForms();
@@ -1709,7 +1707,7 @@ const TransfersPage: React.FC = () => {
                 {t("common.cancel")}
               </button>
               <button 
-                className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full sm:w-auto px-4 py-3 sm:py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={handleSubmitTransfer}
                 disabled={!formData.fromAccount || !formData.toAccount || !formData.amount || !formData.description || !formData.scheduledDate}
               >

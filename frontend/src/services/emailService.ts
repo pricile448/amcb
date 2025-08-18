@@ -1,4 +1,4 @@
-import { auth } from '../config/firebase';
+import { auth, getRedirectUrl } from '../config/firebase';
 import { sendEmailVerification } from 'firebase/auth';
 
 export const sendVerificationEmail = async (
@@ -38,10 +38,11 @@ export const sendVerificationEmail = async (
 
     const language = detectLanguage();
     
-    // 🔧 AMÉLIORATION: URL avec préfixe de langue pour une meilleure cohérence
-    const verificationUrl = `${window.location.origin}/${language}/auth/action`;
+    // 🔧 AMÉLIORATION: URL avec détection d'environnement
+    const baseUrl = getRedirectUrl();
+    const verificationUrl = `${baseUrl}/${language}/auth/action`;
     
-    console.log('🔧 URL de vérification avec langue:', verificationUrl);
+    console.log('🔧 URL de vérification avec environnement:', verificationUrl);
 
     // Utiliser Firebase Auth natif pour l'envoi d'email
     await sendEmailVerification(user, {

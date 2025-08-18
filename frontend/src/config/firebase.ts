@@ -47,4 +47,17 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const functions = getFunctions(app);
 
+// Fonction pour obtenir l'URL de redirection selon l'environnement
+export const getRedirectUrl = (): string => {
+  const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const isDev = import.meta.env.DEV;
+  
+  if (isLocalhost || isDev) {
+    return 'http://localhost:3000';
+  }
+  
+  // URL de production (mybunq.amccredit.com)
+  return 'https://mybunq.amccredit.com';
+};
+
 export default app;

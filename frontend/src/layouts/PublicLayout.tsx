@@ -41,52 +41,52 @@ const PublicLayout: React.FC = () => {
             {/* Logo */}
             <div className="flex items-center">
               <Link to={getLink('/')}>
-                <Logo variant="full" size="md" showTagline={false} />
+                <Logo variant="full" size="sm" showTagline={false} />
               </Link>
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-8">
+            <nav className="hidden lg:flex items-center space-x-6 md:space-x-8">
               <Link
                 to={getLink('/')}
-                className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
+                className="text-gray-700 hover:text-blue-600 transition-colors font-medium text-sm md:text-base"
               >
                 {t("nav.home")}
               </Link>
               <Link
                 to={getLink('/fonctionnalites')}
-                className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
+                className="text-gray-700 hover:text-blue-600 transition-colors font-medium text-sm md:text-base"
               >
                 {t("nav.features")}
               </Link>
               <Link
                 to={getLink('/tarifs')}
-                className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
+                className="text-gray-700 hover:text-blue-600 transition-colors font-medium text-sm md:text-base"
               >
                 {t("nav.pricing")}
               </Link>
               <Link
                 to={getLink('/aide')}
-                className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
+                className="text-gray-700 hover:text-blue-600 transition-colors font-medium text-sm md:text-base"
               >
                 {t("nav.help")}
               </Link>
             </nav>
 
             {/* Desktop Actions */}
-            <div className="hidden lg:flex items-center space-x-4">
+            <div className="hidden lg:flex items-center space-x-3 md:space-x-4">
               {/* Language Selector */}
               <LanguageSelector />
 
               <Link
                 to={getLink('/connexion')}
-                className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
+                className="text-gray-700 hover:text-blue-600 transition-colors font-medium text-sm md:text-base"
               >
                 {t("nav.login")}
               </Link>
               <Link
                 to={getLink('/ouvrir-compte')}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                className="bg-blue-600 text-white px-3 md:px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm md:text-base"
               >
                 {t("nav.openAccount")}
               </Link>
@@ -99,7 +99,7 @@ const PublicLayout: React.FC = () => {
                 className="text-gray-700 hover:text-blue-600 p-2 rounded-lg hover:bg-gray-100 transition-colors"
                 aria-label="Toggle menu"
               >
-                {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
             </div>
           </div>
@@ -113,28 +113,28 @@ const PublicLayout: React.FC = () => {
               <Link
                 to={getLink('/')}
                 onClick={handleMobileLinkClick}
-                className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors font-medium"
+                className="block px-3 py-3 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors font-medium text-sm md:text-base"
               >
                 {t("nav.home")}
               </Link>
               <Link
                 to={getLink('/fonctionnalites')}
                 onClick={handleMobileLinkClick}
-                className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors font-medium"
+                className="block px-3 py-3 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors font-medium text-sm md:text-base"
               >
                 {t("nav.features")}
               </Link>
               <Link
                 to={getLink('/tarifs')}
                 onClick={handleMobileLinkClick}
-                className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors font-medium"
+                className="block px-3 py-3 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors font-medium text-sm md:text-base"
               >
                 {t("nav.pricing")}
               </Link>
               <Link
                 to={getLink('/aide')}
                 onClick={handleMobileLinkClick}
-                className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors font-medium"
+                className="block px-3 py-3 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors font-medium text-sm md:text-base"
               >
                 {t("nav.help")}
               </Link>
@@ -152,14 +152,14 @@ const PublicLayout: React.FC = () => {
                 <Link
                   to={getLink('/connexion')}
                   onClick={handleMobileLinkClick}
-                  className="block w-full px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors font-medium text-center border border-gray-200 hover:border-blue-200"
+                  className="block w-full px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors font-medium text-center border border-gray-200 hover:border-blue-200 text-sm md:text-base"
                 >
                   {t("nav.login")}
                 </Link>
                 <Link
                   to={getLink('/ouvrir-compte')}
                   onClick={handleMobileLinkClick}
-                  className="block w-full px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-center shadow-sm hover:shadow-md"
+                  className="block w-full px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-center shadow-sm hover:shadow-md text-sm md:text-base"
                 >
                   {t("nav.openAccount")}
                 </Link>
