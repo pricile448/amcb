@@ -110,11 +110,17 @@ const IbanPage: React.FC = () => {
         logger.debug('Sous-document RIB chargé:', ribSubDoc);
       }
       
-      // ✅ NOUVEAU: Vérifier le statut de la demande RIB
-      const ribRequest = await ribService.getRibRequestStatus(userId);
-      if (ribRequest) {
-        setRibRequestStatus(ribRequest.status);
-        logger.debug('Statut de la demande RIB:', ribRequest.status);
+      // ✅ NOUVEAU: Vérifier le statut de la demande RIB (avec gestion d'erreur)
+      try {
+        const ribRequest = await ribService.getRibRequestStatus(userId);
+        if (ribRequest) {
+          setRibRequestStatus(ribRequest.status);
+          logger.debug('Statut de la demande RIB:', ribRequest.status);
+        }
+      } catch (error) {
+        // En cas d'erreur de permissions, ne pas afficher d'erreur à l'utilisateur
+        logger.debug('Impossible de récupérer le statut RIB (permissions):', error);
+        // Garder le statut par défaut 'none'
       }
       
       if (firebaseIban) {
@@ -227,7 +233,7 @@ Date: ${new Date().toLocaleDateString('fr-FR')}
   };
 
   const handleRequestIban = async () => {
-    if (!ibanData?.userId) {
+    if (!auth.currentUser?.uid) {
       showError(t('common.error'), t('iban.errors.errorRequest') || 'Impossible de demander le RIB');
       return;
     }
@@ -257,7 +263,7 @@ Date: ${new Date().toLocaleDateString('fr-FR')}
       setRibSubDocument(tempRibDoc);
       
       // ✅ NOUVEAU: Utiliser le service RIB
-      const success = await ribService.createRibRequest(ibanData.userId);
+      const success = await ribService.createRibRequest(auth.currentUser.uid);
       
       if (success) {
         showSuccess(
@@ -268,7 +274,7 @@ Date: ${new Date().toLocaleDateString('fr-FR')}
         // ✅ NOUVEAU: Recharger les vraies données depuis Firestore
         setTimeout(async () => {
           try {
-            const realRibDoc = await ribService.getRibSubDocument(ibanData.userId);
+            const realRibDoc = await ribService.getRibSubDocument(auth.currentUser!.uid);
             if (realRibDoc) {
               setRibSubDocument(realRibDoc);
             }

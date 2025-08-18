@@ -46,4 +46,18 @@ export const logger = {
   }
 };
 
-export default logger; 
+export default logger;
+
+// Fonction pour les logs de debug (uniquement en développement)
+export const debugLog = (message: string, ...args: any[]) => {
+  if (import.meta.env.DEV) {
+    console.log(message, ...args);
+  }
+};
+
+// Fonction pour les logs de debug avec logger (uniquement en développement)
+export const debugLogger = (message: string, ...args: any[]) => {
+  if (import.meta.env.DEV) {
+    logger.debug(message, ...args);
+  }
+}; 

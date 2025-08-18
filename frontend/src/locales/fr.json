@@ -815,6 +815,21 @@
     "historyDetails": {
       "title": "Historique des virements"
     },
+    "viewDetails": "Voir détails",
+    "transferDetails": "Détails du virement",
+    "cancelTransfer": "Annuler le virement",
+    "downloadReceipt": "Télécharger le reçu",
+    "unknownAccount": "Compte inconnu",
+    "categories": {
+      "Virement interne": "Virement interne",
+      "Virement externe": "Virement externe",
+      "Virement récurrent": "Virement récurrent"
+    },
+    "fee": "Frais",
+    "fromAccount": "Compte de débit",
+    "toAccount": "Compte de crédit",
+    "category": "Catégorie",
+    "reference": "Référence",
     "transferLimits": "Limites de virement",
     "dailyLimit": "5 000,00 €",
     "monthlyLimit": "20 000,00 €",
@@ -1421,7 +1436,9 @@
       "showing": "Affichage de",
       "transactions": "transactions",
       "previous": "Précédent",
-      "next": "Suivant"
+      "next": "Suivant",
+      "page": "Page",
+      "of": "sur"
     },
     "errors": {
       "noUser": "Aucun utilisateur connecté",

@@ -32,7 +32,6 @@ export interface RibSubDocument {
 }
 
 class RibService {
-  private readonly COLLECTION_NAME = 'ribRequests';
   private readonly USERS_COLLECTION = 'users';
 
   /**
@@ -40,25 +39,14 @@ class RibService {
    */
   async createRibRequest(userId: string): Promise<boolean> {
     try {
-      // ✅ NOUVEAU: S'assurer que l'utilisateur existe d'abord
+      // ✅ S'assurer que l'utilisateur existe d'abord
       const userExists = await this.ensureUserExists(userId);
       if (!userExists) {
         logger.error('Impossible de créer/assurer l\'existence de l\'utilisateur:', userId);
         return false;
       }
 
-      const requestId = `rib_${userId}_${Date.now()}`;
-      const ribRequest: RibRequest = {
-        id: requestId,
-        userId,
-        status: 'pending',
-        requestedAt: Timestamp.now(),
-        adminNotes: 'Demande de RIB en attente de traitement'
-      };
-
-      await setDoc(doc(db, this.COLLECTION_NAME, requestId), ribRequest);
-      
-      // ✅ Mettre à jour le document utilisateur avec les données RIB
+      // ✅ Mettre à jour uniquement le document utilisateur (pas de collection séparée)
       const userRef = doc(db, this.USERS_COLLECTION, userId);
       const ribSubDoc: RibSubDocument = {
         iban: 'En attente',
@@ -78,7 +66,7 @@ class RibService {
         updatedAt: Timestamp.now()
       });
       
-      logger.success('Demande RIB créée avec succès:', requestId);
+      logger.success('Demande RIB créée avec succès pour l\'utilisateur:', userId);
       return true;
     } catch (error) {
       logger.error('Erreur lors de la création de la demande RIB:', error);
@@ -91,7 +79,7 @@ class RibService {
    */
   async getRibRequestStatus(userId: string): Promise<RibRequest | null> {
     try {
-      // ✅ NOUVEAU: Vérifier d'abord dans le document utilisateur
+      // ✅ Vérifier uniquement dans le document utilisateur
       const userRef = doc(db, this.USERS_COLLECTION, userId);
       const userSnap = await getDoc(userRef);
       
@@ -109,20 +97,12 @@ class RibService {
         }
       }
       
-      // Fallback: vérifier dans les demandes RIB
-      const q = query(
-        collection(db, this.COLLECTION_NAME),
-        where('userId', '==', userId)
-      );
-      
-      const querySnapshot = await getDocs(q);
-      if (!querySnapshot.empty) {
-        const doc = querySnapshot.docs[0];
-        return doc.data() as RibRequest;
-      }
       return null;
     } catch (error) {
-      logger.error('Erreur lors de la récupération du statut RIB:', error);
+      // En production, ne pas logger les erreurs de permissions pour éviter le spam
+      if (import.meta.env.DEV) {
+        logger.error('Erreur lors de la récupération du statut RIB:', error);
+      }
       return null;
     }
   }
@@ -150,34 +130,30 @@ class RibService {
    * Mettre à jour le statut d'une demande RIB (pour les admins)
    */
   async updateRibRequestStatus(
-    requestId: string, 
+    userId: string, 
     status: RibRequest['status'], 
     adminId: string,
     adminNotes?: string
   ): Promise<boolean> {
     try {
-      const requestRef = doc(db, this.COLLECTION_NAME, requestId);
-      const updateData: Partial<RibRequest> = {
-        status,
-        completedAt: status === 'completed' ? Timestamp.now() : undefined,
-        adminNotes
+      const userRef = doc(db, this.USERS_COLLECTION, userId);
+      const updateData: any = {
+        ribRequestStatus: status,
+        updatedAt: Timestamp.now()
       };
 
-      await updateDoc(requestRef, updateData);
-
-      // Si le statut est 'completed', mettre à jour le sous-document RIB dans users
+      // Si le statut est 'completed', activer l'affichage du RIB
       if (status === 'completed') {
-        const requestSnap = await getDoc(requestRef);
-        if (requestSnap.exists()) {
-          const requestData = requestSnap.data() as RibRequest;
-          if (requestData.ribData) {
-            await this.updateRibSubDocument(requestData.userId, {
-              ...requestData.ribData,
-              isDisplayed: true
-            });
-          }
-        }
+        updateData['ribData.isDisplayed'] = true;
+        updateData['ribData.updatedAt'] = Timestamp.now();
       }
+
+      // Ajouter les notes admin si fournies
+      if (adminNotes) {
+        updateData['ribData.adminNotes'] = adminNotes;
+      }
+
+      await updateDoc(userRef, updateData);
 
       logger.success('Statut de la demande RIB mis à jour:', status);
       return true;
@@ -238,7 +214,7 @@ class RibService {
    */
   async hasPendingRibRequest(userId: string): Promise<boolean> {
     try {
-      // ✅ NOUVEAU: Vérifier d'abord dans le document utilisateur
+      // ✅ Vérifier uniquement dans le document utilisateur
       const userRef = doc(db, this.USERS_COLLECTION, userId);
       const userSnap = await getDoc(userRef);
       
@@ -249,15 +225,7 @@ class RibService {
         }
       }
       
-      // Fallback: vérifier dans les demandes RIB
-      const q = query(
-        collection(db, this.COLLECTION_NAME),
-        where('userId', '==', userId),
-        where('status', 'in', ['pending', 'processing'])
-      );
-      
-      const querySnapshot = await getDocs(q);
-      return !querySnapshot.empty;
+      return false;
     } catch (error) {
       logger.error('Erreur lors de la vérification des demandes RIB en cours:', error);
       return false;
@@ -269,10 +237,23 @@ class RibService {
    */
   async getAllRibRequests(): Promise<RibRequest[]> {
     try {
-      const q = query(collection(db, this.COLLECTION_NAME));
+      // ✅ Récupérer tous les utilisateurs qui ont une demande RIB en cours
+      const q = query(
+        collection(db, this.USERS_COLLECTION),
+        where('ribRequestStatus', 'in', ['pending', 'processing'])
+      );
       const querySnapshot = await getDocs(q);
       
-      return querySnapshot.docs.map(doc => doc.data() as RibRequest);
+      return querySnapshot.docs.map(doc => {
+        const userData = doc.data();
+        return {
+          id: `rib_${doc.id}`,
+          userId: doc.id,
+          status: userData.ribRequestStatus,
+          requestedAt: userData.ribData?.createdAt || Timestamp.now(),
+          adminNotes: userData.ribData?.adminNotes
+        } as RibRequest;
+      });
     } catch (error) {
       logger.error('Erreur lors de la récupération de toutes les demandes RIB:', error);
       return [];

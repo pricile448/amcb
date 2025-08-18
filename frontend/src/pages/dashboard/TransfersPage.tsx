@@ -22,6 +22,7 @@ import {
   Edit
 } from 'lucide-react';
 import { formatCurrency, formatDate, formatReference } from '../../utils/formatters';
+import { debugLog } from '../../utils/logger';
 import { useAuth } from "../../hooks/useAuth";
 import { useKycSync } from '../../hooks/useKycSync';
 import KycProtectedContent from '../../components/KycProtectedContent';
@@ -128,76 +129,33 @@ const TransfersPage: React.FC = () => {
 
   // Fonction pour obtenir le nom traduit d'un compte
   const getAccountName = (accountIdOrNameOrAccount: string | { id: string; name: string; balance: number; currency: string } | { name: string }): string => {
-    // Obtenir la langue actuelle
-    const currentLanguage = i18n.language;
-    
-    // Dictionnaire des traductions par langue
-    const accountTranslations: { [key: string]: { [key: string]: string } } = {
-      fr: {
-        checking: "Compte Courant",
-        savings: "Compte Épargne", 
-        credit: "Carte de Crédit"
-      },
-      en: {
-        checking: "Current Account",
-        savings: "Savings Account",
-        credit: "Credit Card"
-      },
-      es: {
-        checking: "Cuenta Corriente",
-        savings: "Cuenta de Ahorro",
-        credit: "Tarjeta de Crédito"
-      },
-      de: {
-        checking: "Girokonto",
-        savings: "Sparkonto",
-        credit: "Kreditkarte"
-      },
-      it: {
-        checking: "Conto Corrente",
-        savings: "Conto di Risparmio",
-        credit: "Carta di Credito"
-      },
-      nl: {
-        checking: "Betaalrekening",
-        savings: "Spaarrekening",
-        credit: "Creditcard"
-      },
-      pt: {
-        checking: "Conta Corrente",
-        savings: "Conta Poupança",
-        credit: "Cartão de Crédito"
-      }
-    };
-    
-    // Fonction pour obtenir la traduction
-    const getTranslation = (accountType: string): string => {
-      const translations = accountTranslations[currentLanguage] || accountTranslations.fr;
-      return translations[accountType] || accountType;
-    };
-    
     // Si c'est un objet account
     if (typeof accountIdOrNameOrAccount === 'object' && accountIdOrNameOrAccount.name) {
-      return getTranslation(accountIdOrNameOrAccount.name);
+      return t(`transactions.accounts.${accountIdOrNameOrAccount.name}`);
     }
     
     // Si c'est une chaîne (ID ou nom)
     if (typeof accountIdOrNameOrAccount === 'string') {
       // Vérifier si c'est un nom de compte connu
       if (['checking', 'savings', 'credit'].includes(accountIdOrNameOrAccount)) {
-        return getTranslation(accountIdOrNameOrAccount);
+        return t(`transactions.accounts.${accountIdOrNameOrAccount}`);
       }
       
       // Sinon, chercher par ID dans les comptes
       const account = accounts.find(acc => acc.id === accountIdOrNameOrAccount);
       if (account) {
-        return getTranslation(account.name);
+        return t(`transactions.accounts.${account.name}`);
       }
       
-      return accountIdOrNameOrAccount;
+      // Si c'est déjà un nom traduit ou un nom de bénéficiaire, le retourner tel quel
+      if (accountIdOrNameOrAccount.includes(' ') || accountIdOrNameOrAccount.length > 10) {
+        return accountIdOrNameOrAccount;
+      }
+      
+      return t("transfers.unknownAccount");
     }
     
-    return 'Compte inconnu';
+    return t("transfers.unknownAccount");
   };
 
 
@@ -242,7 +200,20 @@ const TransfersPage: React.FC = () => {
                   status: transaction.status || 'completed',
                   fromAccount: getAccountName(transaction.accountId) || transaction.accountId || '',
                   fromAccountId: transaction.accountId,
-                  toAccount: transaction.beneficiaryName || getAccountName(transaction.toAccountId) || transaction.category || '',
+                  toAccount: (() => {
+                    // Pour les virements internes, utiliser un compte de destination logique
+                    if (transaction.category === 'Virement interne') {
+                      // Si le compte source est 'checking', destination = 'savings', sinon 'checking'
+                      const sourceAccount = transaction.accountId;
+                      if (sourceAccount === 'checking') {
+                        return getAccountName('savings');
+                      } else {
+                        return getAccountName('checking');
+                      }
+                    }
+                    // Pour les virements externes, utiliser le nom du bénéficiaire
+                    return transaction.beneficiaryName || getAccountName(transaction.toAccountId) || transaction.category || '';
+                  })(),
                   toAccountId: transaction.beneficiaryId,
                   reference: transaction.reference || transaction.transferId || '',
                   category: transaction.category,
@@ -448,7 +419,7 @@ const TransfersPage: React.FC = () => {
   };
 
   const handleSubmitTransfer = async () => {
-    console.log('handleSubmitTransfer appelé', { transferType, formData });
+    debugLog('handleSubmitTransfer appelé', { transferType, formData });
     if (!user?.uid) return;
     
     // Validation des données requises
@@ -542,7 +513,7 @@ const TransfersPage: React.FC = () => {
           accounts: updatedAccounts
         });
         
-        console.log('Transfert effectué et soldes mis à jour:', {
+        debugLog('Transfert effectué et soldes mis à jour:', {
           transferType,
           amount: transferAmount,
           fromAccount: formData.fromAccount,
@@ -593,7 +564,7 @@ const TransfersPage: React.FC = () => {
   };
 
   const handleSubmitBeneficiary = async () => {
-    console.log('handleSubmitBeneficiary appelé', { beneficiaryFormData, selectedBeneficiary });
+    debugLog('handleSubmitBeneficiary appelé', { beneficiaryFormData, selectedBeneficiary });
     if (!user?.uid) return;
     
     // Validation des données requises
@@ -721,6 +692,227 @@ const TransfersPage: React.FC = () => {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+  };
+
+  // Composants utilitaires pour le modal de détails
+  const StatusBadge = ({ status }: { status: string }) => {
+    const getStatusConfig = (status: string) => {
+      switch (status) {
+        case 'completed':
+          return {
+            bg: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+            icon: <CheckCircle2 className="w-3 h-3 mr-1" />,
+            text: t(`transfers.status.${status}`)
+          };
+        case 'pending':
+          return {
+            bg: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
+            icon: <Clock className="w-3 h-3 mr-1" />,
+            text: t(`transfers.status.${status}`)
+          };
+        case 'processing':
+          return {
+            bg: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+            icon: <Loader2 className="w-3 h-3 mr-1 animate-spin" />,
+            text: t(`transfers.status.${status}`)
+          };
+        case 'failed':
+          return {
+            bg: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
+            icon: <AlertCircle className="w-3 h-3 mr-1" />,
+            text: t(`transfers.status.${status}`)
+          };
+        case 'cancelled':
+          return {
+            bg: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200',
+            icon: <X className="w-3 h-3 mr-1" />,
+            text: t(`transfers.status.${status}`)
+          };
+        default:
+          return {
+            bg: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200',
+            icon: null,
+            text: t(`transfers.status.${status}`)
+          };
+      }
+    };
+
+    const config = getStatusConfig(status);
+    
+    return (
+      <span className={`inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full ${config.bg}`}>
+        {config.icon}
+        {config.text}
+      </span>
+    );
+  };
+
+  const DetailRow = ({ 
+    label, 
+    value, 
+    isMobile = false, 
+    valueClassName = "" 
+  }: { 
+    label: string; 
+    value: React.ReactNode; 
+    isMobile?: boolean; 
+    valueClassName?: string;
+  }) => {
+    if (isMobile) {
+      return (
+        <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-xs text-gray-600 dark:text-gray-400">{label}:</span>
+            <span className={`text-sm ${valueClassName}`}>{value}</span>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="flex justify-between items-center">
+        <span className="text-gray-600 dark:text-gray-400">{label}:</span>
+        <span className={valueClassName}>{value}</span>
+      </div>
+    );
+  };
+
+  const TransferDetailsContent = ({ transfer, isMobile = false }: { transfer: Transfer; isMobile?: boolean }) => {
+    const amountValue = (
+      <span className={`font-semibold ${transfer.type === 'external' ? 'text-red-600 dark:text-red-400' : 'text-blue-600 dark:text-blue-400'}`}>
+        {transfer.type === 'external' ? '-' : ''}{formatCurrency(transfer.amount, 'EUR')}
+      </span>
+    );
+
+    const details = [
+      {
+        label: t("common.status"),
+        value: <StatusBadge status={transfer.status} />,
+        mobile: true
+      },
+      {
+        label: t("common.date"),
+        value: formatDate(transfer.date, 'long'),
+        mobile: true
+      },
+      {
+        label: t("transfers.amount"),
+        value: amountValue,
+        mobile: true
+      },
+      {
+        label: t("transfers.fromAccount"),
+        value: getAccountName(transfer.fromAccount),
+        mobile: true
+      },
+      {
+        label: t("transfers.toAccount"),
+        value: getAccountName(transfer.toAccount),
+        mobile: true
+      },
+      {
+        label: t("transfers.reference"),
+        value: transfer.reference,
+        mobile: true
+      },
+      {
+        label: t("transfers.fee"),
+        value: formatCurrency(transfer.fee || 0, 'EUR'),
+        mobile: transfer.fee !== undefined,
+        desktop: transfer.fee !== undefined
+      },
+      {
+        label: t("transfers.exchangeRate"),
+        value: `1 EUR = ${transfer.exchangeRate} GBP`,
+        mobile: transfer.exchangeRate !== undefined,
+        desktop: transfer.exchangeRate !== undefined
+      },
+      {
+        label: t("transfers.category"),
+        value: transfer.category ? t(`transfers.categories.${transfer.category}`) : t("transfers.unknownAccount"),
+        mobile: !!transfer.category,
+        desktop: !!transfer.category
+      }
+    ];
+
+    return (
+      <div className={isMobile ? "space-y-3" : "space-y-6"}>
+        {details.map((detail, index) => {
+          if (isMobile && !detail.mobile) return null;
+          if (!isMobile && !detail.desktop) return null;
+          
+          return (
+            <DetailRow
+              key={index}
+              label={detail.label}
+              value={detail.value}
+              isMobile={isMobile}
+              valueClassName={isMobile ? "text-gray-900 dark:text-white" : "text-gray-900 dark:text-white"}
+            />
+          );
+        })}
+      </div>
+    );
+  };
+
+  const TransferDetailsModal = ({ transfer, onClose }: { transfer: Transfer; onClose: () => void }) => {
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          {/* Header */}
+          <div className="p-4 md:p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+            <h3 className="text-base md:text-lg font-semibold text-gray-900 dark:text-white">
+              {t("transfers.transferDetails")}
+            </h3>
+            <button 
+              className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 p-1"
+              onClick={onClose}
+            >
+              <X className="w-4 h-4 md:w-5 md:h-5" />
+            </button>
+          </div>
+
+          {/* Content */}
+          <div className="p-4 md:p-6 space-y-4 md:space-y-6">
+            {/* Version Mobile */}
+            <div className="block md:hidden">
+              <TransferDetailsContent transfer={transfer} isMobile={true} />
+            </div>
+
+            {/* Version Desktop */}
+            <div className="hidden md:block">
+              <TransferDetailsContent transfer={transfer} isMobile={false} />
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="p-4 md:p-6 border-t border-gray-200 dark:border-gray-700 flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3">
+            <button 
+              className="w-full sm:w-auto px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              onClick={onClose}
+            >
+              {t("common.close")}
+            </button>
+            
+            {transfer.status === 'pending' && (
+              <button 
+                className="w-full sm:w-auto px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm transition-colors"
+                onClick={() => handleCancelTransfer(transfer.id)}
+              >
+                {t("transfers.cancelTransfer")}
+              </button>
+            )}
+            
+            <button 
+              className="w-full sm:w-auto px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm transition-colors"
+              onClick={() => handleDownloadReceipt(transfer)}
+            >
+              {t("transfers.downloadReceipt")}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   // Rendu du composant
@@ -997,327 +1189,207 @@ const TransfersPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Historique des transferts */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-4 sm:space-y-0">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t("transfers.history")}</h2>
-          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <input
-                type="text"
-                placeholder={String(t("transactions.searchPlaceholder") || "Rechercher...")}
-                className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:ring-blue-500 focus:border-blue-500 w-full bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
+          {/* Historique des transferts - Version responsive */}
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 md:p-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-4 sm:space-y-0">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t("transfers.history")}</h2>
             </div>
-            <div className="flex space-x-2">
-              <button 
-                className="bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white px-3 py-2 rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors flex items-center space-x-1"
-                onClick={() => setShowFilters(!showFilters)}
-              >
-                <Filter className="w-4 h-4" />
-                <span>{t("transactions.filters")}</span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${showFilters ? 'rotate-180' : ''}`} />
-              </button>
-              <button className="bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white px-3 py-2 rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors flex items-center space-x-1">
-                <Download className="w-4 h-4" />
-                <span>{t("transactions.export")}</span>
-              </button>
-            </div>
-          </div>
-        </div>
 
-        {/* Filtres avancés */}
-        {showFilters && (
-          <div className="mb-6 p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="font-medium text-gray-900 dark:text-white">{t("transactions.advancedFilters")}</h3>
-              <button 
-                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                onClick={handleResetFilters}
-              >
-                {t("common.resetFilters")}
-              </button>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t("common.type")}</label>
-                <select 
-                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                  value={filters.type}
-                  onChange={(e) => handleFilterChange('type', e.target.value)}
-                >
-                  <option value="all">{t("transactions.all")}</option>
-                  <option value="internal">{t("transfers.type.internal")}</option>
-                  <option value="external">{t("transfers.type.external")}</option>
-                  <option value="recurring">{t("transfers.type.recurring")}</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t("common.status")}</label>
-                <select 
-                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                  value={filters.status}
-                  onChange={(e) => handleFilterChange('status', e.target.value)}
-                >
-                  <option value="all">{t("transactions.all")}</option>
-                  <option value="completed">{t("transfers.status.completed")}</option>
-                  <option value="pending">{t("transfers.status.pending")}</option>
-                  <option value="failed">{t("transfers.status.failed")}</option>
-                  <option value="cancelled">{t("transfers.status.cancelled")}</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t("common.date")}</label>
-                <select 
-                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                  value={filters.dateRange}
-                  onChange={(e) => handleFilterChange('dateRange', e.target.value)}
-                >
-                  <option value="all">{t("transactions.allTime")}</option>
-                  <option value="today">{t("transactions.today")}</option>
-                  <option value="week">{t("transactions.lastWeek")}</option>
-                  <option value="month">{t("transactions.lastMonth")}</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t("transfers.amount")}</label>
-                <select 
-                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                  value={filters.amount}
-                  onChange={(e) => handleFilterChange('amount', e.target.value)}
-                >
-                  <option value="all">{t("transactions.all")}</option>
-                  <option value="small">{t("transactions.amountSmall")}</option>
-                  <option value="medium">{t("transactions.amountMedium")}</option>
-                  <option value="large">{t("transactions.amountLarge")}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        )}
+            <KycProtectedContent
+              titleKey="transfers.history"
+              fallbackMessage={String(t('kyc.noTransfersAvailable'))}
+            >
+              {loading ? (
+                <div className="p-6 text-center">
+                  <div className="flex items-center justify-center space-x-2 text-gray-500 dark:text-gray-400">
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span>{t("common.loading")}</span>
+                  </div>
+                </div>
+              ) : filteredTransfers.length === 0 ? (
+                <div className="p-6 text-center">
+                  <p className="text-gray-500 dark:text-gray-400">{t("transfers.noTransfersFound")}</p>
+                </div>
+              ) : (
+                <>
+                                  {/* Version Mobile - Cartes */}
+                <div className="block md:hidden space-y-3">
+                  {paginatedTransfers.map((transfer) => (
+                    <div 
+                      key={transfer.id} 
+                      className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 border border-gray-200 dark:border-gray-600"
+                    >
+                      {/* En-tête de la carte */}
+                      <div className="flex justify-between items-start mb-3">
+                        <div className="flex items-center space-x-2">
+                          <span className={`inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full ${
+                            transfer.status === 'completed' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 
+                            transfer.status === 'pending' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' : 
+                            transfer.status === 'processing' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
+                            transfer.status === 'failed' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' : 
+                            'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+                          }`}>
+                            {transfer.status === 'completed' && <CheckCircle2 className="w-3 h-3 mr-1" />}
+                            {transfer.status === 'pending' && <Clock className="w-3 h-3 mr-1" />}
+                            {transfer.status === 'processing' && <Loader2 className="w-3 h-3 mr-1 animate-spin" />}
+                            {transfer.status === 'failed' && <AlertCircle className="w-3 h-3 mr-1" />}
+                            {transfer.status === 'cancelled' && <X className="w-3 h-3 mr-1" />}
+                            {transfer.status === 'completed' ? 'Terminé' : 
+                             transfer.status === 'pending' ? 'En attente' : 
+                             transfer.status === 'processing' ? 'En cours' :
+                             transfer.status === 'failed' ? 'Échoué' : 
+                             transfer.status === 'cancelled' ? 'Annulé' : 'Inconnu'}
+                          </span>
+                        </div>
+                        <span className={`text-lg font-bold ${transfer.type === 'external' ? 'text-red-600' : 'text-blue-600'}`}>
+                          {transfer.type === 'external' ? '-' : ''}{formatCurrency(transfer.amount, 'EUR')}
+                        </span>
+                      </div>
 
-        <div className="overflow-x-auto">
-          <div className="inline-block min-w-full align-middle">
-            <div className="overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg">
-              <KycProtectedContent
-                titleKey="transfers.history"
-                fallbackMessage={String(t('kyc.noTransfersAvailable'))}
-              >
-                {loading ? (
-                  <div className="p-6 text-center">
-                    <div className="flex items-center justify-center space-x-2 text-gray-500 dark:text-gray-400">
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                      <span>{t("common.loading")}</span>
-                    </div>
-                  </div>
-                ) : filteredTransfers.length === 0 ? (
-                  <div className="p-6 text-center">
-                    <p className="text-gray-500 dark:text-gray-400">{t("transfers.noTransfersFound")}</p>
-                  </div>
-                ) : (
-                  <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                    <thead className="bg-gray-50 dark:bg-gray-800">
-                      <tr>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                          {t("common.date")}
-                        </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                          {t("transfers.description")}
-                        </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                          {t("common.type")}
-                        </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                          {t("common.status")}
-                        </th>
-                        <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                          {t("transfers.amount")}
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                      {paginatedTransfers.map((transfer) => (
-                        <tr 
-                          key={transfer.id} 
-                          className="hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition-colors"
+                      {/* Description */}
+                      <div className="mb-3">
+                        <h3 className="font-medium text-gray-900 dark:text-white text-sm">
+                          {transfer.description}
+                        </h3>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          {getAccountName(transfer.fromAccount)} → {getAccountName(transfer.toAccount)}
+                        </p>
+                      </div>
+
+                      {/* Date et bouton détails */}
+                      <div className="flex justify-between items-center">
+                        <div className="text-xs text-gray-500 dark:text-gray-400">
+                          {formatDate(transfer.date, 'short')}
+                        </div>
+                        <button
                           onClick={() => handleTransferClick(transfer)}
+                          className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-lg transition-colors"
                         >
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                            {formatDate(transfer.date, 'short')}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="flex items-center">
-                              <div>
-                                <div className="text-sm font-medium text-gray-900 dark:text-white">
-                                  {transfer.description}
-                                </div>
-                                <div className="text-sm text-gray-500 dark:text-gray-400">
-                                  {transfer.fromAccount} → {transfer.toAccount}
+                          {t("transfers.viewDetails")}
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                  {/* Version Desktop - Table */}
+                  <div className="hidden md:block overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg">
+                    <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                      <thead className="bg-gray-50 dark:bg-gray-800">
+                        <tr>
+                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            {t("common.date")}
+                          </th>
+                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            {t("transfers.description")}
+                          </th>
+                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            {t("common.type")}
+                          </th>
+                          <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            {t("common.status")}
+                          </th>
+                          <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            {t("transfers.amount")}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                        {paginatedTransfers.map((transfer) => (
+                          <tr 
+                            key={transfer.id} 
+                            className="hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition-colors"
+                            onClick={() => handleTransferClick(transfer)}
+                          >
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                              {formatDate(transfer.date, 'short')}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="flex items-center">
+                                <div>
+                                  <div className="text-sm font-medium text-gray-900 dark:text-white">
+                                    {transfer.description}
+                                  </div>
+                                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                                    {getAccountName(transfer.fromAccount)} → {getAccountName(transfer.toAccount)}
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${transfer.type === 'internal' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' : transfer.type === 'external' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200'}`}>
-                              {t(`transfers.type.${transfer.type}`)}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className={`inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full ${
-                              transfer.status === 'completed' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 
-                              transfer.status === 'pending' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' : 
-                              transfer.status === 'processing' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
-                              transfer.status === 'failed' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' : 
-                              'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
-                            }`}>
-                              {transfer.status === 'completed' && <CheckCircle2 className="w-3 h-3 mr-1" />}
-                              {transfer.status === 'pending' && <Clock className="w-3 h-3 mr-1" />}
-                              {transfer.status === 'processing' && <Loader2 className="w-3 h-3 mr-1 animate-spin" />}
-                              {transfer.status === 'failed' && <AlertCircle className="w-3 h-3 mr-1" />}
-                              {transfer.status === 'cancelled' && <X className="w-3 h-3 mr-1" />}
-                              {transfer.status === 'completed' ? 'Terminé' : 
-                               transfer.status === 'pending' ? 'En attente' : 
-                               transfer.status === 'processing' ? 'En cours' :
-                               transfer.status === 'failed' ? 'Échoué' : 
-                               transfer.status === 'cancelled' ? 'Annulé' : 'Inconnu'}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-medium text-gray-900 dark:text-white">
-                            <span className={transfer.type === 'external' ? 'text-red-600' : 'text-blue-600'}>
-                              {transfer.type === 'external' ? '-' : ''}{formatCurrency(transfer.amount, 'EUR')}
-                            </span>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                )}
-
-                {/* Contrôles de pagination */}
-                {totalPages > 1 && (
-                  <div className="mt-6 flex items-center justify-between">
-                    <div className="text-sm text-gray-700 dark:text-gray-300">
-                      Affichage de {startIndex + 1} à {Math.min(endIndex, filteredTransfers.length)} sur {filteredTransfers.length} transferts
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <button
-                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                        disabled={currentPage === 1}
-                        className="px-3 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        Précédent
-                      </button>
-                      <span className="text-sm text-gray-700 dark:text-gray-300">
-                        Page {currentPage} sur {totalPages}
-                      </span>
-                      <button
-                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                        disabled={currentPage === totalPages}
-                        className="px-3 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        Suivant
-                      </button>
-                    </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${transfer.type === 'internal' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' : transfer.type === 'external' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200'}`}>
+                                {t(`transfers.type.${transfer.type}`)}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <span className={`inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full ${
+                                transfer.status === 'completed' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 
+                                transfer.status === 'pending' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' : 
+                                transfer.status === 'processing' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
+                                transfer.status === 'failed' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' : 
+                                'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+                              }`}>
+                                {transfer.status === 'completed' && <CheckCircle2 className="w-3 h-3 mr-1" />}
+                                {transfer.status === 'pending' && <Clock className="w-3 h-3 mr-1" />}
+                                {transfer.status === 'processing' && <Loader2 className="w-3 h-3 mr-1 animate-spin" />}
+                                {transfer.status === 'failed' && <AlertCircle className="w-3 h-3 mr-1" />}
+                                {transfer.status === 'cancelled' && <X className="w-3 h-3 mr-1" />}
+                                {transfer.status === 'completed' ? 'Terminé' : 
+                                 transfer.status === 'pending' ? 'En attente' : 
+                                 transfer.status === 'processing' ? 'En cours' :
+                                 transfer.status === 'failed' ? 'Échoué' : 
+                                 transfer.status === 'cancelled' ? 'Annulé' : 'Inconnu'}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-medium text-gray-900 dark:text-white">
+                              <span className={transfer.type === 'external' ? 'text-red-600' : 'text-blue-600'}>
+                                {transfer.type === 'external' ? '-' : ''}{formatCurrency(transfer.amount, 'EUR')}
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
-                )}
-              </KycProtectedContent>
-            </div>
+
+                  {/* Contrôles de pagination */}
+                  {totalPages > 1 && (
+                    <div className="mt-6 flex items-center justify-between">
+                      <div className="text-sm text-gray-700 dark:text-gray-300">
+                        {t("transactions.pagination.showing")} {startIndex + 1} à {Math.min(endIndex, filteredTransfers.length)} {t("transactions.pagination.transactions")} {t("transactions.pagination.of")} {filteredTransfers.length}
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <button
+                          onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                          disabled={currentPage === 1}
+                          className="px-3 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {t("transactions.pagination.previous")}
+                        </button>
+                        <span className="text-sm text-gray-700 dark:text-gray-300">
+                          {t("transactions.pagination.page")} {currentPage} {t("transactions.pagination.of")} {totalPages}
+                        </span>
+                        <button
+                          onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                          disabled={currentPage === totalPages}
+                          className="px-3 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {t("transactions.pagination.next")}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+            </KycProtectedContent>
           </div>
-        </div>
-      </div>
 
       {/* Modal de détails du transfert */}
       {selectedTransfer && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t("transfers.transferDetails")}</h3>
-              <button 
-                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                onClick={() => setSelectedTransfer(null)}
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="p-6 space-y-6">
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600 dark:text-gray-400">{t("common.status")}:</span>
-                <span className={`inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full ${selectedTransfer.status === 'completed' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : selectedTransfer.status === 'pending' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' : selectedTransfer.status === 'failed' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'}`}>
-                  {selectedTransfer.status === 'completed' && <CheckCircle2 className="w-3 h-3 mr-1" />}
-                  {selectedTransfer.status === 'pending' && <Clock className="w-3 h-3 mr-1" />}
-                  {selectedTransfer.status === 'failed' && <AlertCircle className="w-3 h-3 mr-1" />}
-                  {selectedTransfer.status === 'cancelled' && <X className="w-3 h-3 mr-1" />}
-                  {t(`transfers.status.${selectedTransfer.status}`)}
-                </span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600 dark:text-gray-400">{t("common.date")}:</span>
-                <span className="text-gray-900 dark:text-white">{formatDate(selectedTransfer.date, 'long')}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600 dark:text-gray-400">{t("transfers.amount")}:</span>
-                <span className={`font-semibold ${selectedTransfer.type === 'external' ? 'text-red-600 dark:text-red-400' : 'text-blue-600 dark:text-blue-400'}`}>
-                  {selectedTransfer.type === 'external' ? '-' : ''}{formatCurrency(selectedTransfer.amount, 'EUR')}
-                </span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600 dark:text-gray-400">{t("transfers.fromAccount")}:</span>
-                <span className="text-gray-900 dark:text-white">{selectedTransfer.fromAccount}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600 dark:text-gray-400">{t("transfers.toAccount")}:</span>
-                <span className="text-gray-900 dark:text-white">{selectedTransfer.toAccount}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600 dark:text-gray-400">{t("transfers.reference")}:</span>
-                <span className="text-gray-900 dark:text-white">{selectedTransfer.reference}</span>
-              </div>
-              {selectedTransfer.fee !== undefined && (
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600 dark:text-gray-400">{t("transfers.fee")}:</span>
-                  <span className="text-gray-900 dark:text-white">{formatCurrency(selectedTransfer.fee, 'EUR')}</span>
-                </div>
-              )}
-              {selectedTransfer.exchangeRate !== undefined && (
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600 dark:text-gray-400">{t("transfers.exchangeRate")}:</span>
-                  <span className="text-gray-900 dark:text-white">1 EUR = {selectedTransfer.exchangeRate} GBP</span>
-                </div>
-              )}
-              {selectedTransfer.category && (
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600 dark:text-gray-400">{t("transfers.category")}:</span>
-                  <span className="text-gray-900 dark:text-white">{t(`categories.${selectedTransfer.category}`)}</span>
-                </div>
-              )}
-            </div>
-            <div className="p-6 border-t border-gray-200 dark:border-gray-700 flex justify-end space-x-3">
-              <button 
-                className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                onClick={() => setSelectedTransfer(null)}
-              >
-                {t("common.close")}
-              </button>
-              {selectedTransfer.status === 'pending' && (
-                <button 
-                  className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm transition-colors"
-                  onClick={() => handleCancelTransfer(selectedTransfer.id)}
-                >
-                  {t("transfers.cancelTransfer")}
-                </button>
-              )}
-              <button 
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm transition-colors"
-                onClick={() => handleDownloadReceipt(selectedTransfer)}
-              >
-                {t("transfers.downloadReceipt")}
-              </button>
-            </div>
-          </div>
-        </div>
+        <TransferDetailsModal
+          transfer={selectedTransfer}
+          onClose={() => setSelectedTransfer(null)}
+        />
       )}
 
       {/* Modal Nouveau Transfert */}

@@ -825,6 +825,21 @@
     "historyDetails": {
       "title": "Overschrijvingsgeschiedenis"
     },
+    "viewDetails": "Details bekijken",
+    "transferDetails": "Overboekingsdetails",
+    "cancelTransfer": "Overboeking annuleren",
+    "downloadReceipt": "Bewijs downloaden",
+    "unknownAccount": "Onbekende rekening",
+    "categories": {
+      "Virement interne": "Interne overschrijving",
+      "Virement externe": "Externe overschrijving",
+      "Virement récurrent": "Terugkerende overschrijving"
+    },
+    "fee": "Kosten",
+    "fromAccount": "Van rekening",
+    "toAccount": "Naar rekening",
+    "category": "Categorie",
+    "reference": "Referentie",
     "transferLimits": "Overschrijvingslimieten",
     "dailyLimit": "5.000,00 €",
     "monthlyLimit": "20.000,00 €",
@@ -1384,7 +1399,9 @@
       "showing": "Weergave van",
       "transactions": "transacties",
       "previous": "Vorige",
-      "next": "Volgende"
+      "next": "Volgende",
+      "page": "Pagina",
+      "of": "van"
     },
     "errors": {
       "noUser": "Geen ingelogde gebruiker",

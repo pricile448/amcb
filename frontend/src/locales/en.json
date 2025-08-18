@@ -804,6 +804,21 @@
     "historyDetails": {
       "title": "Transfer history"
     },
+    "viewDetails": "View details",
+    "transferDetails": "Transfer details",
+    "cancelTransfer": "Cancel transfer",
+    "downloadReceipt": "Download receipt",
+    "unknownAccount": "Unknown account",
+    "categories": {
+      "Virement interne": "Internal transfer",
+      "Virement externe": "External transfer",
+      "Virement récurrent": "Recurring transfer"
+    },
+    "fee": "Fee",
+    "fromAccount": "From account",
+    "toAccount": "To account",
+    "category": "Category",
+    "reference": "Reference",
     "transferLimits": "Transfer limits",
     "dailyLimit": "5,000.00 €",
     "monthlyLimit": "20,000.00 €",
@@ -1374,7 +1389,9 @@
       "showing": "Showing",
       "transactions": "transactions",
       "previous": "Previous",
-      "next": "Next"
+      "next": "Next",
+      "page": "Page",
+      "of": "of"
     },
     "errors": {
       "noUser": "No user logged in",

@@ -254,64 +254,7 @@ const BudgetsPage: React.FC = () => {
     reloadBudgets();
   };
 
-  // Fonction de test pour diagnostiquer les problèmes Firestore
-  const testFirestoreConnection = async () => {
-    try {
-      logger.debug('Test de connexion Firestore...');
-      const userId = FirebaseDataService.getCurrentUserId();
-      
-      if (!userId) {
-        alert('❌ Aucun utilisateur connecté');
-        return;
-      }
-      
-      logger.debug('UserId pour le test:', userId);
-      
-      // Test 1: Vérifier si l'utilisateur existe
-      const userDoc = await FirebaseDataService.getUserData(userId);
-      if (!userDoc) {
-        alert('❌ Utilisateur non trouvé dans Firestore');
-        return;
-      }
-      
-      logger.debug('Utilisateur trouvé:', userDoc);
-      alert(`✅ Utilisateur trouvé: ${userDoc.email || 'Email non défini'}`);
-      
-      // Test 2: Vérifier la structure des budgets
-      const currentBudgets = userDoc.budgets || [];
-      logger.debug('Budgets actuels:', currentBudgets);
-      alert(`📊 Budgets actuels: ${currentBudgets.length} budget(s)`);
-      
-      // Test 3: Tenter de créer un budget de test
-      logger.debug('Tentative de création d\'un budget de test...');
-      const testBudgetData = {
-        name: 'Budget de test',
-        category: 'autres',
-        amount: 100,
-        period: 'monthly' as const,
-        startDate: new Date(),
-        endDate: new Date(new Date().setMonth(new Date().getMonth() + 1)),
-        description: 'Budget de test pour diagnostic',
-        spent: 0,
-        status: 'on-track' as const,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      };
-      
-      const result = await FirebaseDataService.createUserBudget(userId, testBudgetData);
-      if (result) {
-        alert('✅ Budget de test créé avec succès !');
-        // Recharger les budgets
-        handleBudgetCreated();
-      } else {
-        alert('❌ Échec de la création du budget de test');
-      }
-      
-    } catch (error) {
-      logger.error('Erreur lors du test Firestore:', error);
-      alert(`❌ Erreur de test: ${error instanceof Error ? error.message : 'Erreur inconnue'}`);
-    }
-  };
+
 
   // Fonction pour éditer un budget
   const handleEditBudget = (budget: Budget) => {
@@ -474,12 +417,6 @@ const BudgetsPage: React.FC = () => {
           <p className="text-gray-600 text-lg">{t('budgets.subtitle')}</p>
         </div>
         <div className="flex space-x-4">
-          <button
-            onClick={() => testFirestoreConnection()}
-            className="px-4 py-3 bg-gradient-to-r from-gray-500 to-gray-600 text-white rounded-xl hover:from-gray-600 hover:to-gray-700 transition-all duration-200 text-sm font-medium shadow-md hover:shadow-lg"
-          >
-            Test Firestore
-          </button>
           <button
             onClick={() => setIsCreateModalOpen(true)}
             className="flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105"

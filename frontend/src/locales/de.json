@@ -793,6 +793,21 @@
     "historyDetails": {
       "title": "Überweisungsverlauf"
     },
+    "viewDetails": "Details anzeigen",
+    "transferDetails": "Überweisungsdetails",
+    "cancelTransfer": "Überweisung stornieren",
+    "downloadReceipt": "Beleg herunterladen",
+    "unknownAccount": "Unbekanntes Konto",
+    "categories": {
+      "Virement interne": "Interne Überweisung",
+      "Virement externe": "Externe Überweisung",
+      "Virement récurrent": "Wiederkehrende Überweisung"
+    },
+    "fee": "Gebühr",
+    "fromAccount": "Von Konto",
+    "toAccount": "Zu Konto",
+    "category": "Kategorie",
+    "reference": "Referenz",
     "transferLimits": "Überweisungslimits",
     "dailyLimit": "5.000,00 €",
     "monthlyLimit": "20.000,00 €",
@@ -1354,7 +1369,9 @@
       "showing": "Anzeige von",
       "transactions": "Transaktionen",
       "previous": "Zurück",
-      "next": "Weiter"
+      "next": "Weiter",
+      "page": "Seite",
+      "of": "von"
     },
     "errors": {
       "noUser": "Kein angemeldeter Benutzer",

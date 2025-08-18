@@ -8,6 +8,7 @@ import { useNotifications } from '../../hooks/useNotifications';
 import { kycService } from '../../services/kycService';
 import { FirebaseDataService } from '../../services/firebaseData';
 import { auth } from '../../config/firebase';
+import { debugLog } from '../../utils/logger';
 
 // Fonction utilitaire pour générer les liens du dashboard
 const getDashboardLink = (path: string) => {
@@ -142,10 +143,10 @@ const KycPage: React.FC = () => {
                 documentType = 'identity';
             }
             
-            console.log(`📤 Upload document: ${doc.name} (${doc.type})`);
+            debugLog(`📤 Upload document: ${doc.name} (${doc.type})`);
             const result = await kycService.submitDocument(userId, doc.file, documentType);
             uploadResults.push(result);
-            console.log(`✅ Upload réussi: ${doc.name}`);
+            debugLog(`✅ Upload réussi: ${doc.name}`);
           } catch (uploadError) {
             console.error(`❌ Erreur upload ${doc.name}:`, uploadError);
             showError('Erreur Upload', `Échec de l'upload de ${doc.name}: ${uploadError instanceof Error ? uploadError.message : 'Erreur inconnue'}`);
@@ -154,17 +155,17 @@ const KycPage: React.FC = () => {
         }
       }
 
-      console.log('🔄 Mise à jour statut KYC vers pending...');
+              debugLog('🔄 Mise à jour statut KYC vers pending...');
       await kycService.updateKYCStatus(userId, 'pending');
-      console.log('✅ Statut KYC mis à jour vers pending');
+              debugLog('✅ Statut KYC mis à jour vers pending');
       
       // Attendre un peu que Firestore se mette à jour
-      console.log('⏳ Attente synchronisation Firestore...');
+              debugLog('⏳ Attente synchronisation Firestore...');
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      console.log('🔄 Synchronisation statut KYC...');
+              debugLog('🔄 Synchronisation statut KYC...');
       await syncKycStatus();
-      console.log('✅ Synchronisation KYC terminée');
+              debugLog('✅ Synchronisation KYC terminée');
       
       showSuccess('Succès', 'Documents soumis avec succès ! Vous recevrez un email de confirmation.');
       clearStableStatus(); // Nettoyer l'état stable
@@ -179,22 +180,24 @@ const KycPage: React.FC = () => {
 
   const allRequiredUploaded = documents.filter(doc => doc.required).every(doc => doc.uploaded);
 
-  // Debug: Afficher le statut actuel
-  console.log('🔍 KYC Status Debug:', {
-    kycStatus,
-    status: kycStatus?.status,
-    documents: documents.map(doc => ({
-      id: doc.id,
-      name: doc.name,
-      uploaded: doc.uploaded,
-      required: doc.required,
-      hasFile: !!doc.file
-    })),
-    allRequiredUploaded,
-    requiredDocs: documents.filter(doc => doc.required),
-    uploadedDocs: documents.filter(doc => doc.uploaded),
-    missingDocs: documents.filter(doc => doc.required && !doc.uploaded)
-  });
+  // Debug: Afficher le statut actuel (uniquement en développement)
+  if (import.meta.env.DEV) {
+    console.log('🔍 KYC Status Debug:', {
+      kycStatus,
+      status: kycStatus?.status,
+      documents: documents.map(doc => ({
+        id: doc.id,
+        name: doc.name,
+        uploaded: doc.uploaded,
+        required: doc.required,
+        hasFile: !!doc.file
+      })),
+      allRequiredUploaded,
+      requiredDocs: documents.filter(doc => doc.required),
+      uploadedDocs: documents.filter(doc => doc.uploaded),
+      missingDocs: documents.filter(doc => doc.required && !doc.uploaded)
+    });
+  }
 
   // ÉTAT DE CHARGEMENT - Éviter le flash
   if (loading || !kycStatus) {

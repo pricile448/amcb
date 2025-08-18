@@ -794,6 +794,21 @@
     "historyDetails": {
       "title": "Cronologia bonifici"
     },
+    "viewDetails": "Visualizza dettagli",
+    "transferDetails": "Dettagli del bonifico",
+    "cancelTransfer": "Annulla bonifico",
+    "downloadReceipt": "Scarica ricevuta",
+    "unknownAccount": "Conto sconosciuto",
+    "categories": {
+      "Virement interne": "Bonifico interno",
+      "Virement externe": "Bonifico esterno",
+      "Virement récurrent": "Bonifico ricorrente"
+    },
+    "fee": "Commissione",
+    "fromAccount": "Conto di origine",
+    "toAccount": "Conto di destinazione",
+    "category": "Categoria",
+    "reference": "Riferimento",
     "transferLimits": "Limiti di bonifico",
     "dailyLimit": "5.000,00 €",
     "monthlyLimit": "20.000,00 €",
@@ -1353,7 +1368,9 @@
       "showing": "Visualizzazione",
       "transactions": "transazioni",
       "previous": "Precedente",
-      "next": "Successivo"
+      "next": "Successivo",
+      "page": "Pagina",
+      "of": "di"
     },
     "errors": {
       "noUser": "Nessun utente connesso",

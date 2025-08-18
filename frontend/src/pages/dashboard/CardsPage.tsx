@@ -4,7 +4,7 @@ import { CreditCard, Plus, Shield } from 'lucide-react';
 import { auth } from '../../config/firebase';
 import { cardService, CardSubDocument } from '../../services/cardService';
 import { useNotifications } from '../../hooks/useNotifications';
-import { logger } from '../../utils/logger';
+import { logger, debugLog } from '../../utils/logger';
 import CardDisplay from '../../components/cards/CardDisplay';
 import PhysicalCardMessage from '../../components/cards/PhysicalCardMessage';
 import VirtualCardMessage from '../../components/cards/VirtualCardMessage';
@@ -35,44 +35,44 @@ const CardsPage: React.FC = () => {
 
   // ✅ Réinitialisation forcée des cartes
   const forceResetCards = () => {
-    console.log('🔄 Réinitialisation forcée des cartes...');
+    debugLog('🔄 Réinitialisation forcée des cartes...');
     setCardData({
       physicalCardData: null,
       virtualCardData: null,
       physicalCardStatus: null,
       virtualCardStatus: null
     });
-    console.log('✅ État réinitialisé à null');
+    debugLog('✅ État réinitialisé à null');
   };
 
   // ✅ Charger les données des cartes
   const loadCardData = async () => {
     if (!auth.currentUser) {
-      console.log('❌ Aucun utilisateur connecté');
+      debugLog('❌ Aucun utilisateur connecté');
       return;
     }
 
     try {
-      console.log('🔄 Début du chargement des données...');
+      debugLog('🔄 Début du chargement des données...');
       setLoading(true);
       const userId = auth.currentUser.uid;
-      console.log('👤 ID utilisateur:', userId);
+              debugLog('👤 ID utilisateur:', userId);
 
       // ✅ Charger les données des cartes physiques et virtuelles
-      console.log('📥 Chargement des données de cartes...');
+              debugLog('📥 Chargement des données de cartes...');
       const [physicalData, virtualData] = await Promise.all([
         cardService.getPhysicalCardData(userId),
         cardService.getVirtualCardData(userId)
       ]);
 
       // ✅ Charger les statuts
-      console.log('📊 Chargement des statuts...');
+              debugLog('📊 Chargement des statuts...');
       const [physicalStatus, virtualStatus] = await Promise.all([
         cardService.getPhysicalCardStatus(userId),
         cardService.getVirtualCardStatus(userId)
       ]);
 
-      console.log('🔍 Données brutes reçues:', {
+              debugLog('🔍 Données brutes reçues:', {
         physicalData,
         virtualData,
         physicalStatus,
@@ -87,11 +87,11 @@ const CardsPage: React.FC = () => {
         virtualCardStatus: virtualStatus?.status || null
       };
 
-      console.log('🔄 Mise à jour de l\'état avec:', newCardData);
+              debugLog('🔄 Mise à jour de l\'état avec:', newCardData);
       setCardData(newCardData);
       
       // ✅ DEBUG: Afficher les données chargées
-      console.log('🔍 Données finales:', {
+              debugLog('🔍 Données finales:', {
         physicalData,
         virtualData,
         physicalStatus: physicalStatus?.status,
@@ -102,7 +102,7 @@ const CardsPage: React.FC = () => {
       logger.error('Erreur lors du chargement des données de cartes:', error);
     } finally {
       setLoading(false);
-      console.log('✅ Chargement terminé');
+              debugLog('✅ Chargement terminé');
     }
   };
 
@@ -114,7 +114,7 @@ const CardsPage: React.FC = () => {
     }
 
     // ✅ Empêcher les demandes multiples - un utilisateur n'a droit qu'à une seule carte physique
-    if (requestingPhysical || cardData.physicalCardStatus === 'pending' || cardData.physicalCardData) {
+    if (requestingPhysical || cardData.physicalCardStatus === 'pending' || (cardData.physicalCardData && cardData.physicalCardData.cardNumber !== 'En attente')) {
       return;
     }
 
@@ -289,7 +289,7 @@ const CardsPage: React.FC = () => {
   }
 
   // ✅ DEBUG: Afficher l'état actuel
-  console.log('🎯 État actuel du composant:', {
+  debugLog('🎯 État actuel du composant:', {
     cardData,
     loading,
     requestingPhysical,
@@ -305,28 +305,7 @@ const CardsPage: React.FC = () => {
           <p className="text-gray-600">{t('cards.subtitle')}</p>
         </div>
         
-        {/* ✅ Bouton de rafraîchissement */}
-        <button
-          onClick={loadCardData}
-          disabled={loading}
-          className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 mr-2"
-        >
-          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-          </svg>
-          Rafraîchir
-        </button>
-        
-        {/* ✅ Bouton de réinitialisation forcée */}
-        <button
-          onClick={forceResetCards}
-          className="inline-flex items-center px-3 py-2 text-sm font-medium text-red-700 bg-white border border-red-300 rounded-md hover:bg-red-50"
-        >
-          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-          Reset Forcé
-        </button>
+
       </div>
 
       {/* ✅ Résumé des cartes */}

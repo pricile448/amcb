@@ -370,15 +370,15 @@ const DashboardLayout: React.FC = () => {
                </h1>
             </div>
 
-            <div className="flex items-center space-x-2 md:space-x-4">
+            <div className="flex items-center space-x-1.5 sm:space-x-2 md:space-x-4">
               {/* Messages */}
               {userStatus === 'verified' ? (
                 <Link
                   to={getDashboardLink('/messages')}
-                  className="relative p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+                  className="relative p-1.5 sm:p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
                 >
-                  <MessageCircle className="w-5 md:w-6 h-5 md:h-6" />
-                  <div className="absolute -top-1 -right-1 w-2 md:w-3 h-2 md:h-3 bg-red-500 rounded-full"></div>
+                  <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
+                  <div className="absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 w-1.5 h-1.5 sm:w-2 sm:h-2 md:w-3 md:h-3 bg-red-500 rounded-full"></div>
                 </Link>
               ) : (
                 <button
@@ -389,11 +389,11 @@ const DashboardLayout: React.FC = () => {
                       : t('messages.unavailableUnverified'),
                     'warning'
                   )}
-                  className="relative p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 transition-all duration-200 group"
+                  className="relative p-1.5 sm:p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 transition-all duration-200 group"
                   title={userStatus === 'pending' ? (t('messages.temporarilyUnavailable') as string) : (t('messages.unavailableVerifyIdentity') as string)}
                 >
-                  <MessageCircle className="w-5 md:w-6 h-5 md:h-6 group-hover:scale-110 transition-transform" />
-                  <div className="absolute -top-1 -right-1 w-2 md:w-3 h-2 md:h-3 bg-gray-400 dark:bg-gray-500 rounded-full group-hover:bg-gray-500 dark:group-hover:bg-gray-400 transition-colors"></div>
+                  <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 group-hover:scale-110 transition-transform" />
+                  <div className="absolute -top-0.5 -right-0.5 sm:-top-1 sm:-right-1 w-1.5 h-1.5 sm:w-2 sm:h-2 md:w-3 md:h-3 bg-gray-400 dark:bg-gray-500 rounded-full group-hover:bg-gray-500 dark:group-hover:bg-gray-400 transition-colors"></div>
                   <div className="absolute inset-0 bg-gray-100 dark:bg-gray-700 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </button>
               )}
@@ -410,16 +410,16 @@ const DashboardLayout: React.FC = () => {
               <div className="relative">
                 <button
                   onClick={() => setShowProfileMenu(!showProfileMenu)}
-                  className="flex items-center space-x-2 md:space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                  className="flex items-center space-x-1.5 sm:space-x-2 md:space-x-3 p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                 >
-                  <div className="w-6 md:w-8 h-6 md:h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                    <User className="w-3 md:w-4 h-3 md:h-4 text-white" />
+                  <div className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                    <User className="w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4 text-white" />
                   </div>
                   <div className="hidden md:block text-left">
                     <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{userName}</p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">{t('nav.premiumClient')}</p>
                   </div>
-                  <ChevronDown className="w-4 h-4 text-gray-400 dark:text-gray-500" />
+                  <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400 dark:text-gray-500" />
                 </button>
 
                 {/* Profile Menu Component */}
