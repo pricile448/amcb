@@ -41,7 +41,6 @@
     "send": "Verzenden",
     "receive": "Ontvangen"
   },
-
   "nav": {
     "features": "Functies",
     "pricing": "Prijzen",
@@ -62,7 +61,6 @@
     "verification": "Identiteitsverificatie",
     "transactions": "Transacties"
   },
-
   "home": {
     "hero": {
       "title": "De bank van de toekomst, vandaag",
@@ -112,7 +110,6 @@
       "button": "Mijn account openen"
     }
   },
-
   "features": {
     "hero": {
       "title": "AmCbunq functies",
@@ -167,7 +164,6 @@
       "viewPricing": "Prijzen bekijken"
     }
   },
-
   "pricing": {
     "hero": {
       "title": "Transparante prijzen",
@@ -229,7 +225,6 @@
       "button": "Account openen"
     }
   },
-
   "help": {
     "title": "Helpcentrum",
     "subtitle": "Vind snel antwoorden op uw vragen",
@@ -360,7 +355,6 @@
       "pricingRedirect": "Prijslijst - Doorverwijzing naar prijzenpagina"
     }
   },
-
   "auth": {
     "login": {
       "title": "Inloggen",
@@ -415,7 +409,6 @@
     "tooManyAttempts": "Te veel pogingen. Probeer later opnieuw.",
     "accountDisabled": "Dit account is gedeactiveerd"
   },
-
   "dashboard": {
     "welcome": "Hallo",
     "overview": "Overzicht van uw financiën",
@@ -440,7 +433,6 @@
     "ribVerificationRequired": "Verifieer uw identiteit om toegang te krijgen tot uw RIB",
     "ribRequestPage": "Vraag uw RIB aan op de IBAN pagina"
   },
-
   "accounts": {
     "title": "Mijn Rekeningen",
     "subtitle": "Beheer uw rekeningen en kaarten",
@@ -486,14 +478,12 @@
     "todayAt": "Vandaag om",
     "yesterdayAt": "Gisteren om"
   },
-
   "accountTypes": {
     "current": "Zichtrekening",
     "savings": "Spaarrekening",
     "credit": "Creditcard",
     "account": "Rekening"
   },
-
   "accountStatus": {
     "active": "Actief",
     "blocked": "Geblokkeerd",
@@ -503,7 +493,6 @@
     "unverified": "Niet geverifieerd",
     "pendingVerification": "In behandeling"
   },
-
   "transactions": {
     "title": "Transactiegeschiedenis",
     "subtitle": "Bekijk al uw recente transacties",
@@ -537,7 +526,6 @@
     "noResults": "Geen resultaten gevonden voor uw zoekopdracht",
     "tryDifferentSearch": "Probeer andere zoekwoorden"
   },
-
   "transactionCategories": {
     "salary": "Salaris",
     "food": "Voeding",
@@ -556,7 +544,6 @@
     "incomingTransfer": "Inkomende Overschrijving",
     "noRecent": "Geen recente transacties"
   },
-
   "transfers": {
     "title": "Overschrijvingen",
     "subtitle": "Beheer uw overschrijvingen en begunstigden",
@@ -645,7 +632,6 @@
       "submit": "Overschrijving uitvoeren"
     }
   },
-
   "cards": {
     "title": "Mijn Kaarten",
     "subtitle": "Beheer uw bankpassen en creditcards",
@@ -748,7 +734,6 @@
       "requestFailed": "Fout bij kaartaanvraag"
     }
   },
-
   "verification": {
     "title": "Accountverificatie",
     "subtitle": "Voltooi uw verificatie voor toegang tot alle diensten",
@@ -809,7 +794,6 @@
       }
     }
   },
-
   "kyc": {
     "title": "Identiteitsverificatie",
     "subtitle": "Upload uw documenten om uw account te valideren",
@@ -849,11 +833,19 @@
     "errors": {
       "userNotIdentified": "Gebruiker niet geïdentificeerd",
       "parsingError": "Fout bij verwerken gebruiker:",
-      "submissionGenericError": "Er is een fout opgetreden bij het indienen"
+      "submissionGenericError": "Er is een fout opgetreden bij het indienen",
+      "title": "Fout",
+      "userMissing": "Gebruikersinformatie ontbreekt",
+      "parsingUser": "Fout bij het verwerken van gebruiker:",
+      "submissionError": "Fout tijdens het indienen:",
+      "submissionFailed": "Er is een fout opgetreden tijdens het indienen"
     },
-    "unverified": "Niet geverifieerd"
+    "unverified": "Niet geverifieerd",
+    "success": {
+      "title": "Succes",
+      "message": "Documenten succesvol ingediend! Je ontvangt een bevestigingsmail."
+    }
   },
-
   "billing": {
     "title": "Facturatie",
     "subtitle": "RIB en bankberichten",
@@ -942,7 +934,6 @@
       "loadingError": "Fout bij laden facturatiegegevens:"
     }
   },
-
   "iban": {
     "title": "Mijn IBAN",
     "subtitle": "Uw unieke bankidentificatie",
@@ -1072,7 +1063,6 @@
       }
     }
   },
-
   "history": {
     "title": "Geschiedenis",
     "subtitle": "Bekijk uw transactiegeschiedenis",
@@ -1153,7 +1143,6 @@
       "defaultValue": "-"
     }
   },
-
   "budgets": {
     "title": "Budgetten",
     "subtitle": "Volg uw uitgaven en respecteer uw budgetten",
@@ -1220,7 +1209,6 @@
       "loadingError": "Fout bij laden budgetten"
     }
   },
-
   "messages": {
     "title": "Berichten",
     "subtitle": "AmCbunq klantenservice",
@@ -1232,13 +1220,13 @@
     "online": "Online",
     "quickResponse": "Snel antwoord",
     "onlineStatus": "Online",
-          "supportName": "AmCbunq Ondersteuning",
-      "unavailable": "Berichten niet beschikbaar",
-      "unavailableUnverified": "Om toegang te krijgen tot de chat met onze ondersteuning, moet u eerst uw identiteit valideren.",
-      "temporarilyUnavailable": "Berichten tijdelijk niet beschikbaar",
-      "unavailablePending": "Berichten niet beschikbaar - Verificeer uw identiteit",
-      "unavailableVerifyIdentity": "Berichten niet beschikbaar - Verificeer uw identiteit",
-      "verification": {
+    "supportName": "AmCbunq Ondersteuning",
+    "unavailable": "Berichten niet beschikbaar",
+    "unavailableUnverified": "Om toegang te krijgen tot de chat met onze ondersteuning, moet u eerst uw identiteit valideren.",
+    "temporarilyUnavailable": "Berichten tijdelijk niet beschikbaar",
+    "unavailablePending": "Berichten niet beschikbaar - Verificeer uw identiteit",
+    "unavailableVerifyIdentity": "Berichten niet beschikbaar - Verificeer uw identiteit",
+    "verification": {
       "unavailableTitle": "Berichten niet beschikbaar",
       "temporarilyUnavailableTitle": "Berichten tijdelijk niet beschikbaar",
       "unavailableDescription": "Om te chatten met onze ondersteuning, moet u eerst uw identiteit valideren.",
@@ -1251,7 +1239,6 @@
       "noMessages": "Geen berichten gevonden, welkomstbericht aangemaakt"
     }
   },
-
   "settings": {
     "title": "Instellingen",
     "subtitle": "Beheer uw voorkeuren en accountinstellingen",
@@ -1299,7 +1286,6 @@
     "marketingEmails": "Marketing e-mails",
     "marketingEmailsDescription": "Ontvang aanbiedingen en nieuws per e-mail"
   },
-
   "transferMessages": {
     "externalTransferTitle": "Externe overschrijving",
     "externalTransferMessage": "Externe overschrijvingen ondergaan een veiligheidscontrole voor validatie.",
@@ -1315,7 +1301,6 @@
     "beneficiaryUpdateError": "Kan begunstigde niet bijwerken: {error}",
     "beneficiaryDeleteError": "Kan begunstigde niet verwijderen: {error}"
   },
-
   "footer": {
     "description": "De bank van de toekomst, vandaag. Beheer uw financiën eenvoudig.",
     "products": "Producten",
@@ -1326,7 +1311,6 @@
     "terms": "Voorwaarden",
     "rights": "Alle rechten voorbehouden"
   },
-
   "errors": {
     "network": "Verbindingsfout",
     "unauthorized": "Niet geautoriseerd",
@@ -1341,7 +1325,6 @@
     "beneficiaryUpdateFailed": "Fout bij bijwerken",
     "beneficiaryDeleteFailed": "Fout bij verwijderen"
   },
-
   "success": {
     "accountCreated": "Account succesvol aangemaakt",
     "loginSuccess": "Succesvol ingelogd",
@@ -1357,7 +1340,6 @@
     "beneficiaryUpdated": "Begunstigde bijgewerkt",
     "beneficiaryDeleted": "Begunstigde verwijderd"
   },
-
   "pages": {
     "home": {
       "title": "Home - AmCbunq",
@@ -1376,7 +1358,6 @@
       "metaDescription": "AmCbunq helpcentrum. Vind snel antwoorden op uw vragen."
     }
   },
-
   "system": {
     "loading": "Bezig met laden...",
     "noData": "Geen gegevens beschikbaar",
@@ -1387,7 +1368,6 @@
     "serverError": "Serverfout",
     "maintenance": "Onderhoud bezig"
   },
-
   "status": {
     "active": "Actief",
     "inactive": "Inactief",
@@ -1400,7 +1380,6 @@
     "processing": "In verwerking",
     "failed": "Mislukt"
   },
-
   "actions": {
     "create": "Aanmaken",
     "read": "Lezen",
@@ -1416,7 +1395,6 @@
     "send": "Verzenden",
     "receive": "Ontvangen"
   },
-
   "notifications": {
     "newMessage": "Nieuw bericht",
     "newTransaction": "Nieuwe transactie",
@@ -1427,7 +1405,6 @@
     "verificationComplete": "Verificatie voltooid",
     "maintenanceScheduled": "Onderhoud gepland"
   },
-
   "forms": {
     "required": "Verplicht veld",
     "invalid": "Ongeldig formaat",
@@ -1440,7 +1417,6 @@
     "amountInvalid": "Ongeldig bedrag",
     "ibanInvalid": "Ongeldig IBAN"
   },
-
   "time": {
     "now": "Nu",
     "today": "Vandaag",
@@ -1453,7 +1429,6 @@
     "thisYear": "Dit jaar",
     "lastYear": "Vorig jaar"
   },
-
   "currency": {
     "eur": "Euro",
     "usd": "Amerikaanse dollar",
@@ -1461,7 +1436,6 @@
     "chf": "Zwitserse frank",
     "jpy": "Japanse yen"
   },
-
   "languages": {
     "fr": "Frans",
     "en": "Engels",
@@ -1471,7 +1445,6 @@
     "nl": "Nederlands",
     "de": "Duits"
   },
-
   "validation": {
     "firstNameMinLength": "Voornaam moet minstens 2 karakters bevatten",
     "lastNameMinLength": "Achternaam moet minstens 2 karakters bevatten",
@@ -1490,32 +1463,26 @@
     "passwordMismatch": "Wachtwoorden komen niet overeen",
     "passwordMinLength6": "Wachtwoord moet minstens 6 karakters bevatten"
   },
-
   "placeholders": {
     "nationality": "Bijv: Belgisch"
   },
-
   "payments": {
     "title": "Betalingen",
     "quick": "Snel"
   },
-
   "offers": {
     "special": "Speciale Aanbieding",
     "savingsAccount": "Open een spaarrekening en geniet van 2% rente voor 6 maanden!"
   },
-
   "protection": {
     "premium": "Premium Bescherming",
     "description": "Bescherm uw transacties met onze geavanceerde fraudeverzekering."
   },
-
   "referral": {
     "welcome": "Welkomstgeschenk!",
     "description": "Verwijs een vriend en ontvang elk 50€. Toepasselijke voorwaarden.",
     "refer": "Doorverwijzen"
   },
-
   "documents": {
     "title": "Mijn Documenten",
     "subtitle": "Toegang tot al uw bankdocumenten veilig",
@@ -1658,7 +1625,6 @@
       "button": "Ondersteuning contacteren"
     }
   },
-
   "kycSuccess": {
     "title": "Documenten succesvol ingediend!",
     "verificationInProgress": "Verificatie in behandeling...",
@@ -1675,7 +1641,6 @@
     "backToDashboard": "Terug naar dashboard",
     "viewStatus": "Bekijk de status van mijn verificatie"
   },
-
   "verificationState": {
     "titles": {
       "unverified": "Identiteitsverificatie vereist",
@@ -1690,7 +1655,6 @@
       "personalizedFeatures": "Gepersonaliseerde functies"
     }
   },
-
   "modernVerificationState": {
     "startVerification": "Verificatie starten",
     "featuresAfterVerification": "Functies beschikbaar na verificatie",
@@ -1723,20 +1687,20 @@
     "verificationRequiseDescription": "Om toegang te krijgen tot alle functies, moet u uw identiteit valideren.",
     "verificationRejetee": "Verificatie afgewezen",
     "verificationRejeteeDescription": "Uw dossier is afgewezen. Corrigeer de informatie.",
-          "verificationIdentite": "Identiteitsverificatie"
-    },
-    "kycStatusBanner": {
-      "verificationInProgress": "Verificatie in uitvoering",
-      "verificationInProgressDescription": "Uw documenten worden geverifieerd. Dit kan 24-48u duren.",
-      "verificationRejected": "Verificatie afgewezen",
-      "verificationRejectedDescription": "Uw verificatie is afgewezen. Dien nieuwe documenten in.",
-      "verificationRequired": "Verificatie vereist",
-      "verificationRequiredDescription": "Om toegang te krijgen tot alle functies, voltooi uw identiteitsverificatie.",
-      "viewStatus": "Status bekijken",
-      "startVerification": "Verificatie starten",
-      "submitAgain": "Opnieuw indienen"
-    },
-    "modernAlert": {
-      "understood": "Begrepen"
-    }
+    "verificationIdentite": "Identiteitsverificatie"
+  },
+  "kycStatusBanner": {
+    "verificationInProgress": "Verificatie in uitvoering",
+    "verificationInProgressDescription": "Uw documenten worden geverifieerd. Dit kan 24-48u duren.",
+    "verificationRejected": "Verificatie afgewezen",
+    "verificationRejectedDescription": "Uw verificatie is afgewezen. Dien nieuwe documenten in.",
+    "verificationRequired": "Verificatie vereist",
+    "verificationRequiredDescription": "Om toegang te krijgen tot alle functies, voltooi uw identiteitsverificatie.",
+    "viewStatus": "Status bekijken",
+    "startVerification": "Verificatie starten",
+    "submitAgain": "Opnieuw indienen"
+  },
+  "modernAlert": {
+    "understood": "Begrepen"
+  }
 }

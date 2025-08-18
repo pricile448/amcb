@@ -49,7 +49,6 @@
       "submissionGenericError": "Une erreur est survenue lors de la soumission"
     },
     "unverified": "Non vérifié",
-    "verified": "Vérifié",
     "identity": "Pièce d'identité",
     "address": "Justificatif de domicile",
     "income": "Justificatif de revenus",
@@ -58,10 +57,7 @@
     "noDataAvailable": "Aucune donnée disponible",
     "kycRequired": "Vérification KYC requise",
     "kycPending": "Vérification KYC en cours",
-    "kycVerified": "Vérification KYC validée",
-    "verified": "Vérifié",
-    "pending": "En attente",
-    "unverified": "Non vérifié"
+    "kycVerified": "Vérification KYC validée"
   },
   "common": {
     "loading": "Chargement...",

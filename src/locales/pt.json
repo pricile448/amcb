@@ -41,7 +41,6 @@
     "send": "Enviar",
     "receive": "Receber"
   },
-
   "nav": {
     "features": "Funcionalidades",
     "pricing": "Preços",
@@ -62,7 +61,6 @@
     "verification": "Verificação de identidade",
     "transactions": "Transações"
   },
-
   "home": {
     "hero": {
       "title": "O banco do futuro, hoje",
@@ -112,7 +110,6 @@
       "button": "Abrir minha conta"
     }
   },
-
   "features": {
     "hero": {
       "title": "Funcionalidades AmCbunq",
@@ -167,7 +164,6 @@
       "viewPricing": "Ver preços"
     }
   },
-
   "pricing": {
     "hero": {
       "title": "Preços transparentes",
@@ -229,7 +225,6 @@
       "button": "Abrir uma conta"
     }
   },
-
   "help": {
     "title": "Central de Ajuda",
     "subtitle": "Encontre rapidamente respostas para suas dúvidas",
@@ -360,7 +355,6 @@
       "pricingRedirect": "Tabela de preços - Redirecionando para a página de preços"
     }
   },
-
   "auth": {
     "login": {
       "title": "Login",
@@ -415,7 +409,6 @@
     "tooManyAttempts": "Muitas tentativas. Tente novamente mais tarde.",
     "accountDisabled": "Esta conta foi desativada"
   },
-
   "dashboard": {
     "welcome": "Olá",
     "overview": "Visão geral de suas finanças",
@@ -440,7 +433,6 @@
     "ribVerificationRequired": "Verifique sua identidade para acessar seu RIB",
     "ribRequestPage": "Solicite seu RIB na página IBAN"
   },
-
   "accounts": {
     "title": "Minhas Contas",
     "subtitle": "Gerencie suas contas e cartões",
@@ -486,14 +478,12 @@
     "todayAt": "Hoje às",
     "yesterdayAt": "Ontem às"
   },
-
   "accountTypes": {
     "current": "Conta corrente",
     "savings": "Conta poupança",
     "credit": "Cartão de crédito",
     "account": "Conta"
   },
-
   "accountStatus": {
     "active": "Ativo",
     "blocked": "Bloqueado",
@@ -503,7 +493,6 @@
     "unverified": "Não verificado",
     "pendingVerification": "Em andamento"
   },
-
   "transactions": {
     "title": "Histórico de transações",
     "subtitle": "Consulte todas suas transações recentes",
@@ -538,7 +527,6 @@
     "noResults": "Nenhum resultado encontrado para sua pesquisa",
     "tryDifferentSearch": "Tente com palavras-chave diferentes"
   },
-
   "transactionCategories": {
     "salary": "Salário",
     "food": "Alimentação",
@@ -557,7 +545,6 @@
     "incomingTransfer": "Transferência Entrada",
     "noRecent": "Nenhuma transação recente"
   },
-
   "transfers": {
     "title": "Transferências",
     "subtitle": "Gerencie suas transferências e beneficiários",
@@ -646,7 +633,6 @@
       "submit": "Realizar transferência"
     }
   },
-
   "cards": {
     "title": "Meus Cartões",
     "subtitle": "Gerencie seus cartões bancários e de crédito",
@@ -749,7 +735,6 @@
       "requestFailed": "Erro ao solicitar cartão"
     }
   },
-
   "verification": {
     "title": "Verificação da conta",
     "subtitle": "Complete sua verificação para acessar todos os serviços",
@@ -810,7 +795,6 @@
       }
     }
   },
-
   "kyc": {
     "title": "Verificação de identidade",
     "subtitle": "Envie seus documentos para validar sua conta",
@@ -850,11 +834,19 @@
     "errors": {
       "userNotIdentified": "Usuário não identificado",
       "parsingError": "Erro ao processar usuário:",
-      "submissionGenericError": "Ocorreu um erro ao enviar"
+      "submissionGenericError": "Ocorreu um erro ao enviar",
+      "title": "Erro",
+      "userMissing": "Informações do usuário ausentes",
+      "parsingUser": "Erro ao analisar usuário:",
+      "submissionError": "Erro durante o envio:",
+      "submissionFailed": "Ocorreu um erro durante o envio"
     },
-    "unverified": "Não verificado"
+    "unverified": "Não verificado",
+    "success": {
+      "title": "Sucesso",
+      "message": "Documentos enviados com sucesso! Você receberá um e-mail de confirmação."
+    }
   },
-
   "billing": {
     "title": "Faturamento",
     "subtitle": "RIB e mensagens do banco",
@@ -943,7 +935,6 @@
       "loadingError": "Erro ao carregar dados de faturamento:"
     }
   },
-
   "iban": {
     "title": "Meu IBAN",
     "subtitle": "Seu identificador bancário único",
@@ -1073,7 +1064,6 @@
       }
     }
   },
-
   "history": {
     "title": "Histórico",
     "subtitle": "Consulte o histórico de suas transações",
@@ -1154,7 +1144,6 @@
       "defaultValue": "-"
     }
   },
-
   "budgets": {
     "title": "Orçamentos",
     "subtitle": "Acompanhe seus gastos e respeite seus orçamentos",
@@ -1221,7 +1210,6 @@
       "loadingError": "Erro ao carregar orçamentos"
     }
   },
-
   "messages": {
     "title": "Mensagens",
     "subtitle": "Atendimento ao cliente AmCbunq",
@@ -1233,13 +1221,13 @@
     "online": "Online",
     "quickResponse": "Resposta rápida",
     "onlineStatus": "Online",
-          "supportName": "Suporte AmCbunq",
-      "unavailable": "Mensagens indisponíveis",
-      "unavailableUnverified": "Para acessar o chat com nosso suporte, você deve primeiro validar sua identidade.",
-      "temporarilyUnavailable": "Mensagens temporariamente indisponíveis",
-      "unavailablePending": "Mensagens não disponíveis - Verifique sua identidade",
-      "unavailableVerifyIdentity": "Mensagens não disponíveis - Verifique sua identidade",
-      "verification": {
+    "supportName": "Suporte AmCbunq",
+    "unavailable": "Mensagens indisponíveis",
+    "unavailableUnverified": "Para acessar o chat com nosso suporte, você deve primeiro validar sua identidade.",
+    "temporarilyUnavailable": "Mensagens temporariamente indisponíveis",
+    "unavailablePending": "Mensagens não disponíveis - Verifique sua identidade",
+    "unavailableVerifyIdentity": "Mensagens não disponíveis - Verifique sua identidade",
+    "verification": {
       "unavailableTitle": "Mensagens indisponíveis",
       "temporarilyUnavailableTitle": "Mensagens temporariamente indisponíveis",
       "unavailableDescription": "Para acessar o chat com nosso suporte, você precisa primeiro validar sua identidade.",
@@ -1252,7 +1240,6 @@
       "noMessages": "Nenhuma mensagem encontrada, criando mensagem de boas-vindas"
     }
   },
-
   "settings": {
     "title": "Configurações",
     "subtitle": "Gerencie suas preferências e configurações de conta",
@@ -1300,7 +1287,6 @@
     "marketingEmails": "Emails de marketing",
     "marketingEmailsDescription": "Receba ofertas e novidades por email"
   },
-
   "transferMessages": {
     "externalTransferTitle": "Transferência externa",
     "externalTransferMessage": "Transferências externas estão sujeitas a análise de segurança antes de aprovação.",
@@ -1316,7 +1302,6 @@
     "beneficiaryUpdateError": "Não foi possível atualizar o beneficiário: {error}",
     "beneficiaryDeleteError": "Não foi possível remover o beneficiário: {error}"
   },
-
   "footer": {
     "description": "O banco do futuro, hoje. Gerencie suas finanças com simplicidade.",
     "products": "Produtos",
@@ -1327,7 +1312,6 @@
     "terms": "Termos",
     "rights": "Todos os direitos reservados"
   },
-
   "errors": {
     "network": "Erro de conexão",
     "unauthorized": "Não autorizado",
@@ -1342,7 +1326,6 @@
     "beneficiaryUpdateFailed": "Erro ao atualizar",
     "beneficiaryDeleteFailed": "Erro ao remover"
   },
-
   "success": {
     "accountCreated": "Conta criada com sucesso",
     "loginSuccess": "Login realizado",
@@ -1358,7 +1341,6 @@
     "beneficiaryUpdated": "Beneficiário atualizado",
     "beneficiaryDeleted": "Beneficiário removido"
   },
-
   "pages": {
     "home": {
       "title": "Início - AmCbunq",
@@ -1377,7 +1359,6 @@
       "metaDescription": "Central de Ajuda AmCbunq. Encontre rapidamente respostas para suas dúvidas."
     }
   },
-
   "system": {
     "loading": "Carregando...",
     "noData": "Nenhum dado disponível",
@@ -1388,7 +1369,6 @@
     "serverError": "Erro de servidor",
     "maintenance": "Manutenção em andamento"
   },
-
   "status": {
     "active": "Ativo",
     "inactive": "Inativo",
@@ -1401,7 +1381,6 @@
     "processing": "Em processamento",
     "failed": "Falhou"
   },
-
   "actions": {
     "create": "Criar",
     "read": "Ler",
@@ -1417,7 +1396,6 @@
     "send": "Enviar",
     "receive": "Receber"
   },
-
   "notifications": {
     "newMessage": "Nova mensagem",
     "newTransaction": "Nova transação",
@@ -1428,7 +1406,6 @@
     "verificationComplete": "Verificação concluída",
     "maintenanceScheduled": "Manutenção agendada"
   },
-
   "forms": {
     "required": "Campo obrigatório",
     "invalid": "Formato inválido",
@@ -1441,7 +1418,6 @@
     "amountInvalid": "Valor inválido",
     "ibanInvalid": "IBAN inválido"
   },
-
   "time": {
     "now": "Agora",
     "today": "Hoje",
@@ -1454,7 +1430,6 @@
     "thisYear": "Este ano",
     "lastYear": "Ano passado"
   },
-
   "currency": {
     "eur": "Euro",
     "usd": "Dólar americano",
@@ -1462,7 +1437,6 @@
     "chf": "Franco suíço",
     "jpy": "Iene japonês"
   },
-
   "languages": {
     "fr": "Francês",
     "en": "Inglês",
@@ -1472,7 +1446,6 @@
     "nl": "Holandês",
     "de": "Alemão"
   },
-
   "validation": {
     "firstNameMinLength": "O nome deve ter pelo menos 2 caracteres",
     "lastNameMinLength": "O sobrenome deve ter pelo menos 2 caracteres",
@@ -1491,32 +1464,26 @@
     "passwordMismatch": "As senhas não coincidem",
     "passwordMinLength6": "A senha deve ter pelo menos 6 caracteres"
   },
-
   "placeholders": {
     "nationality": "Ex: Brasileira"
   },
-
   "payments": {
     "title": "Pagamentos",
     "quick": "Rápidos"
   },
-
   "offers": {
     "special": "Oferta Especial",
     "savingsAccount": "Abra uma conta poupança e ganhe 2% de juros por 6 meses!"
   },
-
   "protection": {
     "premium": "Proteção Premium",
     "description": "Proteja suas transações com nosso seguro avançado contra fraudes."
   },
-
   "referral": {
     "welcome": "Presente de boas-vindas!",
     "description": "Indique um amigo e receba 50€ cada. Condições aplicáveis.",
     "refer": "Indicar"
   },
-
   "documents": {
     "title": "Meus Documentos",
     "subtitle": "Acesse todos seus documentos bancários com segurança",
@@ -1659,7 +1626,6 @@
       "button": "Contatar suporte"
     }
   },
-
   "kycSuccess": {
     "title": "Documentos enviados com sucesso!",
     "verificationInProgress": "Verificação em andamento...",
@@ -1676,7 +1642,6 @@
     "backToDashboard": "Voltar ao painel",
     "viewStatus": "Ver o status da minha verificação"
   },
-
   "verificationState": {
     "titles": {
       "unverified": "Verificação de identidade necessária",
@@ -1691,7 +1656,6 @@
       "personalizedFeatures": "Funcionalidades personalizadas"
     }
   },
-
   "modernVerificationState": {
     "startVerification": "Iniciar verificação",
     "featuresAfterVerification": "Funcionalidades disponíveis após verificação",
@@ -1724,20 +1688,20 @@
     "verificationRequiseDescription": "Para acessar todas as funcionalidades, você deve validar sua identidade.",
     "verificationRejetee": "Verificação rejeitada",
     "verificationRejeteeDescription": "Seu arquivo foi rejeitado. Por favor, corrija as informações.",
-          "verificationIdentite": "Verificação de identidade"
-    },
-    "kycStatusBanner": {
-      "verificationInProgress": "Verificação em andamento",
-      "verificationInProgressDescription": "Seus documentos estão sendo verificados. Isso pode levar 24-48h.",
-      "verificationRejected": "Verificação rejeitada",
-      "verificationRejectedDescription": "Sua verificação foi rejeitada. Por favor, envie novos documentos.",
-      "verificationRequired": "Verificação necessária",
-      "verificationRequiredDescription": "Para acessar todas as funcionalidades, complete sua verificação de identidade.",
-      "viewStatus": "Ver status",
-      "startVerification": "Iniciar verificação",
-      "submitAgain": "Enviar novamente"
-    },
-    "modernAlert": {
-      "understood": "Entendido"
-    }
+    "verificationIdentite": "Verificação de identidade"
+  },
+  "kycStatusBanner": {
+    "verificationInProgress": "Verificação em andamento",
+    "verificationInProgressDescription": "Seus documentos estão sendo verificados. Isso pode levar 24-48h.",
+    "verificationRejected": "Verificação rejeitada",
+    "verificationRejectedDescription": "Sua verificação foi rejeitada. Por favor, envie novos documentos.",
+    "verificationRequired": "Verificação necessária",
+    "verificationRequiredDescription": "Para acessar todas as funcionalidades, complete sua verificação de identidade.",
+    "viewStatus": "Ver status",
+    "startVerification": "Iniciar verificação",
+    "submitAgain": "Enviar novamente"
+  },
+  "modernAlert": {
+    "understood": "Entendido"
+  }
 }

@@ -188,7 +188,7 @@ const KycSubmissionsList: React.FC<KycSubmissionsListProps> = ({
                         <span className="font-medium">Type:</span> {submission.mimeType}
                       </div>
                       <div>
-                        <span className="font-medium">Soumis:</span> {submission.submittedAt.toLocaleString('fr-FR')}
+                        <span className="font-medium">Soumis:</span> {submission.submittedAt.toLocaleString()}
                       </div>
                       <div>
                         <span className="font-medium">Document:</span> {submission.documentType}

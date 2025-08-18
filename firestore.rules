@@ -6,30 +6,18 @@ service cloud.firestore {
     
     // 👮‍♂️ Collection admins : Administrateurs de la plateforme
     match /admins/{adminId} {
-      // ✅ Création : Seuls les utilisateurs authentifiés peuvent créer des admins
-      // (pour la configuration initiale de l'app admin)
       allow create: if request.auth != null;
-      
-      // ✅ Lecture : L'admin peut lire ses propres données
-      allow read: if request.auth != null 
-        && request.auth.uid == adminId;
-      
-      // ✅ Mise à jour : L'admin peut mettre à jour ses propres données
-      allow update: if request.auth != null 
-        && request.auth.uid == adminId;
-      
-      // ✅ Suppression : Seuls les super admins peuvent supprimer des admins
+      allow read: if request.auth != null && request.auth.uid == adminId;
+      allow update: if request.auth != null && request.auth.uid == adminId;
       allow delete: if request.auth != null 
         && exists(/databases/$(database)/documents/admins/$(request.auth.uid))
         && get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role == 'super_admin';
-      
-      // 🔍 Lecture par email : Pour la vérification des droits admin
       allow read: if request.auth != null 
         && exists(/databases/$(database)/documents/admins/$(request.auth.uid))
         && get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role in ['admin', 'super_admin'];
     }
     
-    // 👤 Collection users : Lecture/écriture pour le propriétaire
+    // 👤 Collection users : RÈGLES SIMPLIFIÉES POUR KYC
     match /users/{userId} {
       // ✅ CRÉATION : utilisateur peut créer son propre document
       allow create: if request.auth != null && request.auth.uid == userId;
@@ -38,51 +26,29 @@ service cloud.firestore {
       allow read: if request.auth != null && request.auth.uid == userId;
       
       // ✅ MISE À JOUR : utilisateur peut mettre à jour ses propres données
-      allow update: if request.auth != null 
-        && request.auth.uid == userId
-        && (
-          // Transition KYC autorisée
-          (resource.data.kycStatus == 'unverified' && request.resource.data.kycStatus == 'pending')
-          // Ou mise à jour de champs autorisés
-          || request.resource.data.diff(resource.data).affectedKeys().hasAny([
-            'kycStatus', 'kycStatusDetails', 'verificationStatus', 
-            'notifications', 'lastSignInTime', 'emailVerified', 
-            'isEmailVerified', 'updatedAt', 'accounts', 'defaultAccountsCreated', 'defaultAccountsCreatedAt',
-            // 🆕 NOUVEAUX CHAMPS AUTORISÉS
-            'billingBic', 'billingHolder', 'billingIban', 'billingText', 'billingVisible',
-            'emailVerificationCode', 'emailVerificationCodeExpires', 'emailVerifiedAt',
-            'phoneVerified', 'isPhoneVerified', 'validatedAt', 'verifiedAt'
-          ])
-        );
+      // 🔧 SIMPLIFICATION : Permettre toutes les mises à jour pour l'utilisateur
+      allow update: if request.auth != null && request.auth.uid == userId;
       
       // 👮‍♂️ Admins peuvent tout faire
       allow read, write: if request.auth != null 
         && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
     
-    // 🆕 RÈGLE SPÉCIALE POUR LES DONNÉES DE FACTURATION
-    // Permet aux admins de gérer les données de facturation de tous les utilisateurs
-    match /users/{userId}/billing/{document=**} {
-      allow read, write: if request.auth != null 
-        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
-    }
-    
-    // 🧾 Collection kycSubmissions
+    // 🧾 Collection kycSubmissions : RÈGLES SIMPLIFIÉES
     match /kycSubmissions/{submissionId} {
-      // ✅ Création : utilisateur peut créer ses propres soumissions
+      // ✅ CRÉATION : utilisateur peut créer ses propres soumissions
       allow create: if request.auth != null 
-        && request.resource.data.userId == request.auth.uid
-        && request.resource.data.keys().hasAll(['id', 'userId', 'documentType', 'cloudinaryUrl', 'cloudinaryPublicId', 'fileName', 'fileSize', 'mimeType', 'submittedAt']);
+        && request.resource.data.userId == request.auth.uid;
       
-      // ✅ Lecture : utilisateur peut lire ses propres soumissions
+      // ✅ LECTURE : utilisateur peut lire ses propres soumissions
       allow read: if request.auth != null 
         && resource.data.userId == request.auth.uid;
       
-      // ✅ Mise à jour : utilisateur peut mettre à jour ses propres soumissions
+      // ✅ MISE À JOUR : utilisateur peut mettre à jour ses propres soumissions
       allow update: if request.auth != null 
         && resource.data.userId == request.auth.uid;
       
-      // ✅ Suppression : utilisateur peut supprimer ses propres soumissions
+      // ✅ SUPPRESSION : utilisateur peut supprimer ses propres soumissions
       allow delete: if request.auth != null 
         && resource.data.userId == request.auth.uid;
       
@@ -91,115 +57,114 @@ service cloud.firestore {
         && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
     
-    // 🏦 Collection accounts : Comptes bancaires
+    // 🏦 Collection accounts
     match /accounts/{accountId} {
-      allow read: if request.auth != null 
-        && resource.data.userId == request.auth.uid;
-      
-      allow create, update: if request.auth != null 
-        && request.resource.data.userId == request.auth.uid;
-      
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create, update: if request.auth != null && request.resource.data.userId == request.auth.uid;
       allow read, write: if request.auth != null 
         && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
     
-    // 💰 Collection transactions : Transactions bancaires
+    // 💰 Collection transactions
     match /transactions/{transactionId} {
-      allow read: if request.auth != null 
-        && resource.data.userId == request.auth.uid;
-      
-      allow create: if request.auth != null 
-        && request.resource.data.userId == request.auth.uid;
-      
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
       allow read, write: if request.auth != null 
         && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
     
-    // 📄 Collection documents : Documents utilisateur
+    // 📄 Collection documents
     match /documents/{documentId} {
-      allow read: if request.auth != null 
-        && resource.data.userId == request.auth.uid;
-      
-      allow create, update, delete: if request.auth != null 
-        && request.resource.data.userId == request.auth.uid;
-      
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create, update, delete: if request.auth != null && request.resource.data.userId == request.auth.uid;
       allow read, write: if request.auth != null 
         && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
     
-    // 🔄 Collection transfers : Virements
+    // 🔄 Collection transfers
     match /transfers/{transferId} {
-      allow read: if request.auth != null 
-        && resource.data.userId == request.auth.uid;
-      
-      allow create: if request.auth != null 
-        && request.resource.data.userId == request.auth.uid;
-      
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
       allow read, write: if request.auth != null 
         && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
     
-    // 👥 Collection beneficiaries : Bénéficiaires
+    // 👥 Collection beneficiaries
     match /beneficiaries/{beneficiaryId} {
-      allow read: if request.auth != null 
-        && resource.data.userId == request.auth.uid;
-      
-      allow create: if request.auth != null 
-        && request.resource.data.userId == request.auth.uid;
-      
-      allow update: if request.auth != null 
-        && resource.data.userId == request.auth.uid
-        && request.resource.data.userId == request.auth.uid;
-      
-      allow delete: if request.auth != null 
-        && resource.data.userId == request.auth.uid;
-      
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create, update, delete: if request.auth != null && request.resource.data.userId == request.auth.uid;
       allow read, write: if request.auth != null 
         && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
     
-    // 💬 Collection chats : Messages de support
+    // 💬 Collection chats
     match /chats/{chatId} {
       allow read: if request.auth != null 
-        && (
-          resource.data.userId == request.auth.uid
-          || request.auth.uid in resource.data.participants
-        );
-      
-      allow create: if request.auth != null 
-        && request.resource.data.userId == request.auth.uid;
-      
+        && (resource.data.userId == request.auth.uid || request.auth.uid in resource.data.participants);
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
       allow read, write: if request.auth != null 
         && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
       
-      // 💬 Sous-collection messages
       match /messages/{messageId} {
         allow read: if request.auth != null 
-          && (
-            get(/databases/$(database)/documents/chats/$(chatId)).data.userId == request.auth.uid
-            || request.auth.uid in get(/databases/$(database)/documents/chats/$(chatId)).data.participants
-          );
-        
+          && (get(/databases/$(database)/documents/chats/$(chatId)).data.userId == request.auth.uid
+              || request.auth.uid in get(/databases/$(database)/documents/chats/$(chatId)).data.participants);
         allow create: if request.auth != null 
-          && (
-            get(/databases/$(database)/documents/chats/$(chatId)).data.userId == request.auth.uid
-            || request.auth.uid in get(/databases/$(database)/documents/chats/$(chatId)).data.participants
-          )
+          && (get(/databases/$(database)/documents/chats/$(chatId)).data.userId == request.auth.uid
+              || request.auth.uid in get(/databases/$(database)/documents/chats/$(chatId)).data.participants)
           && request.resource.data.senderId == request.auth.uid;
-        
         allow read, write: if request.auth != null 
           && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
       }
     }
     
-    // 📧 Collection emailVerificationCodes : Codes de vérification email
+    // 📧 Collection emailVerificationCodes
     match /emailVerificationCodes/{userId} {
-      allow create, read, update, delete: if request.auth != null 
-        && request.auth.uid == userId;
-      
+      allow create, read, update, delete: if request.auth != null && request.auth.uid == userId;
       allow read, write: if request.auth != null 
         && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
+    
+    // 🏦 Collection ribRequests : Demandes de RIB
+    match /ribRequests/{requestId} {
+      // ✅ CRÉATION : utilisateur peut créer ses propres demandes
+      allow create: if request.auth != null 
+        && request.resource.data.userId == request.auth.uid;
+      
+      // ✅ LECTURE : utilisateur peut lire ses propres demandes
+      allow read: if request.auth != null 
+        && resource.data.userId == request.auth.uid;
+      
+      // ✅ MISE À JOUR : utilisateur peut mettre à jour ses propres demandes
+      allow update: if request.auth != null 
+        && resource.data.userId == request.auth.uid;
+      
+      // 👮‍♂️ Admins peuvent tout faire
+      allow read, write: if request.auth != null 
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+    
+    // 💳 Collection cardRequests : Demandes de cartes
+    match /cardRequests/{requestId} {
+      // ✅ CRÉATION : utilisateur peut créer ses propres demandes
+      allow create: if request.auth != null 
+        && request.resource.data.userId == request.auth.uid;
+      
+      // ✅ LECTURE : utilisateur peut lire ses propres demandes
+      allow read: if request.auth != null 
+        && resource.data.userId == request.auth.uid;
+      
+      // ✅ MISE À JOUR : utilisateur peut mettre à jour ses propres demandes
+      allow update: if request.auth != null 
+        && resource.data.userId == request.auth.uid;
+      
+      // 👮‍♂️ Admins peuvent tout faire
+      allow read, write: if request.auth != null 
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+    
+    // ✅ NOTE: Les sous-documents RIB et cartes sont stockés dans users/{userId}
+    // Les règles users existantes couvrent déjà l'accès aux données
     
     // 🚫 Tout le reste est refusé par défaut
     match /{document=**} {

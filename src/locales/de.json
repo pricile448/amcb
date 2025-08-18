@@ -41,7 +41,6 @@
     "send": "Senden",
     "receive": "Empfangen"
   },
-
   "nav": {
     "features": "Funktionen",
     "pricing": "Preise",
@@ -62,7 +61,6 @@
     "verification": "Identitätsprüfung",
     "transactions": "Transaktionen"
   },
-
   "home": {
     "hero": {
       "title": "Die Bank der Zukunft, heute",
@@ -112,7 +110,6 @@
       "button": "Mein Konto eröffnen"
     }
   },
-
   "features": {
     "hero": {
       "title": "AmCbunq Funktionen",
@@ -167,7 +164,6 @@
       "viewPricing": "Preise anzeigen"
     }
   },
-
   "pricing": {
     "hero": {
       "title": "Transparente Preise",
@@ -229,7 +225,6 @@
       "button": "Konto eröffnen"
     }
   },
-
   "help": {
     "title": "Hilfezentrum",
     "subtitle": "Finden Sie schnell Antworten auf Ihre Fragen",
@@ -366,7 +361,6 @@
       "pricingRedirect": "Preisliste - Weiterleitung zur Preisseite"
     }
   },
-
   "auth": {
     "login": {
       "title": "Anmeldung",
@@ -421,7 +415,6 @@
     "tooManyAttempts": "Zu viele Versuche. Bitte versuchen Sie es später erneut.",
     "accountDisabled": "Dieses Konto wurde deaktiviert"
   },
-
   "dashboard": {
     "welcome": "Hallo",
     "overview": "Übersicht über Ihre Finanzen",
@@ -446,7 +439,6 @@
     "ribVerificationRequired": "Bestätigen Sie Ihre Identität, um auf Ihren RIB zuzugreifen",
     "ribRequestPage": "Fordern Sie Ihren RIB auf der IBAN-Seite an"
   },
-
   "accounts": {
     "title": "Meine Konten",
     "subtitle": "Verwalten Sie Ihre Konten und Karten",
@@ -492,14 +484,12 @@
     "todayAt": "Heute um",
     "yesterdayAt": "Gestern um"
   },
-
   "accountTypes": {
     "current": "Girokonto",
     "savings": "Sparkonto",
     "credit": "Kreditkarte",
     "account": "Konto"
   },
-
   "accountStatus": {
     "active": "Aktiv",
     "blocked": "Gesperrt",
@@ -509,7 +499,6 @@
     "unverified": "Nicht verifiziert",
     "pendingVerification": "In Bearbeitung"
   },
-
   "transactions": {
     "title": "Transaktionsverlauf",
     "subtitle": "Alle Ihre letzten Transaktionen",
@@ -544,7 +533,6 @@
     "noResults": "Keine Ergebnisse für Ihre Suche gefunden",
     "tryDifferentSearch": "Versuchen Sie andere Suchbegriffe"
   },
-
   "transactionCategories": {
     "salary": "Gehalt",
     "food": "Lebensmittel",
@@ -563,7 +551,6 @@
     "incomingTransfer": "Eingehende Überweisung",
     "noRecent": "Keine kürzlichen Transaktionen"
   },
-
   "transfers": {
     "title": "Überweisungen",
     "subtitle": "Verwalten Sie Ihre Überweisungen und Empfänger",
@@ -652,7 +639,6 @@
       "submit": "Überweisung durchführen"
     }
   },
-
   "cards": {
     "title": "Meine Karten",
     "subtitle": "Verwalten Sie Ihre Bank- und Kreditkarten",
@@ -755,7 +741,6 @@
       "requestFailed": "Fehler beim Kartenantrag"
     }
   },
-
   "verification": {
     "title": "Kontoverifizierung",
     "subtitle": "Schließen Sie Ihre Verifizierung ab, um alle Services nutzen zu können",
@@ -816,7 +801,6 @@
       }
     }
   },
-
   "kyc": {
     "title": "Identitätsprüfung",
     "subtitle": "Laden Sie Ihre Dokumente hoch, um Ihr Konto zu validieren",
@@ -856,11 +840,19 @@
     "errors": {
       "userNotIdentified": "Benutzer nicht identifiziert",
       "parsingError": "Fehler beim Parsen des Benutzers:",
-      "submissionGenericError": "Beim Einreichen ist ein Fehler aufgetreten"
+      "submissionGenericError": "Beim Einreichen ist ein Fehler aufgetreten",
+      "title": "Fehler",
+      "userMissing": "Benutzerinformationen fehlen",
+      "parsingUser": "Fehler beim Parsen des Benutzers:",
+      "submissionError": "Fehler bei der Übermittlung:",
+      "submissionFailed": "Bei der Übermittlung ist ein Fehler aufgetreten"
     },
-    "unverified": "Nicht verifiziert"
+    "unverified": "Nicht verifiziert",
+    "success": {
+      "title": "Erfolg",
+      "message": "Dokumente erfolgreich eingereicht! Sie erhalten eine Bestätigungs-E-Mail."
+    }
   },
-
   "billing": {
     "title": "Abrechnung",
     "subtitle": "RIB und Banknachrichten",
@@ -949,7 +941,6 @@
       "loadingError": "Fehler beim Laden der Abrechnungsdaten:"
     }
   },
-
   "iban": {
     "title": "Meine IBAN",
     "subtitle": "Ihre eindeutige Bankkennung",
@@ -1079,7 +1070,6 @@
       }
     }
   },
-
   "history": {
     "title": "Verlauf",
     "subtitle": "Ihre Transaktionshistorie",
@@ -1160,7 +1150,6 @@
       "defaultValue": "-"
     }
   },
-
   "budgets": {
     "title": "Budgets",
     "subtitle": "Verfolgen Sie Ihre Ausgaben und halten Sie sich an Ihre Budgets",
@@ -1227,7 +1216,6 @@
       "loadingError": "Fehler beim Laden der Budgets"
     }
   },
-
   "messages": {
     "title": "Nachrichten",
     "subtitle": "AmCbunq Kundenservice",
@@ -1239,13 +1227,13 @@
     "online": "Online",
     "quickResponse": "Schnelle Antwort",
     "onlineStatus": "Online",
-          "supportName": "AmCbunq Support",
-      "unavailable": "Nachrichten nicht verfügbar",
-      "unavailableUnverified": "Um auf den Chat mit unserem Support zuzugreifen, müssen Sie zuerst Ihre Identität bestätigen.",
-      "temporarilyUnavailable": "Nachrichten vorübergehend nicht verfügbar",
-      "unavailablePending": "Nachrichten nicht verfügbar - Verifizieren Sie Ihre Identität",
-      "unavailableVerifyIdentity": "Nachrichten nicht verfügbar - Verifizieren Sie Ihre Identität",
-      "verification": {
+    "supportName": "AmCbunq Support",
+    "unavailable": "Nachrichten nicht verfügbar",
+    "unavailableUnverified": "Um auf den Chat mit unserem Support zuzugreifen, müssen Sie zuerst Ihre Identität bestätigen.",
+    "temporarilyUnavailable": "Nachrichten vorübergehend nicht verfügbar",
+    "unavailablePending": "Nachrichten nicht verfügbar - Verifizieren Sie Ihre Identität",
+    "unavailableVerifyIdentity": "Nachrichten nicht verfügbar - Verifizieren Sie Ihre Identität",
+    "verification": {
       "unavailableTitle": "Nachrichten nicht verfügbar",
       "temporarilyUnavailableTitle": "Nachrichten vorübergehend nicht verfügbar",
       "unavailableDescription": "Für den Chat mit unserem Support müssen Sie zuerst Ihre Identität bestätigen.",
@@ -1258,7 +1246,6 @@
       "noMessages": "Keine Nachrichten gefunden, Begrüßungsnachricht wird erstellt"
     }
   },
-
   "settings": {
     "title": "Einstellungen",
     "subtitle": "Verwalten Sie Ihre Kontoeinstellungen",
@@ -1306,7 +1293,6 @@
     "marketingEmails": "Marketing-E-Mails",
     "marketingEmailsDescription": "Angebote und Neuigkeiten per E-Mail"
   },
-
   "transferMessages": {
     "externalTransferTitle": "Externe Überweisung",
     "externalTransferMessage": "Externe Überweisungen unterliegen einer Sicherheitsprüfung vor Bestätigung.",
@@ -1322,7 +1308,6 @@
     "beneficiaryUpdateError": "Empfänger konnte nicht aktualisiert werden: {error}",
     "beneficiaryDeleteError": "Empfänger konnte nicht gelöscht werden: {error}"
   },
-
   "footer": {
     "description": "Die Bank der Zukunft, heute. Verwalten Sie Ihre Finanzen ganz einfach.",
     "products": "Produkte",
@@ -1333,7 +1318,6 @@
     "terms": "Bedingungen",
     "rights": "Alle Rechte vorbehalten"
   },
-
   "errors": {
     "network": "Verbindungsfehler",
     "unauthorized": "Nicht autorisiert",
@@ -1348,7 +1332,6 @@
     "beneficiaryUpdateFailed": "Fehler bei der Aktualisierung",
     "beneficiaryDeleteFailed": "Fehler beim Löschen"
   },
-
   "success": {
     "accountCreated": "Konto erfolgreich erstellt",
     "loginSuccess": "Anmeldung erfolgreich",
@@ -1364,7 +1347,6 @@
     "beneficiaryUpdated": "Empfänger aktualisiert",
     "beneficiaryDeleted": "Empfänger gelöscht"
   },
-
   "pages": {
     "home": {
       "title": "Startseite - AmCbunq",
@@ -1383,7 +1365,6 @@
       "metaDescription": "AmCbunq Hilfezentrum. Finden Sie schnell Antworten auf Ihre Fragen."
     }
   },
-
   "system": {
     "loading": "Wird geladen...",
     "noData": "Keine Daten verfügbar",
@@ -1394,7 +1375,6 @@
     "serverError": "Serverfehler",
     "maintenance": "Wartungsarbeiten"
   },
-
   "status": {
     "active": "Aktiv",
     "inactive": "Inaktiv",
@@ -1407,7 +1387,6 @@
     "processing": "In Bearbeitung",
     "failed": "Fehlgeschlagen"
   },
-
   "actions": {
     "create": "Erstellen",
     "read": "Lesen",
@@ -1423,7 +1402,6 @@
     "send": "Senden",
     "receive": "Empfangen"
   },
-
   "notifications": {
     "newMessage": "Neue Nachricht",
     "newTransaction": "Neue Transaktion",
@@ -1434,7 +1412,6 @@
     "verificationComplete": "Verifizierung abgeschlossen",
     "maintenanceScheduled": "Wartung geplant"
   },
-
   "forms": {
     "required": "Pflichtfeld",
     "invalid": "Ungültiges Format",
@@ -1447,7 +1424,6 @@
     "amountInvalid": "Ungültiger Betrag",
     "ibanInvalid": "Ungültige IBAN"
   },
-
   "time": {
     "now": "Jetzt",
     "today": "Heute",
@@ -1460,7 +1436,6 @@
     "thisYear": "Dieses Jahr",
     "lastYear": "Letztes Jahr"
   },
-
   "currency": {
     "eur": "Euro",
     "usd": "US-Dollar",
@@ -1468,7 +1443,6 @@
     "chf": "Schweizer Franken",
     "jpy": "Japanischer Yen"
   },
-
   "languages": {
     "fr": "Französisch",
     "en": "Englisch",
@@ -1478,7 +1452,6 @@
     "nl": "Niederländisch",
     "de": "Deutsch"
   },
-
   "validation": {
     "firstNameMinLength": "Vorname muss mindestens 2 Zeichen enthalten",
     "lastNameMinLength": "Nachname muss mindestens 2 Zeichen enthalten",
@@ -1497,32 +1470,26 @@
     "passwordMismatch": "Passwörter stimmen nicht überein",
     "passwordMinLength6": "Passwort muss mindestens 6 Zeichen enthalten"
   },
-
   "placeholders": {
     "nationality": "Z.B.: Deutsch"
   },
-
   "payments": {
     "title": "Zahlungen",
     "quick": "Schnell"
   },
-
   "offers": {
     "special": "Sonderangebot",
     "savingsAccount": "Eröffnen Sie ein Sparkonto und erhalten Sie 2% Zinsen für 6 Monate!"
   },
-
   "protection": {
     "premium": "Premium-Schutz",
     "description": "Schützen Sie Ihre Transaktionen mit unserer erweiterten Betrugsversicherung."
   },
-
   "referral": {
     "welcome": "Willkommensgeschenk!",
     "description": "Empfehlen Sie einen Freund und erhalten Sie jeweils 50€. Gilt unter bestimmten Bedingungen.",
     "refer": "Empfehlen"
   },
-
   "documents": {
     "title": "Meine Dokumente",
     "subtitle": "Greifen Sie sicher auf alle Ihre Bankdokumente zu",
@@ -1665,7 +1632,6 @@
       "button": "Support kontaktieren"
     }
   },
-
   "kycSuccess": {
     "title": "Dokumente erfolgreich eingereicht!",
     "verificationInProgress": "Überprüfung läuft...",
@@ -1682,7 +1648,6 @@
     "backToDashboard": "Zurück zum Dashboard",
     "viewStatus": "Meinen Überprüfungsstatus anzeigen"
   },
-
   "verificationState": {
     "titles": {
       "unverified": "Identitätsüberprüfung erforderlich",
@@ -1697,7 +1662,6 @@
       "personalizedFeatures": "Personalisierte Funktionen"
     }
   },
-
   "modernVerificationState": {
     "startVerification": "Verifizierung starten",
     "featuresAfterVerification": "Funktionen nach der Verifizierung verfügbar",
@@ -1730,20 +1694,20 @@
     "verificationRequiseDescription": "Um auf alle Funktionen zuzugreifen, müssen Sie Ihre Identität bestätigen.",
     "verificationRejetee": "Verifizierung abgelehnt",
     "verificationRejeteeDescription": "Ihre Akte wurde abgelehnt. Bitte korrigieren Sie die Informationen.",
-          "verificationIdentite": "Identitätsverifizierung"
-    },
-    "kycStatusBanner": {
-      "verificationInProgress": "Verifizierung läuft",
-      "verificationInProgressDescription": "Ihre Dokumente werden überprüft. Dies kann 24-48h dauern.",
-      "verificationRejected": "Verifizierung abgelehnt",
-      "verificationRejectedDescription": "Ihre Verifizierung wurde abgelehnt. Bitte reichen Sie neue Dokumente ein.",
-      "verificationRequired": "Verifizierung erforderlich",
-      "verificationRequiredDescription": "Um auf alle Funktionen zuzugreifen, vervollständigen Sie bitte Ihre Identitätsverifizierung.",
-      "viewStatus": "Status anzeigen",
-      "startVerification": "Verifizierung starten",
-      "submitAgain": "Erneut einreichen"
-    },
-    "modernAlert": {
-      "understood": "Verstanden"
-    }
+    "verificationIdentite": "Identitätsverifizierung"
+  },
+  "kycStatusBanner": {
+    "verificationInProgress": "Verifizierung läuft",
+    "verificationInProgressDescription": "Ihre Dokumente werden überprüft. Dies kann 24-48h dauern.",
+    "verificationRejected": "Verifizierung abgelehnt",
+    "verificationRejectedDescription": "Ihre Verifizierung wurde abgelehnt. Bitte reichen Sie neue Dokumente ein.",
+    "verificationRequired": "Verifizierung erforderlich",
+    "verificationRequiredDescription": "Um auf alle Funktionen zuzugreifen, vervollständigen Sie bitte Ihre Identitätsverifizierung.",
+    "viewStatus": "Status anzeigen",
+    "startVerification": "Verifizierung starten",
+    "submitAgain": "Erneut einreichen"
+  },
+  "modernAlert": {
+    "understood": "Verstanden"
+  }
 }

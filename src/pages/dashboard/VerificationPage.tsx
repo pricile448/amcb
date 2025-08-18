@@ -259,7 +259,7 @@ const VerificationPage: React.FC = () => {
                 </span>
                 {kycStatus.lastUpdated && (
                   <span className="text-xs text-gray-500">
-                    ({t('verification.status.lastUpdated')}: {kycStatus.lastUpdated.toLocaleString('fr-FR')})
+                    ({t('verification.status.lastUpdated')}: {kycStatus.lastUpdated.toLocaleString()})
                   </span>
                 )}
               </div>
@@ -622,4 +622,4 @@ const VerificationPage: React.FC = () => {
   );
 };
 
-export default VerificationPage; 
+export default VerificationPage;
