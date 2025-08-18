@@ -11,6 +11,10 @@ const TransactionsPage: React.FC = () => {
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [transactions, setTransactions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  
+  // États de pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   const formatReference = (reference: string) => {
     if (!reference) return '-';
@@ -66,9 +70,9 @@ const TransactionsPage: React.FC = () => {
            // Déterminer le nom du compte
            let accountName = tx.accountId;
            if (accountName === 'checking-1') {
-             accountName = 'Compte Courant';
+             accountName = String(t('transactions.accounts.checking'));
            } else if (accountName === 'savings-1') {
-             accountName = 'Compte Épargne';
+             accountName = String(t('transactions.accounts.savings'));
            }
            
            logger.debug(`Transaction ${tx.id}: amount=${tx.amount}, type=${transactionType}, date=${parsedDate}, category=${tx.category}`);
@@ -76,13 +80,13 @@ const TransactionsPage: React.FC = () => {
            // Corriger les descriptions pour utiliser les noms d'affichage des comptes
            let correctedDescription = tx.description;
            if (tx.description.includes('savings-1')) {
-             correctedDescription = tx.description.replace('savings-1', 'Compte Épargne');
+             correctedDescription = tx.description.replace('savings-1', String(t('transactions.accounts.savings')));
            }
            if (tx.description.includes('checking-1')) {
-             correctedDescription = tx.description.replace('checking-1', 'Compte Courant');
+             correctedDescription = tx.description.replace('checking-1', String(t('transactions.accounts.checking')));
            }
            if (tx.description.includes('credit-1')) {
-             correctedDescription = tx.description.replace('credit-1', 'Carte de Crédit');
+             correctedDescription = tx.description.replace('credit-1', String(t('transactions.accounts.credit')));
            }
            
            // 🔧 TRADUIRE les descriptions allemandes
@@ -119,7 +123,7 @@ const TransactionsPage: React.FC = () => {
             type: "income",
             date: new Date(),
             category: "Salaire",
-            account: "Compte Courant",
+            account: String(t('transactions.accounts.checking')),
             reference: "REF123456",
             formattedAmount: "2 500,00 €",
             formattedDate: "Aujourd'hui"
@@ -131,7 +135,7 @@ const TransactionsPage: React.FC = () => {
             type: "expense",
             date: new Date(Date.now() - 24 * 60 * 60 * 1000),
             category: "Alimentation",
-            account: "Compte Courant",
+            account: String(t('transactions.accounts.checking')),
             reference: "REF123457",
             formattedAmount: "85,50 €",
             formattedDate: "Hier"
@@ -152,14 +156,27 @@ const TransactionsPage: React.FC = () => {
     { value: "transfer", label: t("transactions.transfer") },
   ];
 
-  const filteredTransactions = transactions.filter((transaction) => {
-    const matchesSearch = transaction.description
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    const matchesFilter =
-      selectedFilter === "all" || transaction.type === selectedFilter;
-    return matchesSearch && matchesFilter;
-  });
+  const filteredTransactions = transactions
+    .filter((transaction) => {
+      const matchesSearch = transaction.description
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+      const matchesFilter =
+        selectedFilter === "all" || transaction.type === selectedFilter;
+      return matchesSearch && matchesFilter;
+    })
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  // Calculs de pagination
+  const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedTransactions = filteredTransactions.slice(startIndex, endIndex);
+
+  // Réinitialiser la page courante quand les filtres changent
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, selectedFilter]);
 
   return (
     <div className="space-y-6">
@@ -227,7 +244,7 @@ const TransactionsPage: React.FC = () => {
           </div>
         ) : (
           <div className="divide-y divide-gray-200">
-            {filteredTransactions.map((transaction) => (
+            {paginatedTransactions.map((transaction) => (
               <div
                 key={transaction.id}
                 className="px-6 py-4 hover:bg-gray-50 transition-colors"
@@ -277,6 +294,34 @@ const TransactionsPage: React.FC = () => {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* Contrôles de pagination */}
+        {totalPages > 1 && (
+          <div className="mt-6 flex items-center justify-between">
+            <div className="text-sm text-gray-500">
+              Affichage de {startIndex + 1} à {Math.min(endIndex, filteredTransactions.length)} sur {filteredTransactions.length} transactions
+            </div>
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Précédent
+              </button>
+              <span className="text-sm text-gray-700">
+                Page {currentPage} sur {totalPages}
+              </span>
+              <button
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Suivant
+              </button>
+            </div>
           </div>
         )}
       </div>

@@ -17,6 +17,8 @@
     "selectFile": "Klicken Sie, um eine Datei auszuwählen",
     "dragDrop": "oder ziehen Sie sie hierher",
     "removeFile": "Entfernen",
+    "clickToUpload": "Klicken Sie zum Hochladen",
+    "remove": "Entfernen",
     "submitDocuments": "Dokumente einreichen",
     "submitting": "Wird übermittelt...",
     "missingDocuments": "Fehlende Dokumente",
@@ -54,8 +56,27 @@
     "kycPending": "Verifizierung läuft",
     "kycVerified": "Konto verifiziert",
     "verified": "Verifiziert",
-    "pending": "Ausstehend",
-    "unverified": "Nicht verifiziert"
+    "currentStatus": "Aktueller Status",
+    "undefined": "Nicht definiert",
+    "loadingStatus": "KYC-Status wird geladen...",
+    "documentsRequiredForVerification": "Für die Verifizierung erforderliche Dokumente",
+    "progress": "Fortschritt",
+    "documents": "Dokumente",
+    "identityRecto": "Ausweisdokument - Vorderseite",
+    "identityRectoDesc": "Vorderseite Ihres Personalausweises oder Führerscheins",
+    "identityVerso": "Ausweisdokument - Rückseite",
+    "identityVersoDesc": "Rückseite Ihres Personalausweises oder Führerscheins",
+    "passport": "Reisepass",
+    "passportDesc": "Gültiger Reisepass",
+    "proofOfAddressDesc": "Strom-, Wasser-, Telefonrechnung oder Mietquittung",
+    "selfieWithId": "Selfie mit Ausweis",
+    "selfieWithIdDesc": "Foto von Ihnen mit Ihrem Ausweis neben Ihrem Gesicht",
+    "actionRequired": "Aktion erforderlich: Fehlende Dokumente",
+    "uploadAllRequired": "Bitte laden Sie alle erforderlichen Dokumente hoch, um fortzufahren.",
+    "currentProgress": "Aktueller Fortschritt",
+    "allDocumentsUploaded": "Alle erforderlichen Dokumente wurden hochgeladen",
+    "submitDocumentsForVerification": "🚀 Dokumente zur Verifizierung einreichen",
+    "documentUploaded": "Dokument hochgeladen"
   },
   "common": {
     "loading": "Laden...",
@@ -72,6 +93,9 @@
     "submit": "Absenden",
     "close": "Schließen",
     "search": "Suchen",
+    "noUser": "Kein Benutzer angemeldet",
+    "invalidDate": "Ungültiges Datum",
+    "locale": "de-DE",
     "filter": "Filtern",
     "sort": "Sortieren",
     "view": "Anzeigen",
@@ -97,7 +121,12 @@
     "export": "Exportieren",
     "import": "Importieren",
     "send": "Senden",
-    "receive": "Empfangen"
+    "receive": "Empfangen",
+    "resetFilters": "Filter zurücksetzen",
+    "date": "Datum",
+    "type": "Typ",
+    "status": "Status",
+    "optional": "optional"
   },
   "nav": {
     "home": "Startseite",
@@ -740,30 +769,43 @@
       "add": "Empfänger hinzufügen",
       "addTitle": "Empfänger hinzufügen",
       "editTitle": "Empfänger bearbeiten",
+      "noBeneficiaries": "Keine Empfänger registriert",
+      "addFirstBeneficiary": "Fügen Sie Ihren ersten Empfänger hinzu, um Überweisungen zu tätigen",
+      "lastUsed": "Zuletzt verwendet",
       "form": {
-        "name": "Name und Vorname",
-        "namePlaceholder": "Name und Vorname",
-        "ibanPlaceholder": "DE12 3456 7890 1234 5678 90",
-        "bic": "BIC-Code",
-        "bicPlaceholder": "DEUTDEFFXXX",
-        "bank": "Bank",
-        "bankPlaceholder": "Bankname",
-        "favorite": "Als Favorit markieren"
+        "fullName": "Vollständiger Name",
+        "fullNamePlaceholder": "Vollständiger Name des Empfängers",
+        "nickname": "Spitzname",
+        "nicknamePlaceholder": "Z.B.: Mama, Papa, Miete..."
       }
     },
     "scheduled": {
       "title": "Geplante Überweisungen",
-      "for": "Geplant für den"
+      "for": "Geplant für den",
+      "noScheduledTransfers": "Keine geplanten Überweisungen",
+      "scheduleTransfersMessage": "Planen Sie Ihre Überweisungen, um Ihre Zahlungen zu automatisieren",
+      "modalTitle": "Geplante Überweisung",
+      "scheduleDate": "Planungsdatum",
+      "descriptionPlaceholder": "Beschreibung der geplanten Überweisung",
+      "scheduleTransfer": "Überweisung planen"
     },
-    "history": {
+    "history": "Verlauf",
+    "historyDetails": {
       "title": "Überweisungsverlauf"
     },
+    "transferLimits": "Überweisungslimits",
+    "dailyLimit": "5.000,00 €",
+    "monthlyLimit": "20.000,00 €",
+    "minimumAmount": "0,01 €",
+    "processingTime": "1-2 Werktage",
     "status": {
       "completed": "Abgeschlossen",
       "pending": "Ausstehend",
+      "processing": "In Bearbeitung",
       "failed": "Fehlgeschlagen",
       "scheduled": "Geplant",
-      "unknown": "Unbekannt"
+      "unknown": "Unbekannt",
+      "cancelled": "Storniert"
     },
     "filter": {
       "all": "Alle",
@@ -787,109 +829,163 @@
       "descriptionPlaceholder": "Überweisungsbeschreibung",
       "scheduleDate": "Ausführungsdatum",
       "schedule": "Planen",
-      "submit": "Überweisung durchführen"
+      "submit": "Überweisung durchführen",
+      "sourceAccount": "Quellkonto",
+      "destinationAccount": "Zielkonto",
+      "ibanNewBeneficiary": "IBAN (falls neuer Empfänger)",
+      "reference": "Referenz",
+      "referencePlaceholder": "Benutzerdefinierte Referenz",
+      "submitTransfer": "Überweisung durchführen"
+    },
+    "internalTransfer": "Interne Überweisung",
+    "internalTransferDescription": "Überweisen Sie Geld zwischen Ihren Konten",
+    "startInternalTransfer": "Interne Überweisung starten",
+    "externalTransfer": "Externe Überweisung",
+    "externalTransferDescription": "Senden Sie Geld an einen Empfänger",
+    "startExternalTransfer": "Externe Überweisung starten",
+    "recurringTransfer": "Wiederkehrende Überweisung",
+    "recurringTransferDescription": "Planen Sie regelmäßige Überweisungen",
+    "startRecurringTransfer": "Wiederkehrende Überweisung starten",
+    "businessDays": "Werktage",
+    "noTransfersFound": "Keine Überweisungen gefunden",
+    "amount": "Betrag",
+    "description": "Beschreibung",
+    "type": {
+      "internal": "Intern",
+      "external": "Extern",
+      "recurring": "Wiederkehrend"
+    },
+    "externalDialog": {
+      "title": "Überweisung wartet auf Bewertung",
+      "message": "Ihre externe Überweisung wurde erfolgreich eingereicht. ",
+      "evaluationMessage": "Alle externen Überweisungen unserer Bank durchlaufen eine Bewertung vor der Ausführung.",
+      "nextSteps": "Nächste Schritte",
+      "pendingDescription": "Überweisung zur Bewertung eingereicht",
+      "processingDescription": "Überweisung genehmigt und wird bearbeitet",
+      "completedDescription": "Überweisung erfolgreich ausgeführt",
+      "understood": "Verstanden"
     }
   },
   "cards": {
-    "title": "Meine Karten",
+    "title": "Karten",
     "subtitle": "Verwalten Sie Ihre Bank- und Kreditkarten",
-    "addCard": "Neue Karte beantragen",
-    "noCards": "Keine Karten verfügbar",
-    "noCardsDescription": "Sie haben noch keine Bankkarten. Beantragen Sie Ihre erste Karte, um sie zu nutzen.",
-    "requestFirstCard": "Meine erste Karte beantragen",
-    "requestCard": "Karte beantragen",
-    "cardTypes": {
-      "debit": "Debitkarte",
-      "credit": "Kreditkarte"
+    "loading": "Karten werden geladen...",
+    
+    "physical": {
+      "title": "Physische Karte",
+      "noCard": "Keine physische Karte verfügbar",
+      "noCardDesc": "Sie haben noch keine physische Karte. Beantragen Sie Ihre erste und einzige Karte, um sie zu nutzen.",
+      "processing": {
+        "title": "Karte wird generiert",
+        "description": "Ihr Antrag auf eine physische Karte wurde registriert. Sie wird per Post innerhalb von 6-14 Tagen geliefert.",
+        "status": "In Bearbeitung"
+      },
+      "available": {
+        "title": "Physische Karte verfügbar",
+        "message": "Ihre physische Karte ist aktiv und sicher"
+      },
+      "cardDetails": "Kartendetails",
+      "cardNumber": "Kartennummer",
+      "expiryDate": "Ablaufdatum",
+      "status": {
+        "active": "Aktiv und sicher",
+        "delivered": "An Ihre Adresse geliefert"
+      }
     },
-    "requestTypes": {
-      "physical": "Physische Karte",
-      "virtual": "Virtuelle Karte",
-      "physicalDescription": "Lieferung an Ihre Adresse in 5-7 Werktagen",
-      "virtualDescription": "Innerhalb von 24h für Online-Zahlungen verfügbar"
+    
+    "virtual": {
+      "title": "Virtuelle Karten",
+      "noCard": "Keine virtuelle Karte verfügbar",
+      "noCardDesc": "Sie haben noch keine virtuelle Karte. Aktivieren Sie virtuelle Karten, um sie zu nutzen.",
+      "processing": {
+        "title": "Virtuelle Karte wird generiert",
+        "description": "Ihr Antrag auf eine virtuelle Karte wurde registriert. Sie ist innerhalb von 24 Stunden verfügbar.",
+        "status": "In Bearbeitung"
+      },
+      "available": {
+        "title": "Virtuelle Karte verfügbar",
+        "message": "Ihre virtuelle Karte ist aktiv und sicher"
+      },
+      "cardDetails": "Kartendetails",
+      "cardNumber": "Kartennummer",
+      "expiryDate": "Ablaufdatum",
+      "status": {
+        "active": "Aktiv und sicher",
+        "onlinePayments": "Online-Zahlungen"
+      }
     },
+    
+    "requestPhysical": {
+      "firstCard": "Meine erste Karte beantragen",
+      "successTitle": "Antrag registriert",
+      "successMessage": "Ihr Antrag auf eine physische Karte wurde registriert. Sie wird per Post innerhalb von 6-14 Tagen geliefert.",
+      "errorMessage": "Fehler beim Beantragen der physischen Karte",
+      "errorGeneric": "Beim Antrag ist ein Fehler aufgetreten"
+    },
+    
+    "requestVirtual": {
+      "button": "Virtuelle Karte beantragen",
+      "successTitle": "Antrag registriert",
+      "successMessage": "Ihr Antrag auf eine virtuelle Karte wurde registriert. Sie ist innerhalb von 24 Stunden verfügbar.",
+      "errorMessage": "Fehler beim Beantragen der virtuellen Karte",
+      "errorGeneric": "Beim Antrag ist ein Fehler aufgetreten"
+    },
+    
     "status": {
       "active": "Aktiv",
-      "blocked": "Gesperrt",
-      "expired": "Abgelaufen",
-      "unknown": "Unbekannt"
+      "pending": "Ausstehend",
+      "processing": "In Bearbeitung",
+      "completed": "Abgeschlossen",
+      "rejected": "Abgelehnt"
     },
-    "actions": {
-      "use": "Nutzen",
-      "details": "Details",
-      "settings": "Einstellungen",
-      "delete": "Löschen",
-      "request": "Karte beantragen",
-      "requestNew": "Neue Karte beantragen",
-      "requestFirst": "Meine erste Karte beantragen",
-      "cancel": "Abbrechen"
+    
+    "errors": {
+      "noUser": "Benutzer nicht verbunden"
     },
-    "info": {
-      "title": "Wichtige Informationen",
-      "virtualAvailable": "Die virtuelle Karte ist innerhalb von 24h verfügbar",
-      "physicalDelivery": "Die physische Karte wird an Ihre Adresse geliefert",
-      "pinSms": "Sie erhalten einen separaten PIN per SMS",
-      "secured": "Karten sind gesichert und versichert"
+    
+    "summary": {
+      "title": "Kartenübersicht",
+      "activeCards": "Aktive Karten",
+      "pendingCards": "In Bearbeitung",
+      "rejectedCards": "Abgelehnt",
+      "noCards": "Keine Karten"
     },
-    "loading": {
-      "status": "Ihr Status wird überprüft..."
-    },
-    "verification": {
-      "title": "Identitätsprüfung erforderlich",
-      "description": "Um Karten zu beantragen und zu verwalten, müssen Sie zuerst Ihre Identität bestätigen."
-    },
-    "types": {
-      "credit": "Kreditkarte",
-      "debit": "Debitkarte"
-    },
-    "emptyState": {
-      "title": "Keine Karten verfügbar",
-      "description": "Sie haben noch keine Bankkarten. Beantragen Sie Ihre erste Karte, um sie zu nutzen."
-    },
-    "cardDetails": {
-      "expires": "Läuft ab",
-      "currentBalance": "Aktuelles Guthaben",
-      "creditLimit": "Kreditlimit"
-    },
-    "requestModal": {
-      "title": "Karte beantragen",
-      "cardType": "Kartentyp",
-      "physical": {
-        "title": "Physische Karte",
-        "description": "Lieferung an Ihre Adresse in 5-7 Werktagen"
-      },
-      "virtual": {
-        "title": "Virtuelle Karte",
-        "description": "Innerhalb von 24h für Online-Zahlungen verfügbar"
-      },
-      "importantInfo": {
-        "title": "Wichtige Informationen",
-        "info1": "Virtuelle Karte innerhalb von 24h verfügbar",
-        "info2": "Physische Karte wird an Ihre Adresse geliefert",
-        "info3": "Sie erhalten einen separaten PIN per SMS",
-        "info4": "Karten sind gesichert und versichert"
-      },
-      "submit": "Karte beantragen"
-    },
+    
     "security": {
       "title": "Kartensicherheit",
-      "protection": {
-        "title": "Kartenschutz",
-        "feature1": "Sofortige Sperrung/Entsperrung",
-        "feature2": "Transaktionsbenachrichtigungen",
-        "feature3": "Konfigurierbare Zahlungslimits",
-        "feature4": "Betrugsschutz"
+      "description": "Ihre Karten sind durch die neuesten Sicherheitstechnologien geschützt",
+      "features": [
+        "256-Bit-Verschlüsselung",
+        "Betrugsschutz",
+        "Echtzeit-Benachrichtigungen",
+        "Externe Sperrung"
+      ],
+      "cardGeneration": {
+        "virtual": {
+          "title": "Virtuelle Karte wird generiert",
+          "description": "Virtuelle Karte wird generiert - Verzögerung 24h",
+          "mobileAvailable": "Verfügbar auf Mobilgeräten",
+          "delay": "Verzögerung: 24h"
+        },
+        "physical": {
+          "title": "Physische Karte wird generiert",
+          "description": "Physische Karte wird generiert - Verzögerung 6-14 Tage",
+          "postalDelivery": "Postzustellung",
+          "delay": "Verzögerung: 6-14 Tage"
+        }
       },
       "tips": {
         "title": "Sicherheitstipps",
-        "tip1": "Geben Sie Ihre Codes nie weiter",
-        "tip2": "Nutzen Sie sichere Websites",
-        "tip3": "Überwachen Sie Ihre Transaktionen",
-        "tip4": "Melden Sie verdächtige Aktivitäten"
+        "pinCvv": "Geben Sie Ihre PIN- oder CVV-Codes nie weiter",
+        "secureSites": "Nutzen Sie nur sichere Websites (HTTPS)",
+        "monitorTransactions": "Überwachen Sie regelmäßig Ihre Transaktionen",
+        "reportSuspicious": "Melden Sie verdächtige Aktivitäten sofort"
+      },
+      "fraudProtection": {
+        "title": "Betrugsschutz",
+        "description": "Bei Betrug sind Sie durch unsere Sicherheitsgarantie geschützt",
+        "guarantee": "Ihre Karten sind gesichert und versichert"
       }
-    },
-    "errors": {
-      "requestFailed": "Fehler beim Kartenantrag"
     }
   },
   "verification": {
@@ -968,7 +1064,7 @@
   },
   "billing": {
     "title": "Abrechnung",
-    "subtitle": "RIB und Banknachrichten",
+    "subtitle": "Abrechnungs-RIB und Bankinformationen",
     "loading": "Abrechnungsdaten werden geladen...",
     "statusVerification": "Überprüfung Ihres Status...",
     "noData": {
@@ -1009,8 +1105,9 @@
       "sharing": "Abrechnungs-IBAN wird geteilt..."
     },
     "bankMessage": {
-      "title": "Banknachricht",
-      "importantInfo": "Wichtige Informationen"
+      "title": "Banknachrichten",
+      "importantInfo": "Wichtige Informationen",
+      "noMessage": "Keine Banknachricht im Moment."
     },
     "ribFile": {
       "title": "AmCbunq Abrechnungs-IBAN",
@@ -1090,11 +1187,13 @@
       "button": "Meinen RIB anfordern",
       "requesting": "Anfrage wird bearbeitet...",
       "successTitle": "Anfrage registriert",
-      "successMessage": "Ihre RIB-Anfrage wurde registriert. Er wird innerhalb von 24-48h verfügbar sein.",
+      "successMessage": "Ihre RIB-Anfrage wurde registriert. Er wird innerhalb von 24h verfügbar sein.",
       "errorTitle": "Fehler",
       "errorMessage": "Ihre RIB-Anfrage konnte nicht bearbeitet werden",
       "errorGeneric": "Fehler bei der RIB-Anfrage",
-      "errorRequest": "RIB konnte nicht angefordert werden"
+      "errorRequest": "RIB konnte nicht angefordert werden",
+      "processingMessage": "Ihre Anfrage wird bearbeitet. Der RIB wird innerhalb von 24h verfügbar sein.",
+      "pendingMessage": "Anfrage wird bearbeitet..."
     },
     "processing": {
       "title": "RIB wird generiert",
@@ -1188,7 +1287,7 @@
       }
     }
   },
-  "history": {
+  "historyPage": {
     "title": "Verlauf",
     "subtitle": "Ihre Transaktionshistorie",
     "loading": {
@@ -1270,39 +1369,16 @@
   },
   "budgets": {
     "title": "Budgets",
-    "subtitle": "Verfolgen Sie Ihre Ausgaben und halten Sie sich an Ihre Budgets",
-    "loading": {
-      "budgets": "Ihre Budgets werden geladen...",
-      "status": "Ihr Status wird überprüft..."
-    },
-    "unverified": {
-      "titleUnverified": "Identitätsprüfung erforderlich",
-      "titlePending": "Verifizierung läuft",
-      "descriptionUnverified": "Für die Budgeterstellung müssen Sie zuerst Ihre Identität bestätigen.",
-      "descriptionPending": "Ihr Konto wird verifiziert. Sie können Budgets nach der Validierung erstellen.",
-      "secureAccount": "Sicheres Konto",
-      "customBudgets": "Individuelle Budgets"
-    },
+    "subtitle": "Verwalten Sie Ihre Budgets und verfolgen Sie Ihre Ausgaben",
     "summary": {
       "totalBudget": "Gesamtbudget",
       "spent": "Ausgegeben",
       "remaining": "Verbleibend",
-      "usage": "Nutzung"
+      "usage": "Verwendung"
     },
     "progress": {
       "title": "Gesamtfortschritt",
-      "budgetUsage": "Budgetnutzung"
-    },
-    "actions": {
-      "createNew": "Neues Budget erstellen",
-      "edit": "Bearbeiten",
-      "details": "Details"
-    },
-    "status": {
-      "onTrack": "Im Rahmen",
-      "overBudget": "Über Budget",
-      "underBudget": "Unter Budget",
-      "unknown": "Unbekannt"
+      "budgetUsage": "Budgetverwendung"
     },
     "card": {
       "progression": "Fortschritt",
@@ -1312,26 +1388,186 @@
       "monthly": "Monatlich",
       "yearly": "Jährlich"
     },
+    "details": {
+      "progression": "Fortschritt",
+      "budgetTotal": "Gesamtbudget",
+      "spent": "Ausgegeben",
+      "remaining": "Verbleibend",
+      "period": "Zeitraum",
+      "monthly": "📅 Monatlich",
+      "yearly": "📅 Jährlich",
+      "percentageMarkers": {
+        "zero": "0%",
+        "fifty": "50%",
+        "hundred": "100%"
+      },
+      "close": "Schließen"
+    },
+    "status": {
+      "onTrack": "Auf Kurs",
+      "overBudget": "Über Budget",
+      "underBudget": "Unter Budget",
+      "unknown": "Unbekannt"
+    },
     "tips": {
-      "title": "Tipps zur Budgetverwaltung",
+      "title": "Tipps zur Optimierung Ihrer Budgets",
       "planning": {
         "title": "Planung",
         "tip1": "Setzen Sie realistische Ziele",
-        "tip2": "Verfolgen Sie regelmäßig Ihre Ausgaben",
-        "tip3": "Passen Sie Budgets bei Bedarf an",
-        "tip4": "Planen Sie Unvorhergesehenes ein"
+        "tip2": "Verfolgen Sie Ihre Ausgaben regelmäßig",
+        "tip3": "Passen Sie Budgets an Ihre Bedürfnisse an",
+        "tip4": "Planen Sie unerwartete Ausgaben"
       },
       "optimization": {
         "title": "Optimierung",
-        "tip1": "Identifizieren Sie Ihre Ausgabenposten",
-        "tip2": "Suchen Sie nach günstigeren Alternativen",
-        "tip3": "Vermeiden Sie impulsive Käufe",
-        "tip4": "Sparen Sie Überschüsse"
+        "tip1": "Identifizieren Sie nicht-essentielle Ausgaben",
+        "tip2": "Verhandeln Sie über Verträge und Abonnements",
+        "tip3": "Verwenden Sie Vergleichstools",
+        "tip4": "Setzen Sie klare Prioritäten"
       }
     },
-    "errors": {
-      "noUser": "Kein angemeldeter Benutzer",
-      "loadingError": "Fehler beim Laden der Budgets"
+    "create": {
+      "title": "Budget erstellen",
+      "titleEdit": "Budget bearbeiten",
+      "fields": {
+        "name": "Budgetname",
+        "category": "Kategorie",
+        "amount": "Betrag",
+        "period": "Zeitraum",
+        "startDate": "Startdatum",
+        "endDate": "Enddatum",
+        "description": "Beschreibung"
+      },
+      "placeholders": {
+        "name": "z.B. Lebensmittelbudget",
+        "selectCategory": "Kategorie auswählen",
+        "description": "Optionale Budgetbeschreibung"
+      },
+      "periods": {
+        "monthly": "Monatlich",
+        "yearly": "Jährlich"
+      },
+      "categories": {
+        "alimentation": "Ernährung",
+        "transport": "Transport",
+        "logement": "Wohnung",
+        "loisirs": "Unterhaltung",
+        "sante": "Gesundheit",
+        "vetements": "Kleidung",
+        "education": "Bildung",
+        "autres": "Sonstiges"
+      },
+      "amountHelper": "Betrag in Euro (ohne Dezimalstellen)",
+      "errors": {
+        "nameRequired": "Budgetname ist erforderlich",
+        "categoryRequired": "Kategorie ist erforderlich",
+        "amountRequired": "Betrag muss größer als 0 sein",
+        "amountTooHigh": "Betrag darf 999.999 € nicht überschreiten",
+        "startDateRequired": "Startdatum ist erforderlich",
+        "endDateRequired": "Enddatum ist erforderlich",
+        "endDateAfterStart": "Enddatum muss nach dem Startdatum liegen"
+      },
+      "actions": {
+        "cancel": "Abbrechen",
+        "create": "Budget erstellen"
+      }
+    },
+    "actions": {
+      "createNew": "Neues Budget erstellen",
+      "edit": "Bearbeiten",
+      "details": "Details",
+          "delete": "Löschen",
+    "addExpense": "Ausgabe hinzufügen"
+  },
+  "delete": {
+    "title": "Budget löschen",
+    "subtitle": "Unwiderrufliche Aktion",
+    "confirmationTitle": "Sind Sie sicher?",
+    "confirmationMessage": "Sie sind dabei, das Budget \"{budgetName}\" zu löschen. Diese Aktion kann nicht rückgängig gemacht werden.",
+    "warningTitle": "Warnung!",
+    "warningMessage": "Alle mit diesem Budget verknüpften Daten (Ausgaben, Verlauf) werden dauerhaft gelöscht.",
+    "actions": {
+      "cancel": "Abbrechen",
+      "confirm": "Löschen",
+      "deleting": "Löschen..."
+    }
+  },
+    "messages": {
+      "deleteConfirmation": "Sind Sie sicher, dass Sie das Budget \"{budgetName}\" löschen möchten?\n\nDiese Aktion ist unumkehrbar.",
+      "deleteSuccess": "Budget \"{budgetName}\" erfolgreich gelöscht!",
+      "noUser": "❌ Kein Benutzer angemeldet",
+      "deleteError": "❌ Fehler beim Löschen: {error}",
+      "fallbackDeleteConfirmation": "Sind Sie sicher, dass Sie das Budget \"{budgetName}\" löschen möchten?\n\nDiese Aktion ist unumkehrbar.",
+      "fallbackDeleteSuccess": "Budget \"{budgetName}\" erfolgreich gelöscht!",
+      "fallbackNoUser": "❌ Kein Benutzer angemeldet",
+      "fallbackDeleteError": "❌ Fehler beim Löschen: {error}"
+    },
+    "expense": {
+      "title": "Ausgabe hinzufügen",
+      "budgetFor": "Budget: {budgetName}",
+      "details": {
+        "progression": "Fortschritt",
+        "budget": "Budget",
+        "spent": "Ausgegeben",
+        "remaining": "Verbleibend",
+        "period": "Zeitraum",
+        "type": "Typ",
+        "start": "Start",
+        "end": "Ende",
+        "duration": "Dauer",
+        "monthly": "Monatlich",
+        "yearly": "Jährlich",
+        "oneMonth": "1 Monat",
+        "oneYear": "1 Jahr",
+        "description": "Beschreibung",
+        "insights": "💡 Einblick",
+        "budgetExceeded": "⚠️ Sie haben Ihr Budget um {percentage}% überschritten",
+        "budgetWarning": "⚠️ Achtung, Sie haben {percentage}% Ihres Budgets verwendet",
+        "budgetHalfway": "✅ Sie sind auf halbem Weg mit {percentage}% Nutzung",
+        "budgetExcellent": "🎯 Ausgezeichnet! Sie haben nur {percentage}% Ihres Budgets verwendet",
+        "monthlyBudgetValid": "📅 Monatliches Budget gültig bis {date}",
+        "budgetRemaining": "💰 Sie haben noch {amount}€ zum Ausgeben"
+      },
+      "fields": {
+        "amount": "Ausgabenbetrag",
+        "date": "Ausgabendatum",
+        "category": "Kategorie",
+        "description": "Beschreibung"
+      },
+      "placeholders": {
+        "description": "Beschreiben Sie diese Ausgabe..."
+      },
+      "categories": {
+        "general": "Allgemein",
+        "food": "Ernährung",
+        "transport": "Transport",
+        "entertainment": "Unterhaltung",
+        "shopping": "Einkaufen",
+        "health": "Gesundheit",
+        "bills": "Rechnungen",
+        "other": "Sonstiges"
+      },
+      "summary": {
+        "totalBudget": "Gesamtbudget",
+        "spent": "Ausgegeben",
+        "remaining": "Verbleibend",
+        "usage": "Verwendung"
+      },
+      "amountHelper": "Betrag in Euro (ohne Dezimalstellen)",
+      "descriptionHelper": "{current}/200 Zeichen",
+      "errors": {
+        "amountRequired": "Betrag muss größer als 0 sein",
+        "amountTooHigh": "Betrag darf 999.999 € nicht überschreiten",
+        "dateRequired": "Datum ist erforderlich",
+        "descriptionRequired": "Beschreibung ist erforderlich",
+        "descriptionTooLong": "Beschreibung darf 200 Zeichen nicht überschreiten",
+        "exceedsBudget": "Betrag überschreitet verbleibendes Budget ({remaining}€)"
+      },
+      "actions": {
+        "cancel": "Abbrechen",
+        "add": "Ausgabe hinzufügen",
+        "adding": "Wird hinzugefügt..."
+      }
     }
   },
   "messages": {
@@ -1770,10 +2006,6 @@
     "verificationIdentite": "Identitätsverifizierung",
     "startVerification": "Verifizierung starten",
     "featuresAfterVerification": "Nach der Verifizierung verfügbare Funktionen",
-    "cards": {
-      "title": "Bankkarten",
-      "description": "Fordern Sie Ihre Kredit- und Debitkarten an und verwalten Sie diese"
-    },
     "transfers": {
       "title": "Überweisungen",
       "description": "Führen Sie sofortige und geplante Überweisungen durch"

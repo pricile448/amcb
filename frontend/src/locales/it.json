@@ -6,36 +6,35 @@
     "dismiss": "Chiudi"
   },
   "kyc": {
-    "title": "Verificación de identidad",
-    "subtitle": "Sube tus documentos para validar tu cuenta",
-    "documentsRequired": "Documentos requeridos",
-    "identityDocument": "Documento de identidad",
+    "title": "Verifica identità",
+    "subtitle": "Carica i tuoi documenti per convalidare il tuo account",
+    "documentsRequired": "Documenti richiesti",
+    "identityDocument": "Documento d'identità",
     "proofOfAddress": "Prova di residenza",
     "proofOfIncome": "Prova di reddito",
     "acceptedFormats": "PDF, JPG, PNG (max 5MB)",
     "required": "Richiesto",
-    "selectFile": "Clicca per selezionare il file",
+    "selectFile": "Clicca per selezionare un file",
     "dragDrop": "o trascina e rilascia qui",
-    "removeFile": "Rimuovi",
     "submitDocuments": "Invia documenti",
     "submitting": "Invio in corso...",
     "missingDocuments": "Documenti mancanti",
-    "missingDocumentsMessage": "Carica tutti i documenti richiesti prima di inviare",
+    "missingDocumentsMessage": "Per favore carica tutti i documenti richiesti prima di inviare",
     "documentsSubmitted": "Documenti inviati",
-    "submissionSuccess": "I tuoi documenti sono stati inviati con successo. Riceverai una notifica una volta completata la verifica.",
+    "submissionSuccess": "I tuoi documenti sono stati inviati correttamente. Riceverai una notifica al termine della verifica.",
     "submissionError": "Si è verificato un errore durante l'invio dei documenti",
     "fileTooLarge": "File troppo grande",
     "fileTooLargeMessage": "Il file non può superare 5MB",
     "importantInfo": "Informazioni importanti",
-    "secureProcessing": "I tuoi documenti vengono elaborati in modo sicuro e riservato",
-    "verificationTime": "La verifica richiede generalmente 24-48 ore",
-    "emailNotification": "Riceverai un'email di conferma una volta completata la verifica",
-    "accountLimits": "Alcune funzionalità rimangono limitate in attesa della validazione",
+    "secureProcessing": "I tuoi documenti vengono elaborati in modo sicuro e confidenziale",
+    "verificationTime": "La verifica richiede solitamente 24-48 ore",
+    "emailNotification": "Riceverai un'email di conferma al termine della verifica",
+    "accountLimits": "Alcune funzionalità rimangono limitate fino alla convalida",
     "pending": {
       "title": "Verifica in corso",
       "subtitle": "La tua richiesta è in fase di revisione da parte dei nostri team",
-      "message": "I tuoi documenti sono stati inviati e sono attualmente in fase di revisione da parte dei nostri team.",
-      "timeframe": "Questo processo richiede generalmente 24-48 ore. Riceverai una notifica non appena la verifica sarà completata.",
+      "message": "I tuoi documenti sono stati inviati e sono in fase di revisione da parte dei nostri team.",
+      "timeframe": "Questo processo richiede solitamente 24-48 ore. Riceverai una notifica al termine della verifica.",
       "documentsSubmitted": "Documenti inviati"
     },
     "navigation": {
@@ -43,11 +42,9 @@
     },
     "errors": {
       "userNotIdentified": "Utente non identificato",
-      "parsingError": "Errore nell'analisi dell'utente:",
+      "parsingError": "Errore durante l'analisi dell'utente:",
       "submissionGenericError": "Si è verificato un errore durante l'invio"
     },
-    "unverified": "Non verificato",
-    "verified": "Verificato",
     "noActiveAccounts": "Nessun account attivo",
     "noTransactionsAvailable": "Nessuna transazione disponibile",
     "noDataAvailable": "Nessun dato disponibile",
@@ -55,50 +52,82 @@
     "kycPending": "Verifica in corso",
     "kycVerified": "Account verificato",
     "verified": "Verificato",
-    "pending": "In attesa",
-    "unverified": "Non verificato"
+    "unverified": "Non verificato",
+    "currentStatus": "Stato attuale",
+    "undefined": "Non definito",
+    "loadingStatus": "Caricamento stato KYC...",
+    "documentsRequiredForVerification": "Documenti richiesti per la verifica",
+    "progress": "Progresso",
+    "documents": "documenti",
+    "identityRecto": "Documento d'identità - Fronte",
+    "identityRectoDesc": "Fronte del tuo documento d'identità o patente",
+    "identityVerso": "Documento d'identità - Retro",
+    "identityVersoDesc": "Retro del tuo documento d'identità o patente",
+    "passport": "Passaporto",
+    "passportDesc": "Passaporto valido",
+    "proofOfAddressDesc": "Bolletta elettrica, acqua, telefono o contratto di affitto",
+    "selfieWithId": "Selfie con documento d'identità",
+    "selfieWithIdDesc": "Foto di te con il documento d'identità vicino al viso",
+    "actionRequired": "Azione richiesta: documenti mancanti",
+    "uploadAllRequired": "Per favore, carica tutti i documenti richiesti per continuare.",
+    "currentProgress": "Progresso attuale",
+    "allDocumentsUploaded": "Tutti i documenti richiesti sono stati caricati",
+    "submitDocumentsForVerification": "🚀 Invia documenti per la verifica",
+    "documentUploaded": "Documento caricato",
+    "clickToUpload": "Clicca per caricare",
+    "removeFile": "Rimuovi"
   },
   "common": {
-    "loading": "Cargando...",
-    "error": "Error",
-    "success": "Éxito",
-    "cancel": "Cancelar",
-    "save": "Guardar",
-    "edit": "Editar",
-    "delete": "Eliminar",
-    "confirm": "Confirmar",
-    "back": "Volver",
-    "next": "Siguiente",
-    "previous": "Anterior",
-    "submit": "Enviar",
-    "close": "Cerrar",
-    "search": "Buscar",
-    "filter": "Filtrar",
-    "sort": "Ordenar",
-    "view": "Ver",
-    "download": "Descargar",
-    "upload": "Subir",
-    "yes": "Sí",
+    "loading": "Caricamento...",
+    "error": "Errore",
+    "success": "Successo",
+    "clickToUpload": "Clicca per caricare",
+    "removeFile": "Rimuovi",
+    "cancel": "Annulla",
+    "save": "Salva",
+    "edit": "Modifica",
+    "delete": "Elimina",
+    "confirm": "Conferma",
+    "back": "Indietro",
+    "next": "Avanti",
+    "previous": "Precedente",
+    "submit": "Invia",
+    "close": "Chiudi",
+    "search": "Cerca",
+    "noUser": "Nessun utente connesso",
+    "invalidDate": "Data non valida",
+    "locale": "it-IT",
+    "filter": "Filtra",
+    "sort": "Ordina",
+    "view": "Visualizza",
+    "download": "Scarica",
+    "upload": "Carica",
+    "yes": "Sì",
     "no": "No",
     "defaultUser": "Cliente AmCbunq",
     "defaultClient": "Cliente",
     "defaultCompany": "AmCbunq",
-    "hide": "Ocultar",
-    "show": "Mostrar",
-    "add": "Añadir",
-    "learnMore": "Saber más",
-    "activate": "Activar",
-    "manage": "Gestionar",
-    "create": "Crear",
-    "read": "Leer",
-    "update": "Actualizar",
-    "copy": "Copiar",
-    "share": "Compartir",
-    "print": "Imprimir",
-    "export": "Exportar",
-    "import": "Importar",
-    "send": "Enviar",
-    "receive": "Recibir"
+    "hide": "Nascondi",
+    "show": "Mostra",
+    "add": "Aggiungi",
+    "learnMore": "Scopri di più",
+    "activate": "Attiva",
+    "manage": "Gestisci",
+    "create": "Crea",
+    "read": "Leggi",
+    "update": "Aggiorna",
+    "copy": "Copia",
+    "share": "Condividi",
+    "print": "Stampa",
+    "export": "Esporta",
+    "import": "Importa",
+    "send": "Invia",
+    "receive": "Ricevi",
+    "resetFilters": "Ripristina filtri",
+    "date": "Data",
+    "type": "Tipo",
+    "status": "Stato",
+    "optional": "opzionale"
   },
   "nav": {
     "home": "Home",
@@ -106,8 +135,8 @@
     "pricing": "Prezzi",
     "help": "Aiuto e Supporto",
     "login": "Accedi",
-    "openAccount": "Apri account",
-    "dashboard": "La mia area cliente",
+    "openAccount": "Apri un account",
+    "dashboard": "Area cliente",
     "accounts": "Conti",
     "iban": "Il mio IBAN",
     "transfers": "Bonifici",
@@ -116,197 +145,354 @@
     "history": "Cronologia",
     "budgets": "Budget",
     "settings": "Impostazioni",
-    "documents": "I miei Documenti",
+    "documents": "I miei documenti",
     "messages": "Messaggi",
     "verification": "Verifica identità",
     "transactions": "Transazioni",
-    "settingsAndMore": "Impostazioni & Altro",
-    "logout": "Disconnetti",
+    "settingsAndMore": "Impostazioni e altro",
+    "logout": "Esci",
     "premiumClient": "Cliente Premium",
     "profile": {
       "myProfile": "Il mio profilo",
       "security": "Sicurezza",
       "myCards": "Le mie carte",
       "documents": "Documenti",
-      "logout": "Disconnetti",
+      "logout": "Esci",
       "verifiedAccount": "Account verificato",
       "verificationInProgress": "Verifica in corso",
       "unverifiedAccount": "Account non verificato",
-      "trustMessage": "Grazie per aver fiducia in AmCbunq",
-      "verifyIdentityMessage": "Verifica la tua identità per sbloccare tutte le funzionalità"
+      "trustMessage": "Grazie per aver scelto AmCbunq",
+      "verifyIdentityMessage": "Verifica la tua identità per sbloccare tutte le funzioni"
     },
     "notifications": {
       "title": "Notifiche",
       "markAllAsRead": "Segna tutto come letto",
       "markAllAsReadShort": "Tutto letto",
       "noNotifications": "Nessuna notifica",
-      "noNotificationsMessage": "Sarai notificato qui delle nuove attività",
-      "viewAllNotifications": "Visualizza tutte le notifiche",
+      "noNotificationsMessage": "Riceverai una notifica qui per le nuove attività",
+      "viewAllNotifications": "Vedi tutte le notifiche",
       "close": "Chiudi"
     }
   },
   "home": {
     "hero": {
-      "title": "El banco del futuro, hoy",
-      "subtitle": "Gestiona tus finanzas con facilidad con AmCbunq. Apertura de cuenta en 5 minutos, transferencias instantáneas y seguridad de nivel bancario.",
-      "openAccount": "Abrir cuenta",
-      "learnMore": "Saber más"
+      "title": "La banca del futuro, oggi",
+      "subtitle": "Gestisci le tue finanze con semplicità con AmCbunq. Apertura conto in 5 minuti, bonifici istantanei e sicurezza di livello bancario.",
+      "openAccount": "Apri un conto",
+      "learnMore": "Scopri di più"
     },
     "features": {
-      "title": "¿Por qué elegir AmCbunq?",
-      "subtitle": "Una experiencia bancaria moderna y segura"
+      "title": "Perché scegliere AmCbunq?",
+      "subtitle": "Un'esperienza bancaria moderna e sicura"
     },
     "security": {
-      "title": "Máxima seguridad",
-      "description": "Tus datos están protegidos con cifrado de nivel militar"
+      "title": "Massima sicurezza",
+      "description": "I tuoi dati sono protetti con crittografia di livello militare"
     },
     "accounts": {
-      "title": "Múltiples cuentas",
-      "description": "Cuenta corriente, ahorro y tarjetas de crédito en un solo lugar"
+      "title": "Conti multipli",
+      "description": "Conto corrente, risparmio e carte di credito in un unico posto"
     },
     "transactions": {
-      "title": "Transacciones instantáneas",
-      "description": "Transferencias y pagos en tiempo real"
+      "title": "Transazioni istantanee",
+      "description": "Bonifici e pagamenti in tempo reale"
     },
     "international": {
-      "title": "Internacional",
-      "description": "Envía dinero a cualquier parte del mundo"
+      "title": "Internazionale",
+      "description": "Invia denaro in tutto il mondo"
     },
     "benefits": {
-      "title": "Ventajas AmCbunq",
-      "noFees": "Sin comisiones ocultas",
-      "instant": "Transferencias instantáneas",
-      "secure": "Seguridad bancaria",
-      "support": "Soporte 24/7",
-      "getStarted": "Empezar ahora"
+      "title": "Vantaggi AmCbunq",
+      "noFees": "Nessuna commissione nascosta",
+      "instant": "Bonifici istantanei",
+      "secure": "Sicurezza bancaria",
+      "support": "Supporto 24/7",
+      "getStarted": "Inizia ora"
     },
     "mobile": {
-      "title": "Aplicación móvil",
-      "description": "Gestiona tus finanzas desde tu smartphone"
+      "title": "App mobile",
+      "description": "Gestisci le tue finanze dal tuo smartphone"
     },
     "speed": {
-      "title": "Rapidez",
-      "description": "Apertura de cuenta en 5 minutos"
+      "title": "Velocità",
+      "description": "Apertura conto in 5 minuti"
     },
     "cta": {
-      "title": "¿Listo para unirte a AmCbunq?",
-      "description": "Únete a miles de clientes satisfechos",
-      "button": "Abrir mi cuenta"
+      "title": "Pronto a unirti a AmCbunq?",
+      "description": "Unisciti a migliaia di clienti soddisfatti",
+      "button": "Apri il mio conto"
     }
   },
   "features": {
     "hero": {
-      "title": "Funcionalidades AmCbunq",
-      "subtitle": "Descubre todo lo que nuestra plataforma puede hacer por ti"
+      "title": "Funzionalità AmCbunq",
+      "subtitle": "Scopri tutto ciò che la nostra piattaforma può fare per te"
     },
     "security": {
-      "title": "Seguridad de nivel bancario",
-      "description": "Tus datos están protegidos con las mejores tecnologías de cifrado",
-      "benefit1": "Cifrado AES-256",
-      "benefit2": "Autenticación en dos pasos",
-      "benefit3": "Monitorización 24/7"
+      "title": "Sicurezza di livello bancario",
+      "description": "I tuoi dati sono protetti con le migliori tecnologie di crittografia",
+      "benefit1": "Crittografia AES-256",
+      "benefit2": "Autenticazione a due fattori",
+      "benefit3": "Monitoraggio 24/7"
     },
     "accounts": {
-      "title": "Gestión de cuentas",
-      "description": "Gestiona todas tus cuentas desde una sola interfaz",
-      "benefit1": "Cuentas corrientes y de ahorro",
-      "benefit2": "Tarjetas de crédito virtuales",
-      "benefit3": "Seguimiento en tiempo real"
+      "title": "Gestione conti",
+      "description": "Gestisci tutti i tuoi conti da un'unica interfaccia",
+      "benefit1": "Conti correnti e di risparmio",
+      "benefit2": "Carte di credito virtuali",
+      "benefit3": "Monitoraggio in tempo reale"
     },
     "transactions": {
-      "title": "Transacciones instantáneas",
-      "description": "Realiza transferencias y pagos en tiempo real",
-      "benefit1": "Transferencias SEPA instantáneas",
-      "benefit2": "Pagos con tarjeta",
-      "benefit3": "Historial detallado"
+      "title": "Transazioni istantanee",
+      "description": "Effettua bonifici e pagamenti in tempo reale",
+      "benefit1": "Bonifici SEPA istantanei",
+      "benefit2": "Pagamenti con carta",
+      "benefit3": "Cronologia dettagliata"
     },
     "transfers": {
-      "title": "Transferencias internacionales",
-      "description": "Envía dinero a cualquier parte del mundo",
-      "benefit1": "Tipos de cambio competitivos",
-      "benefit2": "Comisiones transparentes",
-      "benefit3": "Seguimiento en tiempo real"
+      "title": "Bonifici internazionali",
+      "description": "Invia denaro in qualsiasi parte del mondo",
+      "benefit1": "Tassi di cambio competitivi",
+      "benefit2": "Commissioni trasparenti",
+      "benefit3": "Monitoraggio in tempo reale"
     },
     "international": {
-      "title": "Presencia internacional",
-      "description": "Operamos en más de 50 países",
-      "benefit1": "Soporte multilingüe",
-      "benefit2": "Múltiples divisas",
-      "benefit3": "Cumplimiento local"
+      "title": "Presenza internazionale",
+      "description": "Operiamo in oltre 50 paesi",
+      "benefit1": "Supporto multilingue",
+      "benefit2": "Multiple valute",
+      "benefit3": "Conformità locale"
     },
     "mobile": {
-      "title": "Aplicación móvil",
-      "description": "Gestiona tus finanzas desde tu smartphone",
-      "benefit1": "Interfaz intuitiva",
-      "benefit2": "Notificaciones push",
-      "benefit3": "Biometría"
+      "title": "App mobile",
+      "description": "Gestisci le tue finanze dal tuo smartphone",
+      "benefit1": "Interfaccia intuitiva",
+      "benefit2": "Notifiche push",
+      "benefit3": "Biometria"
     },
     "cta": {
-      "title": "¿Listo para empezar?",
-      "description": "Únete a AmCbunq y descubre una nueva forma de gestionar tus finanzas",
-      "openAccount": "Abrir cuenta",
-      "viewPricing": "Ver precios"
+      "title": "Pronto a iniziare?",
+      "description": "Unisciti a AmCbunq e scopri un nuovo modo di gestire le tue finanze",
+      "openAccount": "Apri un conto",
+      "viewPricing": "Vedi prezzi"
     }
   },
   "pricing": {
     "hero": {
-      "title": "Precios transparentes",
-      "subtitle": "Tarifas simples y transparentes, sin sorpresas"
+      "title": "Prezzi trasparenti",
+      "subtitle": "Prezzi semplici e trasparenti, senza sorprese"
     },
     "basic": {
-      "name": "Básico",
+      "name": "Base",
       "price": "0€",
-      "description": "Perfecto para empezar",
-      "feature1": "Cuenta corriente gratuita",
-      "feature2": "Tarjeta de débito gratuita",
-      "feature3": "Transferencias SEPA gratuitas",
-      "feature4": "Aplicación móvil",
-      "feature5": "Soporte por email"
+      "description": "Perfetto per iniziare",
+      "feature1": "Conto corrente gratuito",
+      "feature2": "Carta di debito gratuita",
+      "feature3": "Bonifici SEPA gratuiti",
+      "feature4": "App mobile",
+      "feature5": "Supporto via email"
     },
     "premium": {
       "name": "Premium",
       "price": "9,99€",
-      "description": "Para usuarios activos",
-      "feature1": "Todo del plan Básico",
-      "feature2": "Cuenta de ahorro",
-      "feature3": "Tarjeta de crédito",
-      "feature4": "Transferencias internacionales",
-      "feature5": "Soporte prioritario",
-      "feature6": "Seguro de viaje",
-      "feature7": "Retiros gratuitos"
+      "description": "Per utenti attivi",
+      "feature1": "Tutto il piano Base",
+      "feature2": "Conto risparmio",
+      "feature3": "Carta di credito",
+      "feature4": "Bonifici internazionali",
+      "feature5": "Supporto prioritario",
+      "feature6": "Assicurazione viaggio",
+      "feature7": "Prelievi gratuiti"
     },
     "business": {
-      "name": "Empresa",
+      "name": "Aziende",
       "price": "29,99€",
-      "description": "Para empresas",
-      "feature1": "Todo del plan Premium",
-      "feature2": "Múltiples cuentas",
-      "feature3": "API de integración",
-      "feature4": "Soporte dedicado",
-      "feature5": "Informes avanzados",
-      "feature6": "Gestión de equipo",
-      "feature7": "Cumplimiento KYC",
-      "feature8": "Formación personalizada"
+      "description": "Per le aziende",
+      "feature1": "Tutto il piano Premium",
+      "feature2": "Conti multipli",
+      "feature3": "API di integrazione",
+      "feature4": "Supporto dedicato",
+      "feature5": "Report avanzati",
+      "feature6": "Gestione team",
+      "feature7": "Conformità KYC",
+      "feature8": "Formazione personalizzata"
     },
-    "month": "mes",
-    "popular": "Popular",
-    "choosePlan": "Elegir este plan",
+    "month": "mese",
+    "popular": "Popolare",
+    "choosePlan": "Scegli questo piano",
     "faq": {
-      "title": "Preguntas frecuentes",
-      "subtitle": "Todo lo que necesitas saber sobre nuestros precios",
-      "q1": "¿Hay comisiones ocultas?",
-      "a1": "No, todas nuestras tarifas son transparentes. Sin comisiones ocultas.",
-      "q2": "¿Puedo cambiar de plan?",
-      "a2": "Sí, puedes cambiar de plan en cualquier momento desde tu área de cliente.",
-      "q3": "¿Las transferencias son realmente gratuitas?",
-      "a3": "Sí, todas las transferencias SEPA son gratuitas en todos nuestros planes.",
-      "q4": "¿Qué pasa si no estoy satisfecho?",
-      "a4": "Puedes cerrar tu cuenta en cualquier momento sin coste."
+      "title": "Domande frequenti",
+      "subtitle": "Tutto quello che devi sapere sui nostri prezzi",
+      "q1": "Ci sono commissioni nascoste?",
+      "a1": "No, tutti i nostri prezzi sono trasparenti. Nessuna commissione nascosta.",
+      "q2": "Posso cambiare piano?",
+      "a2": "Sì, puoi cambiare piano in qualsiasi momento dalla tua area cliente.",
+      "q3": "I bonifici sono veramente gratuiti?",
+      "a3": "Sì, tutti i bonifici SEPA sono gratuiti in tutti i nostri piani.",
+      "q4": "Cosa succede se non sono soddisfatto?",
+      "a4": "Puoi chiudere il tuo conto in qualsiasi momento senza costi."
     },
     "cta": {
-      "title": "¿Listo para empezar?",
-      "description": "Elige el plan que mejor se adapte a ti y abre tu cuenta en 5 minutos",
-      "button": "Abrir cuenta"
+      "title": "Pronto a iniziare?",
+      "description": "Scegli il piano più adatto a te e apri il tuo conto in 5 minuti",
+      "button": "Apri un conto"
+    }
+  },
+  "help": {
+    "title": "Centro assistenza",
+    "subtitle": "Trova rapidamente risposte alle tue domande",
+    "searchPlaceholder": "Cerca nell'assistenza...",
+    "faqTitle": "Domande frequenti",
+    "faqSubtitle": "Le domande più comuni dei nostri clienti",
+    "contactTitle": "Hai bisogno di aiuto?",
+    "contactSubtitle": "Il nostro team è qui per aiutarti",
+    "liveChat": "Chat live",
+    "liveChatDescription": "Ottieni una risposta immediata",
+    "startChat": "Avvia chat",
+    "email": "Email",
+    "emailDescription": "Risposta entro 24h",
+    "sendEmail": "Invia email",
+    "phone": "Telefono",
+    "phoneDescription": "Supporto 24/7",
+    "callUs": "Chiamaci",
+    "quickLinks": "Link rapidi",
+    "quickLinksSubtitle": "Accedi rapidamente a risorse utili",
+    "gettingStarted": "Per iniziare",
+    "gettingStartedDescription": "Guida introduttiva",
+    "accountSecurity": "Sicurezza dell'account",
+    "accountSecurityDescription": "Proteggi il tuo account",
+    "transfers": "Bonifici",
+    "transfersDescription": "Effettua bonifici",
+    "troubleshooting": "Risoluzione problemi",
+    "troubleshootingDescription": "Risolvi problemi",
+    "learnMore": "Scopri di più",
+    "search": {
+      "placeholder": "Cerca nell'assistenza..."
+    },
+    "contact": {
+      "phone": {
+        "title": "Telefono",
+        "description": "Servizio clienti 24/7",
+        "number": "01 23 45 67 89",
+        "action": "Chiama ora"
+      },
+      "chat": {
+        "title": "Chat online",
+        "description": "Risposta immediata",
+        "availability": "Disponibile 24/7",
+        "action": "Avvia chat"
+      },
+      "email": {
+        "title": "Email",
+        "description": "Risposta entro 24h",
+        "address": "assistenza@amcbunq.it",
+        "action": "Invia email",
+        "subject": "Richiesta di assistenza"
+      }
+    },
+    "categories": {
+      "title": "Domande per categoria",
+      "all": "Tutte le domande (8)",
+      "account": "Conto bancario (2)",
+      "transfers": "Bonifici (1)",
+      "cards": "Carte bancarie (1)",
+      "security": "Sicurezza (2)",
+      "fees": "Tariffe (1)",
+      "documents": "Documenti (1)"
+    },
+    "faq": {
+      "title": "Domande frequenti",
+      "results": "domanda trovata",
+      "resultsPlural": "domande trovate",
+      "noResults": {
+        "title": "Nessuna domanda trovata",
+        "description": "Prova a modificare i tuoi criteri di ricerca o contatta il nostro supporto."
+      },
+      "accountOpening": {
+        "question": "Come aprire un conto bancario?",
+        "answer": "Per aprire un conto, visita il nostro sito e clicca su \"Apri un conto\". Dovrai fornire i tuoi dati personali, documento d'identità e prova di residenza. Il processo richiede solitamente 24-48h."
+      },
+      "transfer": {
+        "question": "Come fare un bonifico?",
+        "answer": "Accedi alla tua area cliente, vai alla sezione \"Bonifici\" e segui i passaggi. Avrai bisogno dell'IBAN del beneficiario. I bonifici SEPA richiedono solitamente 24h."
+      },
+      "cardBlocked": {
+        "question": "La mia carta è stata bloccata, cosa devo fare?",
+        "answer": "Se la tua carta è bloccata, contatta immediatamente il nostro servizio clienti al 01 23 45 67 89. Potremo sbloccarla o inviartene una nuova se necessario."
+      },
+      "passwordChange": {
+        "question": "Come cambiare la password?",
+        "answer": "Vai a \"Impostazioni\" > \"Sicurezza\" > \"Cambia password\". Dovrai inserire la tua password attuale e la nuova due volte."
+      },
+      "bankingFees": {
+        "question": "Quali sono le commissioni bancarie?",
+        "answer": "I nostri prezzi variano in base al tipo di conto. Consulta la nostra tabella prezzi nella sezione \"Prezzi\" o contatta il nostro servizio clienti per maggiori dettagli."
+      },
+      "twoFactor": {
+        "question": "Come attivare l'autenticazione a due fattori?",
+        "answer": "In \"Impostazioni\" > \"Sicurezza\", puoi attivare l'autenticazione a due fattori. Riceverai un codice via SMS ad ogni accesso."
+      },
+      "ibanChange": {
+        "question": "Il mio IBAN è cambiato?",
+        "answer": "No, il tuo IBAN rimane lo stesso a meno che non cambi conto. Puoi verificarlo nella sezione IBAN della tua area cliente."
+      },
+      "downloadStatements": {
+        "question": "Come scaricare i miei estratti conto?",
+        "answer": "Vai a Cronologia > seleziona il periodo > clicca su Scarica. Puoi scegliere formato PDF o CSV."
+      }
+    },
+    "faq1": {
+      "question": "Come aprire un conto bancario?",
+      "answer": "Per aprire un conto, vai sul nostro sito e clicca su \"Apri un conto\". Dovrai fornire le tue informazioni personali, un documento d'identità e una prova di residenza. Il processo richiede solitamente 24-48h."
+    },
+    "faq2": {
+      "question": "Come fare un bonifico?",
+      "answer": "Accedi alla tua area cliente, vai alla sezione \"Bonifici\" e segui i passaggi. Avrai bisogno del RIB del beneficiario. I bonifici SEPA richiedono solitamente 24h."
+    },
+    "faq3": {
+      "question": "La mia carta è stata bloccata, cosa devo fare?",
+      "answer": "Se la tua carta è bloccata, contatta immediatamente il nostro servizio clienti al 01 23 45 67 89. Possiamo sbloccarla o inviartene una nuova se necessario."
+    },
+    "faq4": {
+      "question": "Come cambiare la password?",
+      "answer": "Vai a \"Impostazioni\" > \"Sicurezza\" > \"Cambia password\". Dovrai inserire la tua password attuale e la nuova password due volte."
+    },
+    "faq5": {
+      "question": "Quali sono le commissioni bancarie?",
+      "answer": "Le nostre commissioni variano in base al tipo di conto. Consulta la nostra tabella prezzi nella sezione \"Prezzi\" o contatta il nostro servizio clienti per maggiori dettagli."
+    },
+    "resources": {
+      "title": "Risorse utili",
+      "guide": {
+        "title": "Guida utente"
+      },
+      "conditions": {
+        "title": "Termini e condizioni"
+      },
+      "privacy": {
+        "title": "Privacy policy"
+      },
+      "fees": {
+        "title": "Tabella prezzi"
+      }
+    },
+    "importantInfo": {
+      "title": "Informazioni importanti",
+      "openingHours": "Orario assistenza: 24/7",
+      "emailResponse": "Tempo di risposta email: massimo 24h",
+      "chatResponse": "Tempo di risposta chat: Immediato",
+      "emergencyNumber": "Numero emergenza: 01 23 45 67 89"
+    },
+    "stillNeedHelp": {
+      "title": "Non hai trovato la risposta?",
+      "description": "Il nostro team di supporto è qui per aiutarti. Contattaci per telefono, chat o email.",
+      "contactButton": "Contatta il supporto",
+      "appointmentButton": "Richiedi appuntamento"
+    },
+    "alerts": {
+      "appointmentComingSoon": "Funzionalità di richiesta appuntamento prossimamente. Contattaci al telefono 01 23 45 67 89.",
+      "userGuideRedirect": "Guida utente - Reindirizzamento alla guida PDF",
+      "pricingRedirect": "Tabella prezzi - Reindirizzamento alla pagina prezzi"
     }
   },
   "auth": {
@@ -318,7 +504,7 @@
     },
     "register": {
       "title": "Crea un account",
-      "subtitle": "Unisciti ad AmCbunq e scopri un nuovo modo di gestire le tue finanze",
+      "subtitle": "Unisciti a AmCbunq e scopri un nuovo modo di gestire le tue finanze",
       "alreadyHaveAccount": "Hai già un account?",
       "button": "Crea il mio account",
       "sections": {
@@ -346,7 +532,7 @@
     "residenceCountry": "Paese di residenza",
     "address": "Indirizzo",
     "city": "Città",
-    "postalCode": "Codice postale",
+    "postalCode": "CAP",
     "profession": "Professione",
     "salary": "Stipendio mensile",
     "rememberMe": "Ricordami",
@@ -358,87 +544,88 @@
     "acceptTerms": "Accetto i",
     "termsAndConditions": "termini e condizioni",
     "accountCreatedSuccess": "Account creato con successo!",
-    "verifyEmailMessage": "Controlla la tua email per attivare il tuo account",
+    "verifyEmailMessage": "Verifica la tua email per attivare il tuo account",
     "accountCreationError": "Errore durante la creazione dell'account",
     "emailAlreadyUsed": "Questo indirizzo email è già in uso",
     "passwordTooWeak": "La password è troppo debole",
     "emailSendError": "Errore durante l'invio dell'email di verifica",
-    "loginSuccess": "Accesso riuscito!",
-    "loginError": "Errore di accesso",
+    "loginSuccess": "Accesso effettuato con successo!",
+    "loginError": "Errore durante l'accesso",
     "invalidCredentials": "Email o password non corretti",
     "tooManyAttempts": "Troppi tentativi. Riprova più tardi",
     "accountDisabled": "Questo account è stato disabilitato",
     "userNotFoundInDatabase": "Utente non trovato nel database",
-    "verifyEmailBeforeLogin": "Si prega di verificare la propria email prima di accedere. Controllare lo spam o richiedere un nuovo codice.",
-    "verifyEmailBeforeLoginShort": "Si prega di verificare la propria email prima di accedere.",
+    "verifyEmailBeforeLogin": "Per favore verifica la tua email prima di accedere. Controlla lo spam o richiedi un nuovo codice.",
+    "verifyEmailBeforeLoginShort": "Per favore verifica la tua email prima di accedere.",
+    "welcomeAccountVerified": "Benvenuto! Il tuo account è ora verificato",
     "emailVerified": "Email verificata!",
-    "actionSuccess": "Azione riuscita!",
+    "actionSuccess": "Azione completata!",
     "emailVerifiedMessage": "La tua email è stata verificata con successo! Ora puoi accedere con le tue credenziali.",
     "actionSuccessMessage": "La tua azione è stata elaborata con successo.",
-    "verificationComplete": "Verifica completata! Si prega di accedere manualmente.",
+    "verificationComplete": "Verifica completata! Per favore accedi manualmente.",
     "loginWithCredentials": "Accedi con le mie credenziali",
     "verificationPending": {
       "title": "Verifica la tua email",
       "subtitle": "Verifica la tua email per attivare il tuo account",
       "emailLabel": "Email:",
       "automaticVerification": "Verifica automatica in corso...",
-      "resendEmail": "Rinvia email",
+      "resendEmail": "Reinvia email",
       "refresh": "Aggiorna",
-      "returnToLogin": "Torna al login",
+      "returnToLogin": "Torna alla pagina di accesso",
       "sending": "Invio in corso...",
       "emailSent": "Email di verifica inviata!",
-      "emailError": "Errore nell'invio dell'email di verifica"
+      "emailError": "Errore durante l'invio dell'email di verifica"
     },
     "processing": {
-      "title": "Elaborazione in corso...",
-      "message": "Si prega di attendere mentre elaboriamo la tua richiesta."
+      "title": "Elaborazione...",
+      "message": "Attendi mentre elaboriamo la tua richiesta."
     },
     "logout": {
-      "success": "Disconnessione riuscita",
-      "error": "Errore durante la disconnessione"
+      "success": "Logout effettuato",
+      "error": "Errore durante il logout"
     }
   },
   "dashboard": {
-    "welcome": "Hola",
-    "overview": "Resumen de tus finanzas",
-    "totalBalance": "Saldo total",
-    "totalAccounts": "Cuentas",
-    "monthlyIncome": "Ingresos mensuales",
-    "monthlyExpenses": "Gastos mensuales",
-    "fromLastMonth": "vs mes pasado",
-    "currentAccount": "Cuenta Corriente",
-    "savingsAccount": "Cuenta Ahorro",
-    "creditCard": "Tarjeta de Crédito",
-    "accounts": "Cuentas",
-    "recentTransactions": "Transacciones recientes",
-    "viewAll": "Ver todo",
-    "quickActions": "Acciones rápidas",
-    "newTransfer": "Nueva transferencia",
-    "newCard": "Nueva tarjeta",
-    "contacts": "Contactos",
-    "investments": "Inversiones",
-    "balances": "saldos",
-    "ribUnavailable": "RIB no disponible",
+    "welcome": "Ciao",
+    "overview": "Panoramica delle tue finanze",
+    "totalBalance": "Saldo totale",
+    "totalAccounts": "Conti",
+    "monthlyIncome": "Entrate mensili",
+    "monthlyExpenses": "Spese mensili",
+    "fromLastMonth": "vs mese scorso",
+    "currentAccount": "Conto Corrente",
+    "savingsAccount": "Conto Risparmio",
+    "creditCard": "Carta di Credito",
+    "accounts": "Conti",
+    "recentTransactions": "Transazioni recenti",
+    "viewAll": "Vedi tutto",
+    "quickActions": "Azioni rapide",
+    "newTransfer": "Nuovo bonifico",
+    "newCard": "Nuova carta",
+    "contacts": "Contatti",
+    "investments": "Investimenti",
+    "balances": "saldi",
+    "ribUnavailable": "RIB non disponibile",
     "ribVerificationRequired": "Verifica la tua identità per accedere al tuo RIB",
     "ribRequestPage": "Richiedi il tuo RIB nella pagina IBAN",
-    "myAccount": "Il Mio Account"
+    "myAccount": "Il mio conto"
   },
   "accounts": {
-    "title": "Mis Cuentas",
-    "subtitle": "Gestiona tus cuentas y tarjetas",
-    "totalBalance": "Saldo total",
-    "activeAccounts": "Cuentas activas",
-    "status": "Estado",
+    "title": "I miei conti",
+    "subtitle": "Gestisci i tuoi conti e carte",
+    "totalBalance": "Saldo totale",
+    "activeAccounts": "Conti attivi",
+    "status": "Stato",
     "ribAmcbunq": "RIB AmCbunq",
     "ribUnavailable": "RIB non disponibile",
     "ribVerificationRequired": "Verifica la tua identità per accedere al tuo RIB",
     "ribRequestPage": "Richiedi il tuo RIB nella pagina IBAN",
-    "accountNumber": "Numero di conto",
+    "accountNumber": "Numero conto",
     "balance": "Saldo",
     "lastTransaction": "Ultima transazione",
     "details": "Dettagli",
     "transfer": "Bonifico",
-    "transactionLedger": "Libro mastro delle transazioni",
+    "transactionLedger": "Registro transazioni",
     "search": "Cerca...",
     "filter": "Filtra",
     "export": "Esporta",
@@ -447,23 +634,23 @@
     "showBalances": "Mostra saldi",
     "hide": "Nascondi",
     "show": "Mostra",
-    "accountDetails": "Dettagli del conto",
-    "accountInfo": "Informazioni del conto",
+    "accountDetails": "Dettagli conto",
+    "accountInfo": "Informazioni conto",
     "currentBalance": "Saldo attuale",
-    "openingDate": "Data di apertura",
-    "recentTransactions": "Transazioni recenti",
+    "openingDate": "Data apertura",
+    "recentTransactions": "Ultime transazioni",
     "notAvailable": "Non disponibile",
     "displaying": "Visualizzazione",
     "transactions": "transazioni",
     "previous": "Precedente",
     "next": "Successivo",
-    "verificationRequired": "Verifica dell'identità richiesta",
+    "verificationRequired": "Verifica identità richiesta",
     "verificationMessage": "Per effettuare un bonifico, devi prima convalidare la tua identità.",
-    "detailsVerificationMessage": "Per visualizzare i dettagli del conto, devi prima convalidare la tua identità.",
+    "detailsVerificationMessage": "Per vedere i dettagli del conto, devi prima convalidare la tua identità.",
     "cancel": "Annulla",
     "verifyIdentity": "Verifica la mia identità",
     "creatingDefaultAccounts": "Creazione conti...",
-    "defaultAccountsMessage": "I tuoi conti predefiniti sono in fase di creazione. Appariranno qui tra qualche istante.",
+    "defaultAccountsMessage": "I tuoi conti predefiniti sono in fase di creazione. Appariranno qui tra poco.",
     "today": "Oggi",
     "yesterday": "Ieri",
     "daysAgo": "{count} giorni fa",
@@ -471,53 +658,53 @@
     "yesterdayAt": "Ieri alle"
   },
   "accountTypes": {
-    "current": "Cuenta corriente",
-    "savings": "Cuenta ahorro",
-    "credit": "Tarjeta de crédito",
-    "account": "Cuenta"
+    "current": "Conto corrente",
+    "savings": "Conto risparmio",
+    "credit": "Carta di credito",
+    "account": "Conto"
   },
   "accountStatus": {
-    "active": "Activo",
-    "blocked": "Bloqueado",
-    "pending": "Pendiente",
-    "unknown": "Desconocido",
-    "verified": "Verificado",
-    "unverified": "No verificado",
-    "pendingVerification": "En curso"
+    "active": "Attivo",
+    "blocked": "Bloccato",
+    "pending": "In attesa",
+    "unknown": "Sconosciuto",
+    "verified": "Verificato",
+    "unverified": "Non verificato",
+    "pendingVerification": "In corso"
   },
   "transactions": {
-    "title": "Historial de transacciones",
-    "subtitle": "Consulta todas tus transacciones recientes",
-    "export": "Exportar",
-    "searchPlaceholder": "Buscar una transacción...",
-    "recentTransactions": "Transacciones recientes",
-    "loading": "Cargando transacciones...",
-    "all": "Todas",
-    "income": "Ingresos",
-    "expense": "Gastos",
-    "transfer": "Transferencias",
-    "credit": "Crédito",
-    "debit": "Débito",
-    "totalIncome": "Total ingresos",
-    "totalExpenses": "Total gastos",
-    "netBalance": "Saldo neto",
-    "noTransactions": "No se encontraron transacciones",
+    "title": "Cronologia transazioni",
+    "subtitle": "Consulta tutte le tue transazioni recenti",
+    "export": "Esporta",
+    "searchPlaceholder": "Cerca una transazione...",
+    "recentTransactions": "Transazioni recenti",
+    "loading": "Caricamento transazioni...",
+    "all": "Tutte",
+    "income": "Entrate",
+    "expense": "Spese",
+    "transfer": "Bonifici",
+    "credit": "Credito",
+    "debit": "Debito",
+    "totalIncome": "Totale entrate",
+    "totalExpenses": "Totale spese",
+    "netBalance": "Saldo netto",
+    "noTransactions": "Nessuna transazione trovata",
     "noRecent": "Nessuna transazione recente",
-    "today": "Hoy",
-    "yesterday": "Ayer",
-    "reference": "Referencia",
-    "amount": "Cantidad",
-    "date": "Fecha",
-    "description": "Descripción",
-    "category": "Categoría",
-    "account": "Cuenta",
+    "today": "Oggi",
+    "yesterday": "Ieri",
+    "reference": "Riferimento",
+    "amount": "Importo",
+    "date": "Data",
+    "description": "Descrizione",
+    "category": "Categoria",
+    "account": "Conto",
     "type": "Tipo",
-    "filter": "Filtrar",
-    "search": "Buscar",
-    "clear": "Limpiar",
-    "results": "resultados",
-    "noResults": "No se encontraron resultados para tu búsqueda",
-    "tryDifferentSearch": "Prueba con palabras clave diferentes",
+    "filter": "Filtra",
+    "search": "Cerca",
+    "clear": "Pulisci",
+    "results": "risultati",
+    "noResults": "Nessun risultato trovato per la tua ricerca",
+    "tryDifferentSearch": "Prova con parole chiave diverse",
     "fields": {
       "date": "Data",
       "description": "Descrizione",
@@ -529,8 +716,8 @@
   },
   "transactionCategories": {
     "salary": "Stipendio",
-    "food": "Alimentazione",
-    "transport": "Trasporto",
+    "food": "Alimentari",
+    "transport": "Trasporti",
     "shopping": "Shopping",
     "bills": "Bollette",
     "entertainment": "Intrattenimento",
@@ -541,8 +728,8 @@
     "deposit": "Deposito",
     "withdrawal": "Prelievo",
     "amcbunqService": "Servizio AmCBunq",
-    "outgoingTransfer": "Bonifico Uscita",
-    "incomingTransfer": "Bonifico Entrata",
+    "outgoingTransfer": "Bonifico in uscita",
+    "incomingTransfer": "Bonifico in entrata",
     "noRecent": "Nessuna transazione recente"
   },
   "transfers": {
@@ -560,204 +747,269 @@
     "scheduledLabel": "Bonifico programmato",
     "internalDesc": "Tra i tuoi conti",
     "externalDesc": "A un beneficiario",
-    "scheduledDesc": "Programmare un bonifico",
+    "scheduledDesc": "Programma un bonifico",
     "stats": {
-      "thisMonth": "Este mes",
-      "totalAmount": "Cantidad total",
-      "beneficiaries": "Beneficiarios",
-      "scheduled": "Programadas"
+      "thisMonth": "Questo mese",
+      "totalAmount": "Importo totale",
+      "beneficiaries": "Beneficiari",
+      "scheduled": "Programmati"
     },
     "tabs": {
-      "new": "Nueva",
-      "beneficiaries": "Beneficiarios",
-      "scheduled": "Programadas",
-      "history": "Historial"
+      "new": "Nuovo",
+      "beneficiaries": "Beneficiari",
+      "scheduled": "Programmati",
+      "history": "Cronologia"
     },
     "quick": {
-      "title": "Transferencias rápidas",
-      "lastTransfer": "Última transferencia",
-      "never": "Nunca"
+      "title": "Bonifici rapidi",
+      "lastTransfer": "Ultimo bonifico",
+      "never": "Mai"
     },
     "beneficiaries": {
-      "title": "Mis beneficiarios",
-      "add": "Añadir beneficiario",
-      "addTitle": "Añadir beneficiario",
-      "editTitle": "Editar beneficiario",
+      "title": "I miei beneficiari",
+      "add": "Aggiungi beneficiario",
+      "addTitle": "Aggiungi beneficiario",
+      "editTitle": "Modifica beneficiario",
+      "noBeneficiaries": "Nessun beneficiario registrato",
+      "addFirstBeneficiary": "Aggiungi il tuo primo beneficiario per effettuare bonifici",
+      "lastUsed": "Ultimo utilizzo",
       "form": {
-        "name": "Nombre y apellidos",
-        "namePlaceholder": "Nombre y apellidos",
-        "ibanPlaceholder": "ES76 1234 5678 9012 3456 7890 123",
-        "bic": "Código BIC",
-        "bicPlaceholder": "BSCHESMMXXX",
-        "bank": "Banco",
-        "bankPlaceholder": "Nombre del banco",
-        "favorite": "Marcar como favorito"
+        "fullName": "Nome completo",
+        "fullNamePlaceholder": "Nome completo del beneficiario",
+        "nickname": "Soprannome",
+        "nicknamePlaceholder": "Es: Mamma, Papà, Affitto..."
       }
     },
     "scheduled": {
-      "title": "Transferencias programadas",
-      "for": "Programada para el"
+      "title": "Bonifici programmati",
+      "for": "Programmato per il",
+      "noScheduledTransfers": "Nessun bonifico programmato",
+      "scheduleTransfersMessage": "Programma i tuoi bonifici per automatizzare i tuoi pagamenti",
+      "modalTitle": "Bonifico programmato",
+      "scheduleDate": "Data di programmazione",
+      "descriptionPlaceholder": "Descrizione del bonifico programmato",
+      "scheduleTransfer": "Programma bonifico"
     },
-    "history": {
-      "title": "Historial de transferencias"
+    "history": "Cronologia",
+    "historyDetails": {
+      "title": "Cronologia bonifici"
     },
+    "transferLimits": "Limiti di bonifico",
+    "dailyLimit": "5.000,00 €",
+    "monthlyLimit": "20.000,00 €",
+    "minimumAmount": "0,01 €",
+    "processingTime": "1-2 giorni lavorativi",
     "status": {
-      "completed": "Completado",
-      "pending": "Pendiente",
-      "failed": "Fallido",
-      "scheduled": "Programado",
-      "unknown": "Desconocido"
+      "completed": "Completato",
+      "pending": "In attesa",
+      "processing": "In elaborazione",
+      "failed": "Fallito",
+      "scheduled": "Programmato",
+      "unknown": "Sconosciuto",
+      "cancelled": "Annullato"
     },
     "filter": {
-      "all": "Todas",
-      "completed": "Completadas",
-      "pending": "Pendientes",
-      "scheduled": "Programadas"
+      "all": "Tutti",
+      "completed": "Completati",
+      "pending": "In attesa",
+      "scheduled": "Programmati"
     },
     "form": {
       "title": {
-        "internal": "Transferencia interna",
-        "external": "Transferencia externa",
-        "scheduled": "Transferencia programada"
+        "internal": "Bonifico interno",
+        "external": "Bonifico esterno",
+        "scheduled": "Bonifico programmato"
       },
-      "fromAccount": "Cuenta de origen",
-      "toAccount": "Cuenta de destino",
+      "fromAccount": "Conto di addebito",
+      "toAccount": "Conto di accredito",
       "beneficiary": "Beneficiario",
-      "selectAccount": "Seleccionar cuenta",
-      "selectBeneficiary": "Seleccionar beneficiario",
-      "amount": "Cantidad",
-      "description": "Descripción",
-      "descriptionPlaceholder": "Descripción de la transferencia",
-      "scheduleDate": "Fecha de ejecución",
-      "schedule": "Programar",
-      "submit": "Realizar transferencia"
+      "selectAccount": "Seleziona conto",
+      "selectBeneficiary": "Seleziona beneficiario",
+      "amount": "Importo",
+      "description": "Descrizione",
+      "descriptionPlaceholder": "Descrizione del bonifico",
+      "scheduleDate": "Data di esecuzione",
+      "schedule": "Programma",
+      "submit": "Effettua bonifico",
+      "sourceAccount": "Conto di origine",
+      "destinationAccount": "Conto di destinazione",
+      "ibanNewBeneficiary": "IBAN (se nuovo beneficiario)",
+      "reference": "Riferimento",
+      "referencePlaceholder": "Riferimento personalizzato",
+      "submitTransfer": "Effettua bonifico"
+    },
+    "internalTransfer": "Bonifico interno",
+    "internalTransferDescription": "Trasferisci denaro tra i tuoi conti",
+    "startInternalTransfer": "Avvia un bonifico interno",
+    "externalTransfer": "Bonifico esterno",
+    "externalTransferDescription": "Invia denaro a un beneficiario",
+    "startExternalTransfer": "Avvia un bonifico esterno",
+    "recurringTransfer": "Bonifico ricorrente",
+    "recurringTransferDescription": "Programma bonifici regolari",
+    "startRecurringTransfer": "Avvia un bonifico ricorrente",
+    "businessDays": "giorni lavorativi",
+    "noTransfersFound": "Nessun bonifico trovato",
+    "amount": "Importo",
+    "description": "Descrizione",
+    "type": {
+      "internal": "Interno",
+      "external": "Esterno",
+      "recurring": "Ricorrente"
+    },
+    "externalDialog": {
+      "title": "Bonifico in attesa di valutazione",
+      "message": "Il tuo bonifico esterno è stato inviato con successo. ",
+      "evaluationMessage": "Tutti i bonifici esterni della nostra banca passano attraverso una valutazione prima dell'esecuzione.",
+      "nextSteps": "Prossimi passi",
+      "pendingDescription": "Bonifico inviato per valutazione",
+      "processingDescription": "Bonifico approvato e in elaborazione",
+      "completedDescription": "Bonifico eseguito con successo",
+      "understood": "Capito"
     }
   },
   "cards": {
-    "title": "Mis Tarjetas",
-    "subtitle": "Gestiona tus tarjetas bancarias y de crédito",
-    "addCard": "Solicitar nueva tarjeta",
-    "noCards": "No hay tarjetas disponibles",
-    "noCardsDescription": "Aún no tienes tarjetas bancarias. Solicita tu primera tarjeta para empezar a usarla.",
-    "requestFirstCard": "Solicitar mi primera tarjeta",
-    "requestCard": "Solicitar tarjeta",
-    "cardTypes": {
-      "debit": "Tarjeta de Débito",
-      "credit": "Tarjeta de Crédito"
+    "title": "Carte",
+    "subtitle": "Gestisci le tue carte bancarie e di credito",
+    "loading": "Caricamento carte...",
+    
+    "physical": {
+      "title": "Carta fisica",
+      "noCard": "Nessuna carta fisica disponibile",
+      "noCardDesc": "Non hai ancora una carta fisica. Richiedi la tua prima e unica carta per iniziare a usarla.",
+      "processing": {
+        "title": "Carta in generazione",
+        "description": "La tua richiesta di carta fisica è stata registrata. Sarà inviata per posta entro 6-14 giorni.",
+        "status": "In elaborazione"
+      },
+      "available": {
+        "title": "Carta fisica disponibile",
+        "message": "La tua carta fisica è attiva e sicura"
+      },
+      "cardDetails": "Dettagli della carta",
+      "cardNumber": "Numero della carta",
+      "expiryDate": "Data di scadenza",
+      "status": {
+        "active": "Attiva e sicura",
+        "delivered": "Consegnata al tuo indirizzo"
+      }
     },
-    "requestTypes": {
-      "physical": "Tarjeta física",
-      "virtual": "Tarjeta virtual",
-      "physicalDescription": "Enviada a tu dirección en 5-7 días laborables",
-      "virtualDescription": "Disponible en 24h para pagos online"
+    
+    "virtual": {
+      "title": "Carte virtuali",
+      "noCard": "Nessuna carta virtuale disponibile",
+      "noCardDesc": "Non hai ancora una carta virtuale. Attiva carte virtuali per iniziare a usarle.",
+      "processing": {
+        "title": "Carta virtuale in generazione",
+        "description": "La tua richiesta di carta virtuale è stata registrata. Sarà disponibile entro 24h.",
+        "status": "In elaborazione"
+      },
+      "available": {
+        "title": "Carta virtuale disponibile",
+        "message": "La tua carta virtuale è attiva e sicura"
+      },
+      "cardDetails": "Dettagli della carta",
+      "cardNumber": "Numero della carta",
+      "expiryDate": "Data di scadenza",
+      "status": {
+        "active": "Attiva e sicura",
+        "onlinePayments": "Pagamenti online"
+      }
     },
+    
+    "requestPhysical": {
+      "firstCard": "Richiedi la mia prima carta",
+      "successTitle": "Richiesta registrata",
+      "successMessage": "La tua richiesta di carta fisica è stata registrata. Sarà inviata per posta entro 6-14 giorni.",
+      "errorMessage": "Errore nella richiesta della carta fisica",
+      "errorGeneric": "Si è verificato un errore durante la richiesta"
+    },
+    
+    "requestVirtual": {
+      "button": "Richiedi carta virtuale",
+      "successTitle": "Richiesta registrata",
+      "successMessage": "La tua richiesta di carta virtuale è stata registrata. Sarà disponibile entro 24h.",
+      "errorMessage": "Errore nella richiesta della carta virtuale",
+      "errorGeneric": "Si è verificato un errore durante la richiesta"
+    },
+    
     "status": {
-      "active": "Activa",
-      "blocked": "Bloqueada",
-      "expired": "Caducada",
-      "unknown": "Desconocido"
+      "active": "Attiva",
+      "pending": "In attesa",
+      "processing": "In elaborazione",
+      "completed": "Completata",
+      "rejected": "Rifiutata"
     },
-    "actions": {
-      "use": "Usar",
-      "details": "Detalles",
-      "settings": "Ajustes",
-      "delete": "Eliminar",
-      "request": "Solicitar tarjeta",
-      "requestNew": "Solicitar nueva tarjeta",
-      "requestFirst": "Solicitar mi primera tarjeta",
-      "cancel": "Cancelar"
+    
+    "errors": {
+      "noUser": "Utente non connesso"
     },
-    "info": {
-      "title": "Información importante",
-      "virtualAvailable": "La tarjeta virtual estará disponible en 24h",
-      "physicalDelivery": "La tarjeta física será enviada a tu dirección",
-      "pinSms": "Recibirás un código PIN por SMS aparte",
-      "secured": "Las tarjetas están aseguradas"
+    
+    "summary": {
+      "activeCards": "Carte attive",
+      "pendingCards": "In corso",
+      "rejectedCards": "Rifiutate"
     },
-    "loading": {
-      "status": "Verificando tu estado..."
-    },
-    "verification": {
-      "title": "Verificación de identidad requerida",
-      "description": "Para solicitar y gestionar tus tarjetas bancarias, primero debes validar tu identidad."
-    },
-    "types": {
-      "credit": "Tarjeta de Crédito",
-      "debit": "Tarjeta de Débito"
-    },
-    "emptyState": {
-      "title": "No hay tarjetas disponibles",
-      "description": "Aún no tienes tarjetas bancarias. Solicita tu primera tarjeta para empezar a usarla."
-    },
-    "cardDetails": {
-      "expires": "Scade",
-      "currentBalance": "Saldo attuale",
-      "creditLimit": "Limite di credito"
-    },
-    "requestModal": {
-      "title": "Richiedi carta",
-      "cardType": "Tipo di carta",
-      "physical": {
-        "title": "Carta fisica",
-        "description": "Inviata al tuo indirizzo in 5-7 giorni lavorativi"
-      },
-      "virtual": {
-        "title": "Carta virtuale",
-        "description": "Disponibile in 24h per pagamenti online"
-      },
-      "importantInfo": {
-        "title": "Informazioni importanti",
-        "info1": "La carta virtuale sarà disponibile in 24h",
-        "info2": "La carta fisica sarà inviata al tuo indirizzo",
-        "info3": "Riceverai un codice PIN via SMS separatamente",
-        "info4": "Le carte sono assicurate"
-      },
-      "submit": "Richiedi carta"
-    },
+    
     "security": {
       "title": "Sicurezza delle carte",
-      "protection": {
-        "title": "Protezione delle carte",
-        "feature1": "Blocco/sblocco istantaneo",
-        "feature2": "Notifiche delle transazioni",
-        "feature3": "Limiti di pagamento configurabili",
-        "feature4": "Protezione antifrode"
+      "description": "Le tue carte sono protette dalle ultime tecnologie di sicurezza",
+      "features": [
+        "Crittografia a 256 bit",
+        "Protezione antifrode",
+        "Notifiche in tempo reale",
+        "Blocco remoto"
+      ],
+      "cardGeneration": {
+        "virtual": {
+          "title": "Carta virtuale in generazione",
+          "description": "Carta virtuale in generazione - Ritardo 24h",
+          "mobileAvailable": "Disponibile su mobile",
+          "delay": "Ritardo: 24h"
+        },
+        "physical": {
+          "title": "Carta fisica in generazione",
+          "description": "Carta fisica in generazione - Ritardo 6-14 giorni",
+          "postalDelivery": "Consegna postale",
+          "delay": "Ritardo: 6-14 giorni"
+        }
       },
       "tips": {
         "title": "Consigli di sicurezza",
-        "tip1": "Non condividere mai i tuoi codici",
-        "tip2": "Usa siti sicuri",
-        "tip3": "Controlla le tue transazioni",
-        "tip4": "Segnala attività sospette"
+        "pinCvv": "Non condividere mai i tuoi codici PIN o CVV",
+        "secureSites": "Usa solo siti sicuri (HTTPS)",
+        "monitorTransactions": "Monitora regolarmente le tue transazioni",
+        "reportSuspicious": "Segnala immediatamente qualsiasi attività sospetta"
+      },
+      "fraudProtection": {
+        "title": "Protezione antifrode",
+        "description": "In caso di frode, sei protetto dalla nostra garanzia di sicurezza",
+        "guarantee": "Le tue carte sono sicure e assicurate"
       }
-    },
-    "errors": {
-      "requestFailed": "Errore durante la richiesta della carta"
     }
   },
   "verification": {
-    "title": "Verifica dell'account",
-    "subtitle": "Completa la tua verifica per accedere a tutti i servizi",
+    "title": "Verifica account",
+    "subtitle": "Completa la verifica per accedere a tutti i servizi",
     "verificationLevel": "Livello di verifica",
-    "progress": "Progresso della verifica",
+    "progress": "Progresso verifica",
     "completed": "completate",
     "documents": "Documenti",
-    "steps": "Passi",
+    "steps": "Passaggi",
     "uploadedDocuments": "Documenti caricati",
     "uploadDocument": "Carica documento",
     "view": "Visualizza",
     "reupload": "Ricarica",
     "requiredDocuments": "Documenti richiesti",
-    "verificationSteps": "Passi di verifica",
+    "verificationSteps": "Passaggi verifica",
     "identityDocument": "Documento d'identità",
     "proofOfAddress": "Prova di residenza",
     "proofOfIncome": "Prova di reddito",
-    "bankStatement": "Estratto conto bancario",
+    "bankStatement": "Estratto conto",
     "status": {
       "approved": "Approvato",
       "pending": "In attesa",
       "rejected": "Rifiutato",
-      "completed": "Completato",
+      "completed": "Completata",
       "inProgress": "In corso",
       "unverified": "Non verificato"
     },
@@ -784,34 +1036,20 @@
     },
     "banner": {
       "unverified": {
-        "title": "Verifica d'identità richiesta",
-        "message": "Per accedere a tutte le funzionalità di AmCbunq, devi validare la tua identità.",
-        "button": "Valida ora"
+        "title": "Verifica identità richiesta",
+        "message": "Per accedere a tutte le funzionalità di AmCbunq, devi convalidare la tua identità.",
+        "button": "Convalida ora"
       },
       "pending": {
-        "title": "Verificación en curso",
-        "message": "Tus documentos están siendo verificados. Recibirás una notificación cuando finalice.",
-        "button": "Ver estado"
+        "title": "Verifica in corso",
+        "message": "I tuoi documenti sono in fase di verifica. Riceverai una notifica al termine.",
+        "button": "Vedi stato"
       }
-    }
-  },
-  "kycSuccess": {
-    "title": "Documenti inviati con successo!",
-    "verificationInProgress": "Verifica in corso",
-    "description": "I tuoi documenti sono stati ricevuti e sono in fase di verifica dai nostri team.",
-    "waitMessage": "Se prega di attendere durante la verifica",
-    "waitDescription": "Questo processo richiede solitamente dalle 24 alle 48 ore. Riceverai una notifica una volta completata la verifica.",
-    "nextSteps": "Prossimi passi:",
-    "steps": {
-      "received": "Documenti ricevuti e registrati",
-      "verification": "Verifica in corso dai nostri team",
-      "notification": "Notifica email alla fine",
-      "access": "Accesso completo al tuo account"
     }
   },
   "billing": {
     "title": "Fatturazione",
-    "subtitle": "RIB e messaggi della banca",
+    "subtitle": "RIB di fatturazione e informazioni bancarie",
     "loading": "Caricamento dati di fatturazione...",
     "statusVerification": "Verifica del tuo stato...",
     "noData": {
@@ -825,7 +1063,7 @@
       "contact": "Contatta il tuo consulente per maggiori informazioni."
     },
     "verification": {
-      "title": "Verifica dell'identità richiesta",
+      "title": "Verifica identità richiesta",
       "description": "Per accedere alle informazioni di fatturazione e ai messaggi della banca, devi prima convalidare la tua identità."
     },
     "header": {
@@ -833,15 +1071,15 @@
       "ribBilling": "RIB Fatturazione",
       "status": "Stato",
       "active": "Attivo",
-      "usage": "Uso",
+      "usage": "Utilizzo",
       "validation": "Validazione"
     },
     "ribSection": {
       "title": "RIB di Fatturazione",
-      "description": "Per validazione account e operazioni bancarie",
+      "description": "Per validazione conto e operazioni bancarie",
       "ibanNumber": "Numero IBAN di Fatturazione",
       "bicCode": "Codice BIC/SWIFT",
-      "accountHolder": "Titolare dell'account",
+      "accountHolder": "Titolare del conto",
       "showDetails": "Mostra dettagli",
       "hideDetails": "Nascondi dettagli",
       "copy": "Copia",
@@ -852,40 +1090,41 @@
       "sharing": "Condivisione RIB di fatturazione..."
     },
     "bankMessage": {
-      "title": "Messaggio della Banca",
-      "importantInfo": "Informazioni importanti"
+      "title": "Messaggi della Banca",
+      "importantInfo": "Informazioni Importanti",
+      "noMessage": "Nessun messaggio della banca al momento."
     },
     "ribFile": {
-      "title": "RIB di Fatturazione AmCbunq",
+      "title": "RIB AmCbunq",
       "holder": "Titolare:",
       "bank": "Banca:",
       "date": "Data:",
-      "note": "Nota: Questo RIB è per operazioni di fatturazione e validazione account."
+      "note": "Nota: Questo RIB è per operazioni di fatturazione e validazione conto."
     },
     "importantInfo": {
       "title": "Informazioni importanti",
       "ribBilling": {
         "title": "RIB di Fatturazione",
-        "description": "Questo RIB è specifico per operazioni di fatturazione e validazione account. È diverso dal tuo RIB personale."
+        "description": "Questo RIB è specifico per operazioni di fatturazione e validazione conto. È diverso dal tuo RIB personale."
       },
       "accountValidation": {
-        "title": "Validazione Account",
-        "description": "Usa questo RIB per effettuare le transfer di validazione richieste per attivare tutte le funzionalità del tuo account."
+        "title": "Validazione Conto",
+        "description": "Usa questo RIB per effettuare i bonifici di validazione richiesti per attivare tutte le funzionalità del tuo conto."
       },
       "difference": {
         "title": "Differenza con RIB Personale",
-        "description": "Questo RIB è diverso dal tuo RIB personale mostrato nella sezione \"Mio IBAN\". È usato solo per operazioni di fatturazione."
+        "description": "Questo RIB è diverso dal tuo RIB personale mostrato in \"Il mio IBAN\". Si usa solo per operazioni di fatturazione."
       },
       "bankMessages": {
         "title": "Messaggi della Banca",
-        "description": "Controlla regolarmente i messaggi della banca per rimanere informato sui requisiti e procedure importanti."
+        "description": "Controlla regolarmente i messaggi della banca per essere informato su requisiti e procedure importanti."
       }
     },
     "usage": {
-      "title": "Uso del RIB di Fatturazione",
+      "title": "Utilizzo del RIB di Fatturazione",
       "accountValidation": {
-        "title": "Validazione account",
-        "description": "Effettua la transfer di validazione richiesta per attivare tutte le funzionalità."
+        "title": "Validazione conto",
+        "description": "Effettua il bonifico di validazione richiesto per attivare tutte le funzionalità."
       },
       "bankingOperations": {
         "title": "Operazioni bancarie",
@@ -893,7 +1132,7 @@
       },
       "billing": {
         "title": "Fatturazione",
-        "description": "Questo RIB è usato per operazioni di fatturazione e gestione account."
+        "description": "Questo RIB si usa per operazioni di fatturazione e gestione conto."
       }
     },
     "errors": {
@@ -902,207 +1141,223 @@
       "loadingError": "Errore durante il caricamento dei dati di fatturazione:"
     }
   },
+  "kycSuccess": {
+    "title": "Documenti inviati con successo!",
+    "verificationInProgress": "Verifica in corso",
+    "description": "I tuoi documenti sono stati ricevuti e sono in fase di verifica da parte dei nostri team.",
+    "waitMessage": "Attendi durante la verifica",
+    "waitDescription": "Questo processo richiede solitamente 24-48 ore. Riceverai una notifica al termine della verifica.",
+    "nextSteps": "Prossimi passi:",
+    "steps": {
+      "received": "Documenti ricevuti e registrati",
+      "verification": "Verifica in corso da parte dei nostri team",
+      "notification": "Notifica via email al termine",
+      "access": "Accesso completo al tuo conto"
+    }
+  },
   "iban": {
-    "title": "Mi IBAN",
-    "subtitle": "Tu identificador bancario único",
-    "loading": "Cargando datos IBAN...",
-    "noData": "No hay datos IBAN disponibles",
-    "errorLoading": "Error de carga",
-    "mainIban": "IBAN Principal",
-    "currentBalance": "Saldo actual",
-    "status": "Estado",
-    "accountType": "Tipo de cuenta",
-    "active": "Activo",
-    "principal": "Principal",
+    "title": "Il mio IBAN",
+    "subtitle": "Il tuo identificativo bancario unico",
+    "loading": "Caricamento dati IBAN...",
+    "noData": "Nessun dato IBAN disponibile",
+    "errorLoading": "Errore di caricamento",
+    "mainIban": "IBAN Principale",
+    "currentBalance": "Saldo attuale",
+    "status": "Stato",
+    "accountType": "Tipo conto",
+    "active": "Attivo",
+    "principal": "Principale",
     "bankName": "AmCbunq Bank",
-    "ibanDescription": "IBAN único para todas tus cuentas",
-    "ibanNumber": "Número IBAN",
-    "bicCode": "Código BIC/SWIFT",
-    "accountHolder": "Titular de la cuenta",
-    "showDetails": "Mostrar detalles",
-    "hideDetails": "Ocultar detalles",
-    "copy": "Copiar",
-    "copied": "¡Copiado!",
-    "downloadRib": "Descargar RIB",
-    "share": "Compartir",
-    "sharing": "Compartiendo IBAN...",
-    "ribActiveStatus": "RIB disponible y activo",
+    "ibanDescription": "IBAN unico per tutti i tuoi conti",
+    "ibanNumber": "Numero IBAN",
+    "bicCode": "Codice BIC/SWIFT",
+    "accountHolder": "Titolare del conto",
+    "showDetails": "Mostra dettagli",
+    "hideDetails": "Nascondi dettagli",
+    "copy": "Copia",
+    "copied": "Copiato!",
+    "downloadRib": "Scarica RIB",
+    "share": "Condividi",
+    "sharing": "Condivisione IBAN...",
+    "ribActiveStatus": "RIB disponibile e attivo",
     "requestRib": {
-      "title": "RIB no disponible",
-      "description": "Para realizar transferencias, primero debes solicitar tu RIB.",
-      "button": "Solicitar mi RIB",
-      "requesting": "Solicitando...",
-      "successTitle": "Solicitud registrada",
-      "successMessage": "Tu solicitud de RIB ha sido registrada. Estará disponible en 24-48h.",
-      "errorTitle": "Error",
-      "errorMessage": "No se pudo procesar tu solicitud de RIB",
-      "errorGeneric": "Ocurrió un error al solicitar el RIB",
-      "errorRequest": "No se pudo solicitar el RIB"
+      "title": "RIB non disponibile",
+      "description": "Per effettuare bonifici, devi prima richiedere il tuo RIB.",
+      "button": "Richiedi il mio RIB",
+      "requesting": "Richiesta in corso...",
+      "successTitle": "Richiesta registrata",
+      "successMessage": "La tua richiesta di RIB è stata registrata. Sarà disponibile in 24h.",
+      "errorTitle": "Errore",
+      "errorMessage": "Impossibile elaborare la tua richiesta di RIB",
+      "errorGeneric": "Si è verificato un errore durante la richiesta del RIB",
+      "errorRequest": "Impossibile richiedere il RIB",
+      "processingMessage": "La tua richiesta è in fase di elaborazione. Il RIB sarà disponibile in 24h.",
+      "pendingMessage": "Richiesta in fase di elaborazione..."
     },
     "processing": {
-      "title": "RIB en proceso de generación",
-      "description": "Tu solicitud de RIB ha sido registrada y está siendo procesada. El RIB estará disponible en 24-48h.",
-      "notification": "Recibirás una notificación cuando tu RIB esté disponible."
+      "title": "RIB in fase di generazione",
+      "description": "La tua richiesta di RIB è stata registrata ed è in fase di elaborazione. Il RIB sarà disponibile in 24-48h.",
+      "notification": "Riceverai una notifica quando il tuo RIB sarà disponibile."
     },
     "unavailable": {
-      "title": "RIB no disponible",
-      "description": "Tu cuenta debe ser verificada para poder solicitar un RIB.",
-      "fullDescription": "Tu cuenta debe ser verificada para poder solicitar un RIB. Primero valida tu identidad en la página KYC."
+      "title": "RIB non disponibile",
+      "description": "Il tuo conto deve essere verificato per poter richiedere un RIB.",
+      "fullDescription": "Il tuo conto deve essere verificato per poter richiedere un RIB. Per favore convalida prima la tua identità nella pagina KYC."
     },
     "verification": {
-      "title": "Verificación de identidad requerida",
-      "description": "Para acceder a tu información IBAN y gestionar tus cuentas, primero debes validar tu identidad."
+      "title": "Verifica identità richiesta",
+      "description": "Per accedere alle tue informazioni IBAN e gestire i tuoi conti, devi prima convalidare la tua identità."
     },
     "importantInfo": {
-      "title": "Información importante",
+      "title": "Informazioni importanti",
       "uniqueIban": {
-        "title": "IBAN Único",
-        "description": "Este IBAN se usa para todas tus cuentas (corriente, ahorro, tarjeta de crédito). Las transferencias se dirigirán automáticamente a tu cuenta principal."
+        "title": "IBAN Unico",
+        "description": "Questo IBAN si usa per tutti i tuoi conti (corrente, risparmio, carta di credito). I bonifici verranno automaticamente indirizzati al tuo conto principale."
       },
       "sepaTransfers": {
-        "title": "Transferencias SEPA",
-        "description": "Compatible con todas las transferencias SEPA europeas. Tiempo de procesamiento: 1-2 días laborables."
+        "title": "Bonifici SEPA",
+        "description": "Compatibile con tutti i bonifici SEPA europei. Tempo di elaborazione: 1-2 giorni lavorativi."
       },
       "qrCode": {
-        "title": "Código QR",
-        "description": "Usa el código QR para compartir fácilmente tus datos bancarios con otras aplicaciones."
+        "title": "Codice QR",
+        "description": "Usa il codice QR per condividere facilmente i tuoi dati bancari con altre applicazioni."
       },
       "security": {
-        "title": "Seguridad",
-        "description": "Tu IBAN está seguro y solo puede usarse para recibir fondos. No se permiten adeudos automáticos."
+        "title": "Sicurezza",
+        "description": "Il tuo IBAN è sicuro e può essere usato solo per ricevere fondi. Non sono consentiti addebiti automatici."
       }
     },
     "usage": {
-      "title": "Cómo usar tu IBAN",
+      "title": "Come usare il tuo IBAN",
       "receiveTransfers": {
-        "title": "Recibir transferencias",
-        "description": "Comparte tu IBAN para recibir transferencias de cualquier banco europeo."
+        "title": "Ricevi bonifici",
+        "description": "Condividi il tuo IBAN per ricevere bonifici da qualsiasi banca europea."
       },
       "salaryBenefits": {
-        "title": "Salario y prestaciones",
-        "description": "Usa este IBAN para recibir tu salario, ayudas u otras prestaciones."
+        "title": "Stipendio e prestazioni",
+        "description": "Usa questo IBAN per ricevere il tuo stipendio, aiuti o altre prestazioni."
       },
       "onlinePayments": {
-        "title": "Pagos online",
-        "description": "Algunos servicios online aceptan pagos por IBAN para mayor seguridad."
+        "title": "Pagamenti online",
+        "description": "Alcuni servizi online accettano pagamenti via IBAN per maggiore sicurezza."
       }
     },
     "ribFile": {
       "title": "RIB AmCbunq",
-      "holder": "Titular:",
-      "bank": "Banco:",
-      "date": "Fecha:"
+      "holder": "Titolare:",
+      "bank": "Banca:",
+      "date": "Data:"
     },
     "errors": {
-      "noUser": "Ningún usuario conectado",
-      "parsingUser": "Error parsing user:",
-      "copyError": "Error al copiar:",
+      "noUser": "Nessun utente connesso",
+      "parsingUser": "Errore durante l'analisi dell'utente:",
+      "copyError": "Errore durante la copia:",
       "defaultAccountHolder": "Cliente AmCbunq"
     },
     "actions": {
-      "copy": "Copiar",
-      "copied": "¡Copiado!",
-      "download": "Descargar RIB",
-      "share": "Compartir",
-      "showDetails": "Mostrar detalles",
-      "hideDetails": "Ocultar detalles",
-      "requestRib": "Solicitar mi RIB",
-      "requesting": "Solicitando..."
+      "copy": "Copia",
+      "copied": "Copiato!",
+      "download": "Scarica RIB",
+      "share": "Condividi",
+      "showDetails": "Mostra dettagli",
+      "hideDetails": "Nascondi dettagli",
+      "requestRib": "Richiedi il mio RIB",
+      "requesting": "Richiesta in corso..."
     },
     "messages": {
-      "ribNotAvailable": "RIB no disponible",
-      "ribNotAvailableDesc": "Para realizar transferencias, primero debes solicitar tu RIB.",
-      "ribProcessing": "RIB en proceso de generación",
-      "ribProcessingDesc": "Tu solicitud de RIB ha sido registrada. Estará disponible en 24-48h.",
-      "ribUnavailable": "RIB no disponible",
-      "ribUnavailableDesc": "Tu cuenta debe ser verificada para poder solicitar un RIB.",
-      "ribAvailable": "RIB disponible y activo"
+      "ribNotAvailable": "RIB non disponibile",
+      "ribNotAvailableDesc": "Per effettuare bonifici, devi prima richiedere il tuo RIB.",
+      "ribProcessing": "RIB in fase di generazione",
+      "ribProcessingDesc": "La tua richiesta di RIB è stata registrata. Sarà disponibile in 24-48h.",
+      "ribUnavailable": "RIB non disponibile",
+      "ribUnavailableDesc": "Il tuo conto deve essere verificato per poter richiedere un RIB.",
+      "ribAvailable": "RIB disponibile e attivo"
     },
     "info": {
-      "title": "Información importante",
+      "title": "Informazioni importanti",
       "unavailable": {
-        "title": "RIB no disponible",
-        "description": "Tu cuenta debe ser verificada para poder solicitar un RIB. Primero valida tu identidad en la página KYC."
+        "title": "RIB non disponibile",
+        "description": "Il tuo conto deve essere verificato per poter richiedere un RIB. Per favore convalida prima la tua identità nella pagina KYC."
       },
       "processing": {
-        "title": "RIB en proceso de generación",
-        "description": "Tu solicitud de RIB ha sido registrada y está siendo procesada. El RIB estará disponible en 24-48h.",
-        "notification": "Recibirás una notificación cuando tu RIB esté disponible."
+        "title": "RIB in fase di generazione",
+        "description": "La tua richiesta di RIB è stata registrata ed è in fase di elaborazione. Il RIB sarà disponibile in 24-48h.",
+        "notification": "Riceverai una notifica quando il tuo RIB sarà disponibile."
       }
     }
   },
-  "history": {
-    "title": "Historial",
-    "subtitle": "Consulta el historial de tus transacciones",
+  "historyPage": {
+    "title": "Cronologia",
+    "subtitle": "Consulta la cronologia delle tue transazioni",
     "loading": {
-      "status": "Verificando tu estado...",
-      "transactions": "Cargando transacciones...",
-      "history": "Cargando historial..."
+      "status": "Verifica del tuo stato...",
+      "transactions": "Caricamento transazioni...",
+      "history": "Caricamento cronologia..."
     },
     "verification": {
-      "title": "Verificación de identidad requerida",
-      "description": "Para consultar el historial de tus transacciones, primero debes validar tu identidad."
+      "title": "Verifica identità richiesta",
+      "description": "Per consultare la cronologia delle tue transazioni, devi prima convalidare la tua identità."
     },
     "summary": {
-      "income": "Ingresos",
-      "expenses": "Gastos",
-      "netBalance": "Saldo neto"
+      "income": "Entrate",
+      "expenses": "Spese",
+      "netBalance": "Saldo netto"
     },
     "search": {
-      "placeholder": "Buscar una transacción..."
+      "placeholder": "Cerca una transazione..."
     },
     "filters": {
-      "allTypes": "Todos los tipos",
-      "income": "Ingresos",
-      "expense": "Gastos",
-      "transfer": "Transferencias",
+      "allTypes": "Tutti i tipi",
+      "income": "Entrate",
+      "expense": "Spese",
+      "transfer": "Bonifici",
       "periods": {
-        "7Days": "Últimos 7 días",
-        "30Days": "Últimos 30 días",
-        "90Days": "Últimos 90 días",
-        "1Year": "1 año"
+        "7Days": "Ultimi 7 giorni",
+        "30Days": "Ultimi 30 giorni",
+        "90Days": "Ultimi 90 giorni",
+        "1Year": "1 anno"
       },
-      "export": "Exportar"
+      "export": "Esporta"
     },
     "table": {
       "headers": {
-        "transaction": "Transacción",
-        "category": "Categoría",
-        "amount": "Cantidad",
-        "date": "Fecha",
-        "status": "Estado",
-        "reference": "Referencia"
+        "transaction": "Transazione",
+        "category": "Categoria",
+        "amount": "Importo",
+        "date": "Data",
+        "status": "Stato",
+        "reference": "Riferimento"
       }
     },
     "status": {
-      "completed": "Completado",
-      "pending": "Pendiente",
-      "failed": "Fallido",
-      "unknown": "Desconocido"
+      "completed": "Completato",
+      "pending": "In attesa",
+      "failed": "Fallito",
+      "unknown": "Sconosciuto"
     },
     "accounts": {
-      "checking": "Cuenta Corriente",
-      "savings": "Cuenta Ahorro",
-      "credit": "Tarjeta de Crédito",
-      "default": "Cuenta"
+      "checking": "Conto Corrente",
+      "savings": "Conto Risparmio",
+      "credit": "Carta di Credito",
+      "default": "Conto"
     },
     "categories": {
-      "other": "Otro",
-      "transferOut": "Transferencia saliente"
+      "other": "Altro",
+      "transferOut": "Bonifico in uscita"
     },
     "emptyState": {
-      "title": "No se encontraron transacciones",
-      "description": "Prueba a modificar tus criterios de búsqueda."
+      "title": "Nessuna transazione trovata",
+      "description": "Prova a modificare i tuoi criteri di ricerca."
     },
     "pagination": {
-      "showing": "Mostrando",
-      "transactions": "transacciones",
-      "previous": "Anterior",
-      "next": "Siguiente"
+      "showing": "Visualizzazione",
+      "transactions": "transazioni",
+      "previous": "Precedente",
+      "next": "Successivo"
     },
     "errors": {
-      "noUser": "Ningún usuario conectado",
-      "loadingError": "Error cargando datos"
+      "noUser": "Nessun utente connesso",
+      "loadingError": "Errore durante il caricamento dei dati"
     },
     "references": {
       "txnPrefix": "TXN",
@@ -1112,82 +1367,219 @@
     }
   },
   "budgets": {
-    "title": "Presupuestos",
-    "subtitle": "Controla tus gastos y cumple tus presupuestos",
-    "loading": {
-      "budgets": "Cargando tus presupuestos...",
-      "status": "Verificando tu estado..."
-    },
-    "unverified": {
-      "titleUnverified": "Verificación de identidad requerida",
-      "titlePending": "Verificación en curso",
-      "descriptionUnverified": "Para crear y gestionar tus presupuestos, primero debes validar tu identidad.",
-      "descriptionPending": "Tu cuenta está siendo verificada. Podrás crear presupuestos una vez validada.",
-      "secureAccount": "Cuenta segura",
-      "customBudgets": "Presupuestos personalizados"
-    },
+    "title": "Budget",
+    "subtitle": "Gestisci i tuoi budget e traccia le tue spese",
     "summary": {
-      "totalBudget": "Presupuesto total",
-      "spent": "Gastado",
-      "remaining": "Restante",
-      "usage": "Uso"
+      "totalBudget": "Budget Totale",
+      "spent": "Speso",
+      "remaining": "Rimanente",
+      "usage": "Utilizzo"
     },
     "progress": {
-      "title": "Progreso global",
-      "budgetUsage": "Uso del presupuesto"
-    },
-    "actions": {
-      "createNew": "Crear nuevo presupuesto",
-      "edit": "Editar",
-      "details": "Detalles"
-    },
-    "status": {
-      "onTrack": "Dentro del límite",
-      "overBudget": "Excedido",
-      "underBudget": "Por debajo",
-      "unknown": "Desconocido"
+      "title": "Progresso Generale",
+      "budgetUsage": "Utilizzo del Budget"
     },
     "card": {
-      "progression": "Progreso",
-      "budget": "Presupuesto",
-      "spent": "Gastado",
-      "remaining": "Restante",
-      "monthly": "Mensual",
-      "yearly": "Anual"
+      "progression": "Progresso",
+      "budget": "Budget",
+      "spent": "Speso",
+      "remaining": "Rimanente",
+      "monthly": "Mensile",
+      "yearly": "Annuale"
+    },
+    "details": {
+      "progression": "Progresso",
+      "budgetTotal": "Budget Totale",
+      "spent": "Speso",
+      "remaining": "Rimanente",
+      "period": "Periodo",
+      "monthly": "📅 Mensile",
+      "yearly": "📅 Annuale",
+      "percentageMarkers": {
+        "zero": "0%",
+        "fifty": "50%",
+        "hundred": "100%"
+      },
+      "close": "Chiudi"
+    },
+    "status": {
+      "onTrack": "In Regola",
+      "overBudget": "Sopra Budget",
+      "underBudget": "Sotto Budget",
+      "unknown": "Sconosciuto"
     },
     "tips": {
-      "title": "Consejos para gestionar tus presupuestos",
+      "title": "Consigli per ottimizzare i tuoi budget",
       "planning": {
-        "title": "Planificación",
-        "tip1": "Establece objetivos realistas",
-        "tip2": "Controla tus gastos regularmente",
-        "tip3": "Ajusta tus presupuestos si es necesario",
-        "tip4": "Prevé imprevistos"
+        "title": "Pianificazione",
+        "tip1": "Stabilisci obiettivi realistici",
+        "tip2": "Traccia le tue spese regolarmente",
+        "tip3": "Aggiusta i budget secondo le tue esigenze",
+        "tip4": "Pianifica spese impreviste"
       },
       "optimization": {
-        "title": "Optimización",
-        "tip1": "Identifica tus categorías de gasto",
-        "tip2": "Busca alternativas más económicas",
-        "tip3": "Evita compras impulsivas",
-        "tip4": "Ahorra los excedentes"
+        "title": "Ottimizzazione",
+        "tip1": "Identifica spese non essenziali",
+        "tip2": "Negoziare contratti e abbonamenti",
+        "tip3": "Usa strumenti di confronto",
+        "tip4": "Stabilisci priorità chiare"
       }
     },
-    "errors": {
-      "noUser": "Ningún usuario conectado",
-      "loadingError": "Error cargando presupuestos"
+    "create": {
+      "title": "Crea Budget",
+      "titleEdit": "Modifica Budget",
+      "fields": {
+        "name": "Nome del Budget",
+        "category": "Categoria",
+        "amount": "Importo",
+        "period": "Periodo",
+        "startDate": "Data di Inizio",
+        "endDate": "Data di Fine",
+        "description": "Descrizione"
+      },
+      "placeholders": {
+        "name": "Es: Budget Spesa",
+        "selectCategory": "Seleziona una categoria",
+        "description": "Descrizione opzionale del budget"
+      },
+      "periods": {
+        "monthly": "Mensile",
+        "yearly": "Annuale"
+      },
+      "categories": {
+        "alimentation": "Alimentazione",
+        "transport": "Trasporto",
+        "logement": "Abitazione",
+        "loisirs": "Intrattenimento",
+        "sante": "Salute",
+        "vetements": "Abbigliamento",
+        "education": "Educazione",
+        "autres": "Altri"
+      },
+      "amountHelper": "Importo in euro (senza decimali)",
+      "errors": {
+        "nameRequired": "Il nome del budget è richiesto",
+        "categoryRequired": "La categoria è richiesta",
+        "amountRequired": "L'importo deve essere maggiore di 0",
+        "amountTooHigh": "L'importo non può superare 999,999 €",
+        "startDateRequired": "La data di inizio è richiesta",
+        "endDateRequired": "La data di fine è richiesta",
+        "endDateAfterStart": "La data di fine deve essere dopo la data di inizio"
+      },
+      "actions": {
+        "cancel": "Annulla",
+        "create": "Crea Budget"
+      }
+    },
+    "actions": {
+      "createNew": "Crea Nuovo Budget",
+      "edit": "Modifica",
+      "details": "Dettagli",
+          "delete": "Elimina",
+    "addExpense": "Aggiungi Spesa"
+  },
+  "delete": {
+    "title": "Elimina Budget",
+    "subtitle": "Azione Irreversibile",
+    "confirmationTitle": "Sei sicuro?",
+    "confirmationMessage": "Stai per eliminare il budget \"{budgetName}\". Questa azione non può essere annullata.",
+    "warningTitle": "Attenzione!",
+    "warningMessage": "Tutti i dati associati a questo budget (spese, cronologia) saranno eliminati permanentemente.",
+    "actions": {
+      "cancel": "Annulla",
+      "confirm": "Elimina",
+      "deleting": "Eliminazione..."
+    }
+  },
+    "messages": {
+      "deleteConfirmation": "Sei sicuro di voler eliminare il budget \"{budgetName}\"?\n\nQuesta azione è irreversibile.",
+      "deleteSuccess": "Budget \"{budgetName}\" eliminato con successo!",
+      "noUser": "❌ Nessun utente connesso",
+      "deleteError": "❌ Errore durante l'eliminazione: {error}",
+      "fallbackDeleteConfirmation": "Sei sicuro di voler eliminare il budget \"{budgetName}\"?\n\nQuesta azione è irreversibile.",
+      "fallbackDeleteSuccess": "Budget \"{budgetName}\" eliminato con successo!",
+      "fallbackNoUser": "❌ Nessun utente connesso",
+      "fallbackDeleteError": "❌ Errore durante l'eliminazione: {error}"
+    },
+    "expense": {
+      "title": "Aggiungi Spesa",
+      "budgetFor": "Budget: {budgetName}",
+      "details": {
+        "progression": "Progresso",
+        "budget": "Budget",
+        "spent": "Speso",
+        "remaining": "Rimanente",
+        "period": "Periodo",
+        "type": "Tipo",
+        "start": "Inizio",
+        "end": "Fine",
+        "duration": "Durata",
+        "monthly": "Mensile",
+        "yearly": "Annuale",
+        "oneMonth": "1 mese",
+        "oneYear": "1 anno",
+        "description": "Descrizione",
+        "insights": "💡 Panoramica",
+        "budgetExceeded": "⚠️ Hai superato il tuo budget del {percentage}%",
+        "budgetWarning": "⚠️ Attenzione, hai usato {percentage}% del tuo budget",
+        "budgetHalfway": "✅ Sei a metà strada con {percentage}% di utilizzo",
+        "budgetExcellent": "🎯 Eccellente! Hai usato solo {percentage}% del tuo budget",
+        "monthlyBudgetValid": "📅 Budget mensile valido fino al {date}",
+        "budgetRemaining": "💰 Hai {amount}€ rimasti da spendere"
+      },
+      "fields": {
+        "amount": "Importo della Spesa",
+        "date": "Data della Spesa",
+        "category": "Categoria",
+        "description": "Descrizione"
+      },
+      "placeholders": {
+        "description": "Descrivi questa spesa..."
+      },
+      "categories": {
+        "general": "Generale",
+        "food": "Cibo",
+        "transport": "Trasporto",
+        "entertainment": "Intrattenimento",
+        "shopping": "Shopping",
+        "health": "Salute",
+        "bills": "Bollette",
+        "other": "Altro"
+      },
+      "summary": {
+        "totalBudget": "Budget Totale",
+        "spent": "Speso",
+        "remaining": "Rimanente",
+        "usage": "Utilizzo"
+      },
+      "amountHelper": "Importo in euro (senza decimali)",
+      "descriptionHelper": "{current}/200 caratteri",
+      "errors": {
+        "amountRequired": "L'importo deve essere maggiore di 0",
+        "amountTooHigh": "L'importo non può superare 999,999 €",
+        "dateRequired": "La data è richiesta",
+        "descriptionRequired": "La descrizione è richiesta",
+        "descriptionTooLong": "La descrizione non può superare 200 caratteri",
+        "exceedsBudget": "L'importo supera il budget rimanente ({remaining}€)"
+      },
+      "actions": {
+        "cancel": "Annulla",
+        "add": "Aggiungi Spesa",
+        "adding": "Aggiungendo..."
+      }
     }
   },
   "messages": {
-    "title": "Mensajes",
-    "subtitle": "Servicio al cliente AmCbunq",
-    "loading": "Cargando mensajes...",
-    "welcome": "¡Hola! Soy tu asistente virtual AmCbunq. ¿Cómo puedo ayudarte hoy?",
-    "autoReply": "Gracias por tu mensaje. Un asesor te responderá lo antes posible.",
-    "inputPlaceholder": "Escribe tu mensaje...",
-    "typing": "Soporte escribiendo...",
-    "online": "En línea",
-    "quickResponse": "Respuesta rápida",
-    "onlineStatus": "En línea",
+    "title": "Messaggi",
+    "subtitle": "Servizio clienti AmCbunq",
+    "loading": "Caricamento messaggi...",
+    "welcome": "Ciao! Sono il tuo assistente virtuale AmCbunq. Come posso aiutarti oggi?",
+    "autoReply": "Grazie per il tuo messaggio. Un consulente ti risponderà al più presto.",
+    "inputPlaceholder": "Scrivi il tuo messaggio...",
+    "typing": "Supporto sta scrivendo...",
+    "online": "Online",
+    "quickResponse": "Risposta rapida",
+    "onlineStatus": "Online",
     "supportName": "Supporto AmCbunq",
     "unavailable": "Messaggi non disponibili",
     "unavailableUnverified": "Per accedere alla chat con il nostro supporto, devi prima convalidare la tua identità.",
@@ -1197,7 +1589,7 @@
     "verification": {
       "unavailableTitle": "Messaggi non disponibili",
       "temporarilyUnavailableTitle": "Messaggi temporaneamente non disponibili",
-      "unavailableDescription": "Per accedere alla chat con il nostro supporto, devi prima verificare la tua identità.",
+      "unavailableDescription": "Per accedere alla chat con il nostro supporto, devi prima convalidare la tua identità.",
       "pendingDescription": "La messaggistica sarà disponibile una volta completata la verifica della tua identità. La tua richiesta è in fase di revisione."
     },
     "errors": {
@@ -1208,69 +1600,69 @@
     }
   },
   "settings": {
-    "title": "Ajustes",
-    "subtitle": "Gestiona tus preferencias y configuración de cuenta",
-    "loading": "Cargando datos de usuario...",
-    "profile": "Perfil",
-    "security": "Seguridad",
-    "notifications": "Notificaciones",
-    "preferences": "Preferencias",
-    "profileSettings": "Configuración de perfil",
-    "securitySettings": "Configuración de seguridad",
-    "notificationSettings": "Configuración de notificaciones",
-    "firstName": "Nombre",
-    "lastName": "Apellidos",
+    "title": "Impostazioni",
+    "subtitle": "Gestisci le tue preferenze e configurazione dell'account",
+    "loading": "Caricamento dati utente...",
+    "profile": "Profilo",
+    "security": "Sicurezza",
+    "notifications": "Notifiche",
+    "preferences": "Preferenze",
+    "profileSettings": "Impostazioni profilo",
+    "securitySettings": "Impostazioni sicurezza",
+    "notificationSettings": "Impostazioni notifiche",
+    "firstName": "Nome",
+    "lastName": "Cognome",
     "email": "Email",
-    "phone": "Teléfono",
-    "dateOfBirth": "Fecha de nacimiento",
-    "placeOfBirth": "Lugar de nacimiento",
-    "nationality": "Nacionalidad",
-    "residenceCountry": "País de residencia",
-    "address": "Dirección",
-    "city": "Ciudad",
-    "postalCode": "Código postal",
-    "profession": "Profesión",
-    "salary": "Salario",
-    "saveChanges": "Guardar cambios",
-    "change": "Cambiar",
-    "enable": "Activar",
-    "view": "Ver",
-    "language": "Idioma",
-    "currency": "Moneda",
-    "timezone": "Zona horaria",
+    "phone": "Telefono",
+    "dateOfBirth": "Data di nascita",
+    "placeOfBirth": "Luogo di nascita",
+    "nationality": "Nazionalità",
+    "residenceCountry": "Paese di residenza",
+    "address": "Indirizzo",
+    "city": "Città",
+    "postalCode": "CAP",
+    "profession": "Professione",
+    "salary": "Stipendio",
+    "saveChanges": "Salva modifiche",
+    "change": "Cambia",
+    "enable": "Attiva",
+    "view": "Visualizza",
+    "language": "Lingua",
+    "currency": "Valuta",
+    "timezone": "Fuso orario",
     "theme": "Tema",
-    "changePassword": "Cambiar contraseña",
-    "changePasswordDescription": "Modifica tu contraseña para asegurar tu cuenta",
-    "twoFactorAuth": "Autenticación en dos pasos",
-    "twoFactorAuthDescription": "Añade una capa extra de seguridad a tu cuenta",
-    "loginHistory": "Historial de inicios de sesión",
-    "loginHistoryDescription": "Consulta tus inicios de sesión recientes",
-    "emailNotifications": "Notificaciones por email",
-    "emailNotificationsDescription": "Recibe notificaciones importantes por email",
-    "smsNotifications": "Notificaciones SMS",
-    "smsNotificationsDescription": "Recibe alertas de seguridad por SMS",
-    "pushNotifications": "Notificaciones push",
-    "pushNotificationsDescription": "Recibe notificaciones directamente en tu dispositivo",
-    "marketingEmails": "Emails de marketing",
-    "marketingEmailsDescription": "Recibe ofertas y novedades por email"
+    "changePassword": "Cambia password",
+    "changePasswordDescription": "Modifica la tua password per proteggere il tuo account",
+    "twoFactorAuth": "Autenticazione a due fattori",
+    "twoFactorAuthDescription": "Aggiungi un ulteriore livello di sicurezza al tuo account",
+    "loginHistory": "Cronologia accessi",
+    "loginHistoryDescription": "Consulta la cronologia dei tuoi accessi recenti",
+    "emailNotifications": "Notifiche email",
+    "emailNotificationsDescription": "Ricevi notifiche importanti via email",
+    "smsNotifications": "Notifiche SMS",
+    "smsNotificationsDescription": "Ricevi avvisi di sicurezza via SMS",
+    "pushNotifications": "Notifiche push",
+    "pushNotificationsDescription": "Ricevi notifiche direttamente sul tuo dispositivo",
+    "marketingEmails": "Email di marketing",
+    "marketingEmailsDescription": "Ricevi offerte e novità via email"
   },
   "transferMessages": {
-    "externalTransferTitle": "Transferencia externa",
-    "externalTransferMessage": "Las transferencias externas están sujetas a revisión de seguridad antes de su validación.",
-    "confirmTransfer": "Confirmar transferencia",
-    "internalSuccess": "Tu transferencia de {amount} ha sido creada correctamente.",
-    "scheduledSuccess": "Tu transferencia de {amount} ha sido programada correctamente.",
-    "externalSuccess": "Tu transferencia externa de {amount} ha sido enviada y está pendiente de revisión.",
-    "creationError": "No se pudo crear la transferencia: {error}",
-    "beneficiaryAddSuccess": "El beneficiario \"{name}\" ha sido añadido correctamente.",
-    "beneficiaryUpdateSuccess": "La información de \"{name}\" ha sido actualizada correctamente.",
-    "beneficiaryDeleteSuccess": "El beneficiario \"{name}\" ha sido eliminado correctamente.",
-    "beneficiaryAddError": "No se pudo añadir el beneficiario: {error}",
-    "beneficiaryUpdateError": "No se pudo actualizar el beneficiario: {error}",
-    "beneficiaryDeleteError": "No se pudo eliminar el beneficiario: {error}"
+    "externalTransferTitle": "Bonifico esterno",
+    "externalTransferMessage": "I bonifici esterni sono soggetti a revisione di sicurezza prima della convalida.",
+    "confirmTransfer": "Conferma bonifico",
+    "internalSuccess": "Il tuo bonifico di {amount} è stato creato correttamente.",
+    "scheduledSuccess": "Il tuo bonifico di {amount} è stato programmato correttamente.",
+    "externalSuccess": "Il tuo bonifico esterno di {amount} è stato inviato ed è in attesa di revisione.",
+    "creationError": "Impossibile creare il bonifico: {error}",
+    "beneficiaryAddSuccess": "Il beneficiario \"{name}\" è stato aggiunto correttamente.",
+    "beneficiaryUpdateSuccess": "Le informazioni di \"{name}\" sono state aggiornate correttamente.",
+    "beneficiaryDeleteSuccess": "Il beneficiario \"{name}\" è stato eliminato correttamente.",
+    "beneficiaryAddError": "Impossibile aggiungere il beneficiario: {error}",
+    "beneficiaryUpdateError": "Impossibile aggiornare il beneficiario: {error}",
+    "beneficiaryDeleteError": "Impossibile eliminare il beneficiario: {error}"
   },
   "footer": {
-    "description": "La banca del futuro, oggi. Gestisci le tue finanze con totale semplicità.",
+    "description": "La banca del futuro, oggi. Gestisci le tue finanze con semplicità.",
     "quickLinks": "Link rapidi",
     "helpCenter": "Centro assistenza",
     "products": "Prodotti",
@@ -1282,133 +1674,137 @@
     "rights": "Tutti i diritti riservati"
   },
   "errors": {
-    "network": "Error de conexión",
-    "unauthorized": "No autorizado",
-    "forbidden": "Acceso prohibido",
-    "notFound": "Página no encontrada",
-    "serverError": "Error del servidor",
-    "validation": "Error de validación",
-    "fileTooLarge": "Archivo demasiado grande",
-    "invalidFileType": "Tipo de archivo no soportado",
-    "transferCreationFailed": "Error al crear",
-    "beneficiaryAddFailed": "Error al añadir",
-    "beneficiaryUpdateFailed": "Error al actualizar",
-    "beneficiaryDeleteFailed": "Error al eliminar"
+    "network": "Errore di connessione",
+    "unauthorized": "Non autorizzato",
+    "forbidden": "Accesso negato",
+    "notFound": "Pagina non trovata",
+    "serverError": "Errore del server",
+    "validation": "Errore di validazione",
+    "fileTooLarge": "File troppo grande",
+    "invalidFileType": "Tipo file non supportato",
+    "transferCreationFailed": "Errore durante la creazione",
+    "beneficiaryAddFailed": "Errore durante l'aggiunta",
+    "beneficiaryUpdateFailed": "Errore durante l'aggiornamento",
+    "beneficiaryDeleteFailed": "Errore durante l'eliminazione"
   },
   "success": {
-    "accountCreated": "Cuenta creada correctamente",
-    "loginSuccess": "Sesión iniciada correctamente",
-    "logoutSuccess": "Sesión cerrada correctamente",
-    "profileUpdated": "Perfil actualizado",
-    "passwordChanged": "Contraseña cambiada",
-    "documentUploaded": "Documento subido",
-    "transferCompleted": "Transferencia completada",
-    "transferCreated": "Transferencia creada",
-    "transferScheduled": "Transferencia programada",
-    "transferSubmitted": "Transferencia enviada",
-    "beneficiaryAdded": "Beneficiario añadido",
-    "beneficiaryUpdated": "Beneficiario actualizado",
-    "beneficiaryDeleted": "Beneficiario eliminado"
+    "accountCreated": "Account creato correttamente",
+    "loginSuccess": "Accesso effettuato",
+    "logoutSuccess": "Logout effettuato",
+    "profileUpdated": "Profilo aggiornato",
+    "passwordChanged": "Password cambiata",
+    "documentUploaded": "Documento caricato",
+    "transferCompleted": "Bonifico effettuato",
+    "transferCreated": "Bonifico creato",
+    "transferScheduled": "Bonifico programmato",
+    "transferSubmitted": "Bonifico inviato",
+    "beneficiaryAdded": "Beneficiario aggiunto",
+    "beneficiaryUpdated": "Beneficiario aggiornato",
+    "beneficiaryDeleted": "Beneficiario eliminato"
   },
   "pages": {
     "home": {
-      "title": "Inicio - AmCbunq",
-      "metaDescription": "El banco del futuro, hoy. Gestiona tus finanzas con facilidad con AmCbunq."
+      "title": "Home - AmCbunq",
+      "metaDescription": "La banca del futuro, oggi. Gestisci le tue finanze con semplicità con AmCbunq."
     },
     "features": {
-      "title": "Funcionalidades - AmCbunq",
-      "metaDescription": "Descubre todas las funcionalidades de AmCbunq: cuentas, tarjetas, transferencias y más."
+      "title": "Funzionalità - AmCbunq",
+      "metaDescription": "Scopri tutte le funzionalità di AmCbunq: conti, carte, bonifici e altro."
     },
     "pricing": {
-      "title": "Precios - AmCbunq",
-      "metaDescription": "Tarifas transparentes y asequibles para todas tus necesidades bancarias."
+      "title": "Prezzi - AmCbunq",
+      "metaDescription": "Prezzi trasparenti e accessibili per tutte le tue esigenze bancarie."
+    },
+    "help": {
+      "title": "Aiuto - AmCbunq",
+      "metaDescription": "Centro assistenza AmCbunq. Trova rapidamente risposte alle tue domande."
     }
   },
   "system": {
-    "loading": "Cargando...",
-    "noData": "No hay datos disponibles",
-    "retry": "Reintentar",
-    "connectionError": "Error de conexión",
-    "sessionExpired": "Sesión expirada",
-    "unauthorized": "No autorizado",
-    "serverError": "Error del servidor",
-    "maintenance": "En mantenimiento"
+    "loading": "Caricamento...",
+    "noData": "Nessun dato disponibile",
+    "retry": "Riprova",
+    "connectionError": "Errore di connessione",
+    "sessionExpired": "Sessione scaduta",
+    "unauthorized": "Non autorizzato",
+    "serverError": "Errore del server",
+    "maintenance": "In manutenzione"
   },
   "status": {
-    "active": "Activo",
-    "inactive": "Inactivo",
-    "pending": "Pendiente",
-    "approved": "Aprobado",
-    "rejected": "Rechazado",
-    "expired": "Caducado",
-    "suspended": "Suspendido",
-    "completed": "Completado",
-    "processing": "En proceso",
-    "failed": "Fallido"
+    "active": "Attivo",
+    "inactive": "Inattivo",
+    "pending": "In attesa",
+    "approved": "Approvato",
+    "rejected": "Rifiutato",
+    "expired": "Scaduto",
+    "suspended": "Sospeso",
+    "completed": "Completato",
+    "processing": "In elaborazione",
+    "failed": "Fallito"
   },
   "actions": {
-    "create": "Crear",
-    "read": "Leer",
-    "update": "Actualizar",
-    "delete": "Eliminar",
-    "copy": "Copiar",
-    "share": "Compartir",
-    "download": "Descargar",
-    "upload": "Subir",
-    "print": "Imprimir",
-    "export": "Exportar",
-    "import": "Importar",
-    "send": "Enviar",
-    "receive": "Recibir"
+    "create": "Crea",
+    "read": "Leggi",
+    "update": "Aggiorna",
+    "delete": "Elimina",
+    "copy": "Copia",
+    "share": "Condividi",
+    "download": "Scarica",
+    "upload": "Carica",
+    "print": "Stampa",
+    "export": "Esporta",
+    "import": "Importa",
+    "send": "Invia",
+    "receive": "Ricevi"
   },
   "notifications": {
-    "newMessage": "Nuevo mensaje",
-    "newTransaction": "Nueva transacción",
-    "accountUpdated": "Cuenta actualizada",
-    "cardBlocked": "Tarjeta bloqueada",
-    "transferCompleted": "Transferencia completada",
-    "documentRequired": "Documento requerido",
-    "maintenanceScheduled": "Mantenimiento programado"
+    "newMessage": "Nuovo messaggio",
+    "newTransaction": "Nuova transazione",
+    "accountUpdated": "Account aggiornato",
+    "cardBlocked": "Carta bloccata",
+    "transferCompleted": "Bonifico completato",
+    "documentRequired": "Documento richiesto",
+    "maintenanceScheduled": "Manutenzione programmata"
   },
   "forms": {
-    "required": "Campo obligatorio",
-    "invalid": "Formato inválido",
-    "tooShort": "Demasiado corto",
-    "tooLong": "Demasiado largo",
-    "passwordMismatch": "Las contraseñas no coinciden",
-    "emailInvalid": "Email inválido",
-    "phoneInvalid": "Número de teléfono inválido",
-    "dateInvalid": "Fecha inválida",
-    "amountInvalid": "Cantidad inválida",
-    "ibanInvalid": "IBAN inválido"
+    "required": "Campo obbligatorio",
+    "invalid": "Formato non valido",
+    "tooShort": "Troppo corto",
+    "tooLong": "Troppo lungo",
+    "passwordMismatch": "Le password non corrispondono",
+    "emailInvalid": "Email non valida",
+    "phoneInvalid": "Numero di telefono non valido",
+    "dateInvalid": "Data non valida",
+    "amountInvalid": "Importo non valido",
+    "ibanInvalid": "IBAN non valido"
   },
   "time": {
-    "now": "Ahora",
-    "today": "Hoy",
-    "yesterday": "Ayer",
-    "tomorrow": "Mañana",
-    "thisWeek": "Esta semana",
-    "lastWeek": "Semana pasada",
-    "thisMonth": "Este mes",
-    "lastMonth": "Mes pasado",
-    "thisYear": "Este año",
-    "lastYear": "Año pasado"
+    "now": "Ora",
+    "today": "Oggi",
+    "yesterday": "Ieri",
+    "tomorrow": "Domani",
+    "thisWeek": "Questa settimana",
+    "lastWeek": "Settimana scorsa",
+    "thisMonth": "Questo mese",
+    "lastMonth": "Mese scorso",
+    "thisYear": "Quest'anno",
+    "lastYear": "Anno scorso"
   },
   "currency": {
     "eur": "Euro",
-    "usd": "Dólar estadounidense",
-    "gbp": "Libra esterlina",
-    "chf": "Franco suizo",
-    "jpy": "Yen japonés"
+    "usd": "Dollaro USA",
+    "gbp": "Sterlina",
+    "chf": "Franco svizzero",
+    "jpy": "Yen giapponese"
   },
   "languages": {
-    "fr": "Francés",
-    "en": "Inglés",
+    "fr": "Français",
+    "en": "English",
     "es": "Español",
-    "pt": "Portugués",
+    "pt": "Português",
     "it": "Italiano",
-    "nl": "Holandés",
-    "de": "Alemán"
+    "nl": "Nederlands",
+    "de": "Deutsch"
   },
   "validation": {
     "emailInvalid": "Indirizzo email non valido",
@@ -1422,239 +1818,77 @@
     "residenceCountry": "Es: Italia"
   },
   "payments": {
-    "title": "Pagos",
-    "quick": "Rápidos"
+    "title": "Pagamenti",
+    "quick": "Rapidi"
   },
   "offers": {
-    "special": "Oferta Especial",
-    "savingsAccount": "Abre una cuenta de ahorro y benefíciate de un 2% de interés durante 6 meses!"
+    "special": "Offerta Speciale",
+    "savingsAccount": "Apri un conto risparmio e beneficia di un 2% di interesse per 6 mesi!"
   },
   "protection": {
-    "premium": "Protección Premium",
-    "description": "Protege tus transacciones con nuestro seguro avanzado contra fraudes."
-  },
-  "referral": {
-    "welcome": "¡Regalo de bienvenida!",
-    "description": "Recomienda a un amigo y recibid 50€ cada uno. Condiciones aplicables.",
-    "refer": "Recomendar"
-  },
-  "help": {
-    "title": "Centro di assistenza",
-    "subtitle": "Trova rapidamente le risposte alle tue domande",
-    "searchPlaceholder": "Cerca nell'assistenza...",
-    "faqTitle": "Domande frequenti",
-    "faqSubtitle": "Le domande più frequenti dei nostri clienti",
-    "contactTitle": "Hai bisogno di aiuto?",
-    "contactSubtitle": "Il nostro team è qui per aiutarti",
-    "liveChat": "Chat in diretta",
-    "liveChatDescription": "Ottieni una risposta immediata",
-    "startChat": "Avvia la chat",
-    "email": "Email",
-    "emailDescription": "Risposta entro 24h",
-    "sendEmail": "Invia email",
-    "phone": "Telefono",
-    "phoneDescription": "Supporto 24/7",
-    "callUs": "Chiamaci",
-    "quickLinks": "Link rapidi",
-    "quickLinksSubtitle": "Accedi rapidamente alle risorse utili",
-    "gettingStarted": "Primi passi",
-    "gettingStartedDescription": "Guida di avvio rapido",
-    "accountSecurity": "Sicurezza dell'account",
-    "accountSecurityDescription": "Proteggi il tuo account",
-    "transfers": "Bonifici",
-    "transfersDescription": "Effettua bonifici",
-    "troubleshooting": "Risoluzione problemi",
-    "troubleshootingDescription": "Risolvi i problemi",
-    "learnMore": "Scopri di più",
-    "search": {
-      "placeholder": "Cerca nell'assistenza..."
-    },
-    "contact": {
-      "phone": {
-        "title": "Telefono",
-        "description": "Servizio clienti 24h/7g",
-        "number": "01 23 45 67 89",
-        "action": "Chiama ora"
-      },
-      "chat": {
-        "title": "Chat online",
-        "description": "Risposta immediata",
-        "availability": "Disponibile 24h/7g",
-        "action": "Avvia la chat"
-      },
-      "email": {
-        "title": "Email",
-        "description": "Risposta entro 24h",
-        "address": "support@amcbunq.fr",
-        "action": "Invia email",
-        "subject": "Richiesta di aiuto"
-      }
-    },
-    "categories": {
-      "title": "Domande per categoria",
-      "all": "Tutte le domande (8)",
-      "account": "Conto bancario (2)",
-      "transfers": "Bonifici (1)",
-      "cards": "Carte bancarie (1)",
-      "security": "Sicurezza (2)",
-      "fees": "Tariffe (1)",
-      "documents": "Documenti (1)"
-    },
-    "faq": {
-      "title": "Domande frequenti",
-      "results": "domanda trovata",
-      "resultsPlural": "domande trovate",
-      "noResults": {
-        "title": "Nessuna domanda trovata",
-        "description": "Prova a modificare i tuoi criteri di ricerca o contatta il nostro supporto."
-      },
-      "accountOpening": {
-        "question": "Come aprire un conto bancario?",
-        "answer": "Per aprire un conto, vai sul nostro sito web e clicca su \"Apri un conto\". Dovrai fornire le tue informazioni personali, un documento d'identità e un giustificativo di domicilio. Il processo richiede generalmente 24-48h."
-      },
-      "transfer": {
-        "question": "Come effettuare un bonifico?",
-        "answer": "Accedi al tuo spazio clienti, vai nella sezione \"Bonifici\" e segui i passaggi. Avrai bisogno dell'IBAN del beneficiario. I bonifici SEPA sono generalmente elaborati entro 24h."
-      },
-      "cardBlocked": {
-        "question": "La mia carta è stata bloccata, cosa fare?",
-        "answer": "Se la tua carta è bloccata, contatta immediatamente il nostro servizio clienti al 01 23 45 67 89. Potremo sbloccarla o inviartene una nuova se necessario."
-      },
-      "passwordChange": {
-        "question": "Come cambiare la mia password?",
-        "answer": "Vai in \"Impostazioni\" > \"Sicurezza\" > \"Cambia password\". Dovrai inserire la password attuale e la nuova password due volte."
-      },
-      "bankingFees": {
-        "question": "Quali sono le commissioni bancarie?",
-        "answer": "Le nostre tariffe variano in base al tipo di conto. Consulta la nostra griglia tariffaria nella sezione \"Tariffe\" o contatta il nostro servizio clienti per maggiori dettagli."
-      },
-      "twoFactor": {
-        "question": "Come attivare l'autenticazione a due fattori?",
-        "answer": "In \"Impostazioni\" > \"Sicurezza\", puoi attivare l'autenticazione a due fattori. Riceverai un codice via SMS ad ogni accesso."
-      },
-      "ibanChange": {
-        "question": "Il mio IBAN è cambiato?",
-        "answer": "No, il tuo IBAN rimane lo stesso tranne in caso di cambio di conto. Puoi consultarlo nella sezione IBAN del tuo spazio clienti."
-      },
-      "downloadStatements": {
-        "question": "Come scaricare i miei estratti conto?",
-        "answer": "Vai in Cronologia > seleziona il periodo > clicca su Scarica. Puoi scegliere il formato PDF o CSV."
-      }
-    },
-    "faq1": {
-      "question": "Come aprire un conto bancario?",
-      "answer": "Per aprire un conto, vai sul nostro sito web e clicca su \"Apri conto\". Dovrai fornire le tue informazioni personali, un documento d'identità e una prova di residenza. Il processo richiede generalmente 24-48h."
-    },
-    "faq2": {
-      "question": "Come fare un bonifico?",
-      "answer": "Accedi alla tua area cliente, vai nella sezione \"Bonifici\" e segui i passaggi. Avrai bisogno dell'IBAN del beneficiario. I bonifici SEPA sono generalmente elaborati entro 24h."
-    },
-    "faq3": {
-      "question": "La mia carta è stata bloccata, cosa devo fare?",
-      "answer": "Se la tua carta è bloccata, contatta immediatamente il nostro servizio clienti al 01 23 45 67 89. Possiamo sbloccarla o inviartene una nuova se necessario."
-    },
-    "faq4": {
-      "question": "Come cambiare la mia password?",
-      "answer": "Vai su \"Impostazioni\" > \"Sicurezza\" > \"Cambia password\". Dovrai inserire la tua password attuale e la nuova password due volte."
-    },
-    "faq5": {
-      "question": "Quali sono le commissioni bancarie?",
-      "answer": "Le nostre commissioni variano in base al tipo di conto. Consulta la nostra griglia tariffaria nella sezione \"Prezzi\" o contatta il nostro servizio clienti per maggiori dettagli."
-    },
-    "resources": {
-      "title": "Risorse utili",
-      "guide": {
-        "title": "Guida all'uso"
-      },
-      "conditions": {
-        "title": "Condizioni generali"
-      },
-      "privacy": {
-        "title": "Politica sulla privacy"
-      },
-      "fees": {
-        "title": "Griglia tariffaria"
-      }
-    },
-    "importantInfo": {
-      "title": "Informazioni importanti",
-      "openingHours": "Orari di apertura: 24h/7g",
-      "emailResponse": "Tempo di risposta email: massimo 24h",
-      "chatResponse": "Tempo di risposta chat: Immediato",
-      "emergencyNumber": "Numero di emergenza: 01 23 45 67 89"
-    },
-    "stillNeedHelp": {
-      "title": "Non hai trovato la tua risposta?",
-      "description": "Il nostro team di supporto è qui per aiutarti. Contattaci per telefono, chat o email.",
-      "contactButton": "Contatta il supporto",
-      "appointmentButton": "Prenota un appuntamento"
-    },
-    "alerts": {
-      "appointmentComingSoon": "Funzionalità di prenotazione appuntamenti in arrivo. Contattaci per telefono al 01 23 45 67 89.",
-      "userGuideRedirect": "Guida all'uso - Reindirizzamento alla guida PDF",
-      "pricingRedirect": "Griglia tariffaria - Reindirizzamento alla pagina delle tariffe"
-    }
+    "premium": "Protezione Premium",
+    "description": "Proteggi le tue transazioni con la nostra assicurazione avanzata contro le frodi."
   },
   "documents": {
-    "title": "I Miei Documenti",
-    "subtitle": "Accedi a tutti i tuoi documenti bancari in sicurezza",
+    "title": "I miei documenti",
+    "subtitle": "Accedi a tutti i tuoi documenti bancari in modo sicuro",
     "showDocumentation": "Mostra documentazione",
     "hideDocumentation": "Nascondi documentazione",
     "types": {
       "contract": "Contratto",
       "policy": "Politica",
-      "terms": "Condizioni",
+      "terms": "Termini",
       "legal": "Legale",
       "document": "Documento"
     },
     "list": {
       "accountContract": {
-        "title": "Contratto di conto bancario",
-        "description": "Condizioni generali del tuo conto AmCbunq",
-        "detailedDescription": "Questo contratto definisce le condizioni generali di apertura e utilizzo del tuo conto bancario AmCbunq. Include i diritti e gli obblighi di ciascuna parte, le condizioni di funzionamento del conto, le commissioni applicabili e le modalità di recesso.",
+        "title": "Contratto Conto Bancario",
+        "description": "Termini e condizioni generali del tuo conto AmCbunq",
+        "detailedDescription": "Questo contratto definisce i termini e condizioni generali per l'apertura e l'uso del tuo conto bancario AmCbunq. Include i diritti e obblighi di ciascuna parte, le condizioni di funzionamento del conto, le tariffe applicabili e le procedure di chiusura.",
         "usage": "Consulta questo documento per comprendere i tuoi diritti e obblighi come titolare del conto. È importante conservarlo poiché può essere richiesto per pratiche amministrative o in caso di controversia.",
         "importance": "Documento legale obbligatorio",
         "validityPeriod": "Valido fino al 31/12/2024"
       },
       "privacyPolicy": {
-        "title": "Politica sulla privacy",
+        "title": "Politica sulla Privacy",
         "description": "Come proteggiamo i tuoi dati personali",
-        "detailedDescription": "Questa politica dettaglia come AmCbunq raccoglie, utilizza, memorizza e protegge i tuoi dati personali in conformità con il GDPR. Spiega i tuoi diritti in materia di protezione dei dati e come esercitarli.",
-        "usage": "Leggi attentamente questa politica per comprendere come i tuoi dati sono trattati. Puoi esercitare i tuoi diritti (accesso, rettifica, cancellazione) contattando il nostro responsabile della protezione dei dati.",
+        "detailedDescription": "Questa politica dettaglia come AmCbunq raccoglie, utilizza, archivia e protegge i tuoi dati personali in conformità al GDPR. Spiega i tuoi diritti in materia di protezione dei dati e come esercitarli.",
+        "usage": "Leggi attentamente questa politica per capire come vengono elaborati i tuoi dati. Puoi esercitare i tuoi diritti (accesso, rettifica, cancellazione) contattando il nostro responsabile della protezione dei dati.",
         "importance": "Conformità GDPR",
-        "validityPeriod": "Aggiornamento trimestrale"
+        "validityPeriod": "Aggiornamenti trimestrali"
       },
       "termsOfService": {
-        "title": "Condizioni di utilizzo",
-        "description": "Regole di utilizzo dei nostri servizi bancari",
-        "detailedDescription": "Queste condizioni regolano l'utilizzo di tutti i nostri servizi bancari online, mobili e fisici. Coprono le regole di sicurezza, i limiti di utilizzo, le responsabilità e le sanzioni in caso di mancato rispetto.",
-        "usage": "Accetta queste condizioni per utilizzare i nostri servizi. Possono essere modificate con un preavviso di 30 giorni. In caso di modifica, sarai notificato via email e nel tuo spazio clienti.",
+        "title": "Termini di Servizio",
+        "description": "Regole per usare i nostri servizi bancari",
+        "detailedDescription": "Questi termini regolano l'uso di tutti i nostri servizi bancari online, mobili e fisici. Coprono le regole di sicurezza, limiti d'uso, responsabilità e sanzioni in caso di violazione.",
+        "usage": "Accetta questi termini per usare i nostri servizi. Possono essere modificati con 30 giorni di preavviso. In caso di modifica, sarai notificato via email e nella tua area cliente.",
         "importance": "Condizioni di accesso ai servizi",
-        "validityPeriod": "Versione in vigore"
+        "validityPeriod": "Versione vigente"
       },
       "legalNotice": {
-        "title": "Avviso legale",
+        "title": "Avviso Legale",
         "description": "Informazioni legali e regolamentari",
-        "detailedDescription": "Questo avviso contiene le informazioni legali obbligatorie su AmCbunq: identità dell'istituto, autorizzazioni bancarie, supervisione, garanzie dei depositi e coordinate delle autorità di controllo.",
+        "detailedDescription": "Questo avviso contiene le informazioni legali obbligatorie su AmCbunq: identità dell'istituto, autorizzazioni bancarie, supervisione, garanzie sui depositi e dati di contatto delle autorità di vigilanza.",
         "usage": "Consulta questo avviso per verificare la legalità delle nostre attività e conoscere le tue garanzie. Queste informazioni sono importanti per la tua sicurezza e la conformità dei nostri servizi.",
         "importance": "Obbligo legale",
-        "validityPeriod": "Aggiornamento annuale"
+        "validityPeriod": "Aggiornamenti annuali"
       },
       "cardContract": {
-        "title": "Contratto di carta bancaria",
+        "title": "Contratto Carta Bancaria",
         "description": "Condizioni specifiche per la tua carta bancaria",
-        "detailedDescription": "Questo contratto dettaglia le condizioni di emissione e utilizzo della tua carta bancaria: limiti, commissioni, assicurazioni, responsabilità in caso di smarrimento o furto e procedure di contestazione.",
-        "usage": "Conserva questo documento con la tua carta. Contiene le informazioni essenziali sui tuoi diritti e obblighi, in particolare in caso di frode o contestazione di transazione.",
-        "importance": "Protezione giuridica",
-        "validityPeriod": "Valido per la durata di validità della carta"
+        "detailedDescription": "Questo contratto dettaglia le condizioni di emissione e uso della tua carta bancaria: limiti, tariffe, assicurazioni, responsabilità in caso di smarrimento o furto, e procedure di contestazione.",
+        "usage": "Conserva questo documento con la tua carta. Contiene informazioni essenziali sui tuoi diritti e obblighi, specialmente in caso di frode o contestazione di transazione.",
+        "importance": "Protezione legale",
+        "validityPeriod": "Valido per la durata della carta"
       },
       "securityPolicy": {
-        "title": "Politica di sicurezza",
+        "title": "Politica di Sicurezza",
         "description": "Misure di sicurezza per proteggere il tuo conto",
-        "detailedDescription": "Questa politica dettaglia le misure di sicurezza implementate da AmCbunq per proteggere il tuo conto e i tuoi dati: autenticazione multi-fattori, monitoraggio delle transazioni, crittografia dei dati e procedure in caso di incidente.",
-        "usage": "Segui queste raccomandazioni per proteggere il tuo conto. In caso di sospetta compromissione, contatta immediatamente il nostro servizio sicurezza.",
+        "detailedDescription": "Questa politica dettaglia le misure di sicurezza implementate da AmCbunq per proteggere il tuo conto e dati: autenticazione multi-fattore, monitoraggio transazioni, crittografia dati e procedure in caso di incidente.",
+        "usage": "Segui queste raccomandazioni per proteggere il tuo conto. In caso di sospetto compromesso, contatta immediatamente il nostro servizio sicurezza.",
         "importance": "Sicurezza del conto",
-        "validityPeriod": "Aggiornamento continuo"
+        "validityPeriod": "Aggiornamenti continui"
       }
     },
     "documentInfo": {
@@ -1664,7 +1898,7 @@
       "validity": "Validità"
     },
     "actions": {
-      "view": "Visualizza",
+      "view": "Consulta",
       "download": "Scarica",
       "downloading": "Download in corso..."
     },
@@ -1678,29 +1912,29 @@
         "message": "Il documento {{title}} è stato scaricato con successo."
       },
       "downloadError": {
-        "title": "Errore di download",
+        "title": "Errore download",
         "message": "Si è verificato un errore durante il download del documento."
       }
     },
     "documentation": {
-      "title": "Documentazione dei Documenti",
+      "title": "Documentazione Documenti",
       "types": {
         "title": "Tipi di documenti",
         "contract": {
-          "description": "Contratti bancari e condizioni generali"
+          "description": "Contratti bancari e termini generali"
         },
         "policy": {
           "description": "Politiche sulla privacy e sicurezza"
         },
         "terms": {
-          "description": "Condizioni di utilizzo dei servizi"
+          "description": "Termini di uso dei servizi"
         },
         "legal": {
           "description": "Avvisi legali e informazioni regolamentari"
         }
       },
       "format": {
-        "title": "Formato di download",
+        "title": "Formato download",
         "pdf": "Formato PDF standard",
         "compatible": "Compatibile con tutti i lettori",
         "signature": "Firma elettronica inclusa",
@@ -1710,7 +1944,7 @@
         "title": "Informazioni importanti",
         "keepCopy": "Conserva una copia dei tuoi documenti",
         "regularUpdates": "I documenti sono aggiornati regolarmente",
-        "notifications": "Sarai notificato delle modifiche",
+        "notifications": "Sarai notificato dei cambiamenti",
         "contactLegal": "Contatta il servizio legale se necessario"
       }
     },
@@ -1720,14 +1954,14 @@
         "title": "Documenti legali",
         "upToDate": "Tutti i documenti sono aggiornati",
         "secureDownload": "Download sicuro garantito",
-        "retention": "Conservazione conforme alla normativa",
-        "notifications": "Notifiche automatiche degli aggiornamenti"
+        "retention": "Conservazione conforme alla regolamentazione",
+        "notifications": "Notifiche automatiche di aggiornamenti"
       },
       "security": {
         "title": "Sicurezza e conformità",
         "protected": "Documenti protetti da crittografia",
         "access": "Accesso controllato e tracciato",
-        "history": "Cronologia delle consultazioni disponibile",
+        "history": "Cronologia consultazioni disponibile",
         "signature": "Firma elettronica verificata"
       }
     },
@@ -1747,20 +1981,20 @@
       "pending": "La tua richiesta di verifica è in fase di elaborazione. Ti notificheremo una volta completata."
     },
     "features": {
-      "secureAccount": "Account sicuro",
+      "secureAccount": "Conto sicuro",
       "personalizedFeatures": "Funzionalità personalizzate"
     }
   },
   "modernVerificationState": {
     "verificationInProgress": "Verifica in corso",
-    "dossierEnExamen": "Dossier in esame",
-    "dossierEnExamenDescription": "Il tuo dossier di verifica identità è attualmente in fase di revisione dal nostro team. Questo processo richiede solitamente 24-48 ore.",
-    "voirStatut": "Visualizza stato",
+    "dossierEnExamen": "Dossier in revisione",
+    "dossierEnExamenDescription": "Il tuo dossier di verifica identità è in fase di revisione da parte del nostro team. Questo processo richiede solitamente 24-48 ore.",
+    "voirStatut": "Vedi stato",
     "processusEnCours": "Processo in corso",
     "processusEnCoursDescription": "Il nostro team di verifica sta esaminando attentamente i tuoi documenti per garantire la conformità alle normative bancarie.",
     "needHelp": "Hai bisogno di aiuto? Contattaci al {{phoneNumber}}",
     "verificationRejetee": "Verifica rifiutata",
-    "verificationRejeteeDescription": "La tua richiesta di verifica è stata rifiutata. Controlla i motivi e invia nuovi documenti.",
+    "verificationRejeteeDescription": "La tua richiesta di verifica è stata rifiutata. Per favore controlla le ragioni e invia nuovi documenti.",
     "verificationRequise": "Verifica identità richiesta",
     "verificationRequiseDescription": "Per accedere a tutte le funzionalità bancarie, completa la verifica della tua identità fornendo i documenti richiesti.",
     "verificationIdentite": "Verifica identità",
@@ -1783,6 +2017,13 @@
       "description": "Chat live con il nostro team di supporto"
     },
     "securityGuaranteed": "Sicurezza garantita",
-    "securityDescription": "I tuoi dati sono protetti da misure di sécurité di livello bancario."
+    "securityDescription": "I tuoi dati sono protetti da misure di sicurezza di livello bancario."
+  },
+  "summary": {
+    "title": "Riepilogo carte",
+    "activeCards": "Carte attive",
+    "pendingCards": "In corso",
+    "rejectedCards": "Rifiutate",
+    "noCards": "Nessuna carta"
   }
 }

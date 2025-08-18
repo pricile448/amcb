@@ -38,7 +38,7 @@ import DashboardHelpPage from './pages/dashboard/HelpPage'
 import DocumentsPage from './pages/dashboard/DocumentsPage'
 import MessagesPage from './pages/dashboard/MessagesPage'
 import VerificationPage from './pages/dashboard/VerificationPage'
-import KycSuccessPage from './pages/dashboard/KycSuccessPage'
+
 
 // Auth Guard
 import ProtectedRoute from './components/ProtectedRoute'
@@ -93,7 +93,7 @@ function App() {
             <Route path="documents" element={<DocumentsPage />} />
             <Route path="messages" element={<MessagesPage />} />
             <Route path="verification" element={<VerificationPage />} />
-            <Route path="kyc-success" element={<KycSuccessPage />} />
+
           </Route>
         </Route>
       </Routes>

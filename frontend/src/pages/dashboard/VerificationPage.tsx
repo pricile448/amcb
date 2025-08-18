@@ -30,10 +30,25 @@ import { logger } from '../../utils/logger';
 import KycSubmissionsList from "../../components/KycSubmissionsList";
 
 const VerificationPage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { showSuccess, showError } = useNotifications();
   const navigate = useNavigate();
   const { lang } = useParams<{ lang: string }>();
+  
+  // Force re-render when language changes
+  const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
+  
+  useEffect(() => {
+    const handleLanguageChange = (lng: string) => {
+      setCurrentLanguage(lng);
+    };
+    
+    i18n.on('languageChanged', handleLanguageChange);
+    
+    return () => {
+      i18n.off('languageChanged', handleLanguageChange);
+    };
+  }, [i18n]);
   
   // ✅ NOUVEAU: Utiliser le hook useKycSync pour la synchronisation en temps réel
   const { 
@@ -232,7 +247,7 @@ const VerificationPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50" key={currentLanguage}>
       <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         {/* ✅ REFACTORISÉ: En-tête avec navigation et titre */}
         <div className="mb-6">
@@ -297,41 +312,10 @@ const VerificationPage: React.FC = () => {
         {kycStatus && !isVerified && (
           <div className="mb-6">
             {isPending ? (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-                <div className="flex items-start space-x-3">
-                  <Clock className="w-6 h-6 text-yellow-600 flex-shrink-0" />
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-yellow-800 mb-2">
-                      {t('kyc.pending.title')}
-                    </h3>
-                    <p className="text-yellow-700 mb-3">
-                      {t('kyc.pending.message')}
-                    </p>
-                    <p className="text-sm text-yellow-600">
-                      {t('kyc.pending.timeframe')}
-                    </p>
-                    
-                    {/* ✅ REFACTORISÉ: Section documents soumis intégrée */}
-                    {submissions.length > 0 && (
-                      <div className="mt-4 pt-4 border-t border-yellow-200">
-                        <h4 className="font-medium text-yellow-800 mb-3">
-                          {t('kyc.pending.documentsSubmitted')}
-                        </h4>
-                        <div className="space-y-2">
-                          {submissions.map((submission) => (
-                            <div key={submission.id} className="flex items-center space-x-2">
-                              <CheckCircle className="w-4 h-4 text-green-500" />
-                              <span className="text-sm text-yellow-700">
-                                {t(`kyc.${submission.documentType}`)}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
+              <PendingStatusSection 
+                submissions={submissions}
+                currentLanguage={currentLanguage}
+              />
             ) : isRejected ? (
               <div className="bg-red-50 border border-red-200 rounded-lg p-6">
                 <div className="flex items-start space-x-3">
@@ -623,6 +607,52 @@ const VerificationPage: React.FC = () => {
             </div>
           </div>
         )}
+      </div>
+    </div>
+  );
+};
+
+// Composant séparé pour la section pending status
+const PendingStatusSection: React.FC<{ 
+  submissions: KYCSubmission[]; 
+  currentLanguage: string; 
+}> = ({ submissions, currentLanguage }) => {
+  const { t } = useTranslation();
+  
+  return (
+    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6" key={currentLanguage}>
+      <div className="flex items-start space-x-3">
+        <Clock className="w-6 h-6 text-yellow-600 flex-shrink-0" />
+        <div className="flex-1">
+          <h3 className="text-lg font-semibold text-yellow-800 mb-2">
+            {t('kyc.pending.title')}
+          </h3>
+          <p className="text-yellow-700 mb-3">
+            {t('kyc.pending.message')}
+          </p>
+          <p className="text-sm text-yellow-600">
+            {t('kyc.pending.timeframe')}
+          </p>
+          
+          {/* Section documents soumis */}
+          {submissions.length > 0 && (
+            <div className="mt-4 pt-4 border-t border-yellow-200">
+              <h4 className="font-medium text-yellow-800 mb-3">
+                {t('kyc.pending.documentsSubmitted')}
+              </h4>
+              <div className="space-y-2">
+                {submissions.map((submission) => (
+                  <div key={submission.id} className="flex items-center space-x-2">
+                    <CheckCircle className="w-4 h-4 text-green-500" />
+                    <span className="text-sm text-yellow-700">
+                      {t(`kyc.${submission.documentType}`)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -189,13 +189,26 @@ export const useKycSync = () => {
     if (savedStatus) {
       try {
         const parsedStatus = JSON.parse(savedStatus);
-        setKycStatus(parsedStatus);
-        setLastSync(new Date()); // Update lastSync
+        // ✅ NOUVEAU: Vérifier que le statut n'est pas trop ancien (max 5 minutes)
+        const statusAge = Date.now() - new Date(parsedStatus.lastUpdated).getTime();
+        const maxAge = 5 * 60 * 1000; // 5 minutes
+        
+        if (statusAge < maxAge) {
+          setKycStatus(parsedStatus);
+          setLastSync(new Date(parsedStatus.lastUpdated));
+          logger.debug('useKycSync: Statut KYC chargé depuis localStorage (récent):', parsedStatus);
+        } else {
+          logger.debug('useKycSync: Statut localStorage trop ancien, attente Firestore...');
+          // Ne pas afficher le statut ancien, attendre Firestore
+        }
       } catch (err) {
         logger.error('useKycSync: Erreur parsing localStorage:', err);
       }
     }
-  }, []);
+    
+    // ✅ NOUVEAU: Démarrer la synchronisation immédiatement
+    syncKycStatus();
+  }, [syncKycStatus]);
 
   return {
     kycStatus,

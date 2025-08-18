@@ -156,11 +156,30 @@ class KYCService {
       const userRef = doc(db, 'users', userId);
       const userDoc = await getDoc(userRef);
 
+      let currentData: any;
+      
       if (!userDoc.exists()) {
-        throw new Error('Utilisateur non trouvé');
+        // ✅ CRÉER le document utilisateur s'il n'existe pas
+        logger.debug('KYCService.updateKYCStatus - Création document utilisateur:', userId);
+        
+        const newUserData = {
+          id: userId,
+          kycStatus: status,
+          kycStatusDetails: {
+            status,
+            lastUpdated: new Date(),
+            submittedAt: status === KYC_STATUS.PENDING ? new Date() : undefined,
+          },
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+        };
+        
+        await setDoc(userRef, newUserData);
+        logger.success('KYCService.updateKYCStatus - Document utilisateur créé:', { userId, status });
+        return;
       }
 
-      const currentData = userDoc.data();
+      currentData = userDoc.data();
       
       // ✅ Gérer les deux formats: chaîne simple OU objet complet
       let currentKYCStatus: any;

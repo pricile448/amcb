@@ -235,7 +235,7 @@ const DashboardLayout: React.FC = () => {
 
 
   return (
-    <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="dashboard-layout flex h-screen bg-gray-50 dark:bg-gray-900">
       {/* Sidebar */}
       <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-gradient-to-b from-blue-600 to-blue-800 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 ${
         isSidebarOpen ? "translate-x-0" : "-translate-x-full"
@@ -328,7 +328,7 @@ const DashboardLayout: React.FC = () => {
                   ) : userStatus === 'pending' ? (
                     <>
                       <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                      <span className="text-blue-400 text-xs">{t('kyc.pending.title')}</span>
+                      <span className="text-blue-400 text-xs">{t('kyc.kycPending')}</span>
                     </>
                   ) : (
                     <>

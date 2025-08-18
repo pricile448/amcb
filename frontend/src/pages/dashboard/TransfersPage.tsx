@@ -1,173 +1,297 @@
-import React, { useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
-import { 
-  Send, 
-  UserPlus, 
-  Clock, 
-  Calendar, 
-  ArrowRight, 
-  Users, 
-  CreditCard, 
-  Building,
-  Plus,
+import React, { useState, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
+import {
+  ArrowLeftRight,
+  ExternalLink,
   Search,
   Filter,
   Download,
-  Edit,
+  Calendar,
+  Loader2,
+  ChevronDown,
+  AlertCircle,
+  CheckCircle2,
+  Clock,
+  X,
+  Plus,
+  Send,
+  Clock as ClockIcon,
+  User,
   Trash2,
-  Star,
-  Shield
-} from "lucide-react";
-import { FirebaseDataService, FirebaseBeneficiary } from '../../services/firebaseData';
-import { parseFirestoreDate } from '../../utils/dateUtils';
-import { useNotifications, useKycSync } from '../../hooks/useNotifications';
-import NotificationContainer from '../../components/NotificationContainer';
-import ConfirmationDialog from '../../components/ConfirmationDialog';
-import VerificationState from '../../components/VerificationState';
-import { logger } from '../../utils/logger';
+  Edit
+} from 'lucide-react';
+import { formatCurrency, formatDate, formatReference } from '../../utils/formatters';
+import { useAuth } from "../../hooks/useAuth";
+import { useKycSync } from '../../hooks/useKycSync';
+import KycProtectedContent from '../../components/KycProtectedContent';
+import { collection, query, where, getDocs, doc, getDoc, onSnapshot, addDoc, updateDoc, deleteDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../../config/firebase';
+
+// Types
+interface Transfer {
+  id: string;
+  date: Date;
+  description: string;
+  amount: number;
+  type: 'internal' | 'external' | 'recurring';
+  status: 'completed' | 'pending' | 'processing' | 'failed' | 'cancelled';
+  fromAccount: string;
+  fromAccountId?: string;
+  toAccount: string;
+  toAccountId?: string;
+  reference: string;
+  category?: string;
+  fee?: number;
+  exchangeRate?: number;
+  scheduledDate?: Date;
+  beneficiaryId?: string;
+  transferType?: 'internal' | 'external' | 'scheduled';
+  adminStatus?: 'pending_review' | 'approved' | 'rejected';
+  adminNotes?: string;
+}
 
 interface Beneficiary {
   id: string;
   name: string;
   iban: string;
-  bic: string;
-  bank: string;
-  isFavorite: boolean;
+  bankName: string;
+  accountType: string;
+  createdAt: Date;
   lastUsed?: Date;
 }
 
-interface Transfer {
-  id: string;
-  type: 'internal' | 'external' | 'scheduled';
-  fromAccount: string;
-  toAccount: string;
+interface TransferLimit {
+  type: string;
   amount: number;
+  currency: string;
   description: string;
-  status: 'pending' | 'completed' | 'failed' | 'scheduled';
-  date: Date;
-  scheduledDate?: Date;
-  beneficiaryName?: string; // Add beneficiary name field
-  category?: string; // Add category field
 }
 
+interface FilterOptions {
+  type: string;
+  status: string;
+  dateRange: string;
+  amount: string;
+}
+
+// Composant principal
 const TransfersPage: React.FC = () => {
-  const { t } = useTranslation();
-  const { syncKycStatus } = useKycSync();
-  const [activeTab, setActiveTab] = useState<'new' | 'beneficiaries' | 'scheduled' | 'history'>('new');
-  const [showAddBeneficiary, setShowAddBeneficiary] = useState(false);
-  const [showTransferForm, setShowTransferForm] = useState(false);
-  const [showEditBeneficiary, setShowEditBeneficiary] = useState(false);
-  const [transferType, setTransferType] = useState<'internal' | 'external' | 'scheduled'>('internal');
-  const [loading, setLoading] = useState(true);
-  const [beneficiaries, setBeneficiaries] = useState<Beneficiary[]>([]);
-  const [transfers, setTransfers] = useState<Transfer[]>([]);
-  const [userStatus, setUserStatus] = useState<string>('pending');
-  const [isUnverified, setIsUnverified] = useState(false);
+  const { t, i18n } = useTranslation();
+  const { lang } = useParams<{ lang: string }>();
+  const { user } = useAuth();
+  const { kycStatus, isUnverified } = useKycSync();
   
-  // États pour les formulaires
+  // États
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filters, setFilters] = useState<FilterOptions>({
+    type: "all",
+    status: "all",
+    dateRange: "all",
+    amount: "all"
+  });
+  const [transfers, setTransfers] = useState<Transfer[]>([]);
+  const [beneficiaries, setBeneficiaries] = useState<Beneficiary[]>([]);
+  const [scheduledTransfers, setScheduledTransfers] = useState<Transfer[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
+  const [selectedTransfer, setSelectedTransfer] = useState<Transfer | null>(null);
+  const [selectedBeneficiary, setSelectedBeneficiary] = useState<Beneficiary | null>(null);
+  const [activeTab, setActiveTab] = useState<'new' | 'beneficiaries' | 'scheduled'>('new');
+  
+  // États de pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+  const [showNewTransferModal, setShowNewTransferModal] = useState(false);
+  const [showBeneficiaryModal, setShowBeneficiaryModal] = useState(false);
+  const [showScheduledTransferModal, setShowScheduledTransferModal] = useState(false);
+  const [transferType, setTransferType] = useState<'internal' | 'external' | 'scheduled'>('internal');
+  const [showExternalTransferDialog, setShowExternalTransferDialog] = useState(false);
+  const [pendingTransfer, setPendingTransfer] = useState<any>(null);
   const [formData, setFormData] = useState({
-    beneficiaryName: '',
-    beneficiaryIban: '',
-    beneficiaryBic: '',
-    beneficiaryBank: '',
-    isFavorite: false,
-    fromAccount: '',
-    toAccount: '',
     amount: '',
     description: '',
-    scheduledDate: ''
+    fromAccount: '',
+    toAccount: '',
+    toIban: '',
+    beneficiaryName: '',
+    scheduledDate: '',
+    reference: ''
   });
-  
-  const [editingBeneficiary, setEditingBeneficiary] = useState<Beneficiary | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedFilter, setSelectedFilter] = useState('all');
-  const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
-  const [pendingTransferData, setPendingTransferData] = useState<any>(null);
+  const [beneficiaryFormData, setBeneficiaryFormData] = useState({
+    name: '',
+    iban: '',
+    bic: '',
+    nickname: ''
+  });
+  const [accounts, setAccounts] = useState<any[]>([]);
+
+  // Fonction pour obtenir le nom traduit d'un compte
+  const getAccountName = (accountIdOrNameOrAccount: string | { id: string; name: string; balance: number; currency: string } | { name: string }): string => {
+    // Obtenir la langue actuelle
+    const currentLanguage = i18n.language;
+    
+    // Dictionnaire des traductions par langue
+    const accountTranslations: { [key: string]: { [key: string]: string } } = {
+      fr: {
+        checking: "Compte Courant",
+        savings: "Compte Épargne", 
+        credit: "Carte de Crédit"
+      },
+      en: {
+        checking: "Current Account",
+        savings: "Savings Account",
+        credit: "Credit Card"
+      },
+      es: {
+        checking: "Cuenta Corriente",
+        savings: "Cuenta de Ahorro",
+        credit: "Tarjeta de Crédito"
+      },
+      de: {
+        checking: "Girokonto",
+        savings: "Sparkonto",
+        credit: "Kreditkarte"
+      },
+      it: {
+        checking: "Conto Corrente",
+        savings: "Conto di Risparmio",
+        credit: "Carta di Credito"
+      },
+      nl: {
+        checking: "Betaalrekening",
+        savings: "Spaarrekening",
+        credit: "Creditcard"
+      },
+      pt: {
+        checking: "Conta Corrente",
+        savings: "Conta Poupança",
+        credit: "Cartão de Crédito"
+      }
+    };
+    
+    // Fonction pour obtenir la traduction
+    const getTranslation = (accountType: string): string => {
+      const translations = accountTranslations[currentLanguage] || accountTranslations.fr;
+      return translations[accountType] || accountType;
+    };
+    
+    // Si c'est un objet account
+    if (typeof accountIdOrNameOrAccount === 'object' && accountIdOrNameOrAccount.name) {
+      return getTranslation(accountIdOrNameOrAccount.name);
+    }
+    
+    // Si c'est une chaîne (ID ou nom)
+    if (typeof accountIdOrNameOrAccount === 'string') {
+      // Vérifier si c'est un nom de compte connu
+      if (['checking', 'savings', 'credit'].includes(accountIdOrNameOrAccount)) {
+        return getTranslation(accountIdOrNameOrAccount);
+      }
+      
+      // Sinon, chercher par ID dans les comptes
+      const account = accounts.find(acc => acc.id === accountIdOrNameOrAccount);
+      if (account) {
+        return getTranslation(account.name);
+      }
+      
+      return accountIdOrNameOrAccount;
+    }
+    
+    return 'Compte inconnu';
+  };
 
 
-  // Charger les données Firebase au montage du composant
+
+  // Limites de transfert
+  const transferLimits: TransferLimit[] = [
+    { type: 'daily', amount: 5000, currency: 'EUR', description: t("transfers.dailyLimit") },
+    { type: 'monthly', amount: 20000, currency: 'EUR', description: t("transfers.monthlyLimit") },
+    { type: 'minimum', amount: 0.01, currency: 'EUR', description: t("transfers.minimumAmount") },
+    { type: 'processing', amount: 0, currency: '', description: t("transfers.processingTime") }
+  ];
+
+  // Chargement des données depuis Firebase Firestore
   useEffect(() => {
-    const loadFirebaseData = async () => {
+    const loadData = async () => {
+      if (!user?.uid) return;
+      
       try {
         setLoading(true);
-        const userId = FirebaseDataService.getCurrentUserId();
         
-        if (!userId) {
-          logger.error('Aucun utilisateur connecté');
-          return;
-        }
-
-        // Synchroniser le statut KYC avant de vérifier
-        await syncKycStatus();
-
-        // Récupérer le statut de l'utilisateur
-        const userStr = localStorage.getItem('user');
-        if (userStr) {
-          try {
-            const user = JSON.parse(userStr);
-            setUserStatus(user.verificationStatus || 'pending');
-            setIsUnverified(user.verificationStatus !== 'verified');
-          } catch (error) {
-            console.error('Erreur parsing user:', error);
-            setUserStatus('pending');
-            setIsUnverified(true);
+        // Charger les données utilisateur depuis Firestore
+        const userDocRef = doc(db, 'users', user.uid);
+        
+        const unsubscribeUser = onSnapshot(userDocRef, (docSnapshot) => {
+          if (docSnapshot.exists()) {
+            const userData = docSnapshot.data();
+            
+            // Traiter les transactions (transferts)
+            const transactions = userData.transactions || [];
+            const transfersData: Transfer[] = [];
+            const scheduledData: Transfer[] = [];
+            
+            transactions.forEach((transaction: any) => {
+              // Filtrer seulement les transferts
+              if (transaction.type === 'debit' || transaction.type === 'credit' || transaction.type === 'outgoing_transfer') {
+                const transfer: Transfer = {
+                  id: transaction.id || transaction.transferId || `transfer_${Date.now()}`,
+                  date: transaction.date?.toDate() || new Date(),
+                  description: transaction.description || '',
+                  amount: Math.abs(transaction.amount) || 0,
+                  type: transaction.category === 'Virement interne' ? 'internal' : 'external',
+                  status: transaction.status || 'completed',
+                  fromAccount: getAccountName(transaction.accountId) || transaction.accountId || '',
+                  fromAccountId: transaction.accountId,
+                  toAccount: transaction.beneficiaryName || getAccountName(transaction.toAccountId) || transaction.category || '',
+                  toAccountId: transaction.beneficiaryId,
+                  reference: transaction.reference || transaction.transferId || '',
+                  category: transaction.category,
+                  fee: 0,
+                  exchangeRate: undefined,
+                  scheduledDate: undefined,
+                  beneficiaryId: transaction.beneficiaryId
+                };
+                
+                // Séparer les transferts programmés (pour l'instant, tous sont complétés)
+                if (transfer.status === 'pending' && transfer.scheduledDate && transfer.scheduledDate > new Date()) {
+                  scheduledData.push(transfer);
+                } else {
+                  transfersData.push(transfer);
+                }
+              }
+            });
+            
+            setTransfers(transfersData);
+            setScheduledTransfers(scheduledData);
+            
+            // Traiter les bénéficiaires
+            const beneficiaries = userData.beneficiaries || [];
+            const beneficiariesData: Beneficiary[] = [];
+            
+            beneficiaries.forEach((beneficiary: any) => {
+              const beneficiaryData: Beneficiary = {
+                id: beneficiary.id || `beneficiary_${Date.now()}`,
+                name: beneficiary.name || '',
+                iban: beneficiary.iban || '',
+                bankName: 'Banque externe', // Pas de banque spécifique dans les données
+                accountType: 'current',
+                createdAt: new Date(), // Pas de date de création dans les données
+                lastUsed: undefined
+              };
+              beneficiariesData.push(beneficiaryData);
+            });
+            
+            setBeneficiaries(beneficiariesData);
+            
+            // Charger les comptes
+            setAccounts(userData.accounts || []);
           }
-        } else {
-          setUserStatus('pending');
-          setIsUnverified(true);
-        }
-
-        // Charger les virements
-        const firebaseTransfers = await FirebaseDataService.getUserTransfers(userId);
-        logger.debug('Virements reçus dans TransfersPage:', firebaseTransfers);
-        
-        const mappedTransfers: Transfer[] = firebaseTransfers.map(trans => {
-          // Utiliser parseFirestoreDate pour une conversion sécurisée
-          const transferDate = parseFirestoreDate(trans.date);
-
-          // Déterminer le type de virement basé sur la catégorie
-          let transferType: 'internal' | 'external' | 'scheduled' = 'external';
-          if (trans.category === String(t('transactionCategories.transfer'))) {
-            transferType = 'internal';
-          } else if (trans.status === 'scheduled') {
-            transferType = 'scheduled';
-          }
-
-          return {
-            id: trans.id,
-            type: transferType,
-            fromAccount: trans.fromAccountId,
-            toAccount: trans.toAccountId,
-            amount: trans.amount,
-            description: trans.description,
-            status: trans.status as 'pending' | 'completed' | 'failed' | 'scheduled',
-            date: transferDate,
-            beneficiaryName: trans.beneficiaryName,
-            category: trans.category
-          };
         });
-        setTransfers(mappedTransfers);
-
-        // Récupérer les vrais bénéficiaires de Firestore
-        const firebaseBeneficiaries = await FirebaseDataService.getUserBeneficiaries(userId);
-        logger.debug('Bénéficiaires reçus dans TransfersPage:', firebaseBeneficiaries);
         
-        const mappedBeneficiaries: Beneficiary[] = firebaseBeneficiaries.map(ben => {
-          // Utiliser parseFirestoreDate pour une conversion sécurisée
-          const lastUsedDate = parseFirestoreDate(ben.lastUsed);
-
-          return {
-            id: ben.id,
-            name: ben.name,
-            iban: ben.iban,
-            bic: ben.bic,
-            bank: ben.bankName,
-            isFavorite: ben.isFavorite,
-            lastUsed: lastUsedDate
-          };
-        });
-        setBeneficiaries(mappedBeneficiaries);
-
+        return () => {
+          unsubscribeUser();
+        };
+        
       } catch (error) {
         console.error('Erreur lors du chargement des données:', error);
       } finally {
@@ -175,1051 +299,1494 @@ const TransfersPage: React.FC = () => {
       }
     };
 
-    loadFirebaseData();
-  }, [syncKycStatus]);
+    loadData();
+  }, [user?.uid]);
 
-  const [accounts, setAccounts] = useState<any[]>([]);
-
-  // Charger les comptes depuis Firebase
-  useEffect(() => {
-    const loadAccounts = async () => {
-      try {
-        const userId = FirebaseDataService.getCurrentUserId();
-        if (userId) {
-          const firebaseAccounts = await FirebaseDataService.getUserAccounts(userId);
-          logger.debug('Comptes reçus dans TransfersPage:', firebaseAccounts);
-          
-                               const mappedAccounts = firebaseAccounts.map(account => ({
-            id: account.id,
-            name: account.name || (account.name === 'checking' ? 'Compte Courant' : 
-                                 account.name === 'savings' ? 'Compte Épargne' : 
-                                 account.name === 'credit' ? 'Carte de Crédit' : 'Compte'),
-            balance: Math.abs(account.balance || 0), // Utiliser la valeur absolue pour l'affichage
-            type: account.name || 'checking',
-            displayName: account.name === 'checking' ? 'Compte Courant' : 
-                        account.name === 'savings' ? 'Compte Épargne' : 
-                        account.name === 'credit' ? 'Carte de Crédit' : 'Compte'
-          }));
-          setAccounts(mappedAccounts);
-        }
-      } catch (error) {
-        console.error('Erreur lors du chargement des comptes:', error);
-        // Fallback avec des comptes par défaut
-                 setAccounts([
-           { id: 'checking-1', name: 'Compte Courant', balance: 0, type: 'checking', displayName: 'Compte Courant' },
-           { id: 'savings-1', name: 'Compte Épargne', balance: 0, type: 'savings', displayName: 'Compte Épargne' },
-           { id: 'credit-1', name: 'Carte de Crédit', balance: 0, type: 'credit', displayName: 'Carte de Crédit' }
-         ]);
+  // Filtrage et tri des transferts
+  const filteredTransfers = useMemo(() => {
+    const filtered = transfers.filter((transfer) => {
+      // Filtre par terme de recherche
+      const matchesSearch = 
+        transfer.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        transfer.reference.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        transfer.fromAccount.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        transfer.toAccount.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      // Filtre par type
+      const matchesType = 
+        filters.type === "all" ||
+        filters.type === transfer.type;
+      
+      // Filtre par statut
+      const matchesStatus = 
+        filters.status === "all" ||
+        filters.status === transfer.status;
+      
+      // Filtre par plage de dates
+      let matchesDateRange = true;
+      const now = new Date();
+      const transferDate = new Date(transfer.date);
+      
+      if (filters.dateRange === "today") {
+        matchesDateRange = transferDate.toDateString() === now.toDateString();
+      } else if (filters.dateRange === "week") {
+        const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        matchesDateRange = transferDate >= weekAgo;
+      } else if (filters.dateRange === "month") {
+        const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+        matchesDateRange = transferDate >= monthAgo;
       }
-    };
+      
+      // Filtre par montant
+      let matchesAmount = true;
+      if (filters.amount === "small") {
+        matchesAmount = transfer.amount <= 100;
+      } else if (filters.amount === "medium") {
+        matchesAmount = transfer.amount > 100 && transfer.amount <= 500;
+      } else if (filters.amount === "large") {
+        matchesAmount = transfer.amount > 500;
+      }
+      
+      return matchesSearch && matchesType && matchesStatus && matchesDateRange && matchesAmount;
+    });
 
-    loadAccounts();
-  }, []);
+    // Tri par date décroissante (plus récent en premier)
+    return filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  }, [transfers, searchTerm, filters]);
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('fr-FR', {
-      style: 'currency',
-      currency: 'EUR'
-    }).format(amount);
+  // Calculs de pagination pour les transferts
+  const totalPages = Math.ceil(filteredTransfers.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedTransfers = filteredTransfers.slice(startIndex, endIndex);
+
+  // Réinitialiser la page courante quand les filtres changent
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, filters]);
+
+  // Gestionnaires d'événements
+  const handleFilterChange = (filterType: keyof FilterOptions, value: string) => {
+    setFilters(prev => ({
+      ...prev,
+      [filterType]: value
+    }));
   };
 
-  const formatDate = (date: Date) => {
-    return new Intl.DateTimeFormat('fr-FR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    }).format(date);
+  const handleResetFilters = () => {
+    setFilters({
+      type: "all",
+      status: "all",
+      dateRange: "all",
+      amount: "all"
+    });
+    setSearchTerm("");
   };
 
-  // Fonction pour obtenir le nom d'affichage d'un compte
-  const getAccountDisplayName = (accountId: string): string => {
-    const account = accounts.find(acc => acc.id === accountId);
-    if (account) {
-      return account.displayName;
-    }
-    
-    // Fallback pour les IDs de compte connus
-    switch (accountId) {
-      case 'checking-1': return 'Compte Courant';
-      case 'savings-1': return 'Compte Épargne';
-      case 'credit-1': return 'Carte de Crédit';
-      default: return accountId;
-    }
+  const handleTransferClick = (transfer: Transfer) => {
+    setSelectedTransfer(transfer);
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'completed':
-        return 'text-green-600 bg-green-50';
-      case 'pending':
-        return 'text-yellow-600 bg-yellow-50';
-      case 'failed':
-        return 'text-red-600 bg-red-50';
-      case 'scheduled':
-        return 'text-blue-600 bg-blue-50';
-      default:
-        return 'text-gray-600 bg-gray-50';
-    }
-  };
-
-  const getStatusText = (status: string) => {
-    switch (status) {
-      case 'completed':
-        return t('transfers.status.completed') as string;
-      case 'pending':
-        return t('transfers.status.pending') as string;
-      case 'failed':
-        return t('transfers.status.failed') as string;
-      case 'scheduled':
-        return t('transfers.status.scheduled', 'Programmé') as string;
-      default:
-        return t('transfers.status.unknown', 'Inconnu') as string;
+  // Fonctions pour les boutons
+  const handleNewTransfer = (type: 'internal' | 'external' | 'scheduled') => {
+    setTransferType(type);
+    if (type === 'scheduled') {
+      setShowScheduledTransferModal(true);
+    } else {
+      setShowNewTransferModal(true);
     }
   };
 
-  // Fonctions pour gérer les actions
-  const resetFormData = () => {
+  const handleFormChange = (field: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleBeneficiaryFormChange = (field: string, value: string) => {
+    setBeneficiaryFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const resetForms = () => {
     setFormData({
-      beneficiaryName: '',
-      beneficiaryIban: '',
-      beneficiaryBic: '',
-      beneficiaryBank: '',
-      isFavorite: false,
-      fromAccount: '',
-      toAccount: '',
       amount: '',
       description: '',
-      scheduledDate: ''
+      fromAccount: '',
+      toAccount: '',
+      toIban: '',
+      beneficiaryName: '',
+      scheduledDate: '',
+      reference: ''
+    });
+    setBeneficiaryFormData({
+      name: '',
+      iban: '',
+      bic: '',
+      nickname: ''
     });
   };
 
-  const handleAddBeneficiary = async () => {
-    try {
-      const userId = FirebaseDataService.getCurrentUserId();
-      if (!userId) return;
-
-      const newBeneficiary = {
-        userId,
-        name: formData.beneficiaryName,
-        iban: formData.beneficiaryIban,
-        bic: formData.beneficiaryBic,
-        bankName: formData.beneficiaryBank,
-        isFavorite: formData.isFavorite,
-        lastUsed: new Date()
-      };
-
-              logger.debug('Ajout du bénéficiaire:', newBeneficiary);
-      
-      // Appel API réel pour créer le bénéficiaire
-      const createdBeneficiary = await FirebaseDataService.createBeneficiary(newBeneficiary);
-      
-      if (createdBeneficiary) {
-        const addedBeneficiary: Beneficiary = {
-          id: createdBeneficiary.id,
-          name: createdBeneficiary.name,
-          iban: createdBeneficiary.iban,
-          bic: createdBeneficiary.bic,
-          bank: createdBeneficiary.bankName,
-          isFavorite: createdBeneficiary.isFavorite,
-          lastUsed: new Date(createdBeneficiary.lastUsed)
-        };
-
-        setBeneficiaries(prev => [...prev, addedBeneficiary]);
-        setShowAddBeneficiary(false);
-        resetFormData();
-        logger.success('Bénéficiaire ajouté avec succès !');
-      }
-    } catch (error) {
-      console.error('Erreur lors de l\'ajout du bénéficiaire:', error);
-      console.error('Erreur lors de l\'ajout du bénéficiaire');
-    }
+  const handleAddBeneficiary = () => {
+    setSelectedBeneficiary(null);
+    resetForms();
+    setShowBeneficiaryModal(true);
   };
 
   const handleEditBeneficiary = (beneficiary: Beneficiary) => {
-    setEditingBeneficiary(beneficiary);
-    setFormData({
-      ...formData,
-      beneficiaryName: beneficiary.name,
-      beneficiaryIban: beneficiary.iban,
-      beneficiaryBic: beneficiary.bic,
-      beneficiaryBank: beneficiary.bank,
-      isFavorite: beneficiary.isFavorite
+    setSelectedBeneficiary(beneficiary);
+    setBeneficiaryFormData({
+      name: beneficiary.name,
+      iban: beneficiary.iban,
+      bic: '',
+      nickname: ''
     });
-    setShowEditBeneficiary(true);
+    setShowBeneficiaryModal(true);
   };
 
-  const handleUpdateBeneficiary = async () => {
+  const handleSubmitTransfer = async () => {
+    console.log('handleSubmitTransfer appelé', { transferType, formData });
+    if (!user?.uid) return;
+    
+    // Validation des données requises
+    if (!formData.fromAccount || !formData.toAccount || !formData.amount || !formData.description) {
+      console.error('Données manquantes pour le transfert');
+      return;
+    }
+    
     try {
-      if (!editingBeneficiary) return;
-
-      const updateData = {
-        name: formData.beneficiaryName,
-        iban: formData.beneficiaryIban,
-        bic: formData.beneficiaryBic,
-        bankName: formData.beneficiaryBank,
-        isFavorite: formData.isFavorite
-      };
-
-              logger.debug('Mise à jour du bénéficiaire:', updateData);
-
-      // Appel API réel pour mettre à jour le bénéficiaire
-      const updatedBeneficiary = await FirebaseDataService.updateBeneficiary(editingBeneficiary.id, updateData);
+      const userDocRef = doc(db, 'users', user.uid);
+      const userDoc = await getDoc(userDocRef);
       
-      if (updatedBeneficiary) {
-        const updatedBeneficiaryLocal: Beneficiary = {
-          id: updatedBeneficiary.id,
-          name: updatedBeneficiary.name,
-          iban: updatedBeneficiary.iban,
-          bic: updatedBeneficiary.bic,
-          bank: updatedBeneficiary.bankName,
-          isFavorite: updatedBeneficiary.isFavorite,
-          lastUsed: editingBeneficiary.lastUsed
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        const transactions = userData.transactions || [];
+        const accounts = userData.accounts || [];
+        
+        const transferAmount = parseFloat(formData.amount);
+        
+        // Vérifier que le compte source a suffisamment de fonds
+        const sourceAccount = accounts.find((account: any) => account.id === formData.fromAccount);
+        if (!sourceAccount) {
+          console.error('Compte source non trouvé');
+          return;
+        }
+        
+        if (sourceAccount.balance < transferAmount) {
+          console.error('Solde insuffisant pour effectuer le transfert');
+          alert('Solde insuffisant pour effectuer ce transfert');
+          return;
+        }
+        
+        // Mettre à jour les soldes des comptes
+        let updatedAccounts = [...accounts];
+        
+        if (transferType === 'internal') {
+          // Vérifier que le compte destination existe
+          const destinationAccount = accounts.find((account: any) => account.id === formData.toAccount);
+          if (!destinationAccount) {
+            console.error('Compte destination non trouvé');
+            alert('Compte destination non trouvé');
+            return;
+          }
+          
+          // Virement interne : déduire du compte source et ajouter au compte destination
+          updatedAccounts = updatedAccounts.map((account: any) => {
+            if (account.id === formData.fromAccount) {
+              return { ...account, balance: account.balance - transferAmount };
+            }
+            if (account.id === formData.toAccount) {
+              return { ...account, balance: account.balance + transferAmount };
+            }
+            return account;
+          });
+        } else if (transferType === 'external') {
+          // Virement externe : déduire du compte source seulement
+          updatedAccounts = updatedAccounts.map((account: any) => {
+            if (account.id === formData.fromAccount) {
+              return { ...account, balance: account.balance - transferAmount };
+            }
+            return account;
+          });
+        }
+        
+        const newTransfer = {
+          id: `txn_${Date.now()}`,
+          accountId: formData.fromAccount,
+          amount: transferAmount,
+          description: formData.description,
+          category: transferType === 'internal' ? 'Virement interne' : 'Virement sortant',
+          currency: 'EUR',
+          date: new Date(),
+          status: transferType === 'internal' ? 'completed' : 'pending',
+          type: 'debit',
+          reference: formData.reference || `transfer_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+          transferId: `transfer_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+          userId: user.uid,
+          beneficiaryName: formData.beneficiaryName || '',
+          beneficiaryId: formData.toAccount,
+          scheduledDate: transferType === 'scheduled' && formData.scheduledDate ? new Date(formData.scheduledDate) : null,
+          transferType: transferType,
+          adminStatus: transferType === 'external' ? 'pending_review' : null,
+          adminNotes: transferType === 'external' ? 'En attente d\'évaluation par l\'administrateur' : null
         };
-
-        setBeneficiaries(prev => 
-          prev.map(b => b.id === editingBeneficiary.id ? updatedBeneficiaryLocal : b)
-        );
-        setShowEditBeneficiary(false);
-        setEditingBeneficiary(null);
-        resetFormData();
-        logger.success('Bénéficiaire mis à jour avec succès !');
+        
+        const updatedTransactions = [...transactions, cleanDataForFirestore(newTransfer)];
+        
+        // Mettre à jour à la fois les transactions et les comptes
+        await updateDoc(userDocRef, {
+          transactions: updatedTransactions,
+          accounts: updatedAccounts
+        });
+        
+        console.log('Transfert effectué et soldes mis à jour:', {
+          transferType,
+          amount: transferAmount,
+          fromAccount: formData.fromAccount,
+          toAccount: formData.toAccount,
+          updatedAccounts
+        });
+        
+        // Fermer les modales
+        setShowNewTransferModal(false);
+        setShowScheduledTransferModal(false);
+        resetForms();
+        
+        // Si c'est un virement externe, afficher la boîte de dialogue
+        if (transferType === 'external') {
+          setPendingTransfer(newTransfer);
+          setShowExternalTransferDialog(true);
+        }
       }
     } catch (error) {
-      console.error('Erreur lors de la mise à jour du bénéficiaire:', error);
-              logger.error('Erreur lors de la mise à jour du bénéficiaire:', (error as Error).message);
+      console.error('Erreur lors de la création du transfert:', error);
+    }
+  };
+
+  const handleConfirmExternalTransfer = () => {
+    setShowExternalTransferDialog(false);
+    setPendingTransfer(null);
+  };
+
+  const closeAllModals = () => {
+    setShowNewTransferModal(false);
+    setShowBeneficiaryModal(false);
+    setShowScheduledTransferModal(false);
+    setShowExternalTransferDialog(false);
+    setSelectedTransfer(null);
+    setSelectedBeneficiary(null);
+    resetForms();
+  };
+
+  // Fonction pour nettoyer les données avant envoi à Firebase
+  const cleanDataForFirestore = (obj: any) => {
+    const cleaned = { ...obj };
+    Object.keys(cleaned).forEach(key => {
+      if (cleaned[key] === undefined) {
+        delete cleaned[key];
+      }
+    });
+    return cleaned;
+  };
+
+  const handleSubmitBeneficiary = async () => {
+    console.log('handleSubmitBeneficiary appelé', { beneficiaryFormData, selectedBeneficiary });
+    if (!user?.uid) return;
+    
+    // Validation des données requises
+    if (!beneficiaryFormData.name || !beneficiaryFormData.iban) {
+      console.error('Données manquantes pour le bénéficiaire');
+      return;
+    }
+    
+    try {
+      const userDocRef = doc(db, 'users', user.uid);
+      const userDoc = await getDoc(userDocRef);
+      
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        const beneficiaries = userData.beneficiaries || [];
+        
+        const newBeneficiary = {
+          id: selectedBeneficiary ? selectedBeneficiary.id : `beneficiary_${Date.now()}`,
+          name: beneficiaryFormData.name,
+          iban: beneficiaryFormData.iban,
+          bic: beneficiaryFormData.bic || 'BANKFUI9388',
+          nickname: beneficiaryFormData.nickname || ''
+        };
+        
+        let updatedBeneficiaries;
+        if (selectedBeneficiary) {
+          // Modification
+          updatedBeneficiaries = beneficiaries.map((b: any) => 
+            b.id === selectedBeneficiary.id ? cleanDataForFirestore(newBeneficiary) : b
+          );
+        } else {
+          // Ajout
+          updatedBeneficiaries = [...beneficiaries, cleanDataForFirestore(newBeneficiary)];
+        }
+        
+        await updateDoc(userDocRef, {
+          beneficiaries: updatedBeneficiaries
+        });
+        
+        setShowBeneficiaryModal(false);
+        resetForms();
+        setSelectedBeneficiary(null);
+        setActiveTab('beneficiaries'); // Rester sur l'onglet bénéficiaires
+      }
+    } catch (error) {
+      console.error('Erreur lors de la gestion du bénéficiaire:', error);
     }
   };
 
   const handleDeleteBeneficiary = async (beneficiaryId: string) => {
+    if (!user?.uid) return;
+    
     try {
-      const userId = FirebaseDataService.getCurrentUserId();
-      if (!userId) return;
-
-              logger.debug('Suppression du bénéficiaire:', beneficiaryId);
-
-      // Appel API réel pour supprimer le bénéficiaire
-      const success = await FirebaseDataService.deleteBeneficiary(beneficiaryId, userId);
+      // Récupérer le document utilisateur actuel
+      const userDocRef = doc(db, 'users', user.uid);
+      const userDoc = await getDoc(userDocRef);
       
-      if (success) {
-        const beneficiaryToDelete = beneficiaries.find(b => b.id === beneficiaryId);
-        setBeneficiaries(prev => prev.filter(b => b.id !== beneficiaryId));
-        logger.success('Bénéficiaire supprimé avec succès:', beneficiaryToDelete?.name || 'Bénéficiaire');
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        const beneficiaries = userData.beneficiaries || [];
+        
+        // Filtrer le bénéficiaire à supprimer
+        const updatedBeneficiaries = beneficiaries.filter((b: any) => b.id !== beneficiaryId);
+        
+        // Mettre à jour le document utilisateur
+        await updateDoc(userDocRef, {
+          beneficiaries: updatedBeneficiaries
+        });
       }
     } catch (error) {
       console.error('Erreur lors de la suppression du bénéficiaire:', error);
-              logger.error('Erreur lors de la suppression du bénéficiaire:', (error as Error).message);
     }
   };
 
-    const handleTransfer = async () => {
-    try {
-      const userId = FirebaseDataService.getCurrentUserId();
-      if (!userId) return;
-
-      // Validation des données
-      if (!formData.fromAccount || !formData.toAccount || !formData.amount || !formData.description) {
-        logger.warn('Champs manquants: Veuillez remplir tous les champs obligatoires pour effectuer le virement.');
-        return;
-      }
-
-      if (parseFloat(formData.amount) <= 0) {
-        logger.warn('Montant invalide: Le montant du virement doit être supérieur à 0.');
-        return;
-      }
-
-      // Pour les virements externes, afficher une confirmation moderne
-      if (transferType === 'external') {
-        setPendingTransferData({
-          userId,
-          fromAccountId: formData.fromAccount,
-          toAccountId: formData.toAccount,
-          amount: parseFloat(formData.amount),
-          currency: 'EUR',
-          description: formData.description,
-          status: 'pending',
-          date: new Date()
-        });
-        setShowConfirmationDialog(true);
-        return;
-      }
-
-      const newTransfer = {
-        userId,
-        fromAccountId: formData.fromAccount,
-        toAccountId: formData.toAccount,
-        amount: parseFloat(formData.amount),
-        currency: 'EUR',
-        description: formData.description,
-        status: transferType === 'scheduled' ? 'scheduled' : 'pending',
-        date: transferType === 'scheduled' ? new Date(formData.scheduledDate) : new Date()
-      };
-
-              logger.debug('Création du virement:', newTransfer);
-
-      // Appel API réel pour créer le virement
-      const createdTransfer = await FirebaseDataService.createTransfer(newTransfer);
-      
-      if (createdTransfer) {
-        const addedTransfer: Transfer = {
-          id: createdTransfer.id,
-          type: transferType,
-          fromAccount: accounts.find(a => a.id === formData.fromAccount)?.displayName || '',
-          toAccount: formData.toAccount,
-          amount: parseFloat(formData.amount),
-          description: formData.description,
-          status: transferType === 'scheduled' ? 'scheduled' : 'pending',
-          date: new Date(createdTransfer.date),
-          scheduledDate: transferType === 'scheduled' ? new Date(formData.scheduledDate) : undefined,
-          beneficiaryName: formData.beneficiaryName, // Map beneficiaryName
-          category: 'Quick Transfer' // Map category
-        };
-
-        setTransfers(prev => [addedTransfer, ...prev]);
-        setShowTransferForm(false);
-        resetFormData();
-        
-        // Message de succès différent selon le type de virement
-        if (transferType === 'internal') {
-          logger.success('Virement interne créé avec succès:', formatCurrency(parseFloat(formData.amount)));
-        } else if (transferType === 'scheduled') {
-                      logger.success('Virement programmé avec succès:', formatCurrency(parseFloat(formData.amount)));
-        }
-      }
-    } catch (error) {
-      console.error('Erreur lors de la création du virement:', error);
-              logger.error('Erreur lors de la création du virement:', (error as Error).message);
-    }
-  };
-
-  const handleQuickTransfer = (beneficiary: Beneficiary) => {
-    setTransferType('external');
-    setFormData(prev => ({
-      ...prev,
-      toAccount: beneficiary.id
-    }));
-    setShowTransferForm(true);
-  };
-
-  const handleConfirmExternalTransfer = async () => {
-    if (!pendingTransferData) return;
-
-    try {
-              logger.debug('Création du virement externe confirmé:', pendingTransferData);
-
-      // Appel API réel pour créer le virement
-      const createdTransfer = await FirebaseDataService.createTransfer(pendingTransferData);
-      
-      if (createdTransfer) {
-        const addedTransfer: Transfer = {
-          id: createdTransfer.id,
-          type: 'external',
-          fromAccount: accounts.find(a => a.id === pendingTransferData.fromAccountId)?.displayName || '',
-          toAccount: pendingTransferData.toAccountId,
-          amount: pendingTransferData.amount,
-          description: pendingTransferData.description,
-          status: 'pending',
-          date: new Date(createdTransfer.date),
-          beneficiaryName: formData.beneficiaryName,
-          category: String(t('transactionCategories.outgoingTransfer'))
-        };
-
-        setTransfers(prev => [addedTransfer, ...prev]);
-        setShowTransferForm(false);
-        resetFormData();
-        
-        logger.success('Virement externe soumis avec succès:', formatCurrency(pendingTransferData.amount));
-      }
-    } catch (error) {
-      console.error('Erreur lors de la création du virement externe:', error);
-              logger.error('Erreur lors de la création du virement externe:', (error as Error).message);
-    } finally {
-      setPendingTransferData(null);
-    }
-  };
-
-  // Filtrage des virements
-  const filteredTransfers = transfers.filter(transfer => {
-    const matchesSearch = transfer.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         transfer.fromAccount.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         transfer.toAccount.toLowerCase().includes(searchTerm.toLowerCase());
+  const handleCancelTransfer = async (transferId: string) => {
+    if (!user?.uid) return;
     
-    const matchesFilter = selectedFilter === 'all' || 
-                         (selectedFilter === 'completed' && transfer.status === 'completed') ||
-                         (selectedFilter === 'pending' && transfer.status === 'pending') ||
-                         (selectedFilter === 'scheduled' && transfer.status === 'scheduled');
+    try {
+      // Récupérer le document utilisateur actuel
+      const userDocRef = doc(db, 'users', user.uid);
+      const userDoc = await getDoc(userDocRef);
+      
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        const transactions = userData.transactions || [];
+        
+        // Trouver et mettre à jour la transaction
+        const updatedTransactions = transactions.map((t: any) => {
+          if (t.id === transferId || t.transferId === transferId) {
+            return {
+              ...t,
+              status: 'cancelled',
+              cancelledAt: new Date()
+            };
+          }
+          return t;
+        });
+        
+        // Mettre à jour le document utilisateur
+        await updateDoc(userDocRef, {
+          transactions: updatedTransactions
+        });
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'annulation du transfert:', error);
+    }
+  };
 
-    return matchesSearch && matchesFilter;
-  });
+  const handleDownloadReceipt = async (transfer: Transfer) => {
+    // Simulation de téléchargement de reçu
+    const receiptData = {
+      transferId: transfer.id,
+      date: transfer.date,
+      amount: transfer.amount,
+      description: transfer.description,
+      reference: transfer.reference
+    };
+    
+    const blob = new Blob([JSON.stringify(receiptData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `receipt-${transfer.id}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
 
-
-
-  // Afficher un indicateur de chargement
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">{t('transfers.loading') as string}</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Si l'utilisateur n'est pas vérifié, afficher le composant VerificationState
-  if (isUnverified) {
-    return (
-      <VerificationState 
-        userStatus={userStatus}
-        title={t('verification.banner.unverified.title') as string}
-        description={t('transfers.verificationRequired') as string}
-        showFeatures={true}
-      />
-    );
-  }
-
+  // Rendu du composant
   return (
-    <div className="space-y-4 sm:space-y-6">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-white">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 space-y-3 sm:space-y-0">
+    <div className="space-y-6">
+      {/* Section bleue avec métriques */}
+      <div className="bg-blue-600 rounded-xl p-6 text-white">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold">{t('transfers.title') as string}</h1>
-            <p className="text-blue-100 text-sm sm:text-base">{t('transfers.subtitle') as string}</p>
+            <h1 className="text-2xl font-bold">{t("transfers.title")}</h1>
+            <p className="text-blue-100">{t("transfers.subtitle")}</p>
           </div>
-          <div className="flex items-center space-x-3">
-                          <button
-                onClick={() => setShowTransferForm(true)}
-                className="bg-white/20 hover:bg-white/30 text-white px-3 sm:px-4 py-2 rounded-lg transition-colors flex items-center space-x-2 text-sm"
-              >
+          <div>
+            <button 
+              className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg text-sm transition-colors font-medium flex items-center space-x-2"
+              onClick={handleAddBeneficiary}
+            >
               <Plus className="w-4 h-4" />
-              <span className="hidden sm:inline">{t('transfers.newTransfer') as string}</span>
-              <span className="sm:hidden">{t('transfers.newShort', 'Nouveau') as string}</span>
+              <span>{t("transfers.beneficiaries.add")}</span>
             </button>
           </div>
         </div>
-
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-          <div className="bg-white/10 rounded-xl p-3 sm:p-4">
-            <p className="text-blue-100 text-xs sm:text-sm">{t('transfers.stats.thisMonth') as string}</p>
-            <p className="text-lg sm:text-2xl font-bold">{transfers.filter(t => t.status === 'completed').length}</p>
-          </div>
-          <div className="bg-white/10 rounded-xl p-3 sm:p-4">
-            <p className="text-blue-100 text-xs sm:text-sm">{t('transfers.stats.totalAmount') as string}</p>
-            <p className="text-lg sm:text-2xl font-bold">
-              {formatCurrency(transfers.filter(t => t.status === 'completed').reduce((sum, t) => sum + t.amount, 0))}
+        
+        {/* Métriques */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-6">
+          <div className="bg-blue-500 rounded-lg p-4">
+            <p className="text-blue-100 text-sm">{t("transfers.stats.thisMonth")}</p>
+            <p className="text-white text-2xl font-bold">
+              {transfers.filter(t => {
+                const now = new Date();
+                const transferDate = new Date(t.date);
+                return transferDate.getMonth() === now.getMonth() && 
+                       transferDate.getFullYear() === now.getFullYear();
+              }).length}
             </p>
           </div>
-          <div className="bg-white/10 rounded-xl p-3 sm:p-4">
-            <p className="text-blue-100 text-xs sm:text-sm">{t('transfers.stats.beneficiaries') as string}</p>
-            <p className="text-lg sm:text-2xl font-bold">{beneficiaries.length}</p>
+          <div className="bg-blue-500 rounded-lg p-4">
+            <p className="text-blue-100 text-sm">{t("transfers.stats.totalAmount")}</p>
+            <p className="text-white text-2xl font-bold">
+              {formatCurrency(
+                transfers.reduce((sum, t) => sum + t.amount, 0),
+                'EUR'
+              )}
+            </p>
           </div>
-          <div className="bg-white/10 rounded-xl p-3 sm:p-4">
-            <p className="text-blue-100 text-xs sm:text-sm">{t('transfers.stats.scheduled') as string}</p>
-            <p className="text-lg sm:text-2xl font-bold">{transfers.filter(t => t.status === 'scheduled').length}</p>
+          <div className="bg-blue-500 rounded-lg p-4">
+            <p className="text-blue-100 text-sm">{t("transfers.status.pending")}</p>
+            <p className="text-white text-2xl font-bold">
+              {transfers.filter(t => t.status === 'pending').length}
+            </p>
+          </div>
+                    <div className="bg-blue-500 rounded-lg p-4">
+            <p className="text-blue-100 text-sm">{t("transfers.status.processing")}</p>
+            <p className="text-white text-2xl font-bold">
+              {transfers.filter(t => t.status === 'processing').length}
+            </p>
+          </div>
+          <div className="bg-blue-500 rounded-lg p-4">
+            <p className="text-blue-100 text-sm">{t("transfers.stats.beneficiaries")}</p>
+            <p className="text-white text-2xl font-bold">{beneficiaries.length}</p>
           </div>
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg">
-        <div className="border-b border-gray-200 overflow-x-auto">
-          <nav className="flex space-x-4 sm:space-x-8 px-4 sm:px-6 min-w-max">
-            {[
-              { id: 'new', label: t('transfers.tabs.new') as string, icon: Plus },
-              { id: 'beneficiaries', label: t('transfers.tabs.beneficiaries') as string, icon: Users },
-              { id: 'scheduled', label: t('transfers.tabs.scheduled') as string, icon: Clock },
-              { id: 'history', label: t('transfers.tabs.history') as string, icon: Calendar }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
-                className={`flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors whitespace-nowrap ${
-                  activeTab === tab.id
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-              >
-                <tab.icon className="w-4 h-4" />
-                <span className="hidden sm:inline">{tab.label}</span>
-                <span className="sm:hidden">{tab.label.split(' ')[0]}</span>
-              </button>
-            ))}
-          </nav>
+      {/* Section blanche avec onglets et cartes */}
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+        {/* Onglets */}
+        <div className="flex space-x-8 border-b border-gray-200 dark:border-gray-700 mb-6">
+          <button
+            className={`pb-2 px-1 border-b-2 font-medium text-sm transition-colors ${
+              activeTab === 'new'
+                ? 'border-blue-600 text-blue-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
+            }`}
+            onClick={() => setActiveTab('new')}
+          >
+            + {t("transfers.newShort")}
+          </button>
+          <button
+            className={`pb-2 px-1 border-b-2 font-medium text-sm transition-colors ${
+              activeTab === 'beneficiaries'
+                ? 'border-blue-600 text-blue-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
+            }`}
+            onClick={() => setActiveTab('beneficiaries')}
+          >
+            {t("transfers.tabs.beneficiaries")}
+          </button>
+          <button
+            className={`pb-2 px-1 border-b-2 font-medium text-sm transition-colors ${
+              activeTab === 'scheduled'
+                ? 'border-blue-600 text-blue-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
+            }`}
+            onClick={() => setActiveTab('scheduled')}
+          >
+            {t("transfers.tabs.scheduled")}
+          </button>
         </div>
 
-        <div className="p-4 sm:p-6">
-          {/* Nouveau virement */}
-          {activeTab === 'new' && (
-            <div className="space-y-4 sm:space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                <button
-                  onClick={() => {
-                    setTransferType('internal');
-                    setShowTransferForm(true);
-                  }}
-                  className="group bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-4 sm:p-6 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
-                >
-                  <div className="flex flex-col items-center space-y-3">
-                    <div className="bg-white/20 p-3 rounded-full">
-                      <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
-                    </div>
-                    <div className="text-center">
-                      <p className="font-semibold text-base sm:text-lg">{t('transfers.internal') as string}</p>
-                      <p className="text-blue-100 text-xs sm:text-sm">{t('transfers.internalDesc') as string}</p>
-                    </div>
-                  </div>
-                </button>
-
-                <button
-                  onClick={() => {
-                    setTransferType('external');
-                    setShowTransferForm(true);
-                  }}
-                  className="group bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white p-4 sm:p-6 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
-                >
-                  <div className="flex flex-col items-center space-y-3">
-                    <div className="bg-white/20 p-3 rounded-full">
-                      <Send className="w-5 h-5 sm:w-6 sm:h-6" />
-                    </div>
-                    <div className="text-center">
-                      <p className="font-semibold text-base sm:text-lg">{t('transfers.external') as string}</p>
-                      <p className="text-green-100 text-xs sm:text-sm">{t('transfers.externalDesc') as string}</p>
-                    </div>
-                  </div>
-                </button>
-
-                <button
-                  onClick={() => {
-                    setTransferType('scheduled');
-                    setShowTransferForm(true);
-                  }}
-                  className="group bg-gradient-to-br from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white p-4 sm:p-6 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg sm:col-span-2 lg:col-span-1"
-                >
-                  <div className="flex flex-col items-center space-y-3">
-                    <div className="bg-white/20 p-3 rounded-full">
-                      <Clock className="w-5 h-5 sm:w-6 sm:h-6" />
-                    </div>
-                    <div className="text-center">
-                      <p className="font-semibold text-base sm:text-lg">{t('transfers.scheduled') as string}</p>
-                      <p className="text-purple-100 text-xs sm:text-sm">{t('transfers.scheduledDesc') as string}</p>
-                    </div>
-                  </div>
-                </button>
-              </div>
-
-              <div className="bg-gray-50 rounded-xl p-4 sm:p-6">
-                <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4">{t('transfers.quick.title') as string}</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                                     {beneficiaries.filter(b => b.isFavorite).map((beneficiary) => (
-                     <button
-                       key={beneficiary.id}
-                       onClick={() => handleQuickTransfer(beneficiary)}
-                       className="bg-white p-3 sm:p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all text-left"
-                     >
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-medium text-gray-900 text-sm sm:text-base">{beneficiary.name}</span>
-                        <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                      </div>
-                      <p className="text-xs sm:text-sm text-gray-500">{beneficiary.bank}</p>
-                      <p className="text-xs text-gray-400 mt-1">
-                        {t('transfers.quick.lastTransfer') as string}: {beneficiary.lastUsed ? formatDate(beneficiary.lastUsed) : (t('transfers.quick.never') as string)}
-                      </p>
-                    </button>
-                  ))}
+        {/* Contenu des onglets */}
+        {activeTab === 'new' && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Carte Virement interne */}
+            <div 
+              className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 border-2 border-blue-200 dark:border-blue-800 hover:shadow-md transition-shadow cursor-pointer"
+              onClick={() => handleNewTransfer('internal')}
+            >
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="bg-blue-600 p-4 rounded-full">
+                  <ArrowLeftRight className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t("transfers.internalTransfer")}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">{t("transfers.internalDesc")}</p>
                 </div>
               </div>
             </div>
-          )}
 
-          {/* Bénéficiaires */}
-          {activeTab === 'beneficiaries' && (
-            <div className="space-y-4 sm:space-y-6">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
-                <h3 className="text-base sm:text-lg font-semibold text-gray-900">{t('transfers.beneficiaries.title') as string}</h3>
-                <button
-                  onClick={() => setShowAddBeneficiary(true)}
-                  className="bg-blue-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 text-sm"
-                >
-                  <UserPlus className="w-4 h-4" />
-                  <span>{t('transfers.beneficiaries.add') as string}</span>
-                </button>
+            {/* Carte Virement externe */}
+            <div 
+              className="bg-green-50 dark:bg-green-900/20 rounded-xl p-6 border-2 border-green-200 dark:border-green-800 hover:shadow-md transition-shadow cursor-pointer"
+              onClick={() => handleNewTransfer('external')}
+            >
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="bg-green-600 p-4 rounded-full">
+                  <Send className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t("transfers.externalTransfer")}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">{t("transfers.externalDesc")}</p>
+                </div>
               </div>
+            </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                {beneficiaries.map((beneficiary) => (
-                  <div key={beneficiary.id} className="bg-white border border-gray-200 rounded-xl p-3 sm:p-4 hover:shadow-md transition-shadow">
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-gray-900 text-sm sm:text-base truncate">{beneficiary.name}</h4>
-                        <p className="text-xs sm:text-sm text-gray-500">{beneficiary.bank}</p>
+            {/* Carte Virement programmé */}
+            <div 
+              className="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-6 border-2 border-purple-200 dark:border-purple-800 hover:shadow-md transition-shadow cursor-pointer"
+              onClick={() => handleNewTransfer('scheduled')}
+            >
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="bg-purple-600 p-4 rounded-full">
+                  <ClockIcon className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t("transfers.scheduledLabel")}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">{t("transfers.scheduledDesc")}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'beneficiaries' && (
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t("transfers.beneficiaries.title")}</h3>
+            </div>
+            
+            {beneficiaries.length === 0 ? (
+              <div className="text-center py-8">
+                <User className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-500 dark:text-gray-400">{t("transfers.beneficiaries.noBeneficiaries")}</p>
+                <p className="text-gray-400 dark:text-gray-500 text-sm">{t("transfers.beneficiaries.addFirstBeneficiary")}</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {beneficiaries
+                  .sort((a, b) => a.name.localeCompare(b.name))
+                  .map((beneficiary) => (
+                  <div key={beneficiary.id} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
+                    <div className="flex justify-between items-start mb-3">
+                      <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded-lg">
+                        <User className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                       </div>
-                                             <div className="flex items-center space-x-2 ml-2">
-                         {beneficiary.isFavorite && (
-                           <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                         )}
-                         <button 
-                           onClick={() => handleEditBeneficiary(beneficiary)}
-                           className="text-gray-400 hover:text-gray-600"
-                         >
-                           <Edit className="w-4 h-4" />
-                         </button>
-                         <button 
-                           onClick={() => handleDeleteBeneficiary(beneficiary.id)}
-                           className="text-gray-400 hover:text-red-600"
-                         >
-                           <Trash2 className="w-4 h-4" />
-                         </button>
-                       </div>
-                    </div>
-                    <div className="space-y-2">
-                      <p className="text-xs text-gray-500">IBAN</p>
-                      <p className="text-xs sm:text-sm font-mono text-gray-900 break-all">{beneficiary.iban}</p>
-                      <p className="text-xs text-gray-500">BIC</p>
-                      <p className="text-xs sm:text-sm font-mono text-gray-900">{beneficiary.bic}</p>
-                    </div>
-                                         <div className="mt-4 flex space-x-2">
-                       <button 
-                         onClick={() => handleQuickTransfer(beneficiary)}
-                         className="flex-1 bg-blue-600 text-white px-3 py-2 rounded-lg text-xs sm:text-sm hover:bg-blue-700 transition-colors"
+                      <div className="flex space-x-2">
+                        <button 
+                          className="text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
+                          onClick={() => handleEditBeneficiary(beneficiary)}
                         >
-                          {t('transfers.quickTransfer') as string}
-                       </button>
-                     </div>
+                          <Edit className="w-4 h-4" />
+                        </button>
+                        <button 
+                          className="text-gray-400 hover:text-red-600 dark:hover:text-red-400"
+                          onClick={() => handleDeleteBeneficiary(beneficiary.id)}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                    <h4 className="font-semibold text-gray-900 dark:text-white mb-1">{beneficiary.name}</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{beneficiary.iban}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-500">{beneficiary.bankName}</p>
+                    {beneficiary.lastUsed && (
+                      <p className="text-xs text-gray-500 dark:text-gray-500 mt-2">
+                        {t("transfers.beneficiaries.lastUsed")}: {formatDate(beneficiary.lastUsed, 'short')}
+                      </p>
+                    )}
                   </div>
                 ))}
               </div>
-            </div>
-          )}
+            )}
+          </div>
+        )}
 
-          {/* Virements programmés */}
-          {activeTab === 'scheduled' && (
-            <div className="space-y-4 sm:space-y-6">
-              <h3 className="text-base sm:text-lg font-semibold text-gray-900">{t('transfers.scheduled.title') as string}</h3>
-              <div className="space-y-3 sm:space-y-4">
-                                 {filteredTransfers.filter(t => t.status === 'scheduled').map((transfer) => (
-                  <div key={transfer.id} className="bg-white border border-gray-200 rounded-xl p-3 sm:p-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
-                      <div className="flex items-center space-x-3 sm:space-x-4">
-                        <div className="p-2 bg-blue-100 rounded-lg">
-                          <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
+        {activeTab === 'scheduled' && (
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t("transfers.scheduled.title")}</h3>
+            </div>
+            
+            {scheduledTransfers.length === 0 ? (
+              <div className="text-center py-8">
+                <ClockIcon className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-500 dark:text-gray-400">{t("transfers.scheduled.noScheduledTransfers")}</p>
+                <p className="text-gray-400 dark:text-gray-500 text-sm">{t("transfers.scheduled.scheduleTransfersMessage")}</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {scheduledTransfers
+                  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+                  .map((transfer) => (
+                  <div key={transfer.id} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
+                    <div className="flex justify-between items-start">
+                      <div className="flex items-center space-x-3">
+                        <div className="bg-purple-100 dark:bg-purple-900 p-2 rounded-lg">
+                          <ClockIcon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-semibold text-gray-900 text-sm sm:text-base">{transfer.description}</h4>
-                          <p className="text-xs sm:text-sm text-gray-500">
-                            {getAccountDisplayName(transfer.fromAccount)} → {transfer.beneficiaryName || getAccountDisplayName(transfer.toAccount)}
+                        <div>
+                          <h4 className="font-semibold text-gray-900 dark:text-white">{transfer.description}</h4>
+                          <p className="text-sm text-gray-600 dark:text-gray-400">
+                            {transfer.fromAccount} → {transfer.toAccount}
                           </p>
-                          <p className="text-xs text-gray-400">
-                            {(t('transfers.scheduled.for') as string)} {transfer.scheduledDate ? formatDate(transfer.scheduledDate) : ''}
+                          <p className="text-xs text-gray-500 dark:text-gray-500">
+                            {t("transfers.scheduled.for")}: {transfer.scheduledDate && formatDate(transfer.scheduledDate, 'long')}
                           </p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="font-semibold text-gray-900 text-sm sm:text-base">{formatCurrency(transfer.amount)}</p>
-                        <span className={`text-xs px-2 py-1 rounded-full ${getStatusColor(transfer.status)}`}>
-                          {getStatusText(transfer.status)}
+                        <p className={`font-semibold ${transfer.type === 'external' ? 'text-red-600 dark:text-red-400' : 'text-blue-600 dark:text-blue-400'}`}>
+                          {transfer.type === 'external' ? '-' : ''}{formatCurrency(transfer.amount, 'EUR')}
+                        </p>
+                        <span className="inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
+                          <Clock className="w-3 h-3 mr-1" />
+                          {t("transfers.status.scheduled")}
                         </span>
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
-          )}
+            )}
+          </div>
+        )}
+      </div>
 
-          {/* Historique */}
-          {activeTab === 'history' && (
-            <div className="space-y-4 sm:space-y-6">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
-                <h3 className="text-base sm:text-lg font-semibold text-gray-900">{t('transfers.history.title') as string}</h3>
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
-                                     <div className="relative">
-                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                     <input
-                       type="text"
-                       placeholder={t('transfers.search') as string}
-                       value={searchTerm}
-                       onChange={(e) => setSearchTerm(e.target.value)}
-                       className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                     />
-                   </div>
-                   <select
-                     value={selectedFilter}
-                     onChange={(e) => setSelectedFilter(e.target.value)}
-                     className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                   >
-                     <option value="all">{t('transfers.filter.all') as string}</option>
-                     <option value="completed">{t('transfers.filter.completed') as string}</option>
-                     <option value="pending">{t('transfers.filter.pending') as string}</option>
-                     <option value="scheduled">{t('transfers.filter.scheduled') as string}</option>
-                   </select>
-                  <button className="flex items-center justify-center space-x-2 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm">
-                    <Download className="w-4 h-4" />
-                    <span>{t('transfers.export') as string}</span>
-                  </button>
+      {/* Limites de transfert et Historique - seulement pour l'onglet principal */}
+      {activeTab === 'new' && (
+        <>
+          {/* Limites de transfert */}
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t("transfers.transferLimits")}</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {transferLimits.map((limit) => (
+                <div key={limit.type} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{limit.description}</p>
+                  <p className="text-xl font-bold text-gray-900 dark:text-white mt-1">
+                    {limit.type === 'processing' ? (
+                      <>0-2 <span className="text-sm font-normal">{t("transfers.businessDays")}</span></>
+                    ) : (
+                      formatCurrency(limit.amount, limit.currency)
+                    )}
+                  </p>
                 </div>
-              </div>
+              ))}
+            </div>
+          </div>
 
-                             <div className="space-y-3 sm:space-y-4">
-                 {filteredTransfers.map((transfer) => (
-                  <div key={transfer.id} className="bg-white border border-gray-200 rounded-xl p-3 sm:p-4">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
-                      <div className="flex items-center space-x-3 sm:space-x-4">
-                        <div className={`p-2 rounded-lg ${
-                          transfer.type === 'internal' ? 'bg-blue-100' :
-                          transfer.type === 'external' ? 'bg-green-100' :
-                          'bg-purple-100'
-                        }`}>
-                          {transfer.type === 'internal' ? (
-                            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
-                          ) : transfer.type === 'external' ? (
-                            <Send className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
-                          ) : (
-                            <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600" />
-                          )}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-semibold text-gray-900 text-sm sm:text-base">{transfer.description}</h4>
-                          <p className="text-xs sm:text-sm text-gray-500">
-                            {getAccountDisplayName(transfer.fromAccount)} → {transfer.beneficiaryName || getAccountDisplayName(transfer.toAccount)}
-                          </p>
-                          <p className="text-xs text-gray-400">{formatDate(transfer.date)}</p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-semibold text-gray-900 text-sm sm:text-base">{formatCurrency(transfer.amount)}</p>
-                        <span className={`text-xs px-2 py-1 rounded-full ${getStatusColor(transfer.status)}`}>
-                          {getStatusText(transfer.status)}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+          {/* Historique des transferts */}
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-4 sm:space-y-0">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t("transfers.history")}</h2>
+          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <input
+                type="text"
+                placeholder={String(t("transactions.searchPlaceholder") || "Rechercher...")}
+                className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:ring-blue-500 focus:border-blue-500 w-full bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <div className="flex space-x-2">
+              <button 
+                className="bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white px-3 py-2 rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors flex items-center space-x-1"
+                onClick={() => setShowFilters(!showFilters)}
+              >
+                <Filter className="w-4 h-4" />
+                <span>{t("transactions.filters")}</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${showFilters ? 'rotate-180' : ''}`} />
+              </button>
+              <button className="bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white px-3 py-2 rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors flex items-center space-x-1">
+                <Download className="w-4 h-4" />
+                <span>{t("transactions.export")}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Filtres avancés */}
+        {showFilters && (
+          <div className="mb-6 p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="font-medium text-gray-900 dark:text-white">{t("transactions.advancedFilters")}</h3>
+              <button 
+                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                onClick={handleResetFilters}
+              >
+                {t("common.resetFilters")}
+              </button>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t("common.type")}</label>
+                <select 
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  value={filters.type}
+                  onChange={(e) => handleFilterChange('type', e.target.value)}
+                >
+                  <option value="all">{t("transactions.all")}</option>
+                  <option value="internal">{t("transfers.type.internal")}</option>
+                  <option value="external">{t("transfers.type.external")}</option>
+                  <option value="recurring">{t("transfers.type.recurring")}</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t("common.status")}</label>
+                <select 
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  value={filters.status}
+                  onChange={(e) => handleFilterChange('status', e.target.value)}
+                >
+                  <option value="all">{t("transactions.all")}</option>
+                  <option value="completed">{t("transfers.status.completed")}</option>
+                  <option value="pending">{t("transfers.status.pending")}</option>
+                  <option value="failed">{t("transfers.status.failed")}</option>
+                  <option value="cancelled">{t("transfers.status.cancelled")}</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t("common.date")}</label>
+                <select 
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  value={filters.dateRange}
+                  onChange={(e) => handleFilterChange('dateRange', e.target.value)}
+                >
+                  <option value="all">{t("transactions.allTime")}</option>
+                  <option value="today">{t("transactions.today")}</option>
+                  <option value="week">{t("transactions.lastWeek")}</option>
+                  <option value="month">{t("transactions.lastMonth")}</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t("transfers.amount")}</label>
+                <select 
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  value={filters.amount}
+                  onChange={(e) => handleFilterChange('amount', e.target.value)}
+                >
+                  <option value="all">{t("transactions.all")}</option>
+                  <option value="small">{t("transactions.amountSmall")}</option>
+                  <option value="medium">{t("transactions.amountMedium")}</option>
+                  <option value="large">{t("transactions.amountLarge")}</option>
+                </select>
               </div>
             </div>
-          )}
+          </div>
+        )}
+
+        <div className="overflow-x-auto">
+          <div className="inline-block min-w-full align-middle">
+            <div className="overflow-hidden border border-gray-200 dark:border-gray-700 rounded-lg">
+              <KycProtectedContent
+                titleKey="transfers.history"
+                fallbackMessage={String(t('kyc.noTransfersAvailable'))}
+              >
+                {loading ? (
+                  <div className="p-6 text-center">
+                    <div className="flex items-center justify-center space-x-2 text-gray-500 dark:text-gray-400">
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      <span>{t("common.loading")}</span>
+                    </div>
+                  </div>
+                ) : filteredTransfers.length === 0 ? (
+                  <div className="p-6 text-center">
+                    <p className="text-gray-500 dark:text-gray-400">{t("transfers.noTransfersFound")}</p>
+                  </div>
+                ) : (
+                  <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <thead className="bg-gray-50 dark:bg-gray-800">
+                      <tr>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                          {t("common.date")}
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                          {t("transfers.description")}
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                          {t("common.type")}
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                          {t("common.status")}
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                          {t("transfers.amount")}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                      {paginatedTransfers.map((transfer) => (
+                        <tr 
+                          key={transfer.id} 
+                          className="hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition-colors"
+                          onClick={() => handleTransferClick(transfer)}
+                        >
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                            {formatDate(transfer.date, 'short')}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center">
+                              <div>
+                                <div className="text-sm font-medium text-gray-900 dark:text-white">
+                                  {transfer.description}
+                                </div>
+                                <div className="text-sm text-gray-500 dark:text-gray-400">
+                                  {transfer.fromAccount} → {transfer.toAccount}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${transfer.type === 'internal' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' : transfer.type === 'external' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200'}`}>
+                              {t(`transfers.type.${transfer.type}`)}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className={`inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full ${
+                              transfer.status === 'completed' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 
+                              transfer.status === 'pending' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' : 
+                              transfer.status === 'processing' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
+                              transfer.status === 'failed' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' : 
+                              'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+                            }`}>
+                              {transfer.status === 'completed' && <CheckCircle2 className="w-3 h-3 mr-1" />}
+                              {transfer.status === 'pending' && <Clock className="w-3 h-3 mr-1" />}
+                              {transfer.status === 'processing' && <Loader2 className="w-3 h-3 mr-1 animate-spin" />}
+                              {transfer.status === 'failed' && <AlertCircle className="w-3 h-3 mr-1" />}
+                              {transfer.status === 'cancelled' && <X className="w-3 h-3 mr-1" />}
+                              {transfer.status === 'completed' ? 'Terminé' : 
+                               transfer.status === 'pending' ? 'En attente' : 
+                               transfer.status === 'processing' ? 'En cours' :
+                               transfer.status === 'failed' ? 'Échoué' : 
+                               transfer.status === 'cancelled' ? 'Annulé' : 'Inconnu'}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-medium text-gray-900 dark:text-white">
+                            <span className={transfer.type === 'external' ? 'text-red-600' : 'text-blue-600'}>
+                              {transfer.type === 'external' ? '-' : ''}{formatCurrency(transfer.amount, 'EUR')}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+
+                {/* Contrôles de pagination */}
+                {totalPages > 1 && (
+                  <div className="mt-6 flex items-center justify-between">
+                    <div className="text-sm text-gray-700 dark:text-gray-300">
+                      Affichage de {startIndex + 1} à {Math.min(endIndex, filteredTransfers.length)} sur {filteredTransfers.length} transferts
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                        className="px-3 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        Précédent
+                      </button>
+                      <span className="text-sm text-gray-700 dark:text-gray-300">
+                        Page {currentPage} sur {totalPages}
+                      </span>
+                      <button
+                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                        disabled={currentPage === totalPages}
+                        className="px-3 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        Suivant
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </KycProtectedContent>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Modal Ajout bénéficiaire */}
-      {showAddBeneficiary && (
+      {/* Modal de détails du transfert */}
+      {selectedTransfer && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 max-w-md w-full mx-4">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg sm:text-xl font-bold text-gray-900">{t('transfers.beneficiaries.addTitle') as string}</h3>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t("transfers.transferDetails")}</h3>
               <button 
-                onClick={() => setShowAddBeneficiary(false)}
-                className="text-gray-400 hover:text-gray-600"
+                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                onClick={() => setSelectedTransfer(null)}
               >
-                ✕
+                <X className="w-5 h-5" />
               </button>
             </div>
-                         <div className="space-y-4">
-               <div>
-                 <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.beneficiaries.form.name') as string}</label>
-                 <input
-                   type="text"
-                   value={formData.beneficiaryName}
-                   onChange={(e) => setFormData(prev => ({ ...prev, beneficiaryName: e.target.value }))}
-                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                   placeholder={t('transfers.beneficiaries.form.namePlaceholder') as string}
-                 />
-               </div>
-               <div>
-                 <label className="block text-sm font-medium text-gray-700 mb-1">IBAN</label>
-                 <input
-                   type="text"
-                   value={formData.beneficiaryIban}
-                   onChange={(e) => setFormData(prev => ({ ...prev, beneficiaryIban: e.target.value }))}
-                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                   placeholder={t('transfers.beneficiaries.form.ibanPlaceholder', 'FR76 1234 5678 9012 3456 7890 123') as string}
-                 />
-               </div>
-               <div>
-                 <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.beneficiaries.form.bic') as string}</label>
-                 <input
-                   type="text"
-                   value={formData.beneficiaryBic}
-                   onChange={(e) => setFormData(prev => ({ ...prev, beneficiaryBic: e.target.value }))}
-                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                   placeholder={t('transfers.beneficiaries.form.bicPlaceholder', 'BNPAFRPPXXX') as string}
-                 />
-               </div>
-               <div>
-                 <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.beneficiaries.form.bank') as string}</label>
-                 <input
-                   type="text"
-                   value={formData.beneficiaryBank}
-                   onChange={(e) => setFormData(prev => ({ ...prev, beneficiaryBank: e.target.value }))}
-                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                   placeholder={t('transfers.beneficiaries.form.bankPlaceholder') as string}
-                 />
-               </div>
-               <div className="flex items-center space-x-2">
-                 <input 
-                   type="checkbox" 
-                   id="favorite" 
-                   checked={formData.isFavorite}
-                   onChange={(e) => setFormData(prev => ({ ...prev, isFavorite: e.target.checked }))}
-                   className="rounded" 
-                 />
-                  <label htmlFor="favorite" className="text-sm text-gray-700">{t('transfers.beneficiaries.form.favorite') as string}</label>
-               </div>
-               <div className="flex space-x-3 pt-4">
-                 <button
-                   onClick={() => {
-                     setShowAddBeneficiary(false);
-                     resetFormData();
-                   }}
-                   className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm"
-                 >
-                   {t('common.cancel')}
-                 </button>
-                 <button 
-                   onClick={handleAddBeneficiary}
-                   className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
-                 >
-                    {t('common.add') as string}
-                 </button>
-               </div>
-             </div>
-          </div>
-        </div>
-      )}
-
-             {/* Modal Édition bénéficiaire */}
-       {showEditBeneficiary && editingBeneficiary && (
-         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-           <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 max-w-md w-full mx-4">
-             <div className="flex items-center justify-between mb-4">
-               <h3 className="text-lg sm:text-xl font-bold text-gray-900">{t('transfers.beneficiaries.editTitle') as string}</h3>
-               <button 
-                 onClick={() => {
-                   setShowEditBeneficiary(false);
-                   setEditingBeneficiary(null);
-                   resetFormData();
-                 }}
-                 className="text-gray-400 hover:text-gray-600"
-               >
-                 ✕
-               </button>
-             </div>
-             <div className="space-y-4">
-               <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.beneficiaries.form.name') as string}</label>
-                 <input
-                   type="text"
-                   value={formData.beneficiaryName}
-                   onChange={(e) => setFormData(prev => ({ ...prev, beneficiaryName: e.target.value }))}
-                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                   placeholder="Nom et prénom"
-                 />
-               </div>
-               <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">IBAN</label>
-                 <input
-                   type="text"
-                   value={formData.beneficiaryIban}
-                   onChange={(e) => setFormData(prev => ({ ...prev, beneficiaryIban: e.target.value }))}
-                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                   placeholder="FR76 1234 5678 9012 3456 7890 123"
-                 />
-               </div>
-               <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.beneficiaries.form.bic') as string}</label>
-                 <input
-                   type="text"
-                   value={formData.beneficiaryBic}
-                   onChange={(e) => setFormData(prev => ({ ...prev, beneficiaryBic: e.target.value }))}
-                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                   placeholder="BNPAFRPPXXX"
-                 />
-               </div>
-               <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.beneficiaries.form.bank') as string}</label>
-                 <input
-                   type="text"
-                   value={formData.beneficiaryBank}
-                   onChange={(e) => setFormData(prev => ({ ...prev, beneficiaryBank: e.target.value }))}
-                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                   placeholder="Nom de la banque"
-                 />
-               </div>
-               <div className="flex items-center space-x-2">
-                 <input 
-                   type="checkbox" 
-                   id="edit-favorite" 
-                   checked={formData.isFavorite}
-                   onChange={(e) => setFormData(prev => ({ ...prev, isFavorite: e.target.checked }))}
-                   className="rounded" 
-                 />
-                 <label htmlFor="edit-favorite" className="text-sm text-gray-700">Marquer comme favori</label>
-               </div>
-               <div className="flex space-x-3 pt-4">
-                 <button
-                   onClick={() => {
-                     setShowEditBeneficiary(false);
-                     setEditingBeneficiary(null);
-                     resetFormData();
-                   }}
-                   className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm"
-                 >
-                   {t('common.cancel')}
-                 </button>
-                 <button 
-                   onClick={handleUpdateBeneficiary}
-                   className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
-                 >
-                    {t('common.edit') as string}
-                 </button>
-               </div>
-             </div>
-           </div>
-         </div>
-       )}
-
-       {/* Modal Formulaire de virement */}
-       {showTransferForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 max-w-lg w-full mx-4 max-h-[80vh] overflow-y-auto">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg sm:text-xl font-bold text-gray-900">
-                {transferType === 'internal' ? (t('transfers.form.title.internal') as string) :
-                 transferType === 'external' ? (t('transfers.form.title.external') as string) : (t('transfers.form.title.scheduled') as string)}
-              </h3>
-                             <button 
-                 onClick={() => {
-                   setShowTransferForm(false);
-                   resetFormData();
-                 }}
-                 className="text-gray-400 hover:text-gray-600"
-               >
-                 ✕
-               </button>
-             </div>
-             <div className="space-y-4">
-               <div>
-                 <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.form.fromAccount') as string}</label>
-                 <select 
-                   value={formData.fromAccount}
-                   onChange={(e) => setFormData(prev => ({ ...prev, fromAccount: e.target.value }))}
-                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                 >
-                    <option value="">{t('transfers.form.selectAccount') as string}</option>
-                   {accounts.map(account => (
-                     <option key={account.id} value={account.id}>
-                       {account.displayName} - {formatCurrency(account.balance)}
-                     </option>
-                   ))}
-                 </select>
-               </div>
-                             {transferType === 'internal' ? (
-                 <div>
-                 <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.form.toAccount') as string}</label>
-                   <select 
-                     value={formData.toAccount}
-                     onChange={(e) => setFormData(prev => ({ ...prev, toAccount: e.target.value }))}
-                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                   >
-                      <option value="">{t('transfers.form.selectAccount') as string}</option>
-                     {accounts.filter(account => account.id !== formData.fromAccount).map(account => (
-                       <option key={account.id} value={account.id}>
-                         {account.displayName}
-                       </option>
-                     ))}
-                   </select>
-                 </div>
-               ) : (
-                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.form.beneficiary') as string}</label>
-                   <select 
-                     value={formData.toAccount}
-                     onChange={(e) => setFormData(prev => ({ ...prev, toAccount: e.target.value }))}
-                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                   >
-                      <option value="">{t('transfers.form.selectBeneficiary') as string}</option>
-                     {beneficiaries.map(beneficiary => (
-                       <option key={beneficiary.id} value={beneficiary.id}>
-                         {beneficiary.name} - {beneficiary.iban}
-                       </option>
-                     ))}
-                   </select>
-                 </div>
-               )}
-               <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.form.amount') as string}</label>
-                 <input
-                   type="number"
-                   value={formData.amount}
-                   onChange={(e) => setFormData(prev => ({ ...prev, amount: e.target.value }))}
-                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                   placeholder="0.00"
-                   step="0.01"
-                 />
-               </div>
-               <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.form.description') as string}</label>
-                 <input
-                   type="text"
-                   value={formData.description}
-                   onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                    placeholder={t('transfers.form.descriptionPlaceholder') as string}
-                 />
-               </div>
-               {transferType === 'scheduled' && (
-                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('transfers.form.scheduleDate') as string}</label>
-                   <input
-                     type="date"
-                     value={formData.scheduledDate}
-                     onChange={(e) => setFormData(prev => ({ ...prev, scheduledDate: e.target.value }))}
-                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                   />
-                 </div>
-               )}
-               <div className="flex space-x-3 pt-4">
-                 <button
-                   onClick={() => {
-                     setShowTransferForm(false);
-                     resetFormData();
-                   }}
-                   className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm"
-                 >
-                   {t('common.cancel')}
-                 </button>
-                 <button 
-                   onClick={handleTransfer}
-                   className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
-                 >
-                    {transferType === 'scheduled' ? (t('transfers.form.schedule') as string) : (t('transfers.form.submit') as string)}
-                 </button>
-               </div>
+            <div className="p-6 space-y-6">
+              <div className="flex justify-between items-center">
+                <span className="text-gray-600 dark:text-gray-400">{t("common.status")}:</span>
+                <span className={`inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full ${selectedTransfer.status === 'completed' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : selectedTransfer.status === 'pending' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' : selectedTransfer.status === 'failed' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'}`}>
+                  {selectedTransfer.status === 'completed' && <CheckCircle2 className="w-3 h-3 mr-1" />}
+                  {selectedTransfer.status === 'pending' && <Clock className="w-3 h-3 mr-1" />}
+                  {selectedTransfer.status === 'failed' && <AlertCircle className="w-3 h-3 mr-1" />}
+                  {selectedTransfer.status === 'cancelled' && <X className="w-3 h-3 mr-1" />}
+                  {t(`transfers.status.${selectedTransfer.status}`)}
+                </span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-gray-600 dark:text-gray-400">{t("common.date")}:</span>
+                <span className="text-gray-900 dark:text-white">{formatDate(selectedTransfer.date, 'long')}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-gray-600 dark:text-gray-400">{t("transfers.amount")}:</span>
+                <span className={`font-semibold ${selectedTransfer.type === 'external' ? 'text-red-600 dark:text-red-400' : 'text-blue-600 dark:text-blue-400'}`}>
+                  {selectedTransfer.type === 'external' ? '-' : ''}{formatCurrency(selectedTransfer.amount, 'EUR')}
+                </span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-gray-600 dark:text-gray-400">{t("transfers.fromAccount")}:</span>
+                <span className="text-gray-900 dark:text-white">{selectedTransfer.fromAccount}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-gray-600 dark:text-gray-400">{t("transfers.toAccount")}:</span>
+                <span className="text-gray-900 dark:text-white">{selectedTransfer.toAccount}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-gray-600 dark:text-gray-400">{t("transfers.reference")}:</span>
+                <span className="text-gray-900 dark:text-white">{selectedTransfer.reference}</span>
+              </div>
+              {selectedTransfer.fee !== undefined && (
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600 dark:text-gray-400">{t("transfers.fee")}:</span>
+                  <span className="text-gray-900 dark:text-white">{formatCurrency(selectedTransfer.fee, 'EUR')}</span>
+                </div>
+              )}
+              {selectedTransfer.exchangeRate !== undefined && (
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600 dark:text-gray-400">{t("transfers.exchangeRate")}:</span>
+                  <span className="text-gray-900 dark:text-white">1 EUR = {selectedTransfer.exchangeRate} GBP</span>
+                </div>
+              )}
+              {selectedTransfer.category && (
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600 dark:text-gray-400">{t("transfers.category")}:</span>
+                  <span className="text-gray-900 dark:text-white">{t(`categories.${selectedTransfer.category}`)}</span>
+                </div>
+              )}
+            </div>
+            <div className="p-6 border-t border-gray-200 dark:border-gray-700 flex justify-end space-x-3">
+              <button 
+                className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                onClick={() => setSelectedTransfer(null)}
+              >
+                {t("common.close")}
+              </button>
+              {selectedTransfer.status === 'pending' && (
+                <button 
+                  className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm transition-colors"
+                  onClick={() => handleCancelTransfer(selectedTransfer.id)}
+                >
+                  {t("transfers.cancelTransfer")}
+                </button>
+              )}
+              <button 
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm transition-colors"
+                onClick={() => handleDownloadReceipt(selectedTransfer)}
+              >
+                {t("transfers.downloadReceipt")}
+              </button>
             </div>
           </div>
         </div>
       )}
-      
-      {/* Notifications */}
-      {/* <NotificationContainer notifications={notifications} /> */}
 
-      {/* Confirmation Dialog pour les virements externes */}
-      <ConfirmationDialog
-        isOpen={showConfirmationDialog}
-        onClose={() => {
-          setShowConfirmationDialog(false);
-          setPendingTransferData(null);
-        }}
-        onConfirm={handleConfirmExternalTransfer}
-        title={t('transferMessages.externalTransferTitle') || 'Virement externe'}
-        message={t('transferMessages.externalTransferMessage') || 'Les virements externes sont soumis à un examen de sécurité avant leur validation.'}
-        type="warning"
-        confirmText={t('transferMessages.confirmTransfer') || 'Confirmer le virement'}
-        cancelText={t('common.cancel') || 'Annuler'}
-      />
+      {/* Modal Nouveau Virement */}
+      {showNewTransferModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[60] p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                {transferType === 'internal' ? t("transfers.internalTransfer") : t("transfers.externalTransfer")}
+              </h3>
+              <button 
+                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                onClick={closeAllModals}
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-6 space-y-4">
+              {/* Compte source */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  {t("transfers.form.sourceAccount")}
+                </label>
+                <select 
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  value={formData.fromAccount}
+                  onChange={(e) => handleFormChange('fromAccount', e.target.value)}
+                >
+                  <option value="">{t("transfers.form.selectAccount")}</option>
+                  {accounts.map((account) => (
+                    <option key={account.id} value={account.id}>
+                      {getAccountName(account)} - {formatCurrency(account.balance, account.currency)}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
+              {/* Compte destination */}
+              {transferType === 'internal' ? (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    {t("transfers.form.destinationAccount")}
+                  </label>
+                  <select 
+                    className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                    value={formData.toAccount}
+                    onChange={(e) => handleFormChange('toAccount', e.target.value)}
+                  >
+                    <option value="">{t("transfers.form.selectAccount")}</option>
+                    {accounts.filter(acc => acc.id !== formData.fromAccount).map((account) => (
+                      <option key={account.id} value={account.id}>
+                        {getAccountName(account)} - {formatCurrency(account.balance, account.currency)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : (
+                <>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      {t("transfers.form.beneficiary")}
+                    </label>
+                    <select 
+                      className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      value={formData.toAccount}
+                      onChange={(e) => {
+                        const beneficiary = beneficiaries.find(b => b.id === e.target.value);
+                        handleFormChange('toAccount', e.target.value);
+                        handleFormChange('beneficiaryName', beneficiary?.name || '');
+                      }}
+                    >
+                      <option value="">{t("transfers.form.selectBeneficiary")}</option>
+                      {beneficiaries
+                        .sort((a, b) => a.name.localeCompare(b.name))
+                        .map((beneficiary) => (
+                          <option key={beneficiary.id} value={beneficiary.id}>
+                            {beneficiary.name} - {beneficiary.iban}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      {t("transfers.form.ibanNewBeneficiary")}
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      placeholder="FR76 3000 6000 0112 3456 7890 189"
+                      value={formData.toIban}
+                      onChange={(e) => handleFormChange('toIban', e.target.value)}
+                    />
+                  </div>
+                </>
+              )}
 
+              {/* Montant */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  {t("transfers.form.amount")} (€)
+                </label>
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0.01"
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  placeholder="0,00"
+                  value={formData.amount}
+                  onChange={(e) => handleFormChange('amount', e.target.value)}
+                />
+              </div>
+
+              {/* Description */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  {t("transfers.form.description")}
+                </label>
+                <input
+                  type="text"
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  placeholder={String(t("transfers.form.descriptionPlaceholder"))}
+                  value={formData.description}
+                  onChange={(e) => handleFormChange('description', e.target.value)}
+                />
+              </div>
+
+              {/* Référence */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  {t("transfers.form.reference")} ({t("common.optional")})
+                </label>
+                <input
+                  type="text"
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  placeholder={String(t("transfers.form.referencePlaceholder"))}
+                  value={formData.reference}
+                  onChange={(e) => handleFormChange('reference', e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="p-6 border-t border-gray-200 dark:border-gray-700 flex justify-end space-x-3">
+              <button 
+                className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                onClick={closeAllModals}
+              >
+                {t("common.cancel")}
+              </button>
+              <button 
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                onClick={handleSubmitTransfer}
+                disabled={!formData.fromAccount || !formData.toAccount || !formData.amount || !formData.description}
+              >
+                {t("transfers.form.submitTransfer")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Bénéficiaire */}
+      {showBeneficiaryModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-lg w-full">
+            <div className="p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                {selectedBeneficiary ? t("transfers.beneficiaries.editTitle") : t("transfers.beneficiaries.addTitle")}
+              </h3>
+              <button 
+                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                onClick={() => {
+                  setShowBeneficiaryModal(false);
+                  resetForms();
+                  setActiveTab('beneficiaries'); // Rester sur l'onglet bénéficiaires
+                }}
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-6 space-y-4">
+              {/* Nom du bénéficiaire */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  {t("transfers.beneficiaries.form.fullName")} *
+                </label>
+                <input
+                  type="text"
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  placeholder={String(t("transfers.beneficiaries.form.fullNamePlaceholder"))}
+                  value={beneficiaryFormData.name}
+                  onChange={(e) => handleBeneficiaryFormChange('name', e.target.value)}
+                />
+              </div>
+
+              {/* IBAN */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  IBAN *
+                </label>
+                <input
+                  type="text"
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  placeholder="FR76 3000 6000 0112 3456 7890 189"
+                  value={beneficiaryFormData.iban}
+                  onChange={(e) => handleBeneficiaryFormChange('iban', e.target.value)}
+                />
+              </div>
+
+              {/* BIC/SWIFT */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  BIC/SWIFT
+                </label>
+                <input
+                  type="text"
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  placeholder="BANKFUI9388"
+                  value={beneficiaryFormData.bic}
+                  onChange={(e) => handleBeneficiaryFormChange('bic', e.target.value)}
+                />
+              </div>
+
+              {/* Surnom */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  {t("transfers.beneficiaries.form.nickname")} ({t("common.optional")})
+                </label>
+                <input
+                  type="text"
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  placeholder={String(t("transfers.beneficiaries.form.nicknamePlaceholder"))}
+                  value={beneficiaryFormData.nickname}
+                  onChange={(e) => handleBeneficiaryFormChange('nickname', e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="p-6 border-t border-gray-200 dark:border-gray-700 flex justify-end space-x-3">
+              <button 
+                className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                onClick={() => {
+                  setShowBeneficiaryModal(false);
+                  resetForms();
+                  setActiveTab('beneficiaries'); // Rester sur l'onglet bénéficiaires
+                }}
+              >
+                {t("common.cancel")}
+              </button>
+              <button 
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                onClick={handleSubmitBeneficiary}
+                disabled={!beneficiaryFormData.name || !beneficiaryFormData.iban}
+              >
+                {selectedBeneficiary ? t("common.edit") : t("common.add")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Virement Programmés */}
+      {showScheduledTransferModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[65] p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t("transfers.scheduled.modalTitle")}</h3>
+              <button 
+                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                onClick={() => {
+                  setShowScheduledTransferModal(false);
+                  resetForms();
+                }}
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-6 space-y-4">
+              {/* Compte source */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  {t("transfers.form.sourceAccount")}
+                </label>
+                <select 
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  value={formData.fromAccount}
+                  onChange={(e) => handleFormChange('fromAccount', e.target.value)}
+                >
+                  <option value="">{t("transfers.form.selectAccount")}</option>
+                  {accounts.map((account) => (
+                    <option key={account.id} value={account.id}>
+                      {getAccountName(account)} - {formatCurrency(account.balance, account.currency)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Bénéficiaire */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  {t("transfers.form.beneficiary")}
+                </label>
+                <select 
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  value={formData.toAccount}
+                  onChange={(e) => {
+                    const beneficiary = beneficiaries.find(b => b.id === e.target.value);
+                    handleFormChange('toAccount', e.target.value);
+                    handleFormChange('beneficiaryName', beneficiary?.name || '');
+                  }}
+                >
+                  <option value="">{t("transfers.form.selectBeneficiary")}</option>
+                  {beneficiaries
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .map((beneficiary) => (
+                      <option key={beneficiary.id} value={beneficiary.id}>
+                        {beneficiary.name} - {beneficiary.iban}
+                      </option>
+                    ))}
+                </select>
+              </div>
+
+              {/* Montant */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  {t("transfers.form.amount")} (€)
+                </label>
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0.01"
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  placeholder="0,00"
+                  value={formData.amount}
+                  onChange={(e) => handleFormChange('amount', e.target.value)}
+                />
+              </div>
+
+              {/* Date de programmation */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  {t("transfers.scheduled.scheduleDate")} *
+                </label>
+                <input
+                  type="datetime-local"
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  value={formData.scheduledDate}
+                  onChange={(e) => handleFormChange('scheduledDate', e.target.value)}
+                  min={new Date().toISOString().slice(0, 16)}
+                />
+              </div>
+
+              {/* Description */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  {t("transfers.form.description")}
+                </label>
+                <input
+                  type="text"
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  placeholder={String(t("transfers.scheduled.descriptionPlaceholder"))}
+                  value={formData.description}
+                  onChange={(e) => handleFormChange('description', e.target.value)}
+                />
+              </div>
+
+              {/* Référence */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  {t("transfers.form.reference")} ({t("common.optional")})
+                </label>
+                <input
+                  type="text"
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  placeholder={String(t("transfers.form.referencePlaceholder"))}
+                  value={formData.reference}
+                  onChange={(e) => handleFormChange('reference', e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="p-6 border-t border-gray-200 dark:border-gray-700 flex justify-end space-x-3">
+              <button 
+                className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-white rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                onClick={() => {
+                  setShowScheduledTransferModal(false);
+                  resetForms();
+                }}
+              >
+                {t("common.cancel")}
+              </button>
+              <button 
+                className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                onClick={handleSubmitTransfer}
+                disabled={!formData.fromAccount || !formData.toAccount || !formData.amount || !formData.description || !formData.scheduledDate}
+              >
+                {t("transfers.scheduled.scheduleTransfer")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+        </>
+      )}
+
+      {/* Boîte de dialogue pour virement externe */}
+      {showExternalTransferDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-md w-full">
+            <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+              <div className="flex items-center space-x-3">
+                <div className="bg-yellow-100 dark:bg-yellow-900 p-3 rounded-full">
+                  <AlertCircle className="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  {t("transfers.externalDialog.title")}
+                </h3>
+              </div>
+            </div>
+            <div className="p-6">
+              <p className="text-gray-600 dark:text-gray-400 mb-4">
+                {t("transfers.externalDialog.message")}
+                <strong>{t("transfers.externalDialog.evaluationMessage")}</strong>
+              </p>
+              
+              {pendingTransfer && (
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-4">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm text-gray-600 dark:text-gray-400">{t("transfers.amount")}:</span>
+                    <span className="font-semibold text-red-600 dark:text-red-400">
+                      -{formatCurrency(pendingTransfer.amount, 'EUR')}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm text-gray-600 dark:text-gray-400">{t("transfers.form.beneficiary")}:</span>
+                    <span className="font-semibold text-gray-900 dark:text-white">
+                      {pendingTransfer.beneficiaryName}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600 dark:text-gray-400">{t("transfers.reference")}:</span>
+                    <span className="font-semibold text-gray-900 dark:text-white">
+                      {pendingTransfer.reference}
+                    </span>
+                  </div>
+                </div>
+              )}
+              
+              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">{t("transfers.externalDialog.nextSteps")}:</h4>
+                <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
+                  <li>• <strong>{t("transfers.status.pending")}</strong> : {t("transfers.externalDialog.pendingDescription")}</li>
+                  <li>• <strong>{t("transfers.status.processing")}</strong> : {t("transfers.externalDialog.processingDescription")}</li>
+                  <li>• <strong>{t("transfers.status.completed")}</strong> : {t("transfers.externalDialog.completedDescription")}</li>
+                </ul>
+              </div>
+            </div>
+            <div className="p-6 border-t border-gray-200 dark:border-gray-700 flex justify-end">
+              <button 
+                className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm transition-colors font-medium"
+                onClick={handleConfirmExternalTransfer}
+              >
+                {t("transfers.externalDialog.understood")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default TransfersPage; 
+export default TransfersPage;

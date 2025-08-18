@@ -1,366 +1,388 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CreditCard, Lock, Unlock, Eye, EyeOff, Plus, Settings, Trash2 } from 'lucide-react';
-import VerificationState from '../../components/VerificationState';
-import { useKycSync } from '../../hooks/useNotifications';
+import { CreditCard, Plus, Shield } from 'lucide-react';
+import { auth } from '../../config/firebase';
+import { cardService, CardSubDocument } from '../../services/cardService';
+import { useNotifications } from '../../hooks/useNotifications';
 import { logger } from '../../utils/logger';
+import CardDisplay from '../../components/cards/CardDisplay';
+import PhysicalCardMessage from '../../components/cards/PhysicalCardMessage';
+import VirtualCardMessage from '../../components/cards/VirtualCardMessage';
+import CardsSummary from '../../components/cards/CardsSummary';
+import CardsSecurity from '../../components/cards/CardsSecurity';
 
-interface Card {
-  id: string;
-  type: 'credit' | 'debit';
-  name: string;
-  number: string;
-  expiryDate: string;
-  cvv: string;
-  balance: number;
-  limit?: number;
-  status: 'active' | 'blocked' | 'expired';
-  isVisible: boolean;
-  color: string;
+interface CardData {
+  physicalCardData: CardSubDocument | null;
+  virtualCardData: CardSubDocument | null;
+  physicalCardStatus: 'none' | 'not_requested' | 'pending' | 'processing' | 'completed' | 'rejected' | null;
+  virtualCardStatus: 'none' | 'not_requested' | 'pending' | 'processing' | 'completed' | 'rejected' | null;
 }
 
 const CardsPage: React.FC = () => {
   const { t } = useTranslation();
-  const { userStatus, isUnverified, isLoading: kycLoading } = useKycSync();
-  const [cards, setCards] = useState<Card[]>([]);
-  const [showRequestForm, setShowRequestForm] = useState(false);
-  const [requestType, setRequestType] = useState<'physical' | 'virtual'>('physical');
+  const { showSuccess, showError } = useNotifications();
+  const [cardData, setCardData] = useState<CardData>({
+    physicalCardData: null,
+    virtualCardData: null,
+    physicalCardStatus: null,        // ✅ Changé de 'none' à null
+    virtualCardStatus: null          // ✅ Changé de 'none' à null
+  });
+  const [requestingPhysical, setRequestingPhysical] = useState(false);
+  const [requestingVirtual, setRequestingVirtual] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [showPhysicalCardDetails, setShowPhysicalCardDetails] = useState(false);
+  const [showVirtualCardDetails, setShowVirtualCardDetails] = useState(false);
 
-  const toggleCardVisibility = (id: string) => {
-    setCards(prev => prev.map(card => 
-      card.id === id ? { ...card, isVisible: !card.isVisible } : card
-    ));
+  // ✅ Réinitialisation forcée des cartes
+  const forceResetCards = () => {
+    console.log('🔄 Réinitialisation forcée des cartes...');
+    setCardData({
+      physicalCardData: null,
+      virtualCardData: null,
+      physicalCardStatus: null,
+      virtualCardStatus: null
+    });
+    console.log('✅ État réinitialisé à null');
   };
 
-  const toggleCardStatus = (id: string) => {
-    setCards(prev => prev.map(card => 
-      card.id === id ? { 
-        ...card, 
-        status: card.status === 'active' ? 'blocked' : 'active' 
-      } : card
-    ));
-  };
+  // ✅ Charger les données des cartes
+  const loadCardData = async () => {
+    if (!auth.currentUser) {
+      console.log('❌ Aucun utilisateur connecté');
+      return;
+    }
 
-  const deleteCard = (id: string) => {
-    setCards(prev => prev.filter(card => card.id !== id));
-  };
+    try {
+      console.log('🔄 Début du chargement des données...');
+      setLoading(true);
+      const userId = auth.currentUser.uid;
+      console.log('👤 ID utilisateur:', userId);
 
-  const formatCardNumber = (number: string) => {
-    return number.replace(/(\d{4})/g, '$1 ').trim();
-  };
+      // ✅ Charger les données des cartes physiques et virtuelles
+      console.log('📥 Chargement des données de cartes...');
+      const [physicalData, virtualData] = await Promise.all([
+        cardService.getPhysicalCardData(userId),
+        cardService.getVirtualCardData(userId)
+      ]);
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'active':
-        return 'text-green-600 bg-green-100';
-      case 'blocked':
-        return 'text-red-600 bg-red-100';
-      case 'expired':
-        return 'text-orange-600 bg-orange-100';
-      default:
-        return 'text-gray-600 bg-gray-100';
+      // ✅ Charger les statuts
+      console.log('📊 Chargement des statuts...');
+      const [physicalStatus, virtualStatus] = await Promise.all([
+        cardService.getPhysicalCardStatus(userId),
+        cardService.getVirtualCardStatus(userId)
+      ]);
+
+      console.log('🔍 Données brutes reçues:', {
+        physicalData,
+        virtualData,
+        physicalStatus,
+        virtualStatus
+      });
+
+      const newCardData = {
+        physicalCardData: physicalData,
+        virtualCardData: virtualData,
+        // ✅ Gérer les cas où les statuts sont null/undefined
+        physicalCardStatus: physicalStatus?.status || null,
+        virtualCardStatus: virtualStatus?.status || null
+      };
+
+      console.log('🔄 Mise à jour de l\'état avec:', newCardData);
+      setCardData(newCardData);
+      
+      // ✅ DEBUG: Afficher les données chargées
+      console.log('🔍 Données finales:', {
+        physicalData,
+        virtualData,
+        physicalStatus: physicalStatus?.status,
+        virtualStatus: virtualStatus?.status
+      });
+    } catch (error) {
+      console.error('❌ Erreur lors du chargement des données de cartes:', error);
+      logger.error('Erreur lors du chargement des données de cartes:', error);
+    } finally {
+      setLoading(false);
+      console.log('✅ Chargement terminé');
     }
   };
 
-  const getStatusText = (status: string) => {
-    switch (status) {
-      case 'active':
-        return t('cards.status.active');
-      case 'blocked':
-        return t('cards.status.blocked');
-      case 'expired':
-        return t('cards.status.expired');
-      default:
-        return t('cards.status.unknown');
+  // ✅ Demander une carte physique
+  const handleRequestPhysicalCard = async () => {
+    if (!auth.currentUser) {
+      showError(t('common.error'), t('cards.errors.noUser'));
+      return;
+    }
+
+    // ✅ Empêcher les demandes multiples - un utilisateur n'a droit qu'à une seule carte physique
+    if (requestingPhysical || cardData.physicalCardStatus === 'pending' || cardData.physicalCardData) {
+      return;
+    }
+
+    setRequestingPhysical(true);
+    try {
+      // ✅ Mettre à jour l'état local IMMÉDIATEMENT pour éviter le flash
+      setCardData(prev => ({
+        ...prev,
+        physicalCardStatus: 'pending',
+        physicalCardData: {
+          cardNumber: 'En attente',
+          cardType: 'Carte physique',
+          expiryDate: 'En attente',
+          cvv: 'En attente',
+          isActive: false,
+          isDisplayed: false,
+          createdAt: new Date() as any,
+          updatedAt: new Date() as any,
+          adminNotes: 'Carte physique en cours de génération - Délai 6-14 jours'
+        }
+      }));
+
+      const success = await cardService.createPhysicalCardRequest(auth.currentUser.uid);
+
+      if (success) {
+        showSuccess(
+          t('cards.requestPhysical.successTitle') || 'Demande enregistrée',
+          t('cards.requestPhysical.successMessage') || 'Votre demande de carte physique a été enregistrée. Elle sera envoyée par voie postale dans 6-14 jours.'
+        );
+
+        // ✅ Recharger les vraies données depuis Firestore
+        setTimeout(async () => {
+          try {
+            const realPhysicalData = await cardService.getPhysicalCardData(auth.currentUser!.uid);
+            if (realPhysicalData) {
+              setCardData(prev => ({
+                ...prev,
+                physicalCardData: realPhysicalData
+              }));
+            }
+          } catch (error) {
+            logger.error('Erreur lors du rechargement des données de carte physique:', error);
+          }
+        }, 1000);
+      } else {
+        // ✅ Restaurer l'état précédent en cas d'échec
+        setCardData(prev => ({
+          ...prev,
+          physicalCardStatus: null,        // ✅ Changé de 'none' à null
+          physicalCardData: null
+        }));
+        showError(t('common.error'), t('cards.requestPhysical.errorMessage'));
+      }
+    } catch (error) {
+      console.error('Erreur lors de la demande de carte physique:', error);
+      // ✅ Restaurer l'état précédent en cas d'erreur
+      setCardData(prev => ({
+        ...prev,
+        physicalCardStatus: null,        // ✅ Changé de 'none' à null
+        physicalCardData: null
+      }));
+      showError(t('common.error'), t('cards.requestPhysical.errorGeneric'));
+    } finally {
+      setRequestingPhysical(false);
     }
   };
 
-  const handleRequestCard = () => {
-    setShowRequestForm(true);
+  // ✅ Demander une carte virtuelle
+  const handleRequestVirtualCard = async () => {
+    if (!auth.currentUser) {
+      showError(t('common.error'), t('cards.errors.noUser'));
+      return;
+    }
+
+    if (requestingVirtual || cardData.virtualCardStatus === 'pending') {
+      return;
+    }
+
+    setRequestingVirtual(true);
+    try {
+      // ✅ Mettre à jour l'état local IMMÉDIATEMENT pour éviter le flash
+      setCardData(prev => ({
+        ...prev,
+        virtualCardStatus: 'pending',
+        virtualCardData: {
+          cardNumber: 'En attente',
+          cardType: 'Carte virtuelle',
+          expiryDate: 'En attente',
+          cvv: 'En attente',
+          isActive: false,
+          isDisplayed: false,
+          createdAt: new Date() as any,
+          updatedAt: new Date() as any,
+          adminNotes: 'Carte virtuelle en cours de génération - Délai 24h'
+        }
+      }));
+
+      const success = await cardService.createVirtualCardRequest(auth.currentUser.uid);
+
+      if (success) {
+        showSuccess(
+          t('cards.requestVirtual.successTitle') || 'Demande enregistrée',
+          t('cards.requestVirtual.successMessage') || 'Votre demande de carte virtuelle a été enregistrée. Elle sera disponible dans 24h.'
+        );
+
+        // ✅ Recharger les vraies données depuis Firestore
+        setTimeout(async () => {
+          try {
+            const realVirtualData = await cardService.getVirtualCardData(auth.currentUser!.uid);
+            if (realVirtualData) {
+              setCardData(prev => ({
+                ...prev,
+                virtualCardData: realVirtualData
+              }));
+            }
+          } catch (error) {
+            logger.error('Erreur lors du rechargement des données de carte virtuelle:', error);
+          }
+        }, 1000);
+      } else {
+        // ✅ Restaurer l'état précédent en cas d'échec
+        setCardData(prev => ({
+          ...prev,
+          virtualCardStatus: null,        // ✅ Changé de 'none' à null
+          virtualCardData: null
+        }));
+        showError(t('common.error'), t('cards.requestVirtual.errorMessage'));
+      }
+    } catch (error) {
+      console.error('Erreur lors de la demande de carte virtuelle:', error);
+      // ✅ Restaurer l'état précédent en cas d'erreur
+      setCardData(prev => ({
+        ...prev,
+        virtualCardStatus: null,        // ✅ Changé de 'none' à null
+        virtualCardData: null
+      }));
+      showError(t('common.error'), t('cards.requestVirtual.errorGeneric'));
+    } finally {
+      setRequestingVirtual(false);
+    }
   };
 
-  const handleSubmitRequest = () => {
-    // Logique pour soumettre la demande de carte
-            logger.debug('Demande de carte soumise:', requestType);
-    setShowRequestForm(false);
-  };
+  // ✅ Charger les données au montage et lors des changements d'authentification
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        loadCardData();
+      } else {
+        setCardData({
+          physicalCardData: null,
+          virtualCardData: null,
+          physicalCardStatus: null,        // ✅ Changé de 'none' à null
+          virtualCardStatus: null          // ✅ Changé de 'none' à null
+        });
+        setLoading(false);
+      }
+    });
 
-  // Si l'utilisateur n'est pas vérifié, afficher l'état de vérification
-  if (kycLoading) {
+    return () => unsubscribe();
+  }, []);
+
+  // ✅ Écran de chargement
+  if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="flex items-center space-x-2 text-gray-500">
           <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-          <span>{t('cards.loading.status')}</span>
+          <span>{t('cards.loading')}</span>
         </div>
       </div>
     );
   }
 
-  if (isUnverified) {
-    return (
-      <VerificationState 
-        userStatus={userStatus}
-        title={t('cards.verification.title') || 'Verification Required'}
-                  description={t('cards.verification.description') || 'Please verify your identity to access cards'}
-      />
-    );
-  }
+  // ✅ DEBUG: Afficher l'état actuel
+  console.log('🎯 État actuel du composant:', {
+    cardData,
+    loading,
+    requestingPhysical,
+    requestingVirtual
+  });
 
   return (
-    <div className="max-w-6xl mx-auto">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">{t('cards.title')}</h1>
-        <p className="text-gray-600">{t('cards.subtitle')}</p>
-      </div>
-
-      {/* Add New Card Button */}
-      <div className="mb-6">
-        <button 
-          onClick={handleRequestCard}
-          className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+    <div className="space-y-6">
+      {/* ✅ En-tête */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">{t('cards.title')}</h1>
+          <p className="text-gray-600">{t('cards.subtitle')}</p>
+        </div>
+        
+        {/* ✅ Bouton de rafraîchissement */}
+        <button
+          onClick={loadCardData}
+          disabled={loading}
+          className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 mr-2"
         >
-          <Plus className="w-5 h-5 mr-2" />
-          {t('cards.addCard')}
+          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          Rafraîchir
+        </button>
+        
+        {/* ✅ Bouton de réinitialisation forcée */}
+        <button
+          onClick={forceResetCards}
+          className="inline-flex items-center px-3 py-2 text-sm font-medium text-red-700 bg-white border border-red-300 rounded-md hover:bg-red-50"
+        >
+          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+          Reset Forcé
         </button>
       </div>
 
-      {/* Cards Grid */}
-      {cards.length === 0 ? (
-        <div className="bg-white rounded-lg shadow-sm border p-12 text-center">
-          <div className="max-w-md mx-auto">
-            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <CreditCard className="w-8 h-8 text-blue-600" />
-            </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">
-              {t('cards.noCards')}
-            </h3>
-            <p className="text-gray-600 mb-6">
-              {t('cards.noCardsDescription')}
-            </p>
-            <button 
-              onClick={handleRequestCard}
-              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              <Plus className="w-5 h-5 mr-2" />
-              {t('cards.requestFirstCard')}
-            </button>
-          </div>
-        </div>
-      ) : (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {cards.map((card) => (
-            <div key={card.id} className="bg-white rounded-lg shadow-sm border overflow-hidden">
-              {/* Card Visual */}
-              <div className={`${card.color} p-6 text-white relative`}>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-2">
-                    <CreditCard className="w-6 h-6" />
-                    <span className="font-semibold">
-                      {card.type === 'credit' ? t('cards.cardTypes.credit') : t('cards.cardTypes.debit')}
-                    </span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <button
-                      onClick={() => toggleCardVisibility(card.id)}
-                      className="p-1 hover:bg-white hover:bg-opacity-20 rounded"
-                    >
-                      {card.isVisible ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
-                    </button>
-                    <button
-                      onClick={() => toggleCardStatus(card.id)}
-                      className="p-1 hover:bg-white hover:bg-opacity-20 rounded"
-                    >
-                      {card.status === 'active' ? <Lock className="w-4 h-4" /> : <Unlock className="w-4 h-4" />}
-                    </button>
-                  </div>
-                </div>
+      {/* ✅ Résumé des cartes */}
+      <CardsSummary
+        physicalCardData={cardData.physicalCardData}
+        virtualCardData={cardData.virtualCardData}
+        physicalCardStatus={cardData.physicalCardStatus}
+        virtualCardStatus={cardData.virtualCardStatus}
+      />
 
-                <div className="mb-4">
-                  <p className="text-sm opacity-90 mb-1">{card.name}</p>
-                  <p className="font-mono text-lg tracking-wider">
-                    {card.isVisible ? formatCardNumber(card.number) : '•••• •••• •••• ••••'}
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-xs opacity-90">{t('cards.cardDetails.expires')}</p>
-                    <p className="font-mono">{card.isVisible ? card.expiryDate : '••/••'}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs opacity-90">CVV</p>
-                    <p className="font-mono">{card.isVisible ? card.cvv : '•••'}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card Details */}
-              <div className="p-6">
-                {/* Status */}
-                <div className="flex items-center justify-between mb-4">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(card.status)}`}>
-                    {getStatusText(card.status)}
-                  </span>
-                  <div className="flex items-center space-x-2">
-                    <button className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
-                      <Settings className="w-4 h-4" />
-                    </button>
-                    <button 
-                      onClick={() => deleteCard(card.id)}
-                      className="p-2 text-gray-400 hover:text-red-600 transition-colors"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Balance/Limit */}
-                <div className="space-y-2">
-                  <div>
-                    <p className="text-sm text-gray-500">{t('cards.cardDetails.currentBalance')}</p>
-                    <p className="text-lg font-semibold text-gray-900">
-                      {card.balance.toLocaleString('fr-FR', {
-                        style: 'currency',
-                        currency: 'EUR'
-                      })}
-                    </p>
-                  </div>
-                  {card.limit && (
-                    <div>
-                      <p className="text-sm text-gray-500">{t('cards.cardDetails.creditLimit')}</p>
-                      <p className="text-lg font-semibold text-gray-900">
-                        {card.limit.toLocaleString('fr-FR', {
-                          style: 'currency',
-                          currency: 'EUR'
-                        })}
-                      </p>
-                    </div>
-                  )}
-                </div>
-
-                {/* Actions */}
-                <div className="mt-6 pt-4 border-t">
-                                  <div className="grid grid-cols-2 gap-2">
-                  <button className="bg-blue-600 text-white py-2 px-3 rounded-md hover:bg-blue-700 transition-colors text-sm font-medium">
-                    {t('cards.actions.use')}
-                  </button>
-                  <button className="bg-gray-100 text-gray-700 py-2 px-3 rounded-md hover:bg-gray-200 transition-colors text-sm font-medium">
-                    {t('cards.actions.details')}
-                  </button>
-                </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* Information Section */}
-      <div className="mt-8 bg-blue-50 rounded-lg p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-3">
-          {t('cards.security.title')}
-        </h3>
-        <div className="grid gap-4 md:grid-cols-2">
-          <div>
-            <h4 className="font-medium text-gray-900 mb-2">{t('cards.security.protection.title')}</h4>
-            <ul className="text-sm text-gray-600 space-y-1">
-              <li>• {t('cards.security.protection.feature1')}</li>
-              <li>• {t('cards.security.protection.feature2')}</li>
-              <li>• {t('cards.security.protection.feature3')}</li>
-              <li>• {t('cards.security.protection.feature4')}</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-medium text-gray-900 mb-2">{t('cards.security.tips.title')}</h4>
-            <ul className="text-sm text-gray-600 space-y-1">
-              <li>• {t('cards.security.tips.tip1')}</li>
-              <li>• {t('cards.security.tips.tip2')}</li>
-              <li>• {t('cards.security.tips.tip3')}</li>
-              <li>• {t('cards.security.tips.tip4')}</li>
-            </ul>
-          </div>
-        </div>
+      {/* ✅ Section des cartes physiques */}
+      <div className="bg-white rounded-lg shadow p-6">
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('cards.physical.title')}</h2>
+        
+        {/* Message de la carte physique */}
+        <PhysicalCardMessage 
+          cardData={cardData.physicalCardData}
+          cardStatus={cardData.physicalCardStatus}
+        />
+        
+        {/* Affichage de la carte physique */}
+        <CardDisplay
+          cardData={cardData.physicalCardData}
+          cardStatus={cardData.physicalCardStatus}
+          cardType="physical"
+          onRequestCard={handleRequestPhysicalCard}
+          isRequesting={requestingPhysical}
+          showCardDetails={showPhysicalCardDetails}
+          onToggleCardDetails={() => setShowPhysicalCardDetails(!showPhysicalCardDetails)}
+        />
       </div>
 
-      {/* Modal Demande de carte */}
-      {showRequestForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-gray-900">{t('cards.requestModal.title')}</h3>
-              <button 
-                onClick={() => setShowRequestForm(false)}
-                className="text-gray-400 hover:text-gray-600"
-              >
-                ✕
-              </button>
-            </div>
-            
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">{t('cards.requestModal.cardType')}</label>
-                <div className="space-y-2">
-                  <label className="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg hover:border-blue-300 cursor-pointer">
-                    <input 
-                      type="radio" 
-                      name="cardType" 
-                      value="physical"
-                      checked={requestType === 'physical'}
-                      onChange={(e) => setRequestType(e.target.value as 'physical' | 'virtual')}
-                      className="text-blue-600"
-                    />
-                    <div className="flex-1">
-                      <div className="font-medium text-gray-900">{t('cards.requestTypes.physical.title')}</div>
-                      <div className="text-sm text-gray-500">{t('cards.requestTypes.physical.description')}</div>
-                    </div>
-                  </label>
-                  <label className="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg hover:border-blue-300 cursor-pointer">
-                    <input 
-                      type="radio" 
-                      name="cardType" 
-                      value="virtual"
-                      checked={requestType === 'virtual'}
-                      onChange={(e) => setRequestType(e.target.value as 'physical' | 'virtual')}
-                      className="text-blue-600"
-                    />
-                    <div className="flex-1">
-                      <div className="font-medium text-gray-900">{t('cards.requestTypes.virtual.title')}</div>
-                      <div className="text-sm text-gray-500">{t('cards.requestTypes.virtual.description')}</div>
-                    </div>
-                  </label>
-                </div>
-              </div>
+      {/* ✅ Section des cartes virtuelles */}
+      <div className="bg-white rounded-lg shadow p-6">
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('cards.virtual.title')}</h2>
+        
+        {/* Message de la carte virtuelle */}
+        <VirtualCardMessage 
+          cardData={cardData.virtualCardData}
+          cardStatus={cardData.virtualCardStatus}
+        />
+        
+        {/* Affichage de la carte virtuelle */}
+        <CardDisplay
+          cardData={cardData.virtualCardData}
+          cardStatus={cardData.virtualCardStatus}
+          cardType="virtual"
+          onRequestCard={handleRequestVirtualCard}
+          isRequesting={requestingVirtual}
+          showCardDetails={showVirtualCardDetails}
+          onToggleCardDetails={() => setShowVirtualCardDetails(!showVirtualCardDetails)}
+        />
+      </div>
 
-              <div className="bg-blue-50 rounded-lg p-4">
-                <h4 className="font-medium text-blue-900 mb-2">{t('cards.requestModal.importantInfo.title')}</h4>
-                <ul className="text-sm text-blue-800 space-y-1">
-                  <li>• {t('cards.requestModal.importantInfo.info1')}</li>
-                  <li>• {t('cards.requestModal.importantInfo.info2')}</li>
-                  <li>• {t('cards.requestModal.importantInfo.info3')}</li>
-                  <li>• {t('cards.requestModal.importantInfo.info4')}</li>
-                </ul>
-              </div>
-
-              <div className="flex space-x-3 pt-4">
-                <button
-                  onClick={() => setShowRequestForm(false)}
-                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  {t('cards.requestModal.cancel')}
-                </button>
-                <button 
-                  onClick={handleSubmitRequest}
-                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  {t('cards.requestModal.submit')}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* ✅ Section sécurité */}
+      <CardsSecurity />
     </div>
   );
 };

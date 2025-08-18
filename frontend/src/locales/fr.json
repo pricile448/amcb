@@ -19,6 +19,8 @@
     "selectFile": "Cliquez pour sélectionner un fichier",
     "dragDrop": "ou glissez-déposez ici",
     "removeFile": "Supprimer",
+    "clickToUpload": "Cliquez pour télécharger",
+    "remove": "Supprimer",
     "submitDocuments": "Soumettre les documents",
     "submitting": "Envoi en cours...",
     "missingDocuments": "Documents manquants",
@@ -48,8 +50,6 @@
       "parsingError": "Erreur parsing user:",
       "submissionGenericError": "Une erreur est survenue lors de la soumission"
     },
-    "unverified": "Non vérifié",
-    "verified": "Vérifié",
     "identity": "Pièce d'identité",
     "address": "Justificatif de domicile",
     "income": "Justificatif de revenus",
@@ -60,8 +60,29 @@
     "kycPending": "Vérification KYC en cours",
     "kycVerified": "Vérification KYC validée",
     "verified": "Vérifié",
-    "pending": "En attente",
-    "unverified": "Non vérifié"
+    "currentStatus": "Statut actuel",
+    "unverified": "Non vérifié",
+    "undefined": "Non défini",
+    "loadingStatus": "Chargement du statut KYC...",
+    "documentsRequiredForVerification": "Documents requis pour la vérification",
+    "progress": "Progression",
+    "documents": "documents",
+    "identityRecto": "Pièce d'identité - Recto",
+    "identityRectoDesc": "Face avant de votre carte d'identité ou permis de conduire",
+    "identityVerso": "Pièce d'identité - Verso",
+    "identityVersoDesc": "Face arrière de votre carte d'identité ou permis de conduire",
+    "passport": "Passeport",
+    "passportDesc": "Passeport en cours de validité",
+    "proofOfAddressDesc": "Facture d'électricité, eau, téléphone ou quittance de loyer",
+    "selfieWithId": "Selfie avec pièce d'identité",
+    "selfieWithIdDesc": "Photo de vous tenant votre pièce d'identité à côté de votre visage",
+    "actionRequired": "Action requise : Documents manquants",
+    "uploadAllRequired": "Veuillez uploader tous les documents requis pour continuer.",
+    "currentProgress": "Progression actuelle",
+    "allDocumentsUploaded": "Tous les documents requis ont été uploadés",
+    "submitDocumentsForVerification": "🚀 Soumettre les documents pour vérification",
+    "documentUploaded": "Document téléchargé",
+    "noTransfersAvailable": "Vérifiez votre identité pour accéder aux virements"
   },
   "common": {
     "loading": "Chargement...",
@@ -78,6 +99,9 @@
     "submit": "Envoyer",
     "close": "Fermer",
     "search": "Rechercher",
+    "noUser": "Aucun utilisateur connecté",
+    "invalidDate": "Date invalide",
+    "locale": "fr-FR",
     "filter": "Filtrer",
     "sort": "Trier",
     "view": "Voir",
@@ -103,7 +127,12 @@
     "export": "Exporter",
     "import": "Importer",
     "send": "Envoyer",
-    "receive": "Recevoir"
+    "receive": "Recevoir",
+    "resetFilters": "Réinitialiser les filtres",
+    "date": "Date",
+    "type": "Type",
+    "status": "Statut",
+    "optional": "optionnel"
   },
   "nav": {
     "home": "Accueil",
@@ -688,7 +717,15 @@
       "reference": "Référence",
       "amount": "Montant"
     },
-    "noRecent": "Aucune transaction récente"
+    "noRecent": "Aucune transaction récente",
+    "filters": "Filtres",
+    "advancedFilters": "Filtres avancés",
+    "allTime": "Toutes les périodes",
+    "lastWeek": "7 derniers jours",
+    "lastMonth": "30 derniers jours",
+    "amountSmall": "< 100€",
+    "amountMedium": "100€ - 500€",
+    "amountLarge": "> 500€"
   },
   "transactionCategories": {
     "salary": "Salaire",
@@ -746,7 +783,14 @@
       "add": "Ajouter un bénéficiaire",
       "addTitle": "Ajouter un bénéficiaire",
       "editTitle": "Modifier le bénéficiaire",
+      "noBeneficiaries": "Aucun bénéficiaire enregistré",
+      "addFirstBeneficiary": "Ajoutez votre premier bénéficiaire pour effectuer des virements",
+      "lastUsed": "Dernière utilisation",
       "form": {
+        "fullName": "Nom complet",
+        "fullNamePlaceholder": "Nom et prénom du bénéficiaire",
+        "nickname": "Surnom",
+        "nicknamePlaceholder": "Ex: Maman, Papa, Loyer...",
         "name": "Nom et prénom",
         "namePlaceholder": "Nom et prénom",
         "ibanPlaceholder": "FR76 1234 5678 9012 3456 7890 123",
@@ -759,17 +803,31 @@
     },
     "scheduled": {
       "title": "Virements programmés",
-      "for": "Programmé pour le"
+      "for": "Programmé pour le",
+      "noScheduledTransfers": "Aucun virement programmé",
+      "scheduleTransfersMessage": "Programmez vos virements pour automatiser vos paiements",
+      "modalTitle": "Virement programmé",
+      "scheduleDate": "Date de programmation",
+      "descriptionPlaceholder": "Description du virement programmé",
+      "scheduleTransfer": "Programmer le virement"
     },
-    "history": {
+    "history": "Historique",
+    "historyDetails": {
       "title": "Historique des virements"
     },
+    "transferLimits": "Limites de virement",
+    "dailyLimit": "5 000,00 €",
+    "monthlyLimit": "20 000,00 €",
+    "minimumAmount": "0,01 €",
+    "processingTime": "1-2 jours ouvrables",
     "status": {
       "completed": "Terminé",
       "pending": "En attente",
+      "processing": "En cours",
       "failed": "Échoué",
       "scheduled": "Programmé",
-      "unknown": "Inconnu"
+      "unknown": "Inconnu",
+      "cancelled": "Annulé"
     },
     "filter": {
       "all": "Tous",
@@ -793,109 +851,199 @@
       "descriptionPlaceholder": "Description du virement",
       "scheduleDate": "Date d'exécution",
       "schedule": "Programmer",
-      "submit": "Effectuer le virement"
+      "submit": "Effectuer le virement",
+      "sourceAccount": "Compte source",
+      "destinationAccount": "Compte destination",
+      "ibanNewBeneficiary": "IBAN (si nouveau bénéficiaire)",
+      "reference": "Référence",
+      "referencePlaceholder": "Référence personnalisée",
+      "submitTransfer": "Effectuer le virement"
+    },
+    "internalTransfer": "Virement interne",
+    "internalTransferDescription": "Transférez de l'argent entre vos comptes",
+    "startInternalTransfer": "Démarrer un virement interne",
+    "externalTransfer": "Virement externe",
+    "externalTransferDescription": "Envoyez de l'argent à un bénéficiaire",
+    "startExternalTransfer": "Démarrer un virement externe",
+    "recurringTransfer": "Virement récurrent",
+    "recurringTransferDescription": "Programmez des virements réguliers",
+    "startRecurringTransfer": "Démarrer un virement récurrent",
+    "businessDays": "jours ouvrables",
+    "noTransfersFound": "Aucun virement trouvé",
+    "amount": "Montant",
+    "description": "Description",
+    "type": {
+      "internal": "Interne",
+      "external": "Externe",
+      "recurring": "Récurrent"
+    },
+    "externalDialog": {
+      "title": "Virement en attente d'évaluation",
+      "message": "Votre virement externe a été soumis avec succès. ",
+      "evaluationMessage": "Tous les virements externes de notre banque passent par une évaluation avant exécution.",
+      "nextSteps": "Prochaines étapes",
+      "pendingDescription": "Virement soumis pour évaluation",
+      "processingDescription": "Virement approuvé et en cours de traitement",
+      "completedDescription": "Virement exécuté avec succès",
+      "understood": "Compris"
     }
   },
   "cards": {
-    "title": "Mes Cartes",
-    "subtitle": "Gérez vos cartes bancaires et cartes de crédit",
-    "addCard": "Demander une nouvelle carte",
-    "noCards": "Aucune carte disponible",
-    "noCardsDescription": "Vous n'avez pas encore de cartes bancaires. Demandez votre première carte pour commencer à l'utiliser.",
-    "requestFirstCard": "Demander ma première carte",
-    "requestCard": "Demander une carte",
-    "cardTypes": {
-      "debit": "Carte de Débit",
-      "credit": "Carte de Crédit"
+    "title": "Cartes",
+    "subtitle": "Gérez vos cartes bancaires et de crédit",
+    "loading": "Chargement des cartes...",
+    "physical": {
+      "title": "Carte physique",
+      "noCard": "Aucune carte physique disponible",
+      "noCardDesc": "Vous n'avez pas encore de carte physique. Demandez votre première et unique carte pour commencer à l'utiliser.",
+      "processing": {
+        "title": "Carte en cours de génération",
+        "description": "Votre demande de carte physique a été enregistrée. Elle sera envoyée par voie postale dans 6-14 jours.",
+        "status": "En cours de traitement"
+      },
+      "available": {
+        "title": "Carte physique disponible",
+        "message": "Votre carte physique est active et sécurisée"
+      },
+      "cardDetails": "Détails de la carte",
+      "cardNumber": "Numéro de carte",
+      "expiryDate": "Date d'expiration",
+      "status": {
+        "active": "Active et sécurisée",
+        "delivered": "Livrée à votre adresse"
+      }
     },
-    "requestTypes": {
-      "physical": "Carte physique",
-      "virtual": "Carte virtuelle",
-      "physicalDescription": "Livrée à votre adresse sous 5-7 jours ouvrés",
-      "virtualDescription": "Disponible sous 24h pour les paiements en ligne"
+    "virtual": {
+      "title": "Cartes virtuelles",
+      "noCard": "Aucune carte virtuelle disponible",
+      "noCardDesc": "Vous n'avez pas encore de carte virtuelle. Activez des cartes virtuelles pour commencer à les utiliser.",
+      "processing": {
+        "title": "Carte virtuelle en cours de génération",
+        "description": "Votre demande de carte virtuelle a été enregistrée. Elle sera disponible dans 24h.",
+        "status": "En cours de traitement"
+      },
+      "available": {
+        "title": "Carte virtuelle disponible",
+        "message": "Votre carte virtuelle est active et sécurisée"
+      },
+      "cardDetails": "Détails de la carte",
+      "cardNumber": "Numéro de carte",
+      "expiryDate": "Date d'expiration",
+      "status": {
+        "active": "Active et sécurisée",
+        "onlinePayments": "Paiements en ligne"
+      }
+    },
+    "requestPhysical": {
+      "firstCard": "Demander ma première carte",
+      "successTitle": "Demande enregistrée",
+      "successMessage": "Votre demande de carte physique a été enregistrée. Elle sera envoyée par voie postale dans 6-14 jours.",
+      "errorMessage": "Erreur lors de la demande de carte physique",
+      "errorGeneric": "Une erreur est survenue lors de la demande"
+    },
+    "requestVirtual": {
+      "button": "Demander une carte virtuelle",
+      "successTitle": "Demande enregistrée",
+      "successMessage": "Votre demande de carte virtuelle a été enregistrée. Elle sera disponible dans 24h.",
+      "errorMessage": "Erreur lors de la demande de carte virtuelle",
+      "errorGeneric": "Une erreur est survenue lors de la demande"
     },
     "status": {
       "active": "Active",
-      "blocked": "Bloquée",
-      "expired": "Expirée",
-      "unknown": "Inconnu"
+      "pending": "En attente",
+      "processing": "En traitement",
+      "completed": "Terminé",
+      "rejected": "Rejeté"
     },
-    "actions": {
-      "use": "Utiliser",
-      "details": "Détails",
-      "settings": "Paramètres",
-      "delete": "Supprimer",
-      "request": "Demander la carte",
-      "requestNew": "Demander une nouvelle carte",
-      "requestFirst": "Demander ma première carte",
-      "cancel": "Annuler"
+    "errors": {
+      "noUser": "Utilisateur non connecté"
     },
-    "info": {
-      "title": "Informations importantes",
-      "virtualAvailable": "La carte virtuelle sera disponible sous 24h",
-      "physicalDelivery": "La carte physique sera livrée à votre adresse",
-      "pinSms": "Vous recevrez un code PIN par SMS séparé",
-      "secured": "Les cartes sont sécurisées et assurées"
-    },
-    "loading": {
-      "status": "Vérification de votre statut..."
-    },
-    "verification": {
-      "title": "Vérification d'identité requise",
-      "description": "Pour demander et gérer vos cartes bancaires, vous devez d'abord valider votre identité."
-    },
-    "types": {
-      "credit": "Carte de Crédit",
-      "debit": "Carte de Débit"
-    },
-    "emptyState": {
-      "title": "Aucune carte disponible",
-      "description": "Vous n'avez pas encore de cartes bancaires. Demandez votre première carte pour commencer à l'utiliser."
-    },
-    "cardDetails": {
-      "expires": "Expire",
-      "currentBalance": "Solde actuel",
-      "creditLimit": "Limite de crédit"
-    },
-    "requestModal": {
-      "title": "Demander une carte",
-      "cardType": "Type de carte",
-      "physical": {
-        "title": "Carte physique",
-        "description": "Livrée à votre adresse sous 5-7 jours ouvrés"
-      },
-      "virtual": {
-        "title": "Carte virtuelle",
-        "description": "Disponible sous 24h pour les paiements en ligne"
-      },
-      "importantInfo": {
-        "title": "Informations importantes",
-        "info1": "La carte virtuelle sera disponible sous 24h",
-        "info2": "La carte physique sera livrée à votre adresse",
-        "info3": "Vous recevrez un code PIN par SMS séparé",
-        "info4": "Les cartes sont sécurisées et assurées"
-      },
-      "submit": "Demander la carte"
+    "summary": {
+      "activeCards": "Cartes actives",
+      "pendingCards": "En cours",
+      "rejectedCards": "Rejetées"
     },
     "security": {
       "title": "Sécurité des cartes",
-      "protection": {
-        "title": "Protection des cartes",
-        "feature1": "Verrouillage/déverrouillage instantané",
-        "feature2": "Notifications de transactions",
-        "feature3": "Limites de paiement configurables",
-        "feature4": "Protection contre la fraude"
+      "description": "Vos cartes sont protégées par les dernières technologies de sécurité",
+      "features": [
+        "Chiffrement 256-bit",
+        "Protection contre la fraude",
+        "Notifications en temps réel",
+        "Verrouillage à distance"
+      ],
+      "cardGeneration": {
+        "virtual": {
+          "title": "Carte virtuelle en cours de génération",
+          "description": "Carte virtuelle en cours de génération - Délai 24h",
+          "mobileAvailable": "Disponible sur mobile",
+          "delay": "Délai: 24h"
+        },
+        "physical": {
+          "title": "Carte physique en cours de génération",
+          "description": "Carte physique en cours de génération - Délai 6-14 jours",
+          "postalDelivery": "Livraison postale",
+          "delay": "Délai: 6-14 jours"
+        }
       },
       "tips": {
         "title": "Conseils de sécurité",
-        "tip1": "Ne partagez jamais vos codes",
-        "tip2": "Utilisez des sites sécurisés",
-        "tip3": "Surveillez vos transactions",
-        "tip4": "Signalez toute activité suspecte"
+        "pinCvv": "Ne partagez jamais vos codes PIN ou CVV",
+        "secureSites": "Utilisez uniquement des sites sécurisés (HTTPS)",
+        "monitorTransactions": "Surveillez régulièrement vos transactions",
+        "reportSuspicious": "Signalez toute activité suspecte immédiatement"
+      },
+      "fraudProtection": {
+        "title": "Protection contre la fraude",
+        "description": "En cas de fraude, vous êtes protégé par notre garantie de sécurité",
+        "guarantee": "Vos cartes sont sécurisées et assurées"
       }
     },
-    "errors": {
-      "requestFailed": "Erreur lors de la demande de carte"
+    "support": {
+      "title": "Support et aide",
+      "options": {
+        "phone": {
+          "title": "Support téléphonique",
+          "description": "Appelez notre équipe 24/7 pour toute question sur vos cartes",
+          "action": "Appeler maintenant"
+        },
+        "email": {
+          "title": "Support par email",
+          "description": "Envoyez-nous un message et recevez une réponse sous 2h",
+          "action": "Envoyer un email"
+        },
+        "chat": {
+          "title": "Chat en ligne",
+          "description": "Discutez avec un conseiller en temps réel",
+          "action": "Démarrer le chat"
+        },
+        "help": {
+          "title": "Centre d'aide",
+          "description": "Consultez nos guides et FAQ détaillés",
+          "action": "Consulter l'aide"
+        }
+      },
+      "faq": {
+        "title": "Questions fréquentes",
+        "questions": {
+          "activation": {
+            "question": "Comment activer ma nouvelle carte ?",
+            "answer": "Votre carte est automatiquement activée une fois reçue. Vous recevrez un SMS de confirmation."
+          },
+          "lost": {
+            "question": "Que faire si ma carte est perdue ou volée ?",
+            "answer": "Bloquez immédiatement votre carte depuis l'application ou appelez notre service d'urgence."
+          },
+          "pin": {
+            "question": "Comment changer mon code PIN ?",
+            "answer": "Vous pouvez changer votre code PIN depuis l'application mobile ou en vous rendant dans une agence."
+          },
+          "acceptance": {
+            "question": "Ma carte est-elle acceptée partout ?",
+            "answer": "Oui, vos cartes AmCbunq sont acceptées dans le monde entier par tous les commerçants."
+          }
+        }
+      }
     }
   },
   "verification": {
@@ -918,7 +1066,6 @@
     "bankStatement": "Relevé bancaire",
     "status": {
       "approved": "Approuvé",
-      "pending": "En attente",
       "rejected": "Rejeté",
       "completed": "Complétée",
       "inProgress": "En cours",
@@ -931,8 +1078,7 @@
     },
     "stepStatus": {
       "completed": "Terminé",
-      "inProgress": "En cours",
-      "pending": "En attente"
+      "inProgress": "En cours"
     },
     "step1": {
       "title": "Création du compte",
@@ -957,15 +1103,15 @@
         "message": "Pour accéder à toutes les fonctionnalités d'AmCbunq, vous devez valider votre identité.",
         "button": "Valider maintenant"
       },
-      "pending": {
-        "title": "Vérification en cours",
-        "message": "Vos documents sont en cours de vérification. Vous recevrez une notification une fois terminé.",
-        "button": "Voir le statut"
-      },
       "rejected": {
         "title": "Vérification rejetée",
         "message": "Votre vérification d'identité a été rejetée. Veuillez soumettre de nouveaux documents.",
         "button": "Soumettre à nouveau"
+      },
+      "pending": {
+        "title": "Vérification en cours",
+        "message": "Vos documents sont en cours de vérification. Ce processus prend généralement 24 à 48 heures.",
+        "button": "Voir le statut"
       }
     }
   },
@@ -985,7 +1131,7 @@
   },
   "billing": {
     "title": "Facturation",
-    "subtitle": "RIB et messages de la banque",
+    "subtitle": "RIB de facturation et informations bancaires",
     "loading": "Chargement des données de facturation...",
     "statusVerification": "Vérification de votre statut...",
     "noData": {
@@ -1026,8 +1172,9 @@
       "sharing": "Partage du RIB de facturation..."
     },
     "bankMessage": {
-      "title": "Message de la Banque",
-      "importantInfo": "Informations importantes"
+      "title": "Messages de la Banque",
+      "importantInfo": "Informations importantes",
+      "noMessage": "Aucun message de la banque pour le moment."
     },
     "ribFile": {
       "title": "RIB de Facturation AmCbunq",
@@ -1107,11 +1254,13 @@
       "button": "Demander mon RIB",
       "requesting": "Demande en cours...",
       "successTitle": "Demande enregistrée",
-      "successMessage": "Votre demande de RIB a été enregistrée. Il sera disponible sous 24-48h.",
+      "successMessage": "Votre demande de RIB a été enregistrée. Il sera disponible sous 24h.",
       "errorTitle": "Erreur",
       "errorMessage": "Impossible de traiter votre demande de RIB",
       "errorGeneric": "Une erreur est survenue lors de la demande de RIB",
-      "errorRequest": "Impossible de demander le RIB"
+      "errorRequest": "Impossible de demander le RIB",
+      "processingMessage": "Votre demande est en cours de traitement. Le RIB sera disponible sous 24h.",
+      "pendingMessage": "Demande en cours de traitement..."
     },
     "processing": {
       "title": "RIB en cours de génération",
@@ -1205,7 +1354,7 @@
       }
     }
   },
-  "history": {
+  "historyPage": {
     "title": "Historique",
     "subtitle": "Consultez l'historique de vos transactions",
     "loading": {
@@ -1287,19 +1436,7 @@
   },
   "budgets": {
     "title": "Budgets",
-    "subtitle": "Suivez vos dépenses et respectez vos budgets",
-    "loading": {
-      "budgets": "Chargement de vos budgets...",
-      "status": "Vérification de votre statut..."
-    },
-    "unverified": {
-      "titleUnverified": "Vérification d'identité requise",
-      "titlePending": "Vérification en cours",
-      "descriptionUnverified": "Pour créer et gérer vos budgets, vous devez d'abord valider votre identité.",
-      "descriptionPending": "Votre compte est en cours de vérification. Vous pourrez créer des budgets une fois validé.",
-      "secureAccount": "Compte sécurisé",
-      "customBudgets": "Budgets personnalisés"
-    },
+    "subtitle": "Gérez vos budgets et suivez vos dépenses",
     "summary": {
       "totalBudget": "Budget total",
       "spent": "Dépensé",
@@ -1310,17 +1447,6 @@
       "title": "Progression globale",
       "budgetUsage": "Utilisation du budget"
     },
-    "actions": {
-      "createNew": "Créer un nouveau budget",
-      "edit": "Modifier",
-      "details": "Détails"
-    },
-    "status": {
-      "onTrack": "Dans les limites",
-      "overBudget": "Dépassé",
-      "underBudget": "Sous budget",
-      "unknown": "Inconnu"
-    },
     "card": {
       "progression": "Progression",
       "budget": "Budget",
@@ -1329,26 +1455,188 @@
       "monthly": "Mensuel",
       "yearly": "Annuel"
     },
+    "status": {
+      "onTrack": "Dans les limites",
+      "overBudget": "Dépassé",
+      "underBudget": "Sous-budget",
+      "unknown": "Inconnu"
+    },
     "tips": {
-      "title": "Conseils pour gérer vos budgets",
+      "title": "Conseils pour optimiser vos budgets",
       "planning": {
         "title": "Planification",
         "tip1": "Définissez des objectifs réalistes",
         "tip2": "Suivez vos dépenses régulièrement",
-        "tip3": "Ajustez vos budgets si nécessaire",
+        "tip3": "Ajustez vos budgets selon vos besoins",
         "tip4": "Prévoyez des imprévus"
       },
       "optimization": {
         "title": "Optimisation",
-        "tip1": "Identifiez vos postes de dépenses",
-        "tip2": "Cherchez des alternatives moins chères",
-        "tip3": "Évitez les achats impulsifs",
-        "tip4": "Épargnez les surplus"
+        "tip1": "Identifiez vos dépenses non essentielles",
+        "tip2": "Négociez vos contrats et abonnements",
+        "tip3": "Utilisez des outils de comparaison",
+        "tip4": "Établissez des priorités claires"
       }
     },
-    "errors": {
-      "noUser": "Aucun utilisateur connecté",
-      "loadingError": "Erreur lors du chargement des budgets"
+    "create": {
+      "title": "Créer un budget",
+      "titleEdit": "Modifier le budget",
+      "editTitle": "Modifier le budget: {budgetName}",
+      "editButton": "Modifier le budget",
+      "fields": {
+        "name": "Nom du budget",
+        "category": "Catégorie",
+        "amount": "Montant",
+        "period": "Période",
+        "startDate": "Date de début",
+        "endDate": "Date de fin",
+        "description": "Description"
+      },
+      "placeholders": {
+        "name": "Ex: Budget courses",
+        "selectCategory": "Sélectionner une catégorie",
+        "description": "Description optionnelle du budget"
+      },
+      "periods": {
+        "monthly": "Mensuel",
+        "yearly": "Annuel"
+      },
+      "categories": {
+        "alimentation": "Alimentation",
+        "transport": "Transport",
+        "logement": "Logement",
+        "loisirs": "Loisirs",
+        "sante": "Santé",
+        "vetements": "Vêtements",
+        "education": "Éducation",
+        "autres": "Autres"
+      },
+      "amountHelper": "Montant en euros (sans décimales)",
+      "errors": {
+        "nameRequired": "Le nom du budget est requis",
+        "categoryRequired": "La catégorie est requise",
+        "amountRequired": "Le montant doit être supérieur à 0",
+        "amountTooHigh": "Le montant ne peut pas dépasser 999 999 €",
+        "startDateRequired": "La date de début est requise",
+        "endDateRequired": "La date de fin est requise",
+        "endDateAfterStart": "La date de fin doit être après la date de début"
+      },
+      "actions": {
+        "cancel": "Annuler",
+        "create": "Créer le budget"
+      }
+    },
+    "actions": {
+      "createNew": "Créer un nouveau budget",
+      "edit": "Modifier",
+      "details": "Détails",
+      "delete": "Supprimer",
+      "addExpense": "Ajouter une dépense"
+    },
+    "delete": {
+      "title": "Supprimer le budget",
+      "subtitle": "Action irréversible",
+      "confirmationTitle": "Êtes-vous sûr ?",
+      "confirmationMessage": "Vous êtes sur le point de supprimer le budget \"{budgetName}\". Cette action ne peut pas être annulée.",
+      "warningTitle": "Attention !",
+      "warningMessage": "Toutes les données associées à ce budget (dépenses, historique) seront définitivement supprimées.",
+      "actions": {
+        "cancel": "Annuler",
+        "confirm": "Supprimer",
+        "deleting": "Suppression..."
+      }
+    },
+    "messages": {
+      "deleteConfirmation": "Êtes-vous sûr de vouloir supprimer le budget \"{budgetName}\" ?\n\nCette action est irréversible.",
+      "deleteSuccess": "Budget \"{budgetName}\" supprimé avec succès !",
+      "noUser": "❌ Aucun utilisateur connecté",
+      "deleteError": "❌ Erreur lors de la suppression: {error}",
+      "fallbackDeleteConfirmation": "Êtes-vous sûr de vouloir supprimer le budget \"{budgetName}\" ?\n\nCette action est irréversible.",
+      "fallbackDeleteSuccess": "✅ Budget \"{budgetName}\" supprimé avec succès !",
+      "fallbackNoUser": "❌ Aucun utilisateur connecté",
+      "fallbackDeleteError": "❌ Erreur lors de la suppression: {error}"
+    },
+    "details": {
+      "progression": "Progression",
+      "budgetTotal": "Budget total",
+      "spent": "Dépensé",
+      "remaining": "Restant",
+      "period": "Période",
+      "monthly": "📅 Mensuel",
+      "yearly": "📅 Annuel",
+      "percentageMarkers": {
+        "zero": "0%",
+        "fifty": "50%",
+        "hundred": "100%"
+      },
+      "close": "Fermer"
+    },
+    "expense": {
+      "title": "Ajouter une dépense",
+      "budgetFor": "Budget: {budgetName}",
+      "details": {
+        "progression": "Progression",
+        "budget": "Budget",
+        "spent": "Dépensé",
+        "remaining": "Restant",
+        "period": "Période",
+        "type": "Type",
+        "start": "Début",
+        "end": "Fin",
+        "duration": "Durée",
+        "monthly": "Mensuel",
+        "yearly": "Annuel",
+        "oneMonth": "1 mois",
+        "oneYear": "1 an",
+        "description": "Description",
+        "insights": "💡 Aperçu",
+        "budgetExceeded": "⚠️ Vous avez dépassé votre budget de {percentage}%",
+        "budgetWarning": "⚠️ Attention, vous avez utilisé {percentage}% de votre budget",
+        "budgetHalfway": "✅ Vous êtes à mi-parcours avec {percentage}% d'utilisation",
+        "budgetExcellent": "🎯 Excellent ! Vous n'avez utilisé que {percentage}% de votre budget",
+        "monthlyBudgetValid": "📅 Budget mensuel valide jusqu'au {date}",
+        "budgetRemaining": "💰 Il vous reste {amount}€ à dépenser"
+      },
+      "fields": {
+        "amount": "Montant de la dépense",
+        "date": "Date de la dépense",
+        "category": "Catégorie",
+        "description": "Description"
+      },
+      "placeholders": {
+        "description": "Décrivez cette dépense..."
+      },
+      "categories": {
+        "general": "Général",
+        "food": "Alimentation",
+        "transport": "Transport",
+        "entertainment": "Loisirs",
+        "shopping": "Shopping",
+        "health": "Santé",
+        "bills": "Factures",
+        "other": "Autre"
+      },
+      "summary": {
+        "totalBudget": "Budget total",
+        "spent": "Dépensé",
+        "remaining": "Restant",
+        "usage": "Utilisation"
+      },
+      "amountHelper": "Montant en euros (sans décimales)",
+      "descriptionHelper": "{current}/200 caractères",
+      "errors": {
+        "amountRequired": "Le montant doit être supérieur à 0",
+        "amountTooHigh": "Le montant ne peut pas dépasser 999 999 €",
+        "dateRequired": "La date est requise",
+        "descriptionRequired": "La description est requise",
+        "descriptionTooLong": "La description ne peut pas dépasser 200 caractères",
+        "exceedsBudget": "Le montant dépasse le budget restant ({remaining}€)"
+      },
+      "actions": {
+        "cancel": "Annuler",
+        "add": "Ajouter la dépense",
+        "adding": "Ajout en cours..."
+      }
     }
   },
   "messages": {
@@ -1770,7 +2058,6 @@
       "button": "Contacter le support"
     }
   },
-
   "verificationState": {
     "titles": {
       "unverified": "Vérification d'identité requise",
@@ -1800,10 +2087,6 @@
     "verificationIdentite": "Vérification d'identité",
     "startVerification": "Commencer la vérification",
     "featuresAfterVerification": "Fonctionnalités disponibles après vérification",
-    "cards": {
-      "title": "Cartes bancaires",
-      "description": "Demandez et gérez vos cartes de crédit et de débit"
-    },
     "transfers": {
       "title": "Virements",
       "description": "Effectuez des virements instantanés et programmés"

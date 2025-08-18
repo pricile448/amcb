@@ -48,6 +48,10 @@ const DashboardPage: React.FC = () => {
   const [showBalances, setShowBalances] = useState(true);
   const [dataLoaded, setDataLoaded] = useState(false);
   
+  // États de pagination pour les transactions récentes
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+  
   // Fonction pour traduire les catégories de transactions
    const translateTransactionCategory = (category: string): string => {
      if (!category) return t('transactionCategories.other');
@@ -217,7 +221,7 @@ const DashboardPage: React.FC = () => {
             };
           });
           
-          setRecentTransactions(mappedTransactions);
+          setRecentTransactions(mappedTransactions.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()));
           logger.debug('Dashboard - Transactions chargées:', mappedTransactions);
         } catch (transactionError) {
           console.error('❌ Erreur chargement transactions:', transactionError);
@@ -346,10 +350,16 @@ const DashboardPage: React.FC = () => {
         logger.debug('Dashboard translating credit to Carte de crédit');
         return t('accountTypes.credit');
       default:
-        logger.debug('Dashboard no translation found, returning original:', name);
-        return name;
+        logger.debug('Dashboard using default translation for:', name);
+        return name || t('accountTypes.current');
     }
   };
+
+  // Calculs de pagination pour les transactions récentes
+  const totalPages = Math.ceil(recentTransactions.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedRecentTransactions = recentTransactions.slice(startIndex, endIndex);
 
   // Afficher un indicateur de chargement
   if (loading) {
@@ -589,7 +599,7 @@ const DashboardPage: React.FC = () => {
           <Link to={getDashboardLink('historique')} className="text-blue-600 hover:text-blue-700 font-medium text-sm md:text-base cursor-pointer">{t('common.view')}</Link>
         </div>
         <div className="space-y-3">
-          {recentTransactions.map((transaction) => (
+          {paginatedRecentTransactions.map((transaction) => (
             <div key={transaction.id} className="flex items-center justify-between p-3 md:p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
               <div className="flex items-center space-x-3">
                 {getTransactionIcon(transaction.type)}
@@ -612,6 +622,34 @@ const DashboardPage: React.FC = () => {
             </div>
           ))}
         </div>
+
+        {/* Contrôles de pagination pour les transactions récentes */}
+        {totalPages > 1 && (
+          <div className="mt-4 flex items-center justify-between">
+            <div className="text-sm text-gray-500">
+              Affichage de {startIndex + 1} à {Math.min(endIndex, recentTransactions.length)} sur {recentTransactions.length} transactions
+            </div>
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Précédent
+              </button>
+              <span className="text-sm text-gray-700">
+                Page {currentPage} sur {totalPages}
+              </span>
+              <button
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Suivant
+              </button>
+            </div>
+          </div>
+        )}
       </KycProtectedContent>
 
       {/* Sections publicitaires avec couleurs améliorées */}

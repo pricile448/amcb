@@ -11,7 +11,9 @@
     "start": "node server-prod.js",
     "start:prod": "NODE_ENV=production node server-prod.js",
     "start:full": "node start.cjs",
-    "check-ports": "node check-ports.cjs"
+    "check-ports": "node check-ports.cjs",
+    "i18n:check": "node src/utils/checkMissingTranslations.js",
+    "i18n:merge": "node src/utils/mergeTranslations.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.9.11",

@@ -36,6 +36,10 @@ const AccountsPage: React.FC = () => {
   
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  
+  // États de pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   // Fonction pour récupérer le nom de l'utilisateur connecté (formaté pour mobile)
   const getUserName = (): string => {
@@ -400,7 +404,14 @@ const AccountsPage: React.FC = () => {
 
   // 🔧 NOUVEAU: Gérer l'affichage des comptes selon le statut KYC
   const displayAccounts = userStatus === 'verified' ? accounts : [];
-  const displayTransactions = transactions;
+  const sortedTransactions = transactions.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  
+  // Calculs de pagination
+  const totalPages = Math.ceil(sortedTransactions.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const displayTransactions = sortedTransactions.slice(startIndex, endIndex);
+  
   const totalBalance = accounts.reduce((sum, account) => sum + account.balance, 0);
 
   // Afficher un indicateur de chargement
@@ -709,12 +720,28 @@ const AccountsPage: React.FC = () => {
         </div>
 
         <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs sm:text-sm text-gray-500 space-y-2 sm:space-y-0">
-          <span>{t('accounts.displaying')} {displayTransactions.length} {t('accounts.transactions')}</span>
-          <div className="flex items-center justify-center sm:justify-end space-x-2">
-            <button className="px-2 sm:px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 text-xs sm:text-sm">{t('accounts.previous')}</button>
-            <span className="px-2 sm:px-3 py-1 bg-blue-600 text-white rounded text-xs sm:text-sm">1</span>
-            <button className="px-2 sm:px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 text-xs sm:text-sm">{t('accounts.next')}</button>
-          </div>
+          <span>{t('accounts.displaying')} {startIndex + 1} à {Math.min(endIndex, sortedTransactions.length)} sur {sortedTransactions.length} {t('accounts.transactions')}</span>
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center sm:justify-end space-x-2">
+              <button 
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className="px-2 sm:px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 text-xs sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {t('accounts.previous')}
+              </button>
+              <span className="px-2 sm:px-3 py-1 bg-blue-600 text-white rounded text-xs sm:text-sm">
+                {currentPage} / {totalPages}
+              </span>
+              <button 
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="px-2 sm:px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 text-xs sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {t('accounts.next')}
+              </button>
+            </div>
+          )}
         </div>
       </KycProtectedContent>
 

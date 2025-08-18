@@ -43,38 +43,16 @@ const BillingPage: React.FC = () => {
         const userData = await FirebaseDataService.getUserData(userId);
         logger.debug('Données utilisateur reçues:', userData);
         
-        // 🔒 NOUVELLE LOGIQUE: Gestion automatique de billingVisible selon le statut KYC
-        let isBillingVisible = userData?.billingVisible;
-        
-        // Si l'utilisateur est vérifié (KYC), billingVisible doit être false
-        if (userStatus === 'verified' && isBillingVisible !== false) {
-          logger.warn('Utilisateur vérifié détecté - billingVisible sera automatiquement mis à false');
-          isBillingVisible = false;
-          
-          // Mettre à jour Firestore automatiquement (seul un admin peut le changer à true)
-          try {
-            const { updateDoc, doc } = await import('firebase/firestore');
-            const { db } = await import('../../config/firebase');
-            const userDocRef = doc(db, 'users', userId);
-            await updateDoc(userDocRef, { billingVisible: false });
-            logger.info('Champ billingVisible automatiquement mis à false pour utilisateur vérifié');
-          } catch (updateError) {
-            logger.error('Erreur lors de la mise à jour automatique de billingVisible:', updateError);
-          }
-        }
-        
-        // Si billingVisible n'est pas défini, utiliser la valeur par défaut selon le statut
-        if (isBillingVisible === undefined) {
-          isBillingVisible = userStatus !== 'verified'; // true si non vérifié, false si vérifié
-        }
-        
+        // ✅ NOUVELLE LOGIQUE SIMPLIFIÉE: Gestion de billingVisible
+        const isBillingVisible = userData?.billingVisible ?? false;
         setBillingVisible(isBillingVisible);
         
-        if (userData && userData.billingIban && isBillingVisible) {
+        // Si billingVisible est true, charger les données de facturation (même si certains champs sont vides)
+        if (isBillingVisible && userData) {
           const billingInfo: BillingData = {
-            billingIban: userData.billingIban,
+            billingIban: userData.billingIban || 'FR76 1234 5678 9012 3456 7890 123',
             billingBic: userData.billingBic || 'SMOEFRP1',
-            billingHolder: userData.billingHolder || `${userData.firstName} ${userData.lastName}`,
+            billingHolder: userData.billingHolder || `${userData.firstName || 'Client'} ${userData.lastName || 'AmCbunq'}`,
             billingText: userData.billingText || '',
             firstName: userData.firstName || 'Client',
             lastName: userData.lastName || 'AmCbunq'
@@ -83,12 +61,12 @@ const BillingPage: React.FC = () => {
           setBillingData(billingInfo);
           logger.success('Données de facturation chargées avec succès:', billingInfo);
         } else {
-          if (userStatus === 'verified') {
-            logger.info('Utilisateur vérifié - facturation masquée automatiquement');
-          } else {
-            logger.warn('Aucune donnée de facturation trouvée ou facturation masquée');
-          }
           setBillingData(null);
+          if (!isBillingVisible) {
+            logger.info('Facturation masquée par l\'administrateur');
+          } else {
+            logger.warn('Aucune donnée de facturation trouvée');
+          }
         }
       } catch (error) {
         logger.error('Erreur lors du chargement des données de facturation:', error);
@@ -99,7 +77,7 @@ const BillingPage: React.FC = () => {
     };
 
     loadBillingData();
-  }, [userStatus]); // Ajouter userStatus comme dépendance
+  }, []); // Suppression de la dépendance userStatus
 
   const handleCopyIban = async () => {
     if (!billingData) return;
@@ -148,7 +126,7 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
       <div className="flex items-center justify-center h-64">
         <div className="flex items-center space-x-2 text-gray-500">
           <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-          <span>Vérification de votre statut...</span>
+          <span>{t('billing.statusVerification')}</span>
         </div>
       </div>
     );
@@ -167,13 +145,13 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
       <div className="flex items-center justify-center h-64">
         <div className="flex items-center space-x-2 text-gray-500">
           <Loader2 className="w-6 h-6 animate-spin" />
-          <span>Chargement des données de facturation...</span>
+          <span>{t('billing.loading')}</span>
         </div>
       </div>
     );
   }
 
-  // Vérifier si la facturation est masquée
+  // ✅ NOUVELLE LOGIQUE SIMPLIFIÉE: Vérifier billingVisible en premier
   if (!billingVisible) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -193,6 +171,7 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
     );
   }
 
+  // Si billingVisible est true mais pas de données, afficher un message d'erreur
   if (!billingData) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -200,12 +179,12 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
           <div className="p-4 bg-yellow-100 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
             <AlertCircle className="w-8 h-8 text-yellow-600" />
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Aucune donnée de facturation</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('billing.noData.title')}</h3>
           <p className="text-gray-500 mb-4">
-            Les informations de facturation ne sont pas encore disponibles.
+            {t('billing.noData.description')}
           </p>
           <p className="text-sm text-gray-400">
-            Contactez votre conseiller pour obtenir vos coordonnées de facturation.
+            {t('billing.noData.contact')}
           </p>
         </div>
       </div>
@@ -332,32 +311,36 @@ Note: Ce RIB est destiné aux opérations de facturation et validation de compte
       </div>
 
       {/* Messages de la Banque */}
-      {billingData.billingText && (
-        <div className="bg-white rounded-2xl shadow-lg p-4 md:p-6">
-          <div className="flex items-center space-x-3 mb-4">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <MessageSquare className="w-5 h-5 text-blue-600" />
-            </div>
-            <h2 className="text-lg md:text-xl font-bold text-gray-900">{t('billing.bankMessage.title')}</h2>
+      <div className="bg-white rounded-2xl shadow-lg p-4 md:p-6">
+        <div className="flex items-center space-x-3 mb-4">
+          <div className="p-2 bg-blue-100 rounded-lg">
+            <MessageSquare className="w-5 h-5 text-blue-600" />
           </div>
+          <h2 className="text-lg md:text-xl font-bold text-gray-900">{t('billing.bankMessage.title')}</h2>
+        </div>
 
-          <div className="bg-blue-50 rounded-xl p-4 md:p-6 border border-blue-200">
-            <div className="flex items-start space-x-3">
-              <div className="p-2 bg-blue-100 rounded-lg flex-shrink-0">
-                <CheckCircle className="w-4 h-4 text-blue-600" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-semibold text-gray-900 mb-2">{t('billing.bankMessage.importantInfo')}</h3>
-                <div className="prose prose-sm max-w-none">
+        <div className="bg-blue-50 rounded-xl p-4 md:p-6 border border-blue-200">
+          <div className="flex items-start space-x-3">
+            <div className="p-2 bg-blue-100 rounded-lg flex-shrink-0">
+              <CheckCircle className="w-4 h-4 text-blue-600" />
+            </div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-gray-900 mb-2">{t('billing.bankMessage.importantInfo')}</h3>
+              <div className="prose prose-sm max-w-none">
+                {billingData.billingText ? (
                   <pre className="whitespace-pre-wrap text-sm text-gray-700 font-sans leading-relaxed">
                     {billingData.billingText}
                   </pre>
-                </div>
+                ) : (
+                  <p className="text-sm text-gray-600 italic">
+                    {t('billing.bankMessage.noMessage')}
+                  </p>
+                )}
               </div>
             </div>
           </div>
         </div>
-      )}
+      </div>
 
       {/* Informations importantes */}
       <div className="bg-white rounded-2xl shadow-lg p-4 md:p-6">

@@ -1,0 +1,41 @@
+{
+  "transfers": {
+    "internalTransfer": "Virement interne",
+    "internalTransferDescription": "Transférez de l'argent entre vos comptes",
+    "startInternalTransfer": "Démarrer un virement interne",
+    "externalTransfer": "Virement externe",
+    "externalTransferDescription": "Envoyez de l'argent à un bénéficiaire",
+    "startExternalTransfer": "Démarrer un virement externe",
+    "recurringTransfer": "Virement récurrent",
+    "recurringTransferDescription": "Programmez des virements réguliers",
+    "startRecurringTransfer": "Démarrer un virement récurrent",
+    "businessDays": "jours ouvrables",
+    "noTransfersFound": "Aucun virement trouvé",
+    "amount": "Montant",
+    "description": "Description",
+    "type": {
+      "internal": "Interne",
+      "external": "Externe",
+      "recurring": "Récurrent"
+    },
+    "status": {
+      "cancelled": "Annulé"
+    }
+  },
+  "transactions": {
+    "filters": "Filtres",
+    "advancedFilters": "Filtres avancés",
+    "allTime": "Toutes les périodes",
+    "lastWeek": "7 derniers jours",
+    "lastMonth": "30 derniers jours",
+    "amountSmall": "< 100€",
+    "amountMedium": "100€ - 500€",
+    "amountLarge": "> 500€"
+  },
+  "common": {
+    "resetFilters": "Réinitialiser les filtres"
+  },
+  "kyc": {
+    "noTransfersAvailable": "Vérifiez votre identité pour accéder aux virements"
+  }
+}

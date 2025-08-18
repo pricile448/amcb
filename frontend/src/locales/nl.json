@@ -16,7 +16,6 @@
     "required": "Vereist",
     "selectFile": "Klik om een bestand te selecteren",
     "dragDrop": "of sleep en zet hier neer",
-    "removeFile": "Verwijderen",
     "submitDocuments": "Documenten indienen",
     "submitting": "Bezig met indienen...",
     "missingDocuments": "Ontbrekende documenten",
@@ -54,13 +53,35 @@
     "kycPending": "Verificatie in behandeling",
     "kycVerified": "Account geverifieerd",
     "verified": "Geverifieerd",
-    "pending": "In behandeling",
-    "unverified": "Niet geverifieerd"
+    "currentStatus": "Huidige status",
+    "undefined": "Niet gedefinieerd",
+    "loadingStatus": "KYC-status wordt geladen...",
+    "documentsRequiredForVerification": "Documenten vereist voor verificatie",
+    "progress": "Voortgang",
+    "documents": "documenten",
+    "identityRecto": "Identiteitsbewijs - Voorzijde",
+    "identityRectoDesc": "Voorzijde van uw identiteitskaart of rijbewijs",
+    "identityVerso": "Identiteitsbewijs - Achterzijde",
+    "identityVersoDesc": "Achterzijde van uw identiteitskaart of rijbewijs",
+    "passport": "Paspoort",
+    "passportDesc": "Geldig paspoort",
+    "proofOfAddressDesc": "Elektriciteits-, water-, telefoonrekening of huurontvangst",
+    "selfieWithId": "Selfie met identiteitsbewijs",
+    "selfieWithIdDesc": "Foto van u met uw identiteitsbewijs naast uw gezicht",
+    "actionRequired": "Actie vereist: Ontbrekende documenten",
+    "uploadAllRequired": "Upload alle vereiste documenten om door te gaan.",
+    "currentProgress": "Huidige voortgang",
+    "allDocumentsUploaded": "Alle vereiste documenten zijn geüpload",
+    "submitDocumentsForVerification": "🚀 Documenten indienen voor verificatie",
+    "documentUploaded": "Document geüpload",
+    "clickToUpload": "Klik om te uploaden",
+    "removeFile": "Verwijderen"
   },
   "common": {
     "loading": "Bezig met laden...",
     "error": "Fout",
     "success": "Succes",
+    "clickToUpload": "Klik om te uploaden",
     "cancel": "Annuleren",
     "save": "Opslaan",
     "edit": "Bewerken",
@@ -72,6 +93,9 @@
     "submit": "Verzenden",
     "close": "Sluiten",
     "search": "Zoeken",
+    "noUser": "Geen gebruiker ingelogd",
+    "invalidDate": "Ongeldige datum",
+    "locale": "nl-NL",
     "filter": "Filteren",
     "sort": "Sorteren",
     "view": "Bekijken",
@@ -97,7 +121,12 @@
     "export": "Exporteren",
     "import": "Importeren",
     "send": "Verzenden",
-    "receive": "Ontvangen"
+    "receive": "Ontvangen",
+    "resetFilters": "Filters resetten",
+    "date": "Datum",
+    "type": "Type",
+    "status": "Status",
+    "optional": "optioneel"
   },
   "nav": {
     "home": "Home",
@@ -772,30 +801,43 @@
       "add": "Begunstigde toevoegen",
       "addTitle": "Begunstigde toevoegen",
       "editTitle": "Begunstigde bewerken",
+      "noBeneficiaries": "Geen begunstigden geregistreerd",
+      "addFirstBeneficiary": "Voeg uw eerste begunstigde toe om overschrijvingen te maken",
+      "lastUsed": "Laatst gebruikt",
       "form": {
-        "name": "Naam en voornaam",
-        "namePlaceholder": "Naam en voornaam",
-        "ibanPlaceholder": "BE12 1234 5678 9012",
-        "bic": "BIC code",
-        "bicPlaceholder": "KREDBEBB",
-        "bank": "Bank",
-        "bankPlaceholder": "Banknaam",
-        "favorite": "Markeer als favoriet"
+        "fullName": "Volledige naam",
+        "fullNamePlaceholder": "Volledige naam van de begunstigde",
+        "nickname": "Bijnaam",
+        "nicknamePlaceholder": "Bijv.: Mama, Papa, Huur..."
       }
     },
     "scheduled": {
       "title": "Geplande overschrijvingen",
-      "for": "Gepland voor"
+      "for": "Gepland voor",
+      "noScheduledTransfers": "Geen geplande overschrijvingen",
+      "scheduleTransfersMessage": "Plan uw overschrijvingen om uw betalingen te automatiseren",
+      "modalTitle": "Geplande overschrijving",
+      "scheduleDate": "Planningdatum",
+      "descriptionPlaceholder": "Beschrijving van de geplande overschrijving",
+      "scheduleTransfer": "Overschrijving plannen"
     },
-    "history": {
+    "history": "Geschiedenis",
+    "historyDetails": {
       "title": "Overschrijvingsgeschiedenis"
     },
+    "transferLimits": "Overschrijvingslimieten",
+    "dailyLimit": "5.000,00 €",
+    "monthlyLimit": "20.000,00 €",
+    "minimumAmount": "0,01 €",
+    "processingTime": "1-2 werkdagen",
     "status": {
       "completed": "Voltooid",
       "pending": "In behandeling",
+      "processing": "In behandeling",
       "failed": "Mislukt",
       "scheduled": "Gepland",
-      "unknown": "Onbekend"
+      "unknown": "Onbekend",
+      "cancelled": "Geannuleerd"
     },
     "filter": {
       "all": "Alle",
@@ -819,109 +861,161 @@
       "descriptionPlaceholder": "Omschrijving van de overschrijving",
       "scheduleDate": "Uitvoerdatum",
       "schedule": "Plannen",
-      "submit": "Overschrijving uitvoeren"
+      "submit": "Overschrijving uitvoeren",
+      "sourceAccount": "Bronrekening",
+      "destinationAccount": "Doelrekening",
+      "ibanNewBeneficiary": "IBAN (indien nieuwe begunstigde)",
+      "reference": "Referentie",
+      "referencePlaceholder": "Aangepaste referentie",
+      "submitTransfer": "Overschrijving uitvoeren"
+    },
+    "internalTransfer": "Interne overschrijving",
+    "internalTransferDescription": "Maak geld over tussen uw rekeningen",
+    "startInternalTransfer": "Start een interne overschrijving",
+    "externalTransfer": "Externe overschrijving",
+    "externalTransferDescription": "Stuur geld naar een begunstigde",
+    "startExternalTransfer": "Start een externe overschrijving",
+    "recurringTransfer": "Terugkerende overschrijving",
+    "recurringTransferDescription": "Plan regelmatige overschrijvingen",
+    "startRecurringTransfer": "Start een terugkerende overschrijving",
+    "businessDays": "werkdagen",
+    "noTransfersFound": "Geen overschrijvingen gevonden",
+    "amount": "Bedrag",
+    "description": "Omschrijving",
+    "type": {
+      "internal": "Intern",
+      "external": "Extern",
+      "recurring": "Terugkerend"
+    },
+    "externalDialog": {
+      "title": "Overschrijving wacht op evaluatie",
+      "message": "Uw externe overschrijving is succesvol ingediend. ",
+      "evaluationMessage": "Alle externe overschrijvingen van onze bank ondergaan een evaluatie voordat ze worden uitgevoerd.",
+      "nextSteps": "Volgende stappen",
+      "pendingDescription": "Overschrijving ingediend voor evaluatie",
+      "processingDescription": "Overschrijving goedgekeurd en wordt verwerkt",
+      "completedDescription": "Overschrijving succesvol uitgevoerd",
+      "understood": "Begrepen"
     }
   },
   "cards": {
-    "title": "Mijn Kaarten",
+    "title": "Bankpassen",
     "subtitle": "Beheer uw bankpassen en creditcards",
-    "addCard": "Nieuwe kaart aanvragen",
-    "noCards": "Geen kaarten beschikbaar",
-    "noCardsDescription": "U hebt nog geen bankpassen. Vraag uw eerste kaart aan om te beginnen gebruiken.",
-    "requestFirstCard": "Mijn eerste kaart aanvragen",
-    "requestCard": "Kaart aanvragen",
-    "cardTypes": {
-      "debit": "Betaalkaart",
-      "credit": "Creditcard"
+    "loading": "Bankpassen laden...",
+    
+    "physical": {
+      "title": "Fysieke kaart",
+      "noCard": "Geen fysieke kaart beschikbaar",
+      "noCardDesc": "U heeft nog geen fysieke kaart. Vraag uw eerste en enige kaart aan om te beginnen gebruiken.",
+      "processing": {
+        "title": "Kaart wordt gegenereerd",
+        "description": "Uw verzoek voor een fysieke kaart is geregistreerd. Deze wordt per post verzonden binnen 6-14 dagen.",
+        "status": "In behandeling"
+      },
+      "available": {
+        "title": "Fysieke kaart beschikbaar",
+        "message": "Uw fysieke kaart is actief en beveiligd"
+      },
+      "cardDetails": "Kaartdetails",
+      "cardNumber": "Kaartnummer",
+      "expiryDate": "Vervaldatum",
+      "status": {
+        "active": "Actief en beveiligd",
+        "delivered": "Afgeleverd op uw adres"
+      }
     },
-    "requestTypes": {
-      "physical": "Fysieke kaart",
-      "virtual": "Virtuele kaart",
-      "physicalDescription": "Geleverd op uw adres binnen 5-7 werkdagen",
-      "virtualDescription": "Beschikbaar binnen 24u voor online betalingen"
+    
+    "virtual": {
+      "title": "Virtuele kaarten",
+      "noCard": "Geen virtuele kaart beschikbaar",
+      "noCardDesc": "U heeft nog geen virtuele kaart. Activeer virtuele kaarten om te beginnen gebruiken.",
+      "processing": {
+        "title": "Virtuele kaart wordt gegenereerd",
+        "description": "Uw verzoek voor een virtuele kaart is geregistreerd. Deze is beschikbaar binnen 24 uur.",
+        "status": "In behandeling"
+      },
+      "available": {
+        "title": "Virtuele kaart beschikbaar",
+        "message": "Uw virtuele kaart is actief en beveiligd"
+      },
+      "cardDetails": "Kaartdetails",
+      "cardNumber": "Kaartnummer",
+      "expiryDate": "Vervaldatum",
+      "status": {
+        "active": "Actief en beveiligd",
+        "onlinePayments": "Online betalingen"
+      }
     },
+    
+    "requestPhysical": {
+      "firstCard": "Mijn eerste kaart aanvragen",
+      "successTitle": "Verzoek geregistreerd",
+      "successMessage": "Uw verzoek voor een fysieke kaart is geregistreerd. Deze wordt per post verzonden binnen 6-14 dagen.",
+      "errorMessage": "Fout bij het aanvragen van fysieke kaart",
+      "errorGeneric": "Er is een fout opgetreden tijdens het verzoek"
+    },
+    
+    "requestVirtual": {
+      "button": "Virtuele kaart aanvragen",
+      "successTitle": "Verzoek geregistreerd",
+      "successMessage": "Uw verzoek voor een virtuele kaart is geregistreerd. Deze is beschikbaar binnen 24 uur.",
+      "errorMessage": "Fout bij het aanvragen van virtuele kaart",
+      "errorGeneric": "Er is een fout opgetreden tijdens het verzoek"
+    },
+    
     "status": {
       "active": "Actief",
-      "blocked": "Geblokkeerd",
-      "expired": "Vervallen",
-      "unknown": "Onbekend"
+      "pending": "In afwachting",
+      "processing": "In behandeling",
+      "completed": "Voltooid",
+      "rejected": "Afgewezen"
     },
-    "actions": {
-      "use": "Gebruiken",
-      "details": "Details",
-      "settings": "Instellingen",
-      "delete": "Verwijderen",
-      "request": "Kaart aanvragen",
-      "requestNew": "Nieuwe kaart aanvragen",
-      "requestFirst": "Mijn eerste kaart aanvragen",
-      "cancel": "Annuleren"
+    
+    "errors": {
+      "noUser": "Gebruiker niet verbonden"
     },
-    "info": {
-      "title": "Belangrijke informatie",
-      "virtualAvailable": "De virtuele kaart is beschikbaar binnen 24u",
-      "physicalDelivery": "De fysieke kaart wordt geleverd op uw adres",
-      "pinSms": "U ontvangt een aparte PIN code per SMS",
-      "secured": "Kaarten zijn beveiligd en verzekerd"
+    
+    "summary": {
+      "activeCards": "Actieve kaarten",
+      "pendingCards": "In behandeling",
+      "rejectedCards": "Afgewezen"
     },
-    "loading": {
-      "status": "Uw status wordt gecontroleerd..."
-    },
-    "verification": {
-      "title": "Identiteitsverificatie vereist",
-      "description": "Om bankpassen aan te vragen en te beheren, moet u eerst uw identiteit valideren."
-    },
-    "types": {
-      "credit": "Creditcard",
-      "debit": "Betaalkaart"
-    },
-    "emptyState": {
-      "title": "Geen kaarten beschikbaar",
-      "description": "U hebt nog geen bankpassen. Vraag uw eerste kaart aan om te beginnen gebruiken."
-    },
-    "cardDetails": {
-      "expires": "Vervalt",
-      "currentBalance": "Huidig saldo",
-      "creditLimit": "Kredietlimiet"
-    },
-    "requestModal": {
-      "title": "Kaart aanvragen",
-      "cardType": "Kaarttype",
-      "physical": {
-        "title": "Fysieke kaart",
-        "description": "Geleverd op uw adres binnen 5-7 werkdagen"
-      },
-      "virtual": {
-        "title": "Virtuele kaart",
-        "description": "Beschikbaar binnen 24u voor online betalingen"
-      },
-      "importantInfo": {
-        "title": "Belangrijke informatie",
-        "info1": "De virtuele kaart is beschikbaar binnen 24u",
-        "info2": "De fysieke kaart wordt geleverd op uw adres",
-        "info3": "U ontvangt een aparte PIN code per SMS",
-        "info4": "Kaarten zijn beveiligd en verzekerd"
-      },
-      "submit": "Kaart aanvragen"
-    },
+    
     "security": {
       "title": "Kaartbeveiliging",
-      "protection": {
-        "title": "Kaartbescherming",
-        "feature1": "Direct blokkeren/deblokkeren",
-        "feature2": "Transactiemeldingen",
-        "feature3": "Aanpasbare betalingslimieten",
-        "feature4": "Fraudebescherming"
+      "description": "Uw kaarten zijn beschermd door de nieuwste beveiligingstechnologieën",
+      "features": [
+        "256-bit versleuteling",
+        "Fraudebescherming",
+        "Real-time meldingen",
+        "Externe vergrendeling"
+      ],
+      "cardGeneration": {
+        "virtual": {
+          "title": "Virtuele kaart wordt gegenereerd",
+          "description": "Virtuele kaart wordt gegenereerd - Vertraging 24u",
+          "mobileAvailable": "Beschikbaar op mobiel",
+          "delay": "Vertraging: 24u"
+        },
+        "physical": {
+          "title": "Fysieke kaart wordt gegenereerd",
+          "description": "Fysieke kaart wordt gegenereerd - Vertraging 6-14 dagen",
+          "postalDelivery": "Postale levering",
+          "delay": "Vertraging: 6-14 dagen"
+        }
       },
       "tips": {
         "title": "Veiligheidstips",
-        "tip1": "Deel nooit uw codes",
-        "tip2": "Gebruik beveiligde websites",
-        "tip3": "Controleer uw transacties",
-        "tip4": "Meld verdachte activiteiten"
+        "pinCvv": "Deel nooit uw PIN- of CVV-codes",
+        "secureSites": "Gebruik alleen beveiligde websites (HTTPS)",
+        "monitorTransactions": "Controleer regelmatig uw transacties",
+        "reportSuspicious": "Meld verdachte activiteiten onmiddellijk"
+      },
+      "fraudProtection": {
+        "title": "Fraudebescherming",
+        "description": "Bij fraude bent u beschermd door onze veiligheidsgarantie",
+        "guarantee": "Uw kaarten zijn beveiligd en verzekerd"
       }
-    },
-    "errors": {
-      "requestFailed": "Fout bij kaartaanvraag"
     }
   },
   "verification": {
@@ -1000,18 +1094,18 @@
   },
   "billing": {
     "title": "Facturatie",
-    "subtitle": "RIB en bankberichten",
-    "loading": "Facturatiedata laden...",
+    "subtitle": "Facturatie RIB en bankinformatie",
+    "loading": "Facturatiegegevens laden...",
     "statusVerification": "Je status controleren...",
     "noData": {
-      "title": "Geen facturatiedata",
+      "title": "Geen facturatiegegevens",
       "description": "Facturatie-informatie is nog niet beschikbaar.",
-      "contact": "Neem contact op met je adviseur om je facturatiedetails te krijgen."
+      "contact": "Neem contact op met uw adviseur om uw facturatiegegevens te krijgen."
     },
     "billingHidden": {
       "title": "Geen facturatie beschikbaar",
-      "description": "Facturatie is niet beschikbaar voor je account.",
-      "contact": "Neem contact op met je adviseur voor meer informatie."
+      "description": "Facturatie is niet beschikbaar voor uw account.",
+      "contact": "Neem contact op met uw adviseur voor meer informatie."
     },
     "verification": {
       "title": "Identiteitsverificatie vereist",
@@ -1041,8 +1135,9 @@
       "sharing": "Facturatie RIB wordt gedeeld..."
     },
     "bankMessage": {
-      "title": "Bankbericht",
-      "importantInfo": "Belangrijke informatie"
+      "title": "Bankberichten",
+      "importantInfo": "Belangrijke Informatie",
+      "noMessage": "Geen bankbericht op dit moment."
     },
     "ribFile": {
       "title": "AmCbunq Facturatie RIB",
@@ -1122,11 +1217,13 @@
       "button": "Mijn RIB aanvragen",
       "requesting": "Aanvraag in behandeling...",
       "successTitle": "Aanvraag geregistreerd",
-      "successMessage": "Uw RIB-aanvraag is geregistreerd. Het zal binnen 24-48u beschikbaar zijn.",
+      "successMessage": "Uw RIB-aanvraag is geregistreerd. Het zal binnen 24u beschikbaar zijn.",
       "errorTitle": "Fout",
       "errorMessage": "Kan uw RIB-aanvraag niet verwerken",
       "errorGeneric": "Er is een fout opgetreden bij de RIB-aanvraag",
-      "errorRequest": "Kan RIB niet aanvragen"
+      "errorRequest": "Kan RIB niet aanvragen",
+      "processingMessage": "Uw aanvraag wordt verwerkt. De RIB zal binnen 24u beschikbaar zijn.",
+      "pendingMessage": "Aanvraag wordt verwerkt..."
     },
     "processing": {
       "title": "RIB wordt gegenereerd",
@@ -1220,7 +1317,7 @@
       }
     }
   },
-  "history": {
+  "historyPage": {
     "title": "Geschiedenis",
     "subtitle": "Bekijk uw transactiegeschiedenis",
     "loading": {
@@ -1302,39 +1399,16 @@
   },
   "budgets": {
     "title": "Budgetten",
-    "subtitle": "Volg uw uitgaven en respecteer uw budgetten",
-    "loading": {
-      "budgets": "Uw budgetten worden geladen...",
-      "status": "Uw status wordt gecontroleerd..."
-    },
-    "unverified": {
-      "titleUnverified": "Identiteitsverificatie vereist",
-      "titlePending": "Verificatie in behandeling",
-      "descriptionUnverified": "Om budgetten aan te maken en te beheren, moet u eerst uw identiteit valideren.",
-      "descriptionPending": "Uw account wordt geverifieerd. U kunt budgetten aanmaken na validatie.",
-      "secureAccount": "Beveiligde rekening",
-      "customBudgets": "Gepersonaliseerde budgetten"
-    },
+    "subtitle": "Beheer je budgetten en houd je uitgaven bij",
     "summary": {
-      "totalBudget": "Totaal budget",
+      "totalBudget": "Totaal Budget",
       "spent": "Uitgegeven",
       "remaining": "Resterend",
       "usage": "Gebruik"
     },
     "progress": {
-      "title": "Globale voortgang",
-      "budgetUsage": "Budgetgebruik"
-    },
-    "actions": {
-      "createNew": "Nieuw budget aanmaken",
-      "edit": "Bewerken",
-      "details": "Details"
-    },
-    "status": {
-      "onTrack": "Binnen limieten",
-      "overBudget": "Overschreden",
-      "underBudget": "Onder budget",
-      "unknown": "Onbekend"
+      "title": "Algemene Voortgang",
+      "budgetUsage": "Budget Gebruik"
     },
     "card": {
       "progression": "Voortgang",
@@ -1344,26 +1418,186 @@
       "monthly": "Maandelijks",
       "yearly": "Jaarlijks"
     },
+    "details": {
+      "progression": "Voortgang",
+      "budgetTotal": "Totaal Budget",
+      "spent": "Uitgegeven",
+      "remaining": "Resterend",
+      "period": "Periode",
+      "monthly": "📅 Maandelijks",
+      "yearly": "📅 Jaarlijks",
+      "percentageMarkers": {
+        "zero": "0%",
+        "fifty": "50%",
+        "hundred": "100%"
+      },
+      "close": "Sluiten"
+    },
+    "status": {
+      "onTrack": "Op Schema",
+      "overBudget": "Over Budget",
+      "underBudget": "Onder Budget",
+      "unknown": "Onbekend"
+    },
     "tips": {
-      "title": "Tips voor budgetbeheer",
+      "title": "Tips om je budgetten te optimaliseren",
       "planning": {
         "title": "Planning",
         "tip1": "Stel realistische doelen",
-        "tip2": "Volg uw uitgaven regelmatig",
-        "tip3": "Pas uw budgetten aan indien nodig",
-        "tip4": "Voorzie onvoorziene uitgaven"
+        "tip2": "Houd je uitgaven regelmatig bij",
+        "tip3": "Pas budgetten aan volgens je behoeften",
+        "tip4": "Plan voor onverwachte uitgaven"
       },
       "optimization": {
         "title": "Optimalisatie",
-        "tip1": "Identificeer uw uitgavenposten",
-        "tip2": "Zoek goedkopere alternatieven",
-        "tip3": "Vermijd impulsaankopen",
-        "tip4": "Spaar overschotten"
+        "tip1": "Identificeer niet-essentiële uitgaven",
+        "tip2": "Onderhandel over contracten en abonnementen",
+        "tip3": "Gebruik vergelijkingstools",
+        "tip4": "Stel duidelijke prioriteiten"
       }
     },
-    "errors": {
-      "noUser": "Geen ingelogde gebruiker",
-      "loadingError": "Fout bij laden budgetten"
+    "create": {
+      "title": "Budget Maken",
+      "titleEdit": "Budget Bewerken",
+      "fields": {
+        "name": "Budget Naam",
+        "category": "Categorie",
+        "amount": "Bedrag",
+        "period": "Periode",
+        "startDate": "Startdatum",
+        "endDate": "Einddatum",
+        "description": "Beschrijving"
+      },
+      "placeholders": {
+        "name": "Bijv: Boodschappen Budget",
+        "selectCategory": "Selecteer een categorie",
+        "description": "Optionele budgetbeschrijving"
+      },
+      "periods": {
+        "monthly": "Maandelijks",
+        "yearly": "Jaarlijks"
+      },
+      "categories": {
+        "alimentation": "Voeding",
+        "transport": "Vervoer",
+        "logement": "Huisvesting",
+        "loisirs": "Vermaak",
+        "sante": "Gezondheid",
+        "vetements": "Kleding",
+        "education": "Onderwijs",
+        "autres": "Overig"
+      },
+      "amountHelper": "Bedrag in euro's (geen decimalen)",
+      "errors": {
+        "nameRequired": "Budgetnaam is verplicht",
+        "categoryRequired": "Categorie is verplicht",
+        "amountRequired": "Bedrag moet groter zijn dan 0",
+        "amountTooHigh": "Bedrag kan niet hoger zijn dan 999,999 €",
+        "startDateRequired": "Startdatum is verplicht",
+        "endDateRequired": "Einddatum is verplicht",
+        "endDateAfterStart": "Einddatum moet na startdatum zijn"
+      },
+      "actions": {
+        "cancel": "Annuleren",
+        "create": "Budget Maken"
+      }
+    },
+    "actions": {
+      "createNew": "Nieuw Budget Maken",
+      "edit": "Bewerken",
+      "details": "Details",
+          "delete": "Verwijderen",
+    "addExpense": "Uitgave Toevoegen"
+  },
+  "delete": {
+    "title": "Budget Verwijderen",
+    "subtitle": "Onomkeerbare Actie",
+    "confirmationTitle": "Weet je het zeker?",
+    "confirmationMessage": "Je staat op het punt het budget \"{budgetName}\" te verwijderen. Deze actie kan niet ongedaan worden gemaakt.",
+    "warningTitle": "Waarschuwing!",
+    "warningMessage": "Alle gegevens die aan dit budget zijn gekoppeld (uitgaven, geschiedenis) worden permanent verwijderd.",
+    "actions": {
+      "cancel": "Annuleren",
+      "confirm": "Verwijderen",
+      "deleting": "Verwijderen..."
+    }
+  },
+    "messages": {
+      "deleteConfirmation": "Weet je zeker dat je het budget \"{budgetName}\" wilt verwijderen?\n\nDeze actie is onomkeerbaar.",
+      "deleteSuccess": "Budget \"{budgetName}\" succesvol verwijderd!",
+      "noUser": "❌ Geen gebruiker ingelogd",
+      "deleteError": "❌ Fout tijdens verwijdering: {error}",
+      "fallbackDeleteConfirmation": "Weet je zeker dat je het budget \"{budgetName}\" wilt verwijderen?\n\nDeze actie is onomkeerbaar.",
+      "fallbackDeleteSuccess": "Budget \"{budgetName}\" succesvol verwijderd!",
+      "fallbackNoUser": "❌ Geen gebruiker ingelogd",
+      "fallbackDeleteError": "❌ Fout tijdens verwijdering: {error}"
+    },
+    "expense": {
+      "title": "Uitgave Toevoegen",
+      "budgetFor": "Budget: {budgetName}",
+      "details": {
+        "progression": "Voortgang",
+        "budget": "Budget",
+        "spent": "Uitgegeven",
+        "remaining": "Resterend",
+        "period": "Periode",
+        "type": "Type",
+        "start": "Start",
+        "end": "Einde",
+        "duration": "Duur",
+        "monthly": "Maandelijks",
+        "yearly": "Jaarlijks",
+        "oneMonth": "1 maand",
+        "oneYear": "1 jaar",
+        "description": "Beschrijving",
+        "insights": "💡 Inzicht",
+        "budgetExceeded": "⚠️ Je hebt je budget met {percentage}% overschreden",
+        "budgetWarning": "⚠️ Let op, je hebt {percentage}% van je budget gebruikt",
+        "budgetHalfway": "✅ Je bent halverwege met {percentage}% gebruik",
+        "budgetExcellent": "🎯 Uitstekend! Je hebt slechts {percentage}% van je budget gebruikt",
+        "monthlyBudgetValid": "📅 Maandelijks budget geldig tot {date}",
+        "budgetRemaining": "💰 Je hebt nog {amount}€ over om uit te geven"
+      },
+      "fields": {
+        "amount": "Uitgave Bedrag",
+        "date": "Uitgave Datum",
+        "category": "Categorie",
+        "description": "Beschrijving"
+      },
+      "placeholders": {
+        "description": "Beschrijf deze uitgave..."
+      },
+      "categories": {
+        "general": "Algemeen",
+        "food": "Voeding",
+        "transport": "Vervoer",
+        "entertainment": "Vermaak",
+        "shopping": "Winkelen",
+        "health": "Gezondheid",
+        "bills": "Rekeningen",
+        "other": "Overig"
+      },
+      "summary": {
+        "totalBudget": "Totaal Budget",
+        "spent": "Uitgegeven",
+        "remaining": "Resterend",
+        "usage": "Gebruik"
+      },
+      "amountHelper": "Bedrag in euro's (geen decimalen)",
+      "descriptionHelper": "{current}/200 karakters",
+      "errors": {
+        "amountRequired": "Bedrag moet groter zijn dan 0",
+        "amountTooHigh": "Bedrag kan niet hoger zijn dan 999,999 €",
+        "dateRequired": "Datum is verplicht",
+        "descriptionRequired": "Beschrijving is verplicht",
+        "descriptionTooLong": "Beschrijving kan niet langer zijn dan 200 karakters",
+        "exceedsBudget": "Bedrag overschrijdt resterend budget ({remaining}€)"
+      },
+      "actions": {
+        "cancel": "Annuleren",
+        "add": "Uitgave Toevoegen",
+        "adding": "Toevoegen..."
+      }
     }
   },
   "messages": {
@@ -1819,6 +2053,13 @@
       "description": "Live chat met ons ondersteuningsteam"
     },
     "securityGuaranteed": "Veiligheid gegarandeerd",
-    "securityDescription": "Uw gegevens worden beschermd door bankniveau beveiligingsmaatregelen."
+    "securityDescription": "Uw gegevens worden beschermd door bankniveau beveiligingsmaatregelen.",
+    "summary": {
+      "title": "Kaarten overzicht",
+      "activeCards": "Actieve kaarten",
+      "pendingCards": "In behandeling",
+      "rejectedCards": "Afgewezen",
+      "noCards": "Geen kaarten"
+    }
   }
 }

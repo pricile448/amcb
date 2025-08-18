@@ -3,6 +3,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Correction du double scroll - seulement pour le dashboard */
+.dashboard-layout {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.dashboard-layout html, 
+.dashboard-layout body {
+  height: 100%;
+  overflow: hidden;
+}
+
+.dashboard-layout #root {
+  height: 100%;
+}
+
 /* Animations personnalisées pour le logo */
 @keyframes shine {
   0% {
